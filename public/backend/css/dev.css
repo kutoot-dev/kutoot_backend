@@ -1,0 +1,276 @@
+.btn,
+.form-group>label {
+    font-size: 14px !important
+}
+
+.table {
+    font-size: 15px !important;
+}
+
+.btn-primary {
+    background-color: #2046DA !important;
+}
+
+.btn-danger {
+    background-color: #fb160a !important
+}
+
+.toggle.btn.btn-success,
+.toggle.btn.btn-danger {
+    width: 95px !important;
+}
+
+.text-area-5 {
+    min-height: 100px !important;
+}
+
+.text-area-3 {
+    min-height: 60px !important;
+}
+
+img.admin-img {
+    border: 1px solid #ddd;
+    border-radius: 0px;
+    padding: 0px;
+    max-width: 180px;
+    height: 58px;
+    object-fit: cover;
+    margin: 0px;
+}
+
+img.admin-preview-img {
+    border: 1px solid #ddd;
+    border-radius: 0px;
+    padding: 5px;
+    max-width: 100%;
+    height: auto;
+    object-fit: cover;
+    margin: 0px;
+}
+
+
+img.admin-banner-img {
+    border: 1px solid #ddd;
+    border-radius: 0px;
+    padding: 0px;
+    max-width: 200px;
+    height: 120px;
+    object-fit: cover;
+    margin: 0px;
+}
+
+.select2-container .select2-selection--single {
+    font-size: 14px !important;
+    padding: 10px 15px !important;
+    height: 42px !important;
+    border-color: #e4e6fc !important;
+}
+
+.tagify tag {
+    margin: -5px 0px 5px 5px !important;
+}
+
+.tagify__input {
+    margin: -5px 0px 5px 5px !important;
+}
+
+.note-editable {
+    min-height: 120px !important;
+}
+
+.card-body.seller_chat_list {
+    height: 650px !important;
+}
+
+.chat-box .chat-content .chat-item.chat-right img {
+    object-fit: cover;
+    width: 60px !important;
+    height: 60px !important;
+}
+
+.plus_btn {
+    margin-top: 32px;
+}
+
+.card-header h1 {
+    margin-bottom: 0;
+    font-weight: 700;
+    display: inline-block;
+    font-size: 24px;
+    margin-top: 3px;
+    color: #34395e;
+}
+
+.card .card-header .form-control {
+    height: 42px;
+    font-size: 14px;
+    border-radius: 0;
+}
+
+.card .card-header .btn {
+    margin-top: 1px;
+    padding: 0.3rem 0.8rem;
+}
+
+.card .card-header .btn:not(.note-btn) {
+    border-radius: .25rem;
+}
+
+.add_new_social_btn {
+    margin-top: 35px !important;
+}
+
+.section-body a {
+    text-decoration: none !important;
+}
+
+.list-unstyled {
+    padding-left: 0;
+    list-style: none;
+    max-height: 600px;
+    overflow-y: auto;
+}
+
+.chat-box .chat-content {
+    background-color: #f9f9f9 !important;
+    height: 600px;
+    overflow-y: auto;
+    padding-top: 25px !important;
+    /* display: flex !important;
+    align-items: end !important; */
+}
+
+.media span {
+    background: #2a9cf5;
+    color: #fff;
+    width: 20px;
+    height: 20px;
+    display: block;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    top: 30px;
+    left: -30px;
+    position: relative;
+}
+
+.list-unstyled .active {
+    background: #f8f8f8;
+}
+
+table .rounded-circle {
+    border-radius: 50%!important;
+    width: 80px !important;
+    height: 80px !important;
+    object-fit: cover !important;
+}
+
+.profile-widget .profile-widget-picture {
+    width: 100px !important;
+    height: 100px !important;
+    object-fit: cover !important;
+}
+
+.default-avatar {
+    width: 100px !important;
+    height: 100px !important;
+    object-fit: cover !important;
+}
+
+.navbar .nav-link.nav-link-user img {
+    width: 30px !important;
+    height: 30px !important;
+    object-fit: cover !important;
+}
+
+img.mr-3.ml-3.rounded-circle {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+}
+
+.chat-item.chat-left img {
+    width: 60px !important;
+    height: 60px !important;
+    object-fit: cover;
+}
+
+#toast-container>.toast:before {
+    display: none !important;
+}
+
+.sidebar_img {
+    width: 150px;
+    height: 300px;
+    object-fit: cover;
+}
+
+.w_300 {
+    width: 300px;
+    height: 150px;
+    object-fit: cover;
+}
+
+.customer_msg_list {
+    cursor: pointer !important;
+}
+
+.overflow-style-none::-webkit-scrollbar {
+    display: none !important;
+}
+
+.overflow-style-none {
+    -ms-overflow-style: none !important;
+    scrollbar-width: none !important;
+}
+
+.sms-body .custom-switch {
+    padding-left: 0 !important;
+}
+
+.card_title {
+    color: #34395e;
+}
+
+
+/* custom css start  */
+
+.chat_product .product_img {
+    background: #ebedff;
+    display: flex;
+    align-items: center;
+    max-width: 350px;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 15px;
+}
+
+.chat_product .product_img img {
+    width: 80px !important;
+    border-radius: 5px;
+    margin-right: 10px;
+    object-fit: cover;
+}
+
+.chat_product .product_img p {
+    line-height: 24px;
+    font-size: 16px;
+    font-weight: 600;
+    margin: 0;
+    color: #353535;
+}
+
+.chat_product .main_user {
+    margin-top: 80px;
+}
+
+@media (max-width: 767.99px) {
+    .chat_product .product_img {
+        flex-wrap: wrap;
+    }
+    .chat_product .product_img img {
+        margin-bottom: 5px;
+    }
+}

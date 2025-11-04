@@ -1,0 +1,64 @@
+.loading-icon {
+    margin-right: 10px !important;
+}
+
+.after_subscribe {
+    opacity: 0.7;
+    background: #160f0f;
+}
+
+.after_subscribe:hover {
+    color: #fff;
+    background: #0363ae;
+}
+
+.razorpay-payment-button {
+    font-size: 14px;
+    text-transform: uppercase;
+    font-weight: 600;
+    color: #fff;
+    background: #2a9cf5;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 3px;
+    transition: all linear 0.3s;
+    -webkit-transition: all linear 0.3s ease;
+    -moz-transition: all linear 0.3s ease;
+    -ms-transition: all linear 0.3s ease;
+    -o-transition: all linear 0.3s ease;
+}
+
+.razorpay-payment-button:hover {
+    color: #fff;
+    background: #0363ae;
+}
+
+.wsus__daily_deals_single_img .blue {
+    background: rgb(0, 174, 255);
+    color: #fff;
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    padding: 5px;
+    border-radius: 3px;
+    text-transform: capitalize;
+    font-size: 13px;
+    font-weight: 600;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    -ms-border-radius: 3px;
+    -o-border-radius: 3px;
+    transition: all linear 0.3s;
+    -webkit-transition: all linear 0.3s ease;
+    -moz-transition: all linear 0.3s ease;
+    -ms-transition: all linear 0.3s ease;
+    -o-transition: all linear 0.3s ease;
+}
+
+.wsus__single_blog .green {
+    background: rgb(214, 11, 187);
+}
+
+.wsus__list_view .wsus__product_details .add_cart {
+    color: #fff !important;
+}

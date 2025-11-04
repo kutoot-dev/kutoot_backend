@@ -1,0 +1,111 @@
+.form-group,
+.card {
+    text-align: right !important;
+}
+
+.float-right {
+    float: left !important;
+}
+
+div.dataTables_wrapper div.dataTables_filter {
+    text-align: left !important;
+}
+
+div.table-responsive>div.dataTables_wrapper>div.row>div[class^=col-]:first-child {
+    text-align: right !important;
+}
+
+.input-group-text,
+select.form-control:not([size]):not([multiple]),
+.form-control:not(.form-control-sm):not(.form-control-lg) {
+    padding: 10px 30px 5px 0px !important;
+}
+
+div.dataTables_wrapper div.dataTables_filter input {
+    margin-left: -0.5em !important;
+}
+
+.seller_chat_list .media span {
+	left: auto !important;
+	right: -30px !important;
+}
+
+.modal-header .close {
+    left: 0;
+    position: absolute;
+    outline: none;
+}
+
+address {
+    text-align: right !important;
+}
+
+.invoice .invoice-detail-item {
+    text-align: left !important;
+}
+
+.text-md-right {
+    text-align: left !important;
+}
+
+.order-status {
+    text-align: right !important;
+}
+
+.container-fluid,
+.select2-container,
+.datepicker {
+    text-align: right !important;
+}
+
+.profile-widget .profile-widget-picture {
+    float: right !important;
+    margin-right: 30px !important;
+    margin-left: 0 !important;
+}
+
+.mr-auto {
+    margin-left: auto !important;
+    margin-right: 0 !important;
+}
+
+.chat-box .chat-form .btn {
+    right: auto !important;
+    left: 28px !important;
+}
+
+.chat-box .chat-content .chat-item {
+    display: inline-block;
+    width: 100%;
+    margin-bottom: 25px;
+}
+
+.chat-box .chat-content .chat-item.chat-right img {
+    float: left !important;
+}
+
+.chat-box .chat-content .chat-item.chat-right .chat-details {
+    margin-left: 70px !important;
+    margin-right: 0px !important;
+    text-align: left;
+}
+
+.chat-box .chat-content .chat-item.chat-right .chat-details .chat-text {
+    text-align: right !important;
+}
+
+.chat-box .chat-content .chat-item>img {
+    float: right !important;
+}
+
+.chat-box .chat-content .chat-item .chat-details {
+    margin-right: 70px !important;
+    margin-left: auto !important;
+}
+
+.chat-box .chat-content .chat-item.chat-right img,
+.chat-box .chat-content .chat-item>img {
+    width: 60px !important;
+    height: 60px !important;
+    object-fit: cover !important;
+}

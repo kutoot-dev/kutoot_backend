@@ -1,0 +1,53 @@
+.select_number .number_area {
+	float: left;
+	width: 70px;
+	height: 35px;
+	padding: 0;
+	font-family: Lato;
+	font-size: 1.2em;
+	text-transform: uppercase;
+	text-align: center;
+	color: #333;
+	border: 1px solid #aaa;
+	background: none;
+	outline: none;
+	pointer-events: none;
+}
+
+.select_number span.spinner > .sub, 
+.select_number span.spinner > .add {
+	float: left;
+	display: block;
+	width: 35px;
+	height: 35px;
+	text-align: center;
+	line-height: 35px;
+	color: #333;
+	border: 1px solid #aaa;
+	border-right: 0;
+	border-radius: 2px 0 0 2px;
+	cursor: pointer;
+	transition: 0.1s linear;
+	-o-transition: 0.1s linear;
+	-ms-transition: 0.1s linear;
+	-moz-transition: 0.1s linear;
+	-webkit-transition: 0.1s linear;
+}
+  
+.select_number span.spinner > .add { 
+	border: 1px solid #aaa;
+	border-left: 0;
+	border-radius: 0 2px 2px 0;
+	line-height: 35px;
+}
+
+.select_number span.spinner > .sub:hover,
+.select_number span.spinner > .add:hover {
+	background: #aaa;
+	color: #fff;
+}
+
+.select_number .number_area::-webkit-inner-spin-button, 
+.select_number .number_area::-webkit-outer-spin-button {
+	-webkit-appearance: none;
+}
