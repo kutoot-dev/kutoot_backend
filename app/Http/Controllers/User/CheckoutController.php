@@ -227,7 +227,7 @@ class CheckoutController extends Controller
             array('receipt' => "OID".$purchase->id, 'amount' => ($payable_amount * 100), 'currency' => 'INR')
         );
 
-        $purchase->razor_order_id = $order->id;
+        $purchase->razorpay_order_id = $order->id;
 
         $purchase->razor_key = $razorpay->key;
 
@@ -292,94 +292,94 @@ class CheckoutController extends Controller
     }
 
     public function payment_status(Request $request)
-    {
-        $validator = Validator::make($request->all(), [
-            'razor_order_id' => 'required',
-            'payment_id' => 'required',
-            'payment_status' => 'required',
+{
+    $validator = Validator::make($request->all(), [
+        'razorpay_order_id' => 'required|string',
+        'payment_id' => 'required|string',
+        'payment_status' => 'required|string',
+        'razorpay_signature' => 'required|string',
+    ]);
+
+    if ($validator->fails()) {
+        throw new HttpResponseException(response()->json([
+            'errors' => $validator->errors()
+        ], 422));
+    }
+
+    $user = Auth::guard('api')->user();
+
+    $purchase = PurchasedCoins::with('coupons')
+        ->where('razorpay_order_id', $request->razorpay_order_id)
+        ->where('user_id', $user->id)
+        ->first();
+
+    if (!$purchase) {
+        throw new HttpResponseException(response()->json([
+            'errors' => 'Invalid Order Id'
+        ], 422));
+    }
+
+    if (in_array($purchase->payment_status, ['success', 'failed'])) {
+        throw new HttpResponseException(response()->json([
+            'errors' => 'Status Already Updated'
+        ], 422));
+    }
+
+    // ✅ Update payment details
+    $purchase->payment_id = $request->payment_id;
+    $purchase->payment_status = $request->payment_status;
+    $purchase->razorpay_signature = $request->razorpay_signature;
+    $purchase->save();
+
+    $baseplan = Baseplans::find($purchase->base_plan_id);
+
+    if ($baseplan->coupons_per_campaign * $purchase->quantity > 50) {
+        return response()->json(['message' => 'Coupons count is more!'], 400);
+    }
+
+    $couponslist = [];
+    for ($j = 0; $j < $baseplan->coupons_per_campaign * $purchase->quantity; $j++) {
+        do {
+            $code = '';
+            for ($i = 0; $i < 12; $i++) {
+                $code .= rand(0, 9);
+            }
+            $exists = UserCoupons::where('coupon_code', $code)->exists();
+        } while ($exists);
+
+        $newCoupon = UserCoupons::create([
+            'purchased_camp_id' => $purchase->id,
+            'coupon_code' => $code,
+            'coupon_expires' => now()->addDays(30),
+            'is_claimed' => 0,
+            'status' => 1,
         ]);
 
-        if ($validator->fails()) {
-            throw new HttpResponseException(response()->json([
-                'errors' => $validator->errors()
-            ], 422));
-        }
-
-        $user =  Auth::guard('api')->user();
-        $purchase = PurchasedCoins::with('coupons')->where('razor_order_id',$request->razor_order_id)->where('user_id' , $user->id)->first();
-
-        if(!$purchase){
-            throw new HttpResponseException(response()->json([
-                'errors' => 'Invalid Order Id'
-            ], 422));
-        }
-
-
-        if($purchase->payment_status =='success' || $purchase->payment_status =='failed'){
-            throw new HttpResponseException(response()->json([
-                'errors' => 'Status Already Update'
-            ], 422));
-        }
-
-        $purchase->payment_status = $request->payment_status;
-        $purchase->save();
-
-        $baseplan = Baseplans::find($purchase->base_plan_id);
-
-        if($baseplan->coupons_per_campaign*$purchase->quantity > 50){
-            return response()->json(['message' => 'Coupons count is more!'],400);
-        }
-
-
-
-        $couponslist=array();
-        for ($j = 0; $j < $baseplan->coupons_per_campaign*$purchase->quantity; $j++) {
-
-            // do {
-            //     $code = strtoupper(Str::random(12));
-            //     $exists = UserCoupons::where('coupon_code', $code)->exists();
-            // } while ($exists);
-
-        
-            do {
-                // Generate a 12-digit random numeric string
-                $code = '';
-                for ($i = 0; $i < 12; $i++) {
-                    $code .= rand(0, 9);
-                }
-
-                $exists = UserCoupons::where('coupon_code', $code)->exists();
-            } while ($exists);
-
-
-            $newone= UserCoupons::create([
-                'purchased_camp_id' => $purchase->id,
-                'coupon_code' => $code,
-                'coupon_expires' => now()->addDays(30),
-                'is_claimed' => 0,
-                'status' => 1,
-            ]);
-
-            array_push($couponslist, $newone);
-        }
-
-        $coinsdata = UserCoins::create([
-                'purchased_camp_id' => $purchase->id,
-                'user_id' => $user->id,
-                'coin_expires' => now()->addDays(30),
-                'coins' => $baseplan->coins_per_campaign*$purchase->quantity,
-                'type' => 'credit',
-                'status' => 1,
-            ]);
-        
-
-        $purchase = PurchasedCoins::with('coupons')->where('razor_order_id',$request->razor_order_id)->where('user_id' , $user->id)->first();
-
-        $purchase['coinsdata']=$coinsdata;
-
-        return response()->json(['data'=>$purchase,'message'=>'Update Successfully']);
-
+        $couponslist[] = $newCoupon;
     }
+
+    $coinsdata = UserCoins::create([
+        'purchased_camp_id' => $purchase->id,
+        'user_id' => $user->id,
+        'coin_expires' => now()->addDays(30),
+        'coins' => $baseplan->coins_per_campaign * $purchase->quantity,
+        'type' => 'credit',
+        'status' => 1,
+    ]);
+
+    $purchase = PurchasedCoins::with('coupons')
+        ->where('razorpay_order_id', $request->razorpay_order_id)
+        ->where('user_id', $user->id)
+        ->first();
+
+    $purchase['coinsdata'] = $coinsdata;
+
+    return response()->json([
+        'data' => $purchase,
+        'message' => 'Payment Updated Successfully',
+    ]);
+}
+
 
     public function myPurchases()
     {

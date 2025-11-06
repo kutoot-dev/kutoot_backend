@@ -11,7 +11,7 @@ class PurchasedCoins extends Model
 
     protected $table = 'table_purchasecoins';
    
-    protected $fillable = [
+     protected $fillable = [
         'camp_id',
         'user_id',
         'camp_title',
@@ -21,7 +21,10 @@ class PurchasedCoins extends Model
         'camp_coupons_per_campaign',
         'status',
         'is_cart',
-        'razor_order_id',
+        'razorpay_order_id',      // ✅ renamed
+        'payment_id',             // ✅ ensure it's string-compatible
+        'payment_status',
+        'razorpay_signature',     // ✅ new column
         'base_plan_id',
         'razor_key',
         'quantity',
