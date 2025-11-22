@@ -20,11 +20,5 @@ RewriteRule ^update - [L]
 
 </IfModule>
 
-# Security Headers - Allow Cross-Origin Requests
+# Security Headers
 Header always unset X-Frame-Options
-Header always unset Referrer-Policy
-Header always set Referrer-Policy "no-referrer-when-downgrade"
-Header always set Access-Control-Allow-Origin "*"
-Header always set Access-Control-Allow-Methods "GET, POST, PUT, DELETE, OPTIONS"
-Header always set Access-Control-Allow-Headers "Origin, Content-Type, Accept, Authorization, X-Requested-With"
-Header always set Access-Control-Allow-Credentials "true"
