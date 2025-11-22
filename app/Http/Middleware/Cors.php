@@ -24,6 +24,7 @@ class Cors
                 'Access-Control-Allow-Headers' => 'Origin, Content-Type, Accept, Authorization, X-Requested-With',
                 'Access-Control-Allow-Credentials' => 'true',
                 'Access-Control-Max-Age' => '86400',
+                'Referrer-Policy' => 'no-referrer-when-downgrade',
             ]);
         }
 
@@ -33,6 +34,7 @@ class Cors
         $response->headers->set('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
         $response->headers->set('Access-Control-Allow-Headers', 'Origin, Content-Type, Accept, Authorization, X-Requested-With');
         $response->headers->set('Access-Control-Allow-Credentials', 'true');
+        $response->headers->set('Referrer-Policy', 'no-referrer-when-downgrade');
 
         return $response;
     }
