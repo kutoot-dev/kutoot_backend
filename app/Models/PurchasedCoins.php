@@ -21,7 +21,7 @@ class PurchasedCoins extends Model
         'camp_coupons_per_campaign',
         'status',
         'is_cart',
-        'razorpay_order_id',      // ✅ renamed
+        'razor_order_id',      // ✅ renamed
         'payment_id',             // ✅ ensure it's string-compatible
         'payment_status',
         'razorpay_signature',     // ✅ new column

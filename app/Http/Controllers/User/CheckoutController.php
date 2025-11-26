@@ -227,7 +227,7 @@ class CheckoutController extends Controller
             array('receipt' => "OID".$purchase->id, 'amount' => ($payable_amount * 100), 'currency' => 'INR')
         );
 
-        $purchase->razorpay_order_id = $order->id;
+        $purchase->razor_order_id = $order->id;
 
         $purchase->razor_key = $razorpay->key;
 
