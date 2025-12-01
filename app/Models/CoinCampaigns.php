@@ -51,7 +51,8 @@ class CoinCampaigns extends Model
         'winner_announcement_date',
         'highlights',
         'max_length',
-
+        'sponsored_by',
+        'details_content',
     ];
 
 

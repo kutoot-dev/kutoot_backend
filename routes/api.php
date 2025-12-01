@@ -105,6 +105,7 @@ use App\Http\Controllers\User\PaymentController;
 use App\Http\Controllers\User\PaypalController;
 use App\Http\Controllers\User\MessageController;
 use App\Http\Controllers\User\AddressCotroller;
+use App\Http\Controllers\User\UserDashboardController;
 
 
 
@@ -220,6 +221,18 @@ Route::group([], function () {
     Route::get('/user/logout', [LoginController::class, 'userLogout'])->name('user.logout');
 
     Route::group(['as'=> 'user.', 'prefix' => 'user'],function (){
+
+        // Newsletter subscription
+        Route::post('/subscribe-newsletter', [UserDashboardController::class, 'subscribeNewsletter'])->name('subscribe-newsletter');
+
+        // Dashboard statistics
+        Route::get('/my-dashboard', [UserDashboardController::class, 'myDashboard'])->name('my-dashboard');
+
+        // My purchased campaigns
+        Route::get('/my-campaigns', [UserDashboardController::class, 'myCampaigns'])->name('my-campaigns');
+
+        // Deactivate account
+        Route::post('/deactivate-account', [UserDashboardController::class, 'deactivateAccount'])->name('deactivate-account');
 
         Route::post('/coinpurchase', [CheckoutController::class, 'purchasestore']);
         Route::get('/getcoupons', [CheckoutController::class, 'generateCoupons']);
