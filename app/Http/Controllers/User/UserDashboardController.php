@@ -97,7 +97,7 @@ class UserDashboardController extends Controller
     {
         $user = Auth::guard('api')->user();
 
-        $campaigns = PurchasedCoins::with(['basedetails', 'coupons'])
+        $campaigns = PurchasedCoins::with(['basedetails', 'coupons', 'campaign'])
             ->where('user_id', $user->id)
             ->orderBy('created_at', 'desc')
             ->paginate(15);

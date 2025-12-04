@@ -60,6 +60,11 @@ class CheckoutController extends Controller
             });
         }
 
+        // Filter by purchased_camp_id if provided
+        if ($request->has('purchased_camp_id') && $request->purchased_camp_id) {
+            $query->where('purchased_camp_id', $request->purchased_camp_id);
+        }
+
         $coupons = $query->orderBy('id', 'desc')->paginate(15);
 
         // Transform output
