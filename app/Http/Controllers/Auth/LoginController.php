@@ -171,7 +171,7 @@ if ($login_by == 'phone') {
 
             return response()->json([
                 'message' => trans('OTP sent successfully'),
-                'otp' => $otp // Remove this in production
+                // 'otp' => $otp // Remove this in production
             ], 200);
 
         }

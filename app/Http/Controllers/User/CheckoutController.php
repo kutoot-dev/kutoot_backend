@@ -68,7 +68,7 @@ class CheckoutController extends Controller
         $coupons = $query->orderBy('id', 'desc')->paginate(15);
 
         // Transform output
-        $data = $coupons->map(function ($coupon) {
+        $data = $coupons->getCollection()->map(function ($coupon) {
             return [
                 'id' => $coupon->id,
                 'coupon_code' => $coupon->coupon_code,
@@ -86,9 +86,19 @@ class CheckoutController extends Controller
             ];
         });
 
+        $coupons->setCollection($data);
+
         return response()->json([
             'status' => true,
-            'data' => $data
+            'data' => $data,
+            'pagination' => [
+                'current_page' => $coupons->currentPage(),
+                'last_page' => $coupons->lastPage(),
+                'per_page' => $coupons->perPage(),
+                'total' => $coupons->total(),
+                'next_page_url' => $coupons->nextPageUrl(),
+                'prev_page_url' => $coupons->previousPageUrl(),
+            ]
         ]);
     }
 
