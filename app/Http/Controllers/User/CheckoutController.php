@@ -309,7 +309,7 @@ class CheckoutController extends Controller
     $user = Auth::guard('api')->user();
 
     $purchase = PurchasedCoins::with('coupons')
-        ->where('razorpay_order_id', $request->razorpay_order_id)
+        ->where('razor_order_id', $request->razorpay_order_id)
         ->where('user_id', $user->id)
         ->first();
 
@@ -368,7 +368,7 @@ class CheckoutController extends Controller
     ]);
 
     $purchase = PurchasedCoins::with('coupons')
-        ->where('razorpay_order_id', $request->razorpay_order_id)
+        ->where('razor_order_id', $request->razorpay_order_id)
         ->where('user_id', $user->id)
         ->first();
 
