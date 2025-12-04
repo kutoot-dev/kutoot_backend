@@ -125,128 +125,139 @@ class CheckoutController extends Controller
 
     public function purchasestore(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'camp_id' => 'required',
-            'base_plan_id' => 'required',
-            'amount' => 'required|numeric',
-            'quantity' => 'required|numeric'
-        ]);
-
-        if ($validator->fails()) {
-            throw new HttpResponseException(response()->json([
-                'errors' => $validator->errors()
-            ], 422));
-        }
-
-        if($request->quantity > 5){
-
-            return response()->json(['message' => 'Qty is more!'],400);
-
-        }
-        $baseplan = Baseplans::find($request->base_plan_id);
-
-        $user =  Auth::guard('api')->user();
-        $campaign = CoinCampaigns::find($request->camp_id);
-       
-        $purchase = PurchasedCoins::create([
-            'camp_id' => $request->camp_id,
-            'user_id' => $user->id,
-            'base_plan_id' => $baseplan->id,
-            'quantity' => $request->quantity,
-            'camp_title' => $campaign->title, // Replace with actual lookup
-            'camp_description' => $campaign->description, // Replace with actual
-            'camp_ticket_price' => $baseplan->ticket_price,
-            'camp_coins_per_campaign' => $baseplan->coins_per_campaign,
-            'camp_coupons_per_campaign' => $baseplan->coupons_per_campaign,
-            'status' => 1,
-            'payment_status' => 'Pending'
-        ]);
-
-        //# total_tickets value should be divided by series prefix value  to get single series total tickets
-        $totaltickets = $campaign->total_tickets;
-        $single_length_tickets = $campaign->total_tickets;
-        if($campaign->series_prefix){
-            $prefix = strtoupper($campaign->series_prefix);
-            $firstChar = $prefix[0];
-            if (ctype_alpha($firstChar)) {
-                // $multiplier = ord($firstChar) - ord('A') + 1; // A=1, B=2, C=3, ...
-                // $totaltickets = $campaign->total_tickets * $multiplier;
-                $single_length_tickets = round($campaign->total_tickets/ord($firstChar));
-
-            }
-        }
-        
-        $alreadyPurchasedCouponsCount = PurchasedCoins::where('camp_id', $request->camp_id)
-            ->where('payment_status', 'success')
-            ->sum(\DB::raw('camp_coupons_per_campaign * quantity'));
-
-        if (($alreadyPurchasedCouponsCount + ($baseplan->coupons_per_campaign * $request->quantity)) > $totaltickets) {
-            return response()->json(['message' => 'Not enough tickets available!'], 400);
-        }
-        
-        $couponslist = [];
-        for ($j = 0; $j < $baseplan->coupons_per_campaign * $purchase->quantity; $j++) {
-
-            // Generate a code as a combination of N pairs of two-digit numbers (01-49)
-            do {
-            $numbers = [];
-            // Generate unique numbers between number_min and number_max, formatted as two digits
-            while (count($numbers) < $campaign->numbers_per_ticket) {
-                $num = rand($campaign->number_min, $campaign->number_max);
-                $numStr = str_pad($num, 2, '0', STR_PAD_LEFT); // ensures '01', '02', ..., '49'
-                if (!in_array($numStr, $numbers)) {
-                $numbers[] = $numStr;
-                }
-            }
-            // Join the numbers to form the code
-            $code = implode('', $numbers);
-
-            $exists = UserCoupons::where('coupon_code', $code)->exists();
-            } while ($exists);
-
-            $newone = UserCoupons::create([
-            'purchased_camp_id' => $purchase->id,
-            'coupon_code' => $code,
-            'coupon_expires' => now()->addDays(30),
-            'is_claimed' => 0,
-            'status' => 0,
-            'main_campaign_id'=>$campaign->id,
-            'series_label'=>$campaign->series_prefix // Add series label if available
+        try {
+            $validator = Validator::make($request->all(), [
+                'camp_id' => 'required',
+                'base_plan_id' => 'required',
+                'amount' => 'required|numeric',
+                'quantity' => 'required|numeric'
             ]);
 
-            array_push($couponslist, $newone);
+            if ($validator->fails()) {
+                throw new HttpResponseException(response()->json([
+                    'errors' => $validator->errors()
+                ], 422));
+            }
+
+            if($request->quantity > 5){
+                return response()->json(['message' => 'Qty is more!'],400);
+            }
+
+            $baseplan = Baseplans::find($request->base_plan_id);
+            if (!$baseplan) {
+                return response()->json(['message' => 'Base plan not found!'], 404);
+            }
+
+            $user =  Auth::guard('api')->user();
+            $campaign = CoinCampaigns::find($request->camp_id);
+            if (!$campaign) {
+                return response()->json(['message' => 'Campaign not found!'], 404);
+            }
+           
+            $purchase = PurchasedCoins::create([
+                'camp_id' => $request->camp_id,
+                'user_id' => $user->id,
+                'base_plan_id' => $baseplan->id,
+                'quantity' => $request->quantity,
+                'camp_title' => $campaign->title,
+                'camp_description' => $campaign->description,
+                'camp_ticket_price' => $baseplan->ticket_price,
+                'camp_coins_per_campaign' => $baseplan->coins_per_campaign,
+                'camp_coupons_per_campaign' => $baseplan->coupons_per_campaign,
+                'status' => 1,
+                'payment_status' => 'Pending'
+            ]);
+
+            //# total_tickets value should be divided by series prefix value  to get single series total tickets
+            $totaltickets = $campaign->total_tickets;
+            $single_length_tickets = $campaign->total_tickets;
+            if($campaign->series_prefix){
+                $prefix = strtoupper($campaign->series_prefix);
+                $firstChar = $prefix[0];
+                if (ctype_alpha($firstChar)) {
+                    $single_length_tickets = round($campaign->total_tickets/ord($firstChar));
+                }
+            }
+            
+            $alreadyPurchasedCouponsCount = PurchasedCoins::where('camp_id', $request->camp_id)
+                ->where('payment_status', 'success')
+                ->sum(\DB::raw('camp_coupons_per_campaign * quantity'));
+
+            if (($alreadyPurchasedCouponsCount + ($baseplan->coupons_per_campaign * $request->quantity)) > $totaltickets) {
+                return response()->json(['message' => 'Not enough tickets available!'], 400);
+            }
+            
+            $couponslist = [];
+            for ($j = 0; $j < $baseplan->coupons_per_campaign * $purchase->quantity; $j++) {
+
+                // Generate a code as a combination of N pairs of two-digit numbers (01-49)
+                do {
+                    $numbers = [];
+                    // Generate unique numbers between number_min and number_max, formatted as two digits
+                    while (count($numbers) < $campaign->numbers_per_ticket) {
+                        $num = rand($campaign->number_min, $campaign->number_max);
+                        $numStr = str_pad($num, 2, '0', STR_PAD_LEFT); // ensures '01', '02', ..., '49'
+                        if (!in_array($numStr, $numbers)) {
+                            $numbers[] = $numStr;
+                        }
+                    }
+                    // Join the numbers to form the code
+                    $code = implode('', $numbers);
+
+                    $exists = UserCoupons::where('coupon_code', $code)->exists();
+                } while ($exists);
+
+                $newone = UserCoupons::create([
+                    'purchased_camp_id' => $purchase->id,
+                    'coupon_code' => $code,
+                    'coupon_expires' => now()->addDays(30),
+                    'is_claimed' => 0,
+                    'status' => 0,
+                    'main_campaign_id'=>$campaign->id,
+                    'series_label'=>$campaign->series_prefix
+                ]);
+
+                array_push($couponslist, $newone);
+            }
+
+            $razorpay = RazorpayPayment::first();
+            if (!$razorpay) {
+                return response()->json(['message' => 'Razorpay configuration not found!'], 500);
+            }
+
+            $total_price = $baseplan->ticket_price;
+            $payable_amount = $total_price * 1;
+            $payable_amount = round($payable_amount, 2);
+            
+            $api = new Api($razorpay->key, $razorpay->secret_key);
+            $order = $api->order->create(
+                array('receipt' => "OID".$purchase->id, 'amount' => ($payable_amount * 100), 'currency' => 'INR')
+            );
+
+            $purchase->razor_order_id = $order->id;
+            $purchase->razor_key = $razorpay->key;
+            $purchase->camp_ticket_price = $payable_amount;
+            $purchase->save();
+
+            if($baseplan->coupons_per_campaign*$request->quantity > 5000){
+                return response()->json(['message' => 'Coupons count is more!'],400);
+            }
+
+            $purchase = PurchasedCoins::with('coupons')->where('id',$purchase->id)->where('user_id' , $user->id)->first();
+            $purchase['series-prefix'] = $campaign->series_prefix;
+            $purchase['number_min'] = $campaign->number_min;
+            $purchase['number_max'] = $campaign->number_max;
+            $purchase['numbers_per_ticket'] = $campaign->numbers_per_ticket;
+            $purchase['basedetails']=$purchase->basedetails;
+            
+            return response()->json(['message' => 'Campaign purchased successfully', 'data' => $purchase]);
+            
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'An error occurred during purchase',
+                'error' => $e->getMessage()
+            ], 500);
         }
-
-
-        $razorpay = RazorpayPayment::first();
-        $total_price = $baseplan->ticket_price;
-        $payable_amount = $total_price * 1;
-        $payable_amount = round($payable_amount, 2);
-        $api = new Api($razorpay->key,$razorpay->secret_key);
-        $order = $api->order->create(
-            array('receipt' => "OID".$purchase->id, 'amount' => ($payable_amount * 100), 'currency' => 'INR')
-        );
-
-        $purchase->razor_order_id = $order->id;
-
-        $purchase->razor_key = $razorpay->key;
-
-        $purchase->camp_ticket_price = $payable_amount;
-
-        $purchase->save();
-
-
-        if($baseplan->coupons_per_campaign*$request->quantity > 5000){
-            return response()->json(['message' => 'Coupons count is more!'],400);
-        }
-
-        $purchase = PurchasedCoins::with('coupons')->where('id',$purchase->id)->where('user_id' , $user->id)->first();
-        $purchase['series-prefix'] = $campaign->series_prefix; // Add series prefix if available
-        $purchase['number_min'] = $campaign->number_min; // Add number min if available
-        $purchase['number_max'] = $campaign->number_max; // Add number max if available
-        $purchase['numbers_per_ticket'] = $campaign->numbers_per_ticket; // Add
-        $purchase['basedetails']=$purchase->basedetails;
-        return response()->json(['message' => 'Campaign purchased successfully', 'data' => $purchase]);
     }
 
 
