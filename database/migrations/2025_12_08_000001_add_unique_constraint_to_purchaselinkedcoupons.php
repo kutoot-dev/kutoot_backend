@@ -13,12 +13,14 @@ class AddUniqueConstraintToPurchaselinkedcoupons extends Migration
      */
     public function up()
     {
+        // First, drop the existing unique index on coupon_code
         Schema::table('table_purchaselinkedcoupons', function (Blueprint $table) {
-            // Drop existing index on coupon_code if exists
             $table->dropIndex(['coupon_code']);
-            
-            // Add unique constraint on combination of purchased_camp_id and coupon_code
-            $table->unique(['purchased_camp_id', 'coupon_code'], 'unique_purchased_camp_coupon');
+        });
+        
+        // Add unique constraint on combination of main_campaign_id and coupon_code
+        Schema::table('table_purchaselinkedcoupons', function (Blueprint $table) {
+            $table->unique(['main_campaign_id', 'coupon_code'], 'unique_campaign_coupon');
         });
     }
 
@@ -31,7 +33,7 @@ class AddUniqueConstraintToPurchaselinkedcoupons extends Migration
     {
         Schema::table('table_purchaselinkedcoupons', function (Blueprint $table) {
             // Drop the unique constraint
-            $table->dropUnique('unique_purchased_camp_coupon');
+            $table->dropUnique('unique_campaign_coupon');
             
             // Add back the single column index
             $table->index('coupon_code');

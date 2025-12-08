@@ -203,6 +203,8 @@ class CheckoutController extends Controller
             }
             
             $couponslist = [];
+            $generatedCodes = []; // Track codes generated in this session
+            
             for ($j = 0; $j < $baseplan->coupons_per_campaign * $purchase->quantity; $j++) {
 
                 // Generate a code as a combination of N pairs of two-digit numbers (01-49)
@@ -219,10 +221,16 @@ class CheckoutController extends Controller
                     // Join the numbers to form the code
                     $code = implode('', $numbers);
 
-                    $exists = UserCoupons::where('coupon_code', $code)
+                    // Check both database and current session
+                    $existsInDb = UserCoupons::where('coupon_code', $code)
                         ->where('main_campaign_id', $campaign->id)
                         ->exists();
-                } while ($exists);
+                    $existsInSession = in_array($code, $generatedCodes);
+                    
+                } while ($existsInDb || $existsInSession);
+
+                // Add to session tracker
+                $generatedCodes[] = $code;
 
                 $newone = UserCoupons::create([
                     'purchased_camp_id' => $purchase->id,
