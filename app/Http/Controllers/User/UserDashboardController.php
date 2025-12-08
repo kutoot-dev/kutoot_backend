@@ -98,8 +98,16 @@ class UserDashboardController extends Controller
         $user = Auth::guard('api')->user();
 
         $campaigns = PurchasedCoins::with(['basedetails', 'coupons', 'campaign'])
-            ->where('user_id', $user->id)
-            ->orderBy('created_at', 'desc')
+            ->where('user_id', $user->id);
+
+        // Filter by campaign status if provided
+        if ($request->has('status') && $request->status !== null) {
+            $campaigns->whereHas('campaign', function ($q) use ($request) {
+                $q->where('status', $request->status);
+            });
+        }
+
+        $campaigns = $campaigns->orderBy('created_at', 'desc')
             ->paginate(15);
 
         return response()->json([

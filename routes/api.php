@@ -235,6 +235,7 @@ Route::group([], function () {
         Route::post('/deactivate-account', [UserDashboardController::class, 'deactivateAccount'])->name('deactivate-account');
 
         Route::post('/coinpurchase', [CheckoutController::class, 'purchasestore']);
+        Route::get('/coinpurchase', [CheckoutController::class, 'purchasestore']);
         Route::get('/getcoupons', [CheckoutController::class, 'generateCoupons']);
 
         Route::post('/singlecoderegenerate', [CheckoutController::class, 'singlecoderegenerate']);
