@@ -219,7 +219,9 @@ class CheckoutController extends Controller
                     // Join the numbers to form the code
                     $code = implode('', $numbers);
 
-                    $exists = UserCoupons::where('coupon_code', $code)->where('purchased_camp_id', $purchase->id)->exists();
+                    $exists = UserCoupons::where('coupon_code', $code)
+                        ->where('main_campaign_id', $campaign->id)
+                        ->exists();
                 } while ($exists);
 
                 $newone = UserCoupons::create([
