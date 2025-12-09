@@ -186,11 +186,20 @@ class CheckoutController extends Controller
             //# total_tickets value should be divided by series prefix value  to get single series total tickets
             $totaltickets = $campaign->total_tickets;
             $single_length_tickets = $campaign->total_tickets;
+            $prefix = null;
+            $seriesLabels = []; // Array to hold series A, B, C...
+            
             if($campaign->series_prefix){
                 $prefix = strtoupper($campaign->series_prefix);
                 $firstChar = $prefix[0];
                 if (ctype_alpha($firstChar)) {
-                    $single_length_tickets = round($campaign->total_tickets/ord($firstChar));
+                    // Calculate tickets per series
+                    $single_length_tickets = round($campaign->total_tickets / ord($firstChar));
+                    
+                    // Generate series labels from A to the prefix letter
+                    for ($i = 0; $i < ord($firstChar); $i++) {
+                        $seriesLabels[] = chr(65 + $i); // 65 is ASCII for 'A'
+                    }
                 }
             }
             
@@ -207,6 +216,16 @@ class CheckoutController extends Controller
             
             for ($j = 0; $j < $baseplan->coupons_per_campaign * $purchase->quantity; $j++) {
 
+                // Determine current series label based on already purchased count
+                $currentSeriesLabel = null;
+                if (!empty($seriesLabels)) {
+                    $totalExistingForCampaign = UserCoupons::where('main_campaign_id', $campaign->id)->count();
+                    $seriesIndex = floor($totalExistingForCampaign / $single_length_tickets);
+                    $currentSeriesLabel = $seriesLabels[$seriesIndex] ?? end($seriesLabels);
+                } else {
+                    $currentSeriesLabel = $prefix;
+                }
+
                 // Generate a code as a combination of N pairs of two-digit numbers (01-49)
                 do {
                     $numbers = [];
@@ -221,16 +240,17 @@ class CheckoutController extends Controller
                     // Join the numbers to form the code
                     $code = implode('', $numbers);
 
-                    // Check both database and current session
+                    // Check both database and current session for same campaign and series
                     $existsInDb = UserCoupons::where('coupon_code', $code)
                         ->where('main_campaign_id', $campaign->id)
+                        ->where('series_label', $currentSeriesLabel)
                         ->exists();
-                    $existsInSession = in_array($code, $generatedCodes);
+                    $existsInSession = in_array($code . '_' . $currentSeriesLabel, $generatedCodes);
                     
                 } while ($existsInDb || $existsInSession);
 
-                // Add to session tracker
-                $generatedCodes[] = $code;
+                // Add to session tracker with series label
+                $generatedCodes[] = $code . '_' . $currentSeriesLabel;
 
                 $newone = UserCoupons::create([
                     'purchased_camp_id' => $purchase->id,
@@ -239,7 +259,7 @@ class CheckoutController extends Controller
                     'is_claimed' => 0,
                     'status' => 0,
                     'main_campaign_id'=>$campaign->id,
-                    'series_label'=>$campaign->series_prefix
+                    'series_label'=>$currentSeriesLabel
                 ]);
 
                 array_push($couponslist, $newone);
