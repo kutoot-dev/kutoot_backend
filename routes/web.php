@@ -218,14 +218,25 @@ Route::prefix('seller')->name('seller.')->group(function () {
     Route::post('password-store/{token}', [SellerForgotPasswordController::class,'storeResetData'])->name('store.reset.password');
 });
 
+// =======================
+// PUBLIC WEBSITE ROUTES
+// =======================
+
+Route::get('/', [HomeController::class, 'index'])->name('site.home');
+
+// Public login page (same as live /login)
+Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
+
+// Public register
+Route::get('/register', [RegisterController::class, 'showRegistrationForm'])->name('register');
 
 
 Route::group(['middleware' => ['demo','XSS']], function () {
 
 Route::group(['middleware' => ['maintainance']], function () {
-    Route::get('/', function(){
-        return redirect()->route('admin.login');
-    })->name('home');
+    // Route::get('/', function(){
+    //     return redirect()->route('admin.login');
+    // })->name('home');
 
     Route::get('seller/login', [SellerLoginController::class,'sellerLoginPage'])->name('seller.login');
     Route::post('seller/login', [SellerLoginController::class,'storeLogin'])->name('seller.login');
@@ -336,6 +347,15 @@ Route::group(['middleware' => ['maintainance']], function () {
 
 });
 
+Route::get('/login/google', [LoginController::class, 'redirectToGoogle'])
+    ->name('login-google');
+
+Route::get('/login/google/callback', [LoginController::class, 'googleCallBack']);
+
+Route::get('/login/facebook', [LoginController::class, 'redirectToFacebook'])
+    ->name('login-facebook');
+
+Route::get('/login/facebook/callback', [LoginController::class, 'facebookCallBack']);
 
 
     //delivery man routes
@@ -383,7 +403,7 @@ Route::group(['middleware' => ['maintainance']], function () {
 
 // start admin routes
 Route::group(['as'=> 'admin.', 'prefix' => 'admin'],function (){
-
+    
 
         Route::resource('image-types', ImageTypeController::class);
     Route::resource('image-items', ImageItemController::class);
@@ -920,12 +940,3 @@ Route::group(['as'=> 'admin.', 'prefix' => 'admin'],function (){
 });
 
 });
-
-
-
-
-
-
-
-
-
