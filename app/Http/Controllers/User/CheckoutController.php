@@ -59,7 +59,7 @@ class CheckoutController extends Controller
                 $q->where('user_id', $userId);
             });
         }
-
+        $query = $query->where('status', 1);
         // Filter by purchased_camp_id if provided
         if ($request->has('purchased_camp_id') && $request->purchased_camp_id) {
             $query->where('purchased_camp_id', $request->purchased_camp_id);
@@ -394,25 +394,28 @@ class CheckoutController extends Controller
     }
 
     $couponslist = [];
-    for ($j = 0; $j < $baseplan->coupons_per_campaign * $purchase->quantity; $j++) {
-        do {
-            $code = '';
-            for ($i = 0; $i < 12; $i++) {
-                $code .= rand(0, 9);
-            }
-            $exists = UserCoupons::where('coupon_code', $code)->exists();
-        } while ($exists);
+    // for ($j = 0; $j < $baseplan->coupons_per_campaign * $purchase->quantity; $j++) {
+    //     do {
+    //         $code = '';
+    //         for ($i = 0; $i < 12; $i++) {
+    //             $code .= rand(0, 9);
+    //         }
+    //         $exists = UserCoupons::where('coupon_code', $code)->exists();
+    //     } while ($exists);
 
-        $newCoupon = UserCoupons::create([
-            'purchased_camp_id' => $purchase->id,
-            'coupon_code' => $code,
-            'coupon_expires' => now()->addDays(30),
-            'is_claimed' => 0,
-            'status' => 1,
-        ]);
+    //     $newCoupon = UserCoupons::create([
+    //         'purchased_camp_id' => $purchase->id,
+    //         'coupon_code' => $code,
+    //         'coupon_expires' => now()->addDays(30),
+    //         'is_claimed' => 0,
+    //         'status' => 1,
+    //     ]);
 
-        $couponslist[] = $newCoupon;
-    }
+    //     $couponslist[] = $newCoupon;
+    // }
+
+    // Update all coupons status to 1 for this purchase
+    UserCoupons::where('purchased_camp_id', $purchase->id)->update(['status' => 1]);
 
     $coinsdata = UserCoins::create([
         'purchased_camp_id' => $purchase->id,
