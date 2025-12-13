@@ -130,7 +130,7 @@ Route::group([
 
 
 
-
+Route::post('social-login', [LoginController::class, 'firebaseLogin']);
 Route::group(['middleware' => ['demo','XSS']], function () {
 
 Route::group([], function () {
