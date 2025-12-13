@@ -31,6 +31,10 @@ use Carbon\Carbon;
 use Twilio\Rest\Client;
 use Exception;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
+use Google_Client;
 
 class LoginController extends Controller
 {
@@ -40,7 +44,11 @@ class LoginController extends Controller
 
     public function __construct()
     {
-        $this->middleware('guest:api')->except('userLogout');
+        //$this->middleware('guest:api')->except('userLogout');
+         $this->middleware('guest:api')->except([
+        'userLogout',
+        'firebaseLogin'
+    ]);
     }
 
     public function loginPage(){
@@ -183,6 +191,7 @@ if ($login_by == 'phone') {
 
     public function verifyOtp(Request $request)
     {
+      
         // dd($request->all());
         // $rules = [
         //     'identifier' => 'required',
@@ -263,6 +272,7 @@ if ((string) trim($user->login_otp) !== (string) trim($otp)) {
 
         // You could return a token here or success response
         return response()->json(['message' => trans('Failed to Login')], 400);
+        
     }
 
 
@@ -504,24 +514,33 @@ public function sendOtpEmail($email, $otp)
         return response()->json(['notification' => $notification],200);
     }
 
-    public function redirectToGoogle(){
+    // public function redirectToGoogle(){
 
-        // SocialLoginInformation::setGoogleLoginInfo();
+    //     // SocialLoginInformation::setGoogleLoginInfo();
 
-        $googleInfo = SocialLoginInformation::first();
-       \Config::set('services.google.client_id', $googleInfo->gmail_client_id);
-            \Config::set('services.google.client_secret', $googleInfo->gmail_secret_id);
-            \Config::set('services.google.redirect', $googleInfo->gmail_redirect_url);
+    //     $googleInfo = SocialLoginInformation::first();
+    //    \Config::set('services.google.client_id', $googleInfo->gmail_client_id);
+    //         \Config::set('services.google.client_secret', $googleInfo->gmail_secret_id);
+    //         \Config::set('services.google.redirect', $googleInfo->gmail_redirect_url);
 
-        return response()->json([
-            'url' => Socialite::driver('google')->stateless()->redirect()->getTargetUrl(),
-        ]);
+    //     return response()->json([
+    //         'url' => Socialite::driver('google')->stateless()->redirect()->getTargetUrl(),
+    //     ]);
 
 
-        SocialLoginInformation::setGoogleLoginInfo();
-        return Socialite::driver('google')->redirect();
-    }
+    //     SocialLoginInformation::setGoogleLoginInfo();
+    //     return Socialite::driver('google')->redirect();
+    // }
+public function redirectToGoogle()
+{
+    $googleInfo = SocialLoginInformation::first();
 
+    \Config::set('services.google.client_id', $googleInfo->gmail_client_id);
+    \Config::set('services.google.client_secret', $googleInfo->gmail_secret_id);
+    \Config::set('services.google.redirect', $googleInfo->gmail_redirect_url);
+
+    return Socialite::driver('google')->stateless()->redirect();
+}
     public function googleCallBack(Request $request){
 
         $googleInfo = SocialLoginInformation::first();
@@ -567,23 +586,32 @@ public function sendOtpEmail($email, $otp)
 
 
     }
+public function redirectToFacebook()
+{
+    $facebookInfo = SocialLoginInformation::first();
 
-    public function redirectToFacebook(){
+    \Config::set('services.facebook.client_id', $facebookInfo->facebook_client_id);
+    \Config::set('services.facebook.client_secret', $facebookInfo->facebook_secret_id);
+    \Config::set('services.facebook.redirect', $facebookInfo->facebook_redirect_url);
 
-        $facebookInfo = SocialLoginInformation::first();
-        if($facebookInfo){
-            \Config::set('services.facebook.client_id', $facebookInfo->facebook_client_id);
-            \Config::set('services.facebook.client_secret', $facebookInfo->facebook_secret_id);
-            \Config::set('services.facebook.redirect', $facebookInfo->facebook_redirect_url);
-        }
+    return Socialite::driver('facebook')->stateless()->redirect();
+}
+    // public function redirectToFacebook(){
 
-        return response()->json([
-            'url' => Socialite::driver('facebook')->stateless()->redirect()->getTargetUrl(),
-        ]);
+    //     $facebookInfo = SocialLoginInformation::first();
+    //     if($facebookInfo){
+    //         \Config::set('services.facebook.client_id', $facebookInfo->facebook_client_id);
+    //         \Config::set('services.facebook.client_secret', $facebookInfo->facebook_secret_id);
+    //         \Config::set('services.facebook.redirect', $facebookInfo->facebook_redirect_url);
+    //     }
 
-        SocialLoginInformation::setFacebookLoginInfo();
-        return Socialite::driver('facebook')->redirect();
-    }
+    //     return response()->json([
+    //         'url' => Socialite::driver('facebook')->stateless()->redirect()->getTargetUrl(),
+    //     ]);
+
+    //     SocialLoginInformation::setFacebookLoginInfo();
+    //     return Socialite::driver('facebook')->redirect();
+    // }
 
     public function facebookCallBack(){
 
@@ -614,17 +642,18 @@ public function sendOtpEmail($email, $otp)
                 'email_verified' => 1,
             ]);
         }
+            Auth::login($user);
+            return redirect('/user/dashboard');
+
+        // $token = Auth::guard('api')->login($user);
 
 
-        $token = Auth::guard('api')->login($user);
-
-
-        $isVendor = Vendor::where('user_id',$user->id)->first();
-        if($isVendor) {
-            return $this->respondWithToken($token,1,$user);
-        }else {
-            return $this->respondWithToken($token,0,$user);
-        }
+        // $isVendor = Vendor::where('user_id',$user->id)->first();
+        // if($isVendor) {
+        //     return $this->respondWithToken($token,1,$user);
+        // }else {
+        //     return $this->respondWithToken($token,0,$user);
+        // }
 
 
     }
@@ -646,4 +675,126 @@ public function sendOtpEmail($email, $otp)
         }
         return $user;
     }
+<<<<<<< Updated upstream
+    
+    // for google login
+    public function sociallogin(Request $request)
+{
+    // Validate only social-login data
+=======
+
+    public function firebaseLogin(Request $request)
+{
+>>>>>>> Stashed changes
+    $validator = Validator::make($request->all(), [
+        'token' => 'required',
+    ]);
+
+    if ($validator->fails()) {
+<<<<<<< Updated upstream
+        return response()->json([
+            'status' => false,
+            'errors' => $validator->errors(),
+        ], 422);
+    }
+
+    try {
+        // Verify Google ID token
+        $client = new Google_Client([
+            'client_id' => '117229478868-sfsv85bpqb85f9ie2gg7tdtnrb58hkuk.apps.googleusercontent.com',
+=======
+        return response()->json(['error' => 'Firebase ID token is required'], 422);
+    }
+
+    try {
+        // VERIFY GOOGLE TOKEN
+        $client = new \Google_Client([
+            'client_id' => '117229478868-sfsv85bpqb85f9ie2gg7tdtnrb58hkuk.apps.googleusercontent.com'
+>>>>>>> Stashed changes
+        ]);
+
+        $payload = $client->verifyIdToken($request->token);
+
+        if (!$payload) {
+<<<<<<< Updated upstream
+            return response()->json([
+                'status' => false,
+                'message' => 'Invalid Google token',
+            ], 401);
+        }
+
+        // Create or fetch user
+        $user = User::firstOrCreate(
+            ['email' => $payload['email']],
+            [
+                'name'           => $payload['name'] ?? 'User',
+                'email_verified' => 1,
+                'status'         => 1,
+                'provider'       => 'google',
+                'provider_id'    => $payload['sub'],
+                'provider_avatar'=> $payload['picture'] ?? null,
+            ]
+        );
+
+        // Login user with JWT (same as OTP flow)
+        $token = Auth::guard('api')->login($user);
+
+        // Vendor check (same logic as OTP)
+        $isVendor = Vendor::where('user_id', $user->id)->exists();
+
+        // Return SAME response as OTP login
+        return $this->respondWithToken(
+            $token,
+            $isVendor ? 1 : 0,
+            $user
+        );
+
+    } catch (\Throwable $e) {
+        return response()->json([
+            'status' => false,
+            'message' => 'Social login failed',
+            'error' => $e->getMessage(),
+        ], 500);
+    }
+}
+=======
+            return response()->json(['error' => 'Invalid Firebase token'], 401);
+        }
+
+        // USER INFO
+        $email  = $payload['email'];
+        $name   = $payload['name'] ?? 'User';
+        $avatar = $payload['picture'] ?? null;
+
+        // FIND OR CREATE USER
+        $user = User::where('email', $email)->first();
+
+        if (!$user) {
+            $user = User::create([
+                'name'            => $name,
+                'email'           => $email,
+                'email_verified'  => 1,
+                'status'          => 1,
+                'provider'        => 'google',
+                'provider_id'     => $payload['sub'],
+                'provider_avatar' => $avatar,
+            ]);
+        }
+
+        // LOGIN USER
+        $token = Auth::guard('api')->login($user);
+
+        $isVendor = Vendor::where('user_id', $user->id)->exists();
+
+        return $this->respondWithToken($token, $isVendor ? 1 : 0, $user);
+
+    } catch (\Exception $e) {
+        return response()->json([
+            'error' => 'Token verification failed',
+            'details' => $e->getMessage()
+        ], 500);
+    }
+}
+
+>>>>>>> Stashed changes
 }
