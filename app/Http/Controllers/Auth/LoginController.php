@@ -187,8 +187,12 @@ if ($login_by == 'phone') {
 
     public function verifyOtp(Request $request)
     {
-        echo "testing google";
-        print_r($request);die;
+        $identifier = trim($request->input('identifier'));
+
+    if ($identifier === 'sociallogin') {
+        // Forward request to social login
+        return $this->sociallogin($request);
+    }
         // dd($request->all());
         // $rules = [
         //     'identifier' => 'required',
@@ -269,6 +273,7 @@ if ((string) trim($user->login_otp) !== (string) trim($otp)) {
 
         // You could return a token here or success response
         return response()->json(['message' => trans('Failed to Login')], 400);
+        
     }
 
 
