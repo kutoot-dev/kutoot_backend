@@ -116,9 +116,10 @@ use App\Http\Controllers\WEB\Admin\PurchasedCoinsController;
 use App\Http\Controllers\WEB\Admin\BasePlanController;
 Route::post('social-login', [LoginController::class, 'sociallogin'])
     ->withoutMiddleware([
+        \App\Http\Middleware\RedirectIfAuthenticated::class,
         'auth:admin-api',
         'auth:api',
-        'Authenticate:admin-api'
+        'Authenticate:admin-api',
     ]);
 Route::group([
     'prefix' => 'auth'
