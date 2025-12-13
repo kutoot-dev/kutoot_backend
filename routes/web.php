@@ -140,9 +140,6 @@ Route::group([
 
 });
 
-Route::get('social-login', function () {
-            echo "testiaskdfklasldfa";
-            });
 Route::group(['as'=> 'user.', 'prefix' => 'user'],function (){
     Route::group(['as'=> 'checkout.', 'prefix' => 'checkout'],function (){
 
