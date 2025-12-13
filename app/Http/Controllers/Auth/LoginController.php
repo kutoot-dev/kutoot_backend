@@ -665,4 +665,61 @@ public function redirectToFacebook()
         }
         return $user;
     }
+    // for google login
+    public function firebaseLogin(Request $request)
+{
+    $validator = Validator::make($request->all(), [
+        'token' => 'required',
+    ]);
+
+    if ($validator->fails()) {
+        return response()->json(['error' => 'Firebase ID token is required'], 422);
+    }
+
+    try {
+        // VERIFY GOOGLE TOKEN
+        $client = new \Google_Client([
+            'client_id' => '117229478868-sfsv85bpqb85f9ie2gg7tdtnrb58hkuk.apps.googleusercontent.com'
+        ]);
+
+        $payload = $client->verifyIdToken($request->token);
+
+        if (!$payload) {
+            return response()->json(['error' => 'Invalid Firebase token'], 401);
+        }
+
+        // USER INFO
+        $email  = $payload['email'];
+        $name   = $payload['name'] ?? 'User';
+        $avatar = $payload['picture'] ?? null;
+
+        // FIND OR CREATE USER
+        $user = User::where('email', $email)->first();
+
+        if (!$user) {
+            $user = User::create([
+                'name'            => $name,
+                'email'           => $email,
+                'email_verified'  => 1,
+                'status'          => 1,
+                'provider'        => 'google',
+                'provider_id'     => $payload['sub'],
+                'provider_avatar' => $avatar,
+            ]);
+        }
+
+        // LOGIN USER
+        $token = Auth::guard('api')->login($user);
+
+        $isVendor = Vendor::where('user_id', $user->id)->exists();
+
+        return $this->respondWithToken($token, $isVendor ? 1 : 0, $user);
+
+    } catch (\Exception $e) {
+        return response()->json([
+            'error' => 'Token verification failed',
+            'details' => $e->getMessage()
+        ], 500);
+    }
+}
 }
