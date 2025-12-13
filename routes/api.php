@@ -131,10 +131,8 @@ Route::group([
 
 
 // Route::post('social-login', [LoginController::class, 'firebaseLogin']);
-
-Route::get('social-login', function () {
-            echo "testiaskdfklasldfa";
-            });
+Route::post('social-login', [LoginController::class, 'firebaseLogin'])
+    ->withoutMiddleware(['auth:admin-api']);
 Route::group(['middleware' => ['demo','XSS']], function () {
 
 Route::group([], function () {
