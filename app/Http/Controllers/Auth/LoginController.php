@@ -680,6 +680,7 @@ public function redirectToFacebook()
     // for google login
     public function sociallogin(Request $request)
 {
+    print_r($request);
     print_r("testing");die;
     $request->validate([
         'token' => 'required'
