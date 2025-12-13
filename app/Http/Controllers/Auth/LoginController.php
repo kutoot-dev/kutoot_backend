@@ -670,7 +670,7 @@ public function redirectToFacebook()
         return $user;
     }
     // for google login
-    public function firebaseLogin(Request $request)
+    public function sociallogin(Request $request)
 {
     $request->validate([
         'token' => 'required'
