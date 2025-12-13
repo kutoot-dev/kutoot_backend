@@ -131,6 +131,7 @@ Route::group([
 
 
 // Route::post('social-login', [LoginController::class, 'firebaseLogin']);
+
 Route::get('social-login', function () {
             echo "testiaskdfklasldfa";
             });
