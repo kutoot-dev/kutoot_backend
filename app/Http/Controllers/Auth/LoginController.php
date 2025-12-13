@@ -60,6 +60,7 @@ class LoginController extends Controller
 
     public function logintrigger(Request $request)
     {
+        echo "testingprsdfkjalsdfkasdf";
         $rules = [
             'identifier' => 'required',
         ];
