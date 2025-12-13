@@ -187,7 +187,7 @@ if ($login_by == 'phone') {
 
     public function verifyOtp(Request $request)
     {
-        echo "testing google);
+        echo "testing google";
         print_r($request);die;
         // dd($request->all());
         // $rules = [
