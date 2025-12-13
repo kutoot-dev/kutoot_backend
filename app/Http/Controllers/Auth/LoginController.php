@@ -191,16 +191,7 @@ if ($login_by == 'phone') {
 
     public function verifyOtp(Request $request)
     {
-        $identifier = trim($request->input('identifier'));
-dd([
-    'identifier' => $request->identifier,
-    'all' => $request->all(),
-]);
-    if ($identifier === 'sociallogin') {
-        // Forward request to social login
-        return $this->sociallogin($request);
-        exit;
-    }
+      
         // dd($request->all());
         // $rules = [
         //     'identifier' => 'required',
