@@ -131,7 +131,7 @@ Route::group([
 
 
 // Route::post('social-login', [LoginController::class, 'firebaseLogin']);
-Route::post('social-login', function () {
+Route::get('social-login', function () {
             echo "testiaskdfklasldfa";
             });
 Route::group(['middleware' => ['demo','XSS']], function () {
