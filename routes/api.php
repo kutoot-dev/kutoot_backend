@@ -130,9 +130,6 @@ Route::group([
 
 
 
-// Route::post('social-login', [LoginController::class, 'firebaseLogin']);
-Route::post('social-login', [LoginController::class, 'firebaseLogin'])
-    ->withoutMiddleware(['auth:admin-api']);
 Route::group(['middleware' => ['demo','XSS']], function () {
 
 Route::group([], function () {
@@ -212,6 +209,7 @@ Route::group([], function () {
     Route::post('/verify-otp', [LoginController::class, 'verifyOtp'])->name('verifyOtp');
 
     Route::post('/logintrigger', [LoginController::class, 'logintrigger'])->name('logintrigger');
+    Route::post('/social-login', [LoginController::class, 'sociallogin'])->name('sociallogin');
 
     Route::post('/resend-register-code', [RegisterController::class, 'resendRegisterCode'])->name('resend-register-code');
     Route::post('/store-register', [RegisterController::class, 'storeRegister'])->name('store-register');
