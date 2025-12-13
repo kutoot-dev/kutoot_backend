@@ -31,6 +31,10 @@ use Carbon\Carbon;
 use Twilio\Rest\Client;
 use Exception;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
+use Google_Client;
 
 class LoginController extends Controller
 {
@@ -188,7 +192,10 @@ if ($login_by == 'phone') {
     public function verifyOtp(Request $request)
     {
         $identifier = trim($request->input('identifier'));
-
+dd([
+    'identifier' => $request->identifier,
+    'all' => $request->all(),
+]);
     if ($identifier === 'sociallogin') {
         // Forward request to social login
         return $this->sociallogin($request);
@@ -681,47 +688,65 @@ public function redirectToFacebook()
     // for google login
     public function sociallogin(Request $request)
 {
-    $request->validate([
-        'token' => 'required'
+    // Validate only social-login data
+    $validator = Validator::make($request->all(), [
+        'token' => 'required',
     ]);
 
+    if ($validator->fails()) {
+        return response()->json([
+            'status' => false,
+            'errors' => $validator->errors(),
+        ], 422);
+    }
+
     try {
-        $client = new \Google_Client([
-            'client_id' => '117229478868-sfsv85bpqb85f9ie2gg7tdtnrb58hkuk.apps.googleusercontent.com'
+        // Verify Google ID token
+        $client = new Google_Client([
+            'client_id' => '117229478868-sfsv85bpqb85f9ie2gg7tdtnrb58hkuk.apps.googleusercontent.com',
         ]);
 
         $payload = $client->verifyIdToken($request->token);
 
         if (!$payload) {
-            return response()->json(['error' => 'Invalid token'], 401);
+            return response()->json([
+                'status' => false,
+                'message' => 'Invalid Google token',
+            ], 401);
         }
 
+        // Create or fetch user
         $user = User::firstOrCreate(
             ['email' => $payload['email']],
             [
-                'name'            => $payload['name'] ?? 'User',
-                'email_verified'  => 1,
-                'status'          => 1,
-                'provider'        => 'google',
-                'provider_id'     => $payload['sub'],
-                'provider_avatar' => $payload['picture'] ?? null,
+                'name'           => $payload['name'] ?? 'User',
+                'email_verified' => 1,
+                'status'         => 1,
+                'provider'       => 'google',
+                'provider_id'    => $payload['sub'],
+                'provider_avatar'=> $payload['picture'] ?? null,
             ]
         );
 
-        $jwt = Auth::guard('api')->login($user);
+        // Login user with JWT (same as OTP flow)
+        $token = Auth::guard('api')->login($user);
 
-        return response()->json([
-            'access_token' => $jwt,
-            'token_type'   => 'bearer',
-            'user'         => $user
-        ]);
+        // Vendor check (same logic as OTP)
+        $isVendor = Vendor::where('user_id', $user->id)->exists();
 
-    } catch (\Exception $e) {
+        // Return SAME response as OTP login
+        return $this->respondWithToken(
+            $token,
+            $isVendor ? 1 : 0,
+            $user
+        );
+
+    } catch (\Throwable $e) {
         return response()->json([
-            'error' => 'Token verification failed',
-            'message' => $e->getMessage()
+            'status' => false,
+            'message' => 'Social login failed',
+            'error' => $e->getMessage(),
         ], 500);
     }
 }
-
 }
