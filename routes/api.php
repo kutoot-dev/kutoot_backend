@@ -134,8 +134,14 @@ Route::group([
 });
 
 
+<<<<<<< Updated upstream
 
 
+=======
+// Route::post('social-login', [LoginController::class, 'firebaseLogin'])
+    // ->withoutMiddleware(['auth:admin-api']);
+// Route::post('social-login', [LoginController::class, 'firebaseLogin']);
+>>>>>>> Stashed changes
 Route::group(['middleware' => ['demo','XSS']], function () {
 
 Route::group([], function () {
@@ -216,7 +222,10 @@ Route::group([], function () {
 
     Route::post('/logintrigger', [LoginController::class, 'logintrigger'])->name('logintrigger');
     // Route::post('/social-login', [LoginController::class, 'sociallogin'])->name('sociallogin');
+<<<<<<< Updated upstream
 
+=======
+>>>>>>> Stashed changes
     Route::post('/resend-register-code', [RegisterController::class, 'resendRegisterCode'])->name('resend-register-code');
     Route::post('/store-register', [RegisterController::class, 'storeRegister'])->name('store-register');
     Route::get('/user-verification/{token}/{id}', [RegisterController::class, 'userVerification'])->name('user-verification');
