@@ -192,6 +192,7 @@ if ($login_by == 'phone') {
     if ($identifier === 'sociallogin') {
         // Forward request to social login
         return $this->sociallogin($request);
+        exit;
     }
         // dd($request->all());
         // $rules = [
@@ -680,8 +681,6 @@ public function redirectToFacebook()
     // for google login
     public function sociallogin(Request $request)
 {
-    print_r($request);
-    print_r("testing");die;
     $request->validate([
         'token' => 'required'
     ]);
