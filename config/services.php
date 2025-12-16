@@ -49,5 +49,12 @@ return [
     'sender'   => env('SMS_SENDER'),
 ],
 
+'shiprocket' => [
+    'email' => env('SHIPROCKET_EMAIL'),
+    'password' => env('SHIPROCKET_PASSWORD'),
+    'base_url' => env('SHIPROCKET_BASE_URL'),
+    'pickup' => env('SHIPROCKET_PICKUP'),
+],
+
 
 ];

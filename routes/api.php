@@ -108,12 +108,16 @@ use App\Http\Controllers\User\AddressCotroller;
 use App\Http\Controllers\User\UserDashboardController;
 
 
-
+use App\Http\Controllers\ShippingController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\WEB\Admin\CoinCampaignController;
 use App\Http\Controllers\WEB\Admin\PurchasedCoinsController;
 use App\Http\Controllers\WEB\Admin\BasePlanController;
+Route::get('/test-shiprocket', function (\App\Services\ShiprocketService $shiprocket) {
+    return ['message' => 'Shiprocket service loaded'];
+});
+Route::post('/ship-order/{orderId}', [ShippingController::class, 'shipOrder']);
 
 Route::post('social-login', [LoginController::class, 'sociallogin'])
     ->withoutMiddleware([
