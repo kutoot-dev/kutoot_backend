@@ -193,11 +193,14 @@ class CheckoutController extends Controller
                 $prefix = strtoupper($campaign->series_prefix);
                 $firstChar = $prefix[0];
                 if (ctype_alpha($firstChar)) {
+                    // Calculate number of series (e.g., 'D' = 4 series: A, B, C, D)
+                    $numberOfSeries = ord($firstChar) - 64; // 'A'=1, 'B'=2, 'C'=3, 'D'=4, etc.
+                    
                     // Calculate tickets per series
-                    $single_length_tickets = round($campaign->total_tickets / ord($firstChar));
+                    $single_length_tickets = round($campaign->total_tickets / $numberOfSeries);
                     
                     // Generate series labels from A to the prefix letter
-                    for ($i = 0; $i < ord($firstChar); $i++) {
+                    for ($i = 0; $i < $numberOfSeries; $i++) {
                         $seriesLabels[] = chr(65 + $i); // 65 is ASCII for 'A'
                     }
                 }
