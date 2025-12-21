@@ -58,7 +58,7 @@
                                       <td>{{ $coin->type }}</td>
                                       <td>{{ $coin->created_at->copy()->addDays(100)->format('Y-m-d H:i:s') }}</td>
                                       <td>{{ $coin->status ? 'Active' : 'Inactive' }}</td>
-                                      <td>{{ $coin->created_at->format('Y-m-d') }}</td>
+                                      <td>{{ $coin->created_at->format('Y-m-d H:i:s') }}</td>
                                       <td>
                                           @if ($coin->purchasedCampaign)
                                               {{ $coin->purchasedCampaign->camp_title ?? 'N/A' }} <br>
