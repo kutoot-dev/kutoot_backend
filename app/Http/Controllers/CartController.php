@@ -31,6 +31,7 @@ class CartController extends Controller
 
     public function cart(){
         $user = Auth::guard('api')->user();
+        // $user = User::first();
         $cartProducts = ShoppingCart::with('product','variants.variantItem')->where('user_id', $user->id)->select('id','product_id','qty')->get();
 
         return response()->json(['cartProducts' => $cartProducts],200);

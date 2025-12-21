@@ -240,9 +240,10 @@ class CheckoutController extends Controller
                             $numbers[] = $numStr;
                         }
                     }
+                    // ✅ SORT the two-digit values (important)
+                    sort($numbers, SORT_STRING);
                     // Join the numbers to form the code
                     $code = implode('', $numbers);
-
                     // Check both database and current session for same campaign and series
                     $existsInDb = UserCoupons::where('coupon_code', $code)
                         ->where('main_campaign_id', $campaign->id)
@@ -298,7 +299,7 @@ class CheckoutController extends Controller
             $purchase['numbers_per_ticket'] = $campaign->numbers_per_ticket;
             $purchase['basedetails']=$purchase->basedetails;
             
-            return response()->json(['message' => 'Campaign purchased successfully', 'data' => $purchase]);
+            return response()->json(['message' => 'Payment pending. Please complete the payment to activate your campaign', 'data' => $purchase]);
             
         } catch (\Exception $e) {
             return response()->json([

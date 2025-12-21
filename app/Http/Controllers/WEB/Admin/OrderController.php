@@ -14,6 +14,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Country;
+use Illuminate\Support\Facades\DB;
 
 class OrderController extends Controller
 {
@@ -274,6 +275,38 @@ class OrderController extends Controller
 
     $notification = trans('admin_validation.Delete successfully');
     return redirect()->back()->with(['messege' => $notification, 'alert-type' => 'success']);
+}
+
+public function cancel(Request $request, Order $order)
+{
+    $request->validate([
+        'reason' => 'required|string|max:255'
+    ]);
+
+    // Prevent invalid cancellation
+    if (in_array($order->status, ['cancelled', 'shipped', 'delivered'])) {
+        return back()->with('error', 'Order cannot be cancelled');
+    }
+
+    DB::transaction(function () use ($order, $request) {
+
+        // Update order
+        $order->update([
+            'status'        => 'cancelled',
+            'cancel_reason' => $request->reason,
+            'cancelled_at'  => now(),
+        ]);
+
+        // Restore stock
+        foreach ($order->items as $item) {
+            $item->product->increment('stock', $item->quantity);
+        }
+
+        // Optional refund
+        // $this->refundRazorpay($order);
+    });
+
+    return back()->with('success', 'Order cancelled successfully');
 }
 
 }

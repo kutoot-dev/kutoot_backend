@@ -33,4 +33,9 @@ class Order extends Model
 {
     return $this->hasOne(OrderAddress::class, 'order_id');
 }
+public function items()
+{
+    return $this->hasMany(OrderProduct::class, 'order_id');
+}
+
 }

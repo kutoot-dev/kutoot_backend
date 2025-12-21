@@ -9,6 +9,9 @@ use App\Models\Setting;
 use App\Models\OrderProduct;
 use App\Models\OrderProductVariant;
 use App\Models\OrderAddress;
+use Illuminate\Support\Facades\DB;
+
+
 class OrderController extends Controller
 {
     public function __construct()
@@ -131,4 +134,43 @@ class OrderController extends Controller
         $notification = trans('Delete successfully');
         return response()->json(['notification' => $notification], 200);
     }
+
+
+public function cancel(Request $request, $orderId)
+{
+    $request->validate([
+        'reason' => 'required|string|max:255'
+    ]);
+
+    $order = Order::findOrFail($orderId);
+
+    if (in_array($order->status, ['cancelled', 'shipped', 'delivered'])) {
+        return response()->json([
+            'status' => false,
+            'message' => 'Order cannot be cancelled'
+        ], 400);
+    }
+
+    DB::transaction(function () use ($order, $request) {
+        $order->update([
+            'status'        => 'cancelled',
+            'cancel_reason' => $request->reason,
+            'cancelled_at'  => now(),
+        ]);
+
+        if (method_exists($order, 'items')) {
+            foreach ($order->items as $item) {
+                if ($item->product) {
+                    $item->product->increment('stock', $item->quantity);
+                }
+            }
+        }
+    });
+
+    return response()->json([
+        'status' => true,
+        'message' => 'Order cancelled successfully'
+    ]);
+}
+
 }

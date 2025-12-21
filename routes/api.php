@@ -114,6 +114,17 @@ use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\WEB\Admin\CoinCampaignController;
 use App\Http\Controllers\WEB\Admin\PurchasedCoinsController;
 use App\Http\Controllers\WEB\Admin\BasePlanController;
+use App\Http\Controllers\UserAuthController;
+
+// Route::post('/user/coinpurchase-test', [CheckoutController::class, 'purchasestore']);
+// Route::post('/admin/order-cancel/{order}', 
+//     [\App\Http\Controllers\WEB\Admin\OrderController::class, 'cancel']
+// )->name('admin.order.cancel');
+// Route::post('/user-login', [UserAuthController::class, 'login']);
+// Route::get('/user-me', [UserAuthController::class, 'me'])->middleware('auth:api');
+// Route::post('/user-logout', [UserAuthController::class, 'logout'])->middleware('auth:api');
+Route::post('/order-cancel/{order}', [OrderController::class, 'cancel']);
+
 Route::get('/test-shiprocket', function (\App\Services\ShiprocketService $shiprocket) {
     return ['message' => 'Shiprocket service loaded'];
 });
@@ -242,7 +253,7 @@ Route::group([], function () {
         Route::post('/deactivate-account', [UserDashboardController::class, 'deactivateAccount'])->name('deactivate-account');
 
         Route::post('/coinpurchase', [CheckoutController::class, 'purchasestore']);
-        Route::get('/coinpurchase', [CheckoutController::class, 'purchasestore']);
+        // Route::get('/coinpurchase', [CheckoutController::class, 'purchasestore']);
         Route::get('/getcoupons', [CheckoutController::class, 'generateCoupons']);
 
         Route::post('/singlecoderegenerate', [CheckoutController::class, 'singlecoderegenerate']);
