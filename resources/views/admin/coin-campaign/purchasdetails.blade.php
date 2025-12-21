@@ -40,7 +40,9 @@
                 @foreach($purchase->coupons as $index => $coupon)
                 <tr>
                     <td>{{ $index + 1 }}</td>
-                    <td>{{ $coupon->coupon_code }}</td>
+                    <td>
+    {{ implode('-', str_split(str_pad((string) ($coupon->code ?? $coupon->coupon_code ?? ''), 10, '0', STR_PAD_LEFT), 2)) }}
+</td>
                     <td>{{ $coupon->coupon_expires }}</td>
                     <td>{{ $coupon->is_claimed ? 'Yes' : 'No' }}</td>
                     <td>{{ $coupon->status ? 'Active' : 'Inactive' }}</td>

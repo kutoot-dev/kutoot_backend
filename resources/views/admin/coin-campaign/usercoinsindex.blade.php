@@ -56,7 +56,7 @@
                                       </td>
                                       <td>{{ $coin->coins }}</td>
                                       <td>{{ $coin->type }}</td>
-                                      <td>{{ $coin->coin_expires }}</td>
+                                      <td>{{ $coin->created_at->copy()->addDays(100)->format('Y-m-d H:i:s') }}</td>
                                       <td>{{ $coin->status ? 'Active' : 'Inactive' }}</td>
                                       <td>{{ $coin->created_at->format('Y-m-d') }}</td>
                                       <td>

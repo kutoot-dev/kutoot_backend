@@ -60,12 +60,14 @@ class CoinCampaignController extends Controller
     }
 
 
-    public function purchasedindex(Request $request)
-    {
-    
-        $data = PurchasedCoins::orderBy('id', 'desc')->get();
-        return view('admin.coin-campaign.purchaseindex', compact('data'));
-    }
+ public function purchasedindex(Request $request)
+{
+    $data = PurchasedCoins::where('payment_status', 'success')
+    ->orderBy('id', 'desc')
+    ->get();
+
+    return view('admin.coin-campaign.purchaseindex', compact('data'));
+}
 
 
     public function winnerslist(Request $request)
