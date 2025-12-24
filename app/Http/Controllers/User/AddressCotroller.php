@@ -40,6 +40,7 @@ class AddressCotroller extends Controller
             'city'=>'required',
             'address'=>'required',
             'type'=>'required',
+            'pincode' => 'required|integer'
         ];
         $customMessages = [
             'name.required' => trans('user_validation.Name is required'),
@@ -64,8 +65,9 @@ class AddressCotroller extends Controller
         $address->country_id = $request->country;
         $address->state_id = $request->state;
         $address->city_id = $request->city;
-        $address->city_id = $request->city;
         $address->type = $request->type;
+        $address->pincode = $request->pincode;
+
         if($isExist == 0){
             $address->default_billing = 1;
             $address->default_shipping = 1;
@@ -128,6 +130,7 @@ class AddressCotroller extends Controller
             'city'=>'required',
             'address'=>'required',
             'type'=>'required',
+            'pincode' => 'required|integer'
         ];
         $customMessages = [
             'name.required' => trans('user_validation.Name is required'),
@@ -138,6 +141,7 @@ class AddressCotroller extends Controller
             'city.required' => trans('user_validation.City is required'),
             'address.required' => trans('user_validation.Address is required'),
             'type.required' => trans('user_validation.Address type is required'),
+            'pincode.required' => trans('user_validation.pincode type is required'),
         ];
         $this->validate($request, $rules,$customMessages);
 
@@ -149,8 +153,8 @@ class AddressCotroller extends Controller
         $address->country_id = $request->country;
         $address->state_id = $request->state;
         $address->city_id = $request->city;
-        $address->city_id = $request->city;
         $address->type = $request->type;
+        $address->pincode = $request->pincode;
         $address->save();
 
         $notification = trans('user_validation.Update Successfully');
