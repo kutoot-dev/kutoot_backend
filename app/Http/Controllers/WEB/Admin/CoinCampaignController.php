@@ -107,13 +107,13 @@ class CoinCampaignController extends Controller
 
     public function statementsindex()
     {
-        $userCoins = UserCoins::with(['purchasedCampaign'])
+        $userCoins = UserCoins::with(['user', 'purchasedCampaign'])
+            ->whereHas('user') // ✅ skip records whose user is deleted
             ->orderBy('created_at', 'desc')
             ->paginate(15);
 
         return view('admin.coin-campaign.usercoinsindex', compact('userCoins'));
     }
-
     public function indexAPI(Request $request)
     {
          $type = $request->get('type', 0);
