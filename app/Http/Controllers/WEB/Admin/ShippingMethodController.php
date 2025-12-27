@@ -20,11 +20,26 @@ class ShippingMethodController extends Controller
         $this->middleware('auth:admin');
     }
 
-    public function index(){
-        $shippings = Shipping::with('city')->orderBy('id','asc')->get();
+    public function index()
+    {
+        $shippings = Shipping::with([
+                'city.countryState.country'
+            ])
+            ->where(function ($q) {
+                $q->where('city_id', 0)
+                ->orWhereHas('city');
+            })
+            ->orderBy('id', 'asc')
+            ->get();
+
         $setting = Setting::first();
-        $cities = City::where('status',1)->orderBy('name','asc')->get();
-        return view('admin.shipping_method', compact('shippings','setting','cities'));
+
+        $cities = City::with('countryState.country')
+            ->where('status', 1)
+            ->orderBy('name', 'asc')
+            ->get();
+
+        return view('admin.shipping_method', compact('shippings', 'setting', 'cities'));
     }
 
     public function create(){
