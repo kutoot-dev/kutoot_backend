@@ -8,7 +8,13 @@ use DB;
 class Product extends Model
 {
     use HasFactory;
-
+    // protected $fillable = [
+    //     'zoho_item_id',
+    //     'sku',
+    //     'name',
+    //     'price',
+    //     'stock'
+    // ];
     protected $appends = ['averageRating','totalSold'];
 
     public function getAverageRatingAttribute()
@@ -109,7 +115,11 @@ class Product extends Model
         'status',
         'is_specification',
         'approve_by_admin',
-        'reedem_percentage'
+        'reedem_percentage',
+        // ZOHO FIELDS (add here)
+        'zoho_item_id',
+        'sku',
+        'stock',
     ];
 
 }

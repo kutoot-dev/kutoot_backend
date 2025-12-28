@@ -56,5 +56,10 @@ return [
     'pickup' => env('SHIPROCKET_PICKUP'),
 ],
 
-
+'zoho' => [
+    'client_id'     => env('ZOHO_CLIENT_ID'),
+    'client_secret' => env('ZOHO_CLIENT_SECRET'),
+    'accounts_url'  => env('ZOHO_ACCOUNTS_URL', 'https://accounts.zoho.in'),
+    'redirect_uri'  => env('ZOHO_REDIRECT_URI'),
+],
 ];

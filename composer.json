@@ -7,7 +7,6 @@
     "require": {
         "php": "^7.3|^8.0",
         "bumbummen99/shoppingcart": "^4.0",
-        "doctrine/dbal": "^4.3",
         "fruitcake/laravel-cors": "^3.0",
         "google/recaptcha": "^1.2",
         "guzzlehttp/guzzle": "^7.10",

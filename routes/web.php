@@ -121,6 +121,10 @@ use App\Http\Controllers\WEB\Admin\WinnerController;
 use App\Http\Controllers\CouponCampaignController;
 use App\Http\Controllers\CouponTicketController;
 
+use App\Http\Controllers\ZohoAuthController;
+
+Route::get('/zoho/connect', [ZohoAuthController::class, 'redirectToZoho']);
+Route::get('/zoho/callback', [ZohoAuthController::class, 'handleCallback']);
 
 // Broadcast::routes(['middleware' => ['auth:web']]);
 

@@ -8,7 +8,15 @@ use Illuminate\Database\Eloquent\Model;
 class Order extends Model
 {
     use HasFactory;
-
+    protected $fillable = [
+        'user_id',
+        'zoho_salesorder_id',
+        'zoho_invoice_id',
+        'zoho_shipment_id',
+        'payment_type',
+        'payment_status',
+        'order_status'
+    ];
 
     public function user(){
         return $this->belongsTo(User::class);
@@ -36,6 +44,20 @@ class Order extends Model
 public function items()
 {
     return $this->hasMany(OrderProduct::class, 'order_id');
+}
+public function isPaid()
+{
+    return $this->payment_status === 'success';
+}
+
+public function isCOD()
+{
+    return $this->payment_type === 'COD';
+}
+
+public function markConfirmed()
+{
+    $this->update(['order_status' => 'CONFIRMED']);
 }
 
 }
