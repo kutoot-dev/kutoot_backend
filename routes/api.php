@@ -129,6 +129,8 @@ Route::get('/test-shiprocket', function (\App\Services\ShiprocketService $shipro
     return ['message' => 'Shiprocket service loaded'];
 });
 Route::post('/ship-order/{orderId}', [ShippingController::class, 'shipOrder']);
+Route::post('/check-pincode', [ShippingController::class, 'checkPincode']);
+
 
 Route::post('social-login', [LoginController::class, 'sociallogin'])
     ->withoutMiddleware([

@@ -3,6 +3,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Order;
 use App\Services\ShiprocketService;
+use Illuminate\Http\Request;
 
 class ShippingController extends Controller
 {
@@ -25,8 +26,9 @@ class ShippingController extends Controller
 
         $courier = $shiprocket->checkCourier([
             'pickup_location'   => 'warehouse',
-            'pickup_postcode'   => '282006',   // MUST be different city
-            'delivery_postcode' => $address->shipping_zip_code ?: '560001',
+            'pickup_postcode'   => '333333333',   // MUST be different city
+            // 'delivery_postcode' => $address->shipping_zip_code ?: '560001',
+            'delivery_postcode' => '334444444',
             // 'delivery_postcode' => '572101',
             'weight'            => 0.5,
             'cod'               => $cod,
@@ -194,4 +196,26 @@ if (strlen($phone) !== 10) {
             'shipment_id' => $shipmentId
         ]);
     }
+
+    // checkpincodeserviceability
+    public function checkPincode(Request $request, ShiprocketService $shiprocket)
+    {
+        $request->validate([
+            'pincode' => 'required|digits:6',
+        ]);
+
+        // Seller / warehouse pincode
+        $pickupPincode = 400001;
+
+        $isServiceable = $shiprocket->checkPincodeServiceability(
+            $pickupPincode,
+            (int) $request->pincode
+        );
+
+        return response()->json([
+            'pincode'     => $request->pincode,
+            'serviceable' => $isServiceable,
+        ]);
+    }
+
 }

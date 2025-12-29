@@ -56,6 +56,24 @@ protected function get($endpoint, array $query = [])
     return $response->json();
 }
 
+    public function checkPincodeServiceability(
+        int $pickupPincode,
+        int $deliveryPincode,
+        bool $isCod = false,
+        float $weight = 0.5
+    ): bool {
+        $response = $this->get('/courier/serviceability/', [
+            'pickup_postcode'   => $pickupPincode,
+            'delivery_postcode' => $deliveryPincode,
+            'cod'               => $isCod ? 1 : 0,
+            'weight'            => $weight,
+        ]);
+
+        \Log::info('Shiprocket pincode check', $response);
+
+        // ✅ Serviceable ONLY if courier list exists
+        return !empty($response['data']['available_courier_companies']);
+    }
 public function checkCourier(array $payload)
 {
     return $this->get('/courier/serviceability/', $payload);
