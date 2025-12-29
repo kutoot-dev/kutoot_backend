@@ -16,12 +16,12 @@ class UpdateColumnsInTablePurchasecoins extends Migration
 
             // Modify payment_id to string (if column exists)
             if (Schema::hasColumn('table_purchasecoins', 'payment_id')) {
-                $table->string('payment_id')->change();
+                // $table->string('payment_id')->change();
             }
 
             // Add new column if it doesn’t exist
             if (!Schema::hasColumn('table_purchasecoins', 'razorpay_signature')) {
-                $table->string('razorpay_signature')->nullable()->after('payment_status');
+                // $table->string('razorpay_signature')->nullable()->after('payment_status');
             }
         });
     }
@@ -30,15 +30,15 @@ class UpdateColumnsInTablePurchasecoins extends Migration
     {
         Schema::table('table_purchasecoins', function (Blueprint $table) {
             if (Schema::hasColumn('table_purchasecoins', 'razorpay_order_id')) {
-                $table->renameColumn('razorpay_order_id', 'razor_order_id');
+                // $table->renameColumn('razorpay_order_id', 'razor_order_id');
             }
 
             if (Schema::hasColumn('table_purchasecoins', 'payment_id')) {
-                $table->integer('payment_id')->change();
+                // $table->integer('payment_id')->change();
             }
 
             if (Schema::hasColumn('table_purchasecoins', 'razorpay_signature')) {
-                $table->dropColumn('razorpay_signature');
+                // $table->dropColumn('razorpay_signature');
             }
         });
     }
