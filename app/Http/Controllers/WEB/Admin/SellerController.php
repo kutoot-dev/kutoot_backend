@@ -44,10 +44,15 @@ class SellerController extends Controller
     }
 
     public function pendingSellerList(){
-        $sellers = Vendor::with('user','socialLinks','products')->orderBy('id','desc')->where('status',0)->get();
-        $defaultProfile = BannerImage::whereId('15')->first();
-        $products = Product::all();
-        $setting = Setting::first();
+        $sellers = Vendor::with(['user', 'socialLinks', 'products'])
+            ->where('status', 0)
+            ->whereHas('user') // ✅ skip vendors whose user is deleted
+            ->orderBy('id', 'desc')
+            ->get();
+
+            $defaultProfile = BannerImage::find(15);
+            $products = Product::all();
+            $setting = Setting::first();
 
         return view('admin.seller', compact('sellers','defaultProfile','products','setting'));
     }
