@@ -14,7 +14,7 @@ class ShiprocketService
     public function __construct()
     {
         $this->baseUrl = config('services.shiprocket.base_url');
-        $this->token   = $this->authenticate();
+        // $this->token   = $this->authenticate();
     }
 
     /**
