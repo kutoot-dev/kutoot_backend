@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\Zoho;
+namespace App\Services\zoho;
 
 use Illuminate\Support\Facades\Http;
 

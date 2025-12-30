@@ -15,18 +15,28 @@ class ZohoTokenService
     {
         $token = DB::table('zoho_tokens')->first();
 
-        if (!$token) {
-            throw new \Exception('Zoho refresh token not found in database');
+        // 🔁 Bootstrap from .env if DB empty
+        if (!$token && config('services.zoho.refresh_token')) {
+            DB::table('zoho_tokens')->insert([
+                'refresh_token' => config('services.zoho.refresh_token'),
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]);
+
+            $token = DB::table('zoho_tokens')->first();
         }
 
-        // ✅ Return token ONLY if it exists and is not expired
+        if (!$token) {
+            throw new \Exception('Zoho refresh token not found in DB or .env');
+        }
+
         if (!empty($token->access_token) && now()->lt($token->expires_at)) {
             return $token->access_token;
         }
 
-        // 🔄 Otherwise generate a new one
         return $this->refreshToken($token->refresh_token);
     }
+
 
     /**
      * Generate access token using refresh_token

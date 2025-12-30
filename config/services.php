@@ -61,5 +61,6 @@ return [
     'client_secret' => env('ZOHO_CLIENT_SECRET'),
     'accounts_url'  => env('ZOHO_ACCOUNTS_URL', 'https://accounts.zoho.in'),
     'redirect_uri'  => env('ZOHO_REDIRECT_URI'),
+    'refresh_token' => env('ZOHO_REFRESH_TOKEN'),
 ],
 ];
