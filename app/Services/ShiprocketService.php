@@ -8,54 +8,71 @@ use Exception;
 
 class ShiprocketService
 {
-    protected $baseUrl;
-    protected $token;
+    protected string $baseUrl;
+    protected ?string $token = null;
 
     public function __construct()
     {
-        $this->baseUrl = config('services.shiprocket.base_url');
-        // $this->token   = $this->authenticate();
+        $this->baseUrl = rtrim(config('services.shiprocket.base_url'), '/');
+        // ❌ DO NOT authenticate here
     }
 
     /**
-     * Authenticate & get token
+     * Authenticate & store token (LAZY AUTH)
      */
-    protected function authenticate()
+    protected function authenticate(): void
     {
+        if (!empty($this->token)) {
+            return;
+        }
+
         $response = Http::post($this->baseUrl . '/auth/login', [
             'email'    => config('services.shiprocket.email'),
             'password' => config('services.shiprocket.password'),
         ]);
 
         if (!$response->successful()) {
-            Log::error('Shiprocket auth failed', $response->json());
+            Log::error('Shiprocket auth failed', [
+                'status' => $response->status(),
+                'body'   => $response->json(),
+            ]);
             throw new Exception('Shiprocket authentication failed');
         }
 
-        return $response->json()['token'];
+        $this->token = $response->json('token');
+
+        if (empty($this->token)) {
+            throw new Exception('Shiprocket token missing in response');
+        }
     }
 
     /**
-     * Common POST request method
+     * GET request
      */
-    protected function post($endpoint, array $payload = [])
+    protected function get(string $endpoint, array $query = []): array
     {
-        $response = Http::withToken($this->token)
-            ->post($this->baseUrl . $endpoint, $payload);
+        $this->authenticate();
 
-        return $response->json();
+        return Http::withToken($this->token)
+            ->get($this->baseUrl . $endpoint, $query)
+            ->json();
     }
 
-    // ShiprocketService.php
+    /**
+     * POST request
+     */
+    protected function post(string $endpoint, array $payload = []): array
+    {
+        $this->authenticate();
 
-protected function get($endpoint, array $query = [])
-{
-    $response = Http::withToken($this->token)
-        ->get($this->baseUrl . $endpoint, $query);
+        return Http::withToken($this->token)
+            ->post($this->baseUrl . $endpoint, $payload)
+            ->json();
+    }
 
-    return $response->json();
-}
-
+    /**
+     * Check pincode serviceability
+     */
     public function checkPincodeServiceability(
         int $pickupPincode,
         int $deliveryPincode,
@@ -68,67 +85,64 @@ protected function get($endpoint, array $query = [])
             'cod'               => $isCod ? 1 : 0,
             'weight'            => $weight,
         ]);
+        Log::info('Shiprocket pincode check', [
+            'pickup'   => $pickupPincode,
+            'delivery' => $deliveryPincode,
+            'response' => $response,
+        ]);
 
-        \Log::info('Shiprocket pincode check', $response);
-
-        // ✅ Serviceable ONLY if courier list exists
         return !empty($response['data']['available_courier_companies']);
     }
-public function checkCourier(array $payload)
-{
-    return $this->get('/courier/serviceability/', $payload);
-}
 
     /**
-     *  Create shipment / order
+     * Courier serviceability (raw)
      */
-    public function createOrder(array $payload)
-{
-    $response = Http::withToken($this->token)
-        ->post($this->baseUrl . '/orders/create/adhoc', $payload)
-        ->json();
-
-    \Log::info('Shiprocket create order response', $response);
-
-    // ✅ SUCCESS CONDITION (VERY IMPORTANT)
-    if (
-        isset($response['status_code']) &&
-        (int) $response['status_code'] === 1 &&
-        isset($response['shipment_id'])
-    ) {
-        return $response; // ORDER CREATED
+    public function checkCourier(array $payload): array
+    {
+        return $this->get('/courier/serviceability/', $payload);
     }
 
-    // REAL FAILURE
-    throw new \Exception($response['message'] ?? 'Shiprocket order creation failed');
-}
-
     /**
-     * 🏷 Generate AWB
-     */public function generateAwb($shipmentId)
-{
-    $response = Http::withToken($this->token)
-        ->post($this->baseUrl . '/courier/assign/awb', [
-            'shipment_id' => $shipmentId
-        ])
-        ->json();
-    \Log::info('Shiprocket AWB response', $response);
+     * Create shipment
+     */
+    public function createOrder(array $payload): array
+    {
+        $response = $this->post('/orders/create/adhoc', $payload);
 
-    if (isset($response['awb_code'])) {
-        return $response;
+        Log::info('Shiprocket create order response', $response);
+
+        if (
+            isset($response['status_code']) &&
+            (int) $response['status_code'] === 1 &&
+            isset($response['shipment_id'])
+        ) {
+            return $response;
+        }
+
+        throw new Exception($response['message'] ?? 'Shiprocket order creation failed');
     }
 
-    return null; //  AWB not generated yet (NOT ERROR)
-}
+    /**
+     * Generate AWB
+     */
+    public function generateAwb(int $shipmentId): ?string
+    {
+        $response = $this->post('/courier/assign/awb', [
+            'shipment_id' => $shipmentId,
+        ]);
 
+        Log::info('Shiprocket AWB response', $response);
+
+        return $response['awb_code'] ?? null;
+    }
 
     /**
-     *  Track shipment
+     * Track shipment
      */
-    public function track($awb)
+    public function track(string $awb): array
     {
         return $this->post('/courier/track/awb', [
-            'awb_code' => $awb
+            'awb_code' => $awb,
         ]);
     }
 }
