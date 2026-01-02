@@ -62,5 +62,7 @@ return [
     'accounts_url'  => env('ZOHO_ACCOUNTS_URL', 'https://accounts.zoho.in'),
     'redirect_uri'  => env('ZOHO_REDIRECT_URI'),
     'refresh_token' => env('ZOHO_REFRESH_TOKEN'),
+    'organization_id' => env('ZOHO_ORG_ID'),
+    'books_base_url'=> env('ZOHO_BOOKS_BASE_URL'),
 ],
 ];

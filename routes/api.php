@@ -115,6 +115,8 @@ use App\Http\Controllers\WEB\Admin\CoinCampaignController;
 use App\Http\Controllers\WEB\Admin\PurchasedCoinsController;
 use App\Http\Controllers\WEB\Admin\BasePlanController;
 use App\Http\Controllers\UserAuthController;
+// use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\ZohoInvoiceController;
 
 // Route::post('/user/coinpurchase-test', [CheckoutController::class, 'purchasestore']);
 // Route::post('/admin/order-cancel/{order}', 
@@ -124,6 +126,7 @@ use App\Http\Controllers\UserAuthController;
 // Route::get('/user-me', [UserAuthController::class, 'me'])->middleware('auth:api');
 // Route::post('/user-logout', [UserAuthController::class, 'logout'])->middleware('auth:api');
 Route::post('/order-cancel/{order}', [OrderController::class, 'cancel']);
+Route::post('/zoho/create-invoice', [ZohoInvoiceController::class, 'handlePaymentSuccess']);
 
 Route::get('/test-shiprocket', function (\App\Services\ShiprocketService $shiprocket) {
     return ['message' => 'Shiprocket service loaded'];

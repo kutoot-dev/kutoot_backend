@@ -46,7 +46,6 @@ class ZohoAuthController extends Controller
         );
 
         $data = $response->json();
-
         if (!isset($data['refresh_token'])) {
             return response()->json([
                 'error' => 'Failed to get refresh token',

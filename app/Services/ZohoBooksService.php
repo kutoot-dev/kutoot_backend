@@ -1,34 +1,44 @@
 <?php
 
-namespace App\Services;
+namespace App\Services\Zoho;
 
-use Illuminate\Support\Facades\Http;
+use App\Models\Order;
+use Exception;
 
 class ZohoBooksService
 {
-    private function getAccessToken()
-    {
-        $response = Http::asForm()->post('https://accounts.zoho.in/oauth/v2/token', [
-            'grant_type'    => 'refresh_token',
-            'client_id'     => config('services.zoho.client_id'),
-            'client_secret' => config('services.zoho.client_secret'),
-            'refresh_token' => config('services.zoho.refresh_token'),
-        ]);
+    protected ZohoClient $zoho;
 
-        return $response->json()['access_token'];
+    public function __construct(ZohoClient $zoho)
+    {
+        $this->zoho = $zoho;
     }
 
-    public function request($method, $endpoint, $params = [])
+    public function createInvoice(Order $order, string $customerId): string
     {
-        $accessToken = $this->getAccessToken();
+        if (!$customerId) {
+            throw new Exception('Zoho customer_id missing');
+        }
 
-        return Http::withHeaders([
-            'Authorization' => 'Zoho-oauthtoken ' . $accessToken,
-        ])->$method(
-            config('services.zoho.api_domain') . $endpoint,
-            array_merge($params, [
-                'organization_id' => config('services.zoho.org_id'),
-            ])
-        )->json();
+        $payload = [
+            'customer_id' => $customerId,
+            'line_items' => [
+                [
+                    'name'     => 'Order #' . $order->id,
+                    'rate'     => (float) $order->total_amount,
+                    'quantity' => 1,
+                ]
+            ],
+        ];
+
+        $response = $this->zoho->post('/invoices', $payload);
+
+        if (!isset($response['invoice']['invoice_id'])) {
+            throw new Exception(
+                'Zoho invoice creation failed: ' . json_encode($response)
+            );
+        }
+
+        return $response['invoice']['invoice_id'];
     }
 }
