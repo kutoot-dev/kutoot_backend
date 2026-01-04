@@ -19,7 +19,6 @@ class ZohoSalesOrderService
 
     public function createSalesOrder(Order $order): string
     {
-        
         if (!$order->user) {
             throw new \Exception('Order user not found.');
         }

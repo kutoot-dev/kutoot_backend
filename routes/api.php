@@ -117,6 +117,7 @@ use App\Http\Controllers\WEB\Admin\BasePlanController;
 use App\Http\Controllers\UserAuthController;
 // use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ZohoInvoiceController;
+use App\Http\Controllers\ZohoController;
 
 // Route::post('/user/coinpurchase-test', [CheckoutController::class, 'purchasestore']);
 // Route::post('/admin/order-cancel/{order}', 
@@ -125,6 +126,8 @@ use App\Http\Controllers\ZohoInvoiceController;
 // Route::post('/user-login', [UserAuthController::class, 'login']);
 // Route::get('/user-me', [UserAuthController::class, 'me'])->middleware('auth:api');
 // Route::post('/user-logout', [UserAuthController::class, 'logout'])->middleware('auth:api');
+Route::post('/zoho/sync-order/{order}', [ZohoController::class, 'syncOrder']);
+
 Route::post('/order-cancel/{order}', [OrderController::class, 'cancel']);
 Route::post('/zoho/create-invoice', [ZohoInvoiceController::class, 'handlePaymentSuccess']);
 

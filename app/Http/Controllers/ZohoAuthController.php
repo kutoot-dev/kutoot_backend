@@ -58,7 +58,7 @@ class ZohoAuthController extends Controller
             ['id' => 1],
             [
                 'refresh_token' => $data['refresh_token'],
-                'access_token'  => '',
+                'access_token'  => $data['access_token'],
                 'expires_at'    => now(),
                 'updated_at'    => now(),
                 'created_at'    => now(),
