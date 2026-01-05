@@ -67,6 +67,7 @@ class ZohoClient
         return $response->json();
     }
 
+    
     /**
      * GET request to Zoho Books
      */
