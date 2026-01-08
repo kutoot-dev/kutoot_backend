@@ -374,20 +374,20 @@ public function newupdateProfile(Request $request)
 
     public function updateProfile(Request $request){
         $user = Auth::guard('api')->user();
+
         $rules = [
-            'name'=>'required',
-            'email'=>'required|unique:users,email,'.$user->id,
-            'phone'=>'required',
-            'country'=>'required',
-            'address'=>'required',
+            'name'    => 'required',
+            'email'   => 'required|unique:users,email,' . $user->id,
+            'phone'   => 'required',
+            'country' => 'nullable',
+            'address' => 'nullable',
         ];
+
         $customMessages = [
-            'name.required' => trans('user_validation.Name is required'),
+            'name.required'  => trans('user_validation.Name is required'),
             'email.required' => trans('user_validation.Email is required'),
-            'email.unique' => trans('user_validation.Email already exist'),
+            'email.unique'   => trans('user_validation.Email already exist'),
             'phone.required' => trans('user_validation.Phone is required'),
-            'country.required' => trans('user_validation.Country is required'),
-            'address.required' => trans('user_validation.Address is required'),
         ];
         $this->validate($request, $rules,$customMessages);
 
