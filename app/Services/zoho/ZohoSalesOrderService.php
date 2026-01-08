@@ -19,13 +19,14 @@ class ZohoSalesOrderService
 
     public function createSalesOrder(Order $order): string
     {
-        if (!$order->user) {
+            // print_r($order); 
+            if (!$order->user) {
             throw new \Exception('Order user not found.');
         }
 
         // STEP 1: Get or create Zoho customer
         $customerId = $this->customerService->getOrCreate($order->user);
-        
+     
         // STEP 2: Prepare line items (CORRECT MAPPING)
         $lineItems = [];
 

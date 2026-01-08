@@ -20,6 +20,7 @@ class User extends Authenticatable implements JWTSubject
      */
     protected $fillable = [
         'name',
+        'zoho_customer_id', // ✅ REQUIRED
         'email',
         'password',
         'provider',

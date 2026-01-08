@@ -18,12 +18,12 @@ class ZohoInvoiceService
      */
     public function createInvoice(Order $order): string
     {
-        // ✅ 1. Customer check
+        // 1. Customer check
         if (!$order->user || !$order->user->zoho_customer_id) {
             throw new \Exception('Zoho customer_id missing for user');
         }
 
-        // ✅ 2. Prepare line items from order_products
+        // 2. Prepare line items from order_products
         $lineItems = [];
 
         foreach ($order->items as $orderItem) {
@@ -54,9 +54,7 @@ class ZohoInvoiceService
             'line_items'        => $lineItems,
             'reference_number'  => 'ORDER-' . $order->id,
         ];
-        // print("PAYLOAD:");
-        // print_r($$this->zoho->post);die;
-        // ✅ 4. Create invoice
+        // 4. Create invoice
         
         $response = $this->zoho->post('/invoices', $payload);
         
@@ -66,7 +64,7 @@ class ZohoInvoiceService
             );
         }
 
-        // ✅ 5. Save invoice ID
+        // 5. Save invoice ID
         $order->update([
             'zoho_invoice_id' => $response['invoice']['invoice_id'],
         ]);
