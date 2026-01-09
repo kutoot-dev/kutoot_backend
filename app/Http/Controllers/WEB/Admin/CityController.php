@@ -107,11 +107,13 @@ class CityController extends Controller
 
     public function edit($id)
     {
+        $city = City::with('countryState')->findOrFail($id);
         $states = CountryState::all();
-        $city = City::find($id);
         $countries = Country::all();
-        return view('admin.edit_city', compact('states','city','countries'));
+
+        return view('admin.edit_city', compact('city', 'states', 'countries'));
     }
+
 
 
     public function destroy($id)

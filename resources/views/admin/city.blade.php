@@ -27,7 +27,7 @@
                             <thead>
                                 <tr>
                                     <th>{{__('admin.SN')}}</th>
-                                    <th>{{__('admin.City')}}</th>
+                                    <th>District</th>
                                     <th>{{__('admin.State')}}</th>
                                     <th>{{__('admin.Country')}}</th>
                                     <th>{{__('admin.Status')}}</th>
