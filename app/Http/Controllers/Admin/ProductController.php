@@ -23,6 +23,7 @@ use App\Models\FlashSaleProduct;
 use App\Models\ShoppingCart;
 use App\Models\ShoppingCartVariant;
 use App\Models\CompareProduct;
+use App\Jobs\SyncProductToZohoJob;
 use Image;
 use File;
 use Str;
@@ -140,6 +141,8 @@ class ProductController extends Controller
         $product->reedem_percentage = $request->reedem_percentage;
 
         $product->save();
+        // 🔥 Sync product to Zoho
+        SyncProductToZohoJob::dispatch($product);
 
         if($request->is_specification){
             $exist_specifications=[];
