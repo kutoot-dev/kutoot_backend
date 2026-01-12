@@ -32,7 +32,7 @@ class OtpMail extends Mailable
         $setting = Setting::select('logo')->first();
         $logo = $setting ? $setting->logo : null;
 
-        return $this->subject('Your OTP Code')
+        return $this->subject('Your OTP Code - ' . config('app.name'))
                     ->view('emails.otp')
                     ->with([
                         'otp' => $this->otp,
