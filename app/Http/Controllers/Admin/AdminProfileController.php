@@ -42,21 +42,39 @@ class AdminProfileController extends Controller
         $this->validate($request, $rules);
         $admin=Auth::guard('admin')->user();
 
-        // inset user profile image
-        if($request->file('image')){
-            $old_image=$admin->image;
-            $user_image=$request->image;
-            $extention=$user_image->getClientOriginalExtension();
-            $image_name= Str::slug($request->name).date('-Y-m-d-h-i-s-').rand(999,9999).'.'.$extention;
-            $image_name='uploads/website-images/'.$image_name;
+        // insert user profile image: ensure directory exists and is writable
+        if ($request->file('image')) {
+            $old_image = $admin->image;
+            $user_image = $request->image;
+            $extension = $user_image->getClientOriginalExtension();
+            $fileName = Str::slug($request->name) . date('-Y-m-d-h-i-s-') . rand(999, 9999) . '.' . $extension;
+            $relativePath = 'uploads/website-images/' . $fileName;
+            $destination = public_path('uploads/website-images');
 
-            Image::make($user_image)
-                ->save(public_path().'/'.$image_name);
+            // create directory if it doesn't exist
+            if (!File::exists($destination)) {
+                File::makeDirectory($destination, 0755, true);
+            }
 
-            $admin->image=$image_name;
+            // try to fix permissions if not writable (may be ineffective on some OS)
+            if (!is_writable($destination)) {
+                @chmod($destination, 0755);
+            }
+
+            // final writable check
+            if (!is_writable($destination)) {
+                $notification = trans('Upload directory is not writable');
+                $notification = array('messege' => $notification, 'alert-type' => 'error');
+                return redirect()->back()->with($notification);
+            }
+
+            Image::make($user_image)->save(public_path($relativePath));
+
+            $admin->image = $relativePath;
             $admin->save();
-            if($old_image){
-                if(File::exists(public_path().'/'.$old_image))unlink(public_path().'/'.$old_image);
+
+            if ($old_image) {
+                if (File::exists(public_path($old_image))) unlink(public_path($old_image));
             }
         }
 
