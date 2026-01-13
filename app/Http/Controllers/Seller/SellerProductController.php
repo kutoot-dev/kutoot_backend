@@ -61,8 +61,7 @@ class SellerProductController extends Controller
         $categories = Category::all();
         // Get seller's own brands and admin brands (brands without seller_id)
         $brands = Brand::where(function($query) use ($seller) {
-            $query->where('seller_id', $seller->id)->orWhereNull('seller_id');
-        })->get();
+            $query->where('seller_id', $seller->id)->get();
         $specificationKeys = ProductSpecificationKey::all();
 
         return response()->json(['categories' => $categories , 'brands' => $brands, 'specificationKeys' => $specificationKeys], 200);
