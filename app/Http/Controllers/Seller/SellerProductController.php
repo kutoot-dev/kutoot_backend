@@ -57,8 +57,12 @@ class SellerProductController extends Controller
 
     public function create()
     {
+        $seller = Auth::guard('api')->user()->seller;
         $categories = Category::all();
-        $brands = Brand::all();
+        // Get seller's own brands and admin brands (brands without seller_id)
+        $brands = Brand::where(function($query) use ($seller) {
+            $query->where('seller_id', $seller->id)->orWhereNull('seller_id');
+        })->get();
         $specificationKeys = ProductSpecificationKey::all();
 
         return response()->json(['categories' => $categories , 'brands' => $brands, 'specificationKeys' => $specificationKeys], 200);
@@ -189,10 +193,14 @@ class SellerProductController extends Controller
             $notification = 'Something went wrong';
             return response()->json(['error'=>$notification],403);
         }
+        $seller = Auth::guard('api')->user()->seller;
         $categories = Category::all();
         $subCategories = SubCategory::where('category_id',$product->category_id)->get();
         $childCategories = ChildCategory::where('sub_category_id', $product->sub_category_id)->get();
-        $brands = Brand::all();
+        // Get seller's own brands and admin brands (brands without seller_id)
+        $brands = Brand::where(function($query) use ($seller) {
+            $query->where('seller_id', $seller->id)->orWhereNull('seller_id');
+        })->get();
         $specificationKeys = ProductSpecificationKey::all();
         $productSpecifications = ProductSpecification::where('product_id',$product->id)->get();
         $tagArray = json_decode($product->tags);

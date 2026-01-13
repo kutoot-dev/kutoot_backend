@@ -18,7 +18,7 @@ class ProductBrandController extends Controller
 
     public function index()
     {
-        $brands=Brand::all();
+        $brands=Brand::with('seller')->orderBy('id','desc')->get();
 
         return view('admin.product_brand',compact('brands'));
 

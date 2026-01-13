@@ -29,6 +29,10 @@ class Vendor extends Model
         return $this->hasMany(Product::class,'vendor_id');
     }
 
+    public function brands(){
+        return $this->hasMany(Brand::class, 'seller_id');
+    }
+
     public function activeReviews(){
         return $this->hasMany(ProductReview::class,'product_vendor_id');
     }
