@@ -110,6 +110,7 @@ use App\Http\Controllers\WEB\Admin\Auth\WebAdminForgotPasswordController;
 use App\Http\Controllers\WEB\Deliveryman\DeliveryManProfileController;
 use App\Http\Controllers\WEB\Admin\DeliveryManWithdrawMethodController;
 use App\Http\Controllers\WEB\Seller\SellerProductVariantItemController;
+use App\Http\Controllers\WEB\Seller\SellerBrandController;
 use App\Http\Controllers\WEB\Deliveryman\DeliveryManDashboardController;
 use App\Http\Controllers\WEB\Seller\Auth\SellerForgotPasswordController;
 use App\Http\Controllers\WEB\Deliveryman\Auth\DeliveryManLoginController;
@@ -259,13 +260,16 @@ Route::group(['middleware' => ['maintainance']], function () {
         Route::put('update-seller-shop',[SellerProfileController::class,'updateSellerSop'])->name('update-seller-shop');
         Route::put('remove-seller-social-link/{id}',[SellerProfileController::class,'removeSellerSocialLink'])->name('remove-seller-social-link');
         Route::get('email-history',[SellerProfileController::class,'emailHistory'])->name('email-history');
- 
+
 
 
 
         Route::resource('product', SellerProductController::class);
         Route::get('stockout-product', [SellerProductController::class,'stockoutProduct'])->name('stockout-product');
         Route::put('product-status/{id}', [SellerProductController::class,'changeStatus'])->name('product-status');
+
+        Route::resource('brand', SellerBrandController::class);
+        Route::put('brand-status/{id}', [SellerBrandController::class,'changeStatus'])->name('brand.status');
         Route::put('removed-product-exist-specification/{id}', [SellerProductController::class,'removedProductExistSpecification'])->name('removed-product-exist-specification');
         Route::get('pending-product', [SellerProductController::class,'pendingProduct'])->name('pending-product');
         Route::get('product-highlight/{id}', [SellerProductController::class,'productHighlight'])->name('product-highlight');
@@ -407,7 +411,7 @@ Route::get('/login/facebook/callback', [LoginController::class, 'facebookCallBac
 
 // start admin routes
 Route::group(['as'=> 'admin.', 'prefix' => 'admin'],function (){
-    
+
 
         Route::resource('image-types', ImageTypeController::class);
     Route::resource('image-items', ImageItemController::class);
@@ -423,8 +427,8 @@ Route::group(['as'=> 'admin.', 'prefix' => 'admin'],function (){
     // Ticket routes (optional admin usage)
     Route::get('/campaigns/{campaign}/tickets', [CouponTicketController::class, 'index'])->name('tickets.index');
     Route::post('/campaigns/{campaign}/tickets/generate', [CouponTicketController::class, 'generate'])->name('tickets.generate');
-    
-    
+
+
     Route::get('all-prize-campaigns', [CoinCampaignController::class, 'prizeindex'])->name('all-prize-campaigns');
     Route::get('/winners/create/{camp_id}', [WinnerController::class, 'create'])->name('winners.create');
     Route::post('/winners/store', [WinnerController::class, 'store'])->name('winners.store');
@@ -435,7 +439,7 @@ Route::group(['as'=> 'admin.', 'prefix' => 'admin'],function (){
 
     Route::get('userstatements', [CoinCampaignController::class, 'statementsindex'])->name('statementsindex');
 
-    
+
     Route::get('all-coin-campaigns', [CoinCampaignController::class, 'index'])->name('all-coin-campaigns');
     Route::get('view-coin-campaign/{id}', [CoinCampaignController::class, 'show'])->name('view-coin-campaign');
     Route::get('create-coin-campaign', [CoinCampaignController::class, 'create'])->name('create-coin-campaign');
@@ -787,7 +791,7 @@ Route::group(['as'=> 'admin.', 'prefix' => 'admin'],function (){
 
     Route::resource('slider', SliderController::class);
     Route::put('slider-status/{id}',[SliderController::class,'changeStatus'])->name('slider-status');
-    
+
 
 
 

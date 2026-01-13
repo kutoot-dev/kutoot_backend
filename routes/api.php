@@ -80,6 +80,7 @@ use App\Http\Controllers\Seller\WithdrawController;
 use App\Http\Controllers\Seller\SellerProductReportControler;
 use App\Http\Controllers\Seller\SellerOrderController;
 use App\Http\Controllers\Seller\SellerMessageContoller;
+use App\Http\Controllers\Seller\SellerBrandController;
 
 
 use App\Http\Controllers\Deliveryman\MyReviewController;
@@ -120,7 +121,7 @@ use App\Http\Controllers\ZohoInvoiceController;
 use App\Http\Controllers\ZohoController;
 
 // Route::post('/user/coinpurchase-test', [CheckoutController::class, 'purchasestore']);
-// Route::post('/admin/order-cancel/{order}', 
+// Route::post('/admin/order-cancel/{order}',
 //     [\App\Http\Controllers\WEB\Admin\OrderController::class, 'cancel']
 // )->name('admin.order.cancel');
 // Route::post('/user-login', [UserAuthController::class, 'login']);
@@ -221,7 +222,7 @@ Route::group([], function () {
 
     Route::get('/apply-coupon', [CartController::class, 'applyCoupon'])->name('apply-coupon');
     Route::post('/reedemcoins', [CartController::class, 'reedemcoins'])->name('reedemcoins');
-    
+
     Route::get('/calculate-product-price', [CartController::class, 'calculateProductPrice'])->name('calculate-product-price');
 
     Route::get('login/google',[LoginController::class, 'redirectToGoogle'])->name('login-google');
@@ -265,16 +266,16 @@ Route::group([], function () {
         Route::get('/getcoupons', [CheckoutController::class, 'generateCoupons']);
 
         Route::post('/singlecoderegenerate', [CheckoutController::class, 'singlecoderegenerate']);
-        
-        
+
+
         Route::get('/mycoupons', [CheckoutController::class, 'mycoupons']);
 
         Route::post('/payment_status', [CheckoutController::class, 'payment_status']);
-        
+
         Route::post('/checkwinnerclaim', [CheckoutController::class, 'checkwinnerclaim'])->name('checkwinnerclaim');
 
         Route::get('/mystatements', [CheckoutController::class, 'mystatements']);
-        
+
         Route::get('/my-purchases', [CheckoutController::class, 'myPurchases']);
         Route::get('/purchasedetails/{id}', [CheckoutController::class, 'Purchasedetails']);
 
@@ -357,6 +358,9 @@ Route::group([], function () {
 
         Route::put('product-status/{id}', [SellerProductController::class,'changeStatus'])->name('product.status');
         Route::put('removed-product-exist-specification/{id}', [SellerProductController::class,'removedProductExistSpecification'])->name('removed-product-exist-specification');
+
+        Route::resource('brand', SellerBrandController::class);
+        Route::put('brand-status/{id}', [SellerBrandController::class,'changeStatus'])->name('brand.status');
         Route::get('pending-product', [SellerProductController::class,'pendingProduct'])->name('pending-product');
         Route::get('product-highlight/{id}', [SellerProductController::class,'productHighlight'])->name('product-highlight');
         Route::put('update-product-highlight/{id}', [SellerProductController::class,'productHighlightUpdate'])->name('update-product-highlight');
@@ -426,7 +430,7 @@ Route::group([], function () {
 
     Route::post('deliveryman/password/reset/email',[DeliveryManResetPasswordController::class,'passwrodResetEmail'])->name('deliveryman.password.reset.email');
     Route::put('deliveryman/password/update',[DeliveryManResetPasswordController::class,'passwrodUpdate'])->name('deliveryman.pasword.update');
- 
+
     Route::group(['as'=> 'deliveryman.', 'prefix' => 'deliveryman', 'middleware'=>'deliverymanapi'],function (){
          Route::get('dashboard',[DeliveryManDashboardController::class,'index'])->name('dashboard');
          Route::get('my-profile',[DeliveryManProfileController::class,'index'])->name('my-profile');
@@ -436,10 +440,10 @@ Route::group([], function () {
          Route::get('orders',[DeliveryManOrderController::class,'index'])->name('orders');
          Route::get('order-request',[DeliveryManOrderController::class,'orderRequest'])->name('order-request');
          Route::put('order-request-status/{id}',[DeliveryManOrderController::class,'orderRequestStatus'])->name('order-request-status');
-         
+
          Route::get('completed-order',[DeliveryManOrderController::class,'completedOrder'])->name('completed-order');
          Route::get('order-show/{id}',[DeliveryManOrderController::class,'show'])->name('order-show');
-         
+
          Route::put('update-order-status/{id}',[DeliveryManOrderController::class,'updateOrderStatus'])->name('update-order-status');
 
          Route::resource('withdraw', MyWithdrawController::class);

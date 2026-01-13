@@ -1,21 +1,21 @@
-@extends('admin.master_layout')
+@extends('seller.master_layout')
 @section('title')
-<title>{{__('admin.Product Brand')}}</title>
+<title>{{__('admin.Brands')}}</title>
 @endsection
-@section('admin-content')
+@section('seller-content')
       <!-- Main Content -->
       <div class="main-content">
         <section class="section">
           <div class="section-header">
-            <h1>{{__('admin.Product Brand')}}</h1>
+            <h1>{{__('admin.Brands')}}</h1>
             <div class="section-header-breadcrumb">
-              <div class="breadcrumb-item active"><a href="{{ route('admin.dashboard') }}">{{__('admin.Dashboard')}}</a></div>
-              <div class="breadcrumb-item">{{__('admin.Product Brand')}}</div>
+              <div class="breadcrumb-item active"><a href="{{ route('seller.dashboard') }}">{{__('admin.Dashboard')}}</a></div>
+              <div class="breadcrumb-item">{{__('admin.Brands')}}</div>
             </div>
           </div>
 
           <div class="section-body">
-            <a href="{{ route('admin.product-brand.create') }}" class="btn btn-primary"><i class="fas fa-plus"></i> {{__('admin.Add New')}}</a>
+            <a href="{{ route('seller.brand.create') }}" class="btn btn-primary"><i class="fas fa-plus"></i> {{__('admin.Add New')}}</a>
             <div class="row mt-4">
                 <div class="col">
                   <div class="card">
@@ -25,7 +25,6 @@
                             <thead>
                                 <tr>
                                     <th>{{__('admin.SN')}}</th>
-                                    <th>{{ __('admin.Seller') }}
                                     <th>{{__('admin.Name')}}</th>
                                     <th>{{__('admin.Slug')}}</th>
                                     <th>{{__('admin.Logo')}}</th>
@@ -34,35 +33,35 @@
                                   </tr>
                             </thead>
                             <tbody>
-                                @foreach ($brands as $index => $brand)
+                                @forelse($brands ?? [] as $index => $brand)
                                     <tr>
                                         <td>{{ ++$index }}</td>
-                                        <td>{{ $brand->seller ? $brand->seller->shop_name : __('admin.Admin') }}</td>
                                         <td>{{ $brand->name }}</td>
                                         <td>{{ $brand->slug }}</td>
-                                        <td> <img class="rounded-circle" src="{{ asset($brand->logo) }}" alt="" width="50px"></td>
+                                        <td><img class="rounded-circle" src="{{ asset($brand->logo) }}" alt="" width="50px"></td>
                                         <td>
                                             @if($brand->status == 1)
-                                            <a href="javascript:;" onclick="changeProductBrandStatus({{ $brand->id }})">
+                                            <a href="javascript:;" onclick="changeBrandStatus({{ $brand->id }})">
                                                 <input id="status_toggle" type="checkbox" checked data-toggle="toggle" data-on="{{__('admin.Active')}}" data-off="{{__('admin.InActive')}}" data-onstyle="success" data-offstyle="danger">
                                             </a>
 
                                             @else
-                                            <a href="javascript:;" onclick="changeProductBrandStatus({{ $brand->id }})">
+                                            <a href="javascript:;" onclick="changeBrandStatus({{ $brand->id }})">
                                                 <input id="status_toggle" type="checkbox" data-toggle="toggle" data-on="{{__('admin.Active')}}" data-off="{{__('admin.InActive')}}" data-onstyle="success" data-offstyle="danger">
                                             </a>
 
                                             @endif
                                         </td>
                                         <td>
-                                        <a href="{{ route('admin.product-brand.edit',$brand->id) }}" class="btn btn-primary btn-sm"><i class="fa fa-edit" aria-hidden="true"></i></a>
-                                        @if ($brand->products->count() == 0)
-                                            <a href="javascript:;" data-toggle="modal" data-target="#deleteModal" class="btn btn-danger btn-sm" onclick="deleteData({{ $brand->id }})"><i class="fa fa-trash" aria-hidden="true"></i></a>
-                                        @endif
-
+                                        <a href="{{ route('seller.brand.edit',$brand->id) }}" class="btn btn-primary btn-sm"><i class="fa fa-edit" aria-hidden="true"></i></a>
+                                        <a href="javascript:;" data-toggle="modal" data-target="#deleteModal" class="btn btn-danger btn-sm" onclick="deleteData({{ $brand->id }})"><i class="fa fa-trash" aria-hidden="true"></i></a>
                                         </td>
                                     </tr>
-                                  @endforeach
+                                  @empty
+                                    <tr>
+                                        <td colspan="6" class="text-center">{{__('admin.No brands found')}}</td>
+                                    </tr>
+                                @endforelse
                             </tbody>
                         </table>
                       </div>
@@ -75,26 +74,23 @@
 
 <script>
     function deleteData(id){
-        $("#deleteForm").attr("action",'{{ url("admin/product-brand/") }}'+"/"+id)
+        $("#deleteForm").attr("action",'{{ url("seller/brand/") }}'+"/"+id)
     }
-    function changeProductBrandStatus(id){
-        var isDemo = "{{ env('APP_VERSION') }}"
-        if(isDemo == 0){
-            toastr.error('This Is Demo Version. You Can Not Change Anything');
-            return;
-        }
+    function changeBrandStatus(id){
         $.ajax({
             type:"put",
             data: { _token : '{{ csrf_token() }}' },
-            url:"{{url('/admin/product-brand-status/')}}"+"/"+id,
+            url:"{{url('/seller/brand-status/')}}"+"/"+id,
             success:function(response){
                 toastr.success(response)
             },
             error:function(err){
                 console.log(err);
-
             }
         })
     }
 </script>
+
+
 @endsection
+
