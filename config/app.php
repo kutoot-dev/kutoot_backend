@@ -238,4 +238,6 @@ return [
 
     ],
 
+    'supportEmail' => env('SUPPORT_EMAIL', 'support@kutoot.com'),
+
 ];

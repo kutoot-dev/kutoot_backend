@@ -6,6 +6,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
+use App\Models\Setting;
 
 class OtpMail extends Mailable
 {
@@ -28,7 +29,17 @@ class OtpMail extends Mailable
      */
     public function build()
     {
-        return $this->subject('Your OTP Code')
-                    ->view('emails.otp');
+        $setting = Setting::select('logo')->first();
+        $logo = $setting ? $setting->logo : null;
+
+        return $this->subject('Your OTP Code - ' . config('app.name'))
+                    ->view('emails.otp')
+                    ->with([
+                        'otp' => $this->otp,
+                        'logo' => $logo,
+                        'name' => null,
+                        'expiry' => 10,
+                        'supportEmail' => 'support@kutoot.com'
+                    ]);
     }
 }
