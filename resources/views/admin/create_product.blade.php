@@ -96,8 +96,28 @@
                                 </div>
 
                                 <div class="form-group col-12">
+                                    <label>{{__('admin.HSN')}} </label>
+                                   <input type="text" class="form-control" name="hsn" value="{{ old('hsn') }}">
+                                </div>
+
+                                <div class="form-group col-12">
                                     <label>{{__('admin.Price')}} <span class="text-danger">* ({{__('INR Price')}})</span></label>
                                    <input type="text" class="form-control" name="price" value="{{ old('price') }}" required> 
+                                </div>
+
+                                <div class="form-group col-12">
+                                    <label>{{__('admin.CGST (%)')}} <span class="text-danger">*</span></label>
+                                   <input type="text" class="form-control" name="cgst" value="{{ old('cgst', 0) }}" required>
+                                </div>
+
+                                <div class="form-group col-12">
+                                    <label>{{__('admin.SGST (%)')}} <span class="text-danger">*</span></label>
+                                   <input type="text" class="form-control" name="sgst" value="{{ old('sgst', 0) }}" required>
+                                </div>
+
+                                <div class="form-group col-12">
+                                    <label>{{__('admin.IGST (%)')}} <span class="text-danger">*</span></label>
+                                   <input type="text" class="form-control" name="igst" value="{{ old('igst', 0) }}" required>
                                 </div>
 
                                 <div class="form-group col-12">

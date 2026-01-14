@@ -52,6 +52,10 @@ class ProductBrandController extends Controller
         if($request->logo){
             $extention = $request->logo->getClientOriginalExtension();
             $logo_name = Str::slug($request->name).date('-Y-m-d-h-i-s-').rand(999,9999).'.'.$extention;
+            $path = public_path().'/uploads/custom-images/';
+            if (!File::exists($path)) {
+                File::makeDirectory($path, 0777, true, true);
+            }
             $logo_name = 'uploads/custom-images/'.$logo_name;
             Image::make($request->logo)
                 ->save(public_path().'/'.$logo_name);

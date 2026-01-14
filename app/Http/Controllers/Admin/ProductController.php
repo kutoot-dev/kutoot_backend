@@ -81,6 +81,9 @@ class ProductController extends Controller
             'short_description' => 'required',
             'long_description' => 'required',
             'price' => 'required|numeric',
+            'cgst' => 'required|numeric',
+            'sgst' => 'required|numeric',
+            'igst' => 'required|numeric',
             'status' => 'required',
             'weight' => 'required',
             'quantity' => 'required|numeric',
@@ -97,6 +100,9 @@ class ProductController extends Controller
             'short_description.required' => trans('Short description is required'),
             'long_description.required' => trans('Long description is required'),
             'price.required' => trans('Price is required'),
+            'cgst.required' => trans('CGST is required'),
+            'sgst.required' => trans('SGST is required'),
+            'igst.required' => trans('IGST is required'),
             'status.required' => trans('Status is required'),
             'quantity.required' => trans('Quantity is required'),
             'weight.required' => trans('Weight is required'),
@@ -107,6 +113,10 @@ class ProductController extends Controller
         if($request->thumb_image){
             $extention = $request->thumb_image->getClientOriginalExtension();
             $image_name = Str::slug($request->name).date('-Y-m-d-h-i-s-').rand(999,9999).'.'.$extention;
+            $path = public_path().'/uploads/custom-images/';
+            if (!File::exists($path)) {
+                File::makeDirectory($path, 0777, true, true);
+            }
             $image_name = 'uploads/custom-images/'.$image_name;
             Image::make($request->thumb_image)
                 ->save(public_path().'/'.$image_name);
@@ -121,7 +131,11 @@ class ProductController extends Controller
         $product->child_category_id = $request->child_category ? $request->child_category : 0;
         $product->brand_id = $request->brand ? $request->brand : 0;
         $product->sku = $request->sku;
+        $product->hsn = $request->hsn;
         $product->price = $request->price;
+        $product->cgst = $request->cgst;
+        $product->sgst = $request->sgst;
+        $product->igst = $request->igst;
         $product->offer_price = $request->offer_price;
         $product->qty = $request->quantity ? $request->quantity : 0;
         $product->short_description = $request->short_description;
@@ -216,6 +230,9 @@ class ProductController extends Controller
             'short_description' => 'required',
             'long_description' => 'required',
             'price' => 'required|numeric',
+            'cgst' => 'required|numeric',
+            'sgst' => 'required|numeric',
+            'igst' => 'required|numeric',
             'status' => 'required',
             'weight' => 'required',
             'quantity' => 'required|numeric',
@@ -244,6 +261,10 @@ class ProductController extends Controller
             $old_thumbnail = $product->thumb_image;
             $extention = $request->thumb_image->getClientOriginalExtension();
             $image_name = Str::slug($request->name).date('-Y-m-d-h-i-s-').rand(999,9999).'.'.$extention;
+            $path = public_path().'/uploads/custom-images/';
+            if (!File::exists($path)) {
+                File::makeDirectory($path, 0777, true, true);
+            }
             $image_name = 'uploads/custom-images/'.$image_name;
             Image::make($request->thumb_image)
                 ->save(public_path().'/'.$image_name);
@@ -265,7 +286,11 @@ class ProductController extends Controller
         $product->qty = $request->quantity ? $request->quantity : 0;
         $product->sold_qty = 0;
         $product->sku = $request->sku;
+        $product->hsn = $request->hsn;
         $product->price = $request->price;
+        $product->cgst = $request->cgst;
+        $product->sgst = $request->sgst;
+        $product->igst = $request->igst;
         $product->offer_price = $request->offer_price;
         $product->short_description = $request->short_description;
         $product->long_description = $request->long_description;
