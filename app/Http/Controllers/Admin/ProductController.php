@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Product;
+use App\Enums\ProductApprovalStatus;
 use Illuminate\Http\Request;
 use App\Models\Category;
 use App\Models\SubCategory;
@@ -52,7 +53,7 @@ class ProductController extends Controller
     }
 
     public function sellerPendingProduct(){
-        $products = Product::with('category','seller','brand')->where('approve_by_admin','=',0)->get();
+        $products = Product::with('category','seller','brand')->where('approval_status', ProductApprovalStatus::PENDING)->get();
         $orderProducts = OrderProduct::all();
         $setting = Setting::first();
 
@@ -206,7 +207,7 @@ class ProductController extends Controller
 
         // print_r($request->reedem_percentage);die;
 
-     
+
         $rules = [
             'short_name' => 'required',
             'name' => 'required',
@@ -356,6 +357,36 @@ class ProductController extends Controller
             $product->save();
             $message = trans('Active Successfully');
         }
+        return response()->json($message);
+    }
+
+    public function changeApprovalStatus($id){
+        $product = Product::find($id);
+        if(!$product){
+            return response()->json(['error' => 'Product not found'], 404);
+        }
+
+        $approval_status = request()->input('approval_status');
+        $statusMap = [
+            0 => ProductApprovalStatus::PENDING,
+            1 => ProductApprovalStatus::APPROVED,
+            2 => ProductApprovalStatus::REJECTED,
+        ];
+
+        if(!isset($statusMap[$approval_status])){
+            return response()->json(['error' => 'Invalid status'], 400);
+        }
+
+        $product->approval_status = $statusMap[$approval_status];
+        $product->save();
+
+        $statusNames = [
+            ProductApprovalStatus::PENDING->value => 'Pending',
+            ProductApprovalStatus::APPROVED->value => 'Approved',
+            ProductApprovalStatus::REJECTED->value => 'Rejected',
+        ];
+
+        $message = $statusNames[$approval_status] . ' Successfully';
         return response()->json($message);
     }
 

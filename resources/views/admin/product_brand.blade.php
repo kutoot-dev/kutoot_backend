@@ -25,11 +25,12 @@
                             <thead>
                                 <tr>
                                     <th>{{__('admin.SN')}}</th>
-                                    <th>{{ __('admin.Seller') }}
+                                    <th>{{ __('admin.Seller') }}</th>
                                     <th>{{__('admin.Name')}}</th>
                                     <th>{{__('admin.Slug')}}</th>
                                     <th>{{__('admin.Logo')}}</th>
                                     <th>{{__('admin.Status')}}</th>
+                                    <th>{{__('admin.Approval')}}</th>
                                     <th>{{__('admin.Action')}}</th>
                                   </tr>
                             </thead>
@@ -53,6 +54,13 @@
                                             </a>
 
                                             @endif
+                                        </td>
+                                        <td>
+                                            <select name="approval_status" class="form-control" onchange="changeApprovalStatus({{ $brand->id }}, this.value)">
+                                                <option {{ $brand->approval_status->value == 0 ? 'selected' : '' }} value="0">{{__('admin.Pending')}}</option>
+                                                <option {{ $brand->approval_status->value == 1 ? 'selected' : '' }} value="1">{{__('admin.Approved')}}</option>
+                                                <option {{ $brand->approval_status->value == 2 ? 'selected' : '' }} value="2">{{__('admin.Rejected')}}</option>
+                                            </select>
                                         </td>
                                         <td>
                                         <a href="{{ route('admin.product-brand.edit',$brand->id) }}" class="btn btn-primary btn-sm"><i class="fa fa-edit" aria-hidden="true"></i></a>
@@ -93,6 +101,28 @@
             error:function(err){
                 console.log(err);
 
+            }
+        })
+    }
+
+    function changeApprovalStatus(id, val){
+        var isDemo = "{{ env('APP_VERSION') }}"
+        if(isDemo == 0){
+            toastr.error('This Is Demo Version. You Can Not Change Anything');
+            return;
+        }
+        $.ajax({
+            type:"put",
+            data: { 
+                _token : '{{ csrf_token() }}',
+                approval_status: val
+            },
+            url:"{{url('/admin/product-brand-approval-status/')}}"+"/"+id,
+            success:function(response){
+                toastr.success(response.message)
+            },
+            error:function(err){
+                console.log(err);
             }
         })
     }

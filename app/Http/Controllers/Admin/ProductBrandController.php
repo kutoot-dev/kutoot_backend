@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Enums\BrandApprovalStatus;
 use App\Models\Brand;
 use Illuminate\Http\Request;
 use  Image;
@@ -59,6 +60,7 @@ class ProductBrandController extends Controller
         $brand->name = $request->name;
         $brand->slug = $request->slug;
         $brand->status = $request->status;
+        $brand->approval_status = BrandApprovalStatus::APPROVED;
         $brand->save();
 
         $notification = trans('Created Successfully');
@@ -117,6 +119,9 @@ class ProductBrandController extends Controller
         $brand->slug = $request->slug;
         $brand->status = $request->status;
         $brand->rating = $request->rating;
+        if($request->has('approval_status')){
+            $brand->approval_status = $request->approval_status;
+        }
         $brand->save();
 
         $notification = trans('Update Successfully');
@@ -149,5 +154,28 @@ class ProductBrandController extends Controller
             $message = trans('Active Successfully');
         }
         return response()->json($message);
+    }
+
+    public function changeApprovalStatus(Request $request, $id)
+    {
+        $rules = [
+            'approval_status' => 'required|in:0,1,2',
+        ];
+        $customMessages = [
+            'approval_status.required' => trans('Approval status is required'),
+            'approval_status.in' => trans('Invalid approval status'),
+        ];
+        $this->validate($request, $rules, $customMessages);
+
+        $brand = Brand::find($id);
+        if (!$brand) {
+            return response()->json(['message' => trans('Brand not found')], 404);
+        }
+
+        $brand->approval_status = (int)$request->approval_status;
+        $brand->save();
+
+        $notification = trans('Brand approval status updated successfully');
+        return response()->json(['message' => $notification, 'brand' => $brand], 200);
     }
 }

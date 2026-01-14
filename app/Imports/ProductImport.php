@@ -41,8 +41,8 @@ class ProductImport implements ToModel
             'is_top' => $row[23],
             'is_best' => $row[24],
             'status' => $row[25],
-            'is_specification' => $row[26],
-            'approve_by_admin' => $row[27]
+            'is_specification' => $row[27],
+            'approval_status' => $row[26]
         ]);
     }
 }

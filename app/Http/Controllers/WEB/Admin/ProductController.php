@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\WEB\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Product;
+use App\Enums\ProductApprovalStatus;
 use Illuminate\Http\Request;
 use App\Models\Category;
 use App\Models\SubCategory;
@@ -40,8 +41,8 @@ class ProductController extends Controller
 
     public function index()
     {
-       
-        $products = Product::with('category','seller','brand')->where(['vendor_id' => 0])->orderBy('id','desc')->get();
+
+        $products = Product::with('category','seller','brand')->orderBy('id','desc')->get();
         $orderProducts = OrderProduct::all();
         $setting = Setting::first();
         $frontend_url = $setting->frontend_url;
@@ -51,7 +52,7 @@ class ProductController extends Controller
 
     public function sellerProduct(){
 
-        $products = Product::with('category','seller','brand')->where('vendor_id','!=',0)->where('approve_by_admin',1)->orderBy('id','desc')->get();
+        $products = Product::with('category','seller','brand')->where('vendor_id','!=',0)->where('approval_status', ProductApprovalStatus::APPROVED)->orderBy('id','desc')->get();
         $orderProducts = OrderProduct::all();
         $setting = Setting::first();
         $frontend_url = $setting->frontend_url;
@@ -60,7 +61,7 @@ class ProductController extends Controller
     }
 
     public function sellerPendingProduct(){
-        $products = Product::with('category','seller','brand')->where('vendor_id','!=',0)->where('approve_by_admin',0)->orderBy('id','desc')->get();
+        $products = Product::with('category','seller','brand')->where('vendor_id','!=',0)->where('approval_status', ProductApprovalStatus::PENDING)->orderBy('id','desc')->get();
         $orderProducts = OrderProduct::all();
         $setting = Setting::first();
         $frontend_url = $setting->frontend_url;
@@ -158,7 +159,7 @@ class ProductController extends Controller
         $product->new_product = $request->new_arrival ? 1 : 0;
         $product->is_best = $request->best_product ? 1 : 0;
         $product->is_featured = $request->is_featured ? 1 : 0;
-        $product->approve_by_admin = 1;
+        $product->approval_status = ProductApprovalStatus::APPROVED;
         $product->reedem_percentage = $request->reedem_percentage;
         $product->save();
 
@@ -286,7 +287,7 @@ class ProductController extends Controller
         $product->is_best = $request->best_product ? 1 : 0;
         $product->is_featured = $request->is_featured ? 1 : 0;
         if($product->vendor_id != 0){
-            $product->approve_by_admin = $request->approve_by_admin;
+            $product->approval_status = ProductApprovalStatus::tryFrom((int)$request->approval_status) ?? ProductApprovalStatus::PENDING;
         }
 
         $product->reedem_percentage = $request->reedem_percentage;
@@ -369,14 +370,44 @@ class ProductController extends Controller
         return response()->json($message);
     }
 
+    public function changeApprovalStatus($id){
+        $product = Product::find($id);
+        if(!$product){
+            return response()->json(['error' => 'Product not found'], 404);
+        }
+
+        $approval_status = request()->input('approval_status');
+        $statusMap = [
+            0 => ProductApprovalStatus::PENDING,
+            1 => ProductApprovalStatus::APPROVED,
+            2 => ProductApprovalStatus::REJECTED,
+        ];
+
+        if(!isset($statusMap[$approval_status])){
+            return response()->json(['error' => 'Invalid status'], 400);
+        }
+
+        $product->approval_status = $statusMap[$approval_status];
+        $product->save();
+
+        $statusNames = [
+            ProductApprovalStatus::PENDING->value => 'Pending',
+            ProductApprovalStatus::APPROVED->value => 'Approved',
+            ProductApprovalStatus::REJECTED->value => 'Rejected',
+        ];
+
+        $message = $statusNames[$approval_status] . ' Successfully';
+        return response()->json($message);
+    }
+
     public function productApproved($id){
         $product = Product::find($id);
-        if($product->approve_by_admin == 1){
-            $product->approve_by_admin = 0;
+        if($product->approval_status === ProductApprovalStatus::APPROVED){
+            $product->approval_status = ProductApprovalStatus::PENDING;
             $product->save();
             $message = trans('admin_validation.Reject Successfully');
         }else{
-            $product->approve_by_admin = 1;
+            $product->approval_status = ProductApprovalStatus::APPROVED;
             $product->save();
             $message = trans('admin_validation.Approved Successfully');
         }

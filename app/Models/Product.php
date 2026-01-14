@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use DB;
+use App\Enums\ProductApprovalStatus;
 class Product extends Model
 {
     use HasFactory;
@@ -16,6 +17,10 @@ class Product extends Model
     //     'stock'
     // ];
     protected $appends = ['averageRating','totalSold'];
+
+    protected $casts = [
+        'approval_status' => ProductApprovalStatus::class,
+    ];
 
     public function getAverageRatingAttribute()
     {
@@ -114,12 +119,28 @@ class Product extends Model
         'is_best',
         'status',
         'is_specification',
-        'approve_by_admin',
+        'approval_status',
         'reedem_percentage',
         // ZOHO FIELDS (add here)
         'zoho_item_id',
         'sku',
         'stock',
     ];
+
+    // Scopes for approval status
+    public function scopeApproved($query)
+    {
+        return $query->where('approval_status', ProductApprovalStatus::APPROVED);
+    }
+
+    public function scopePending($query)
+    {
+        return $query->where('approval_status', ProductApprovalStatus::PENDING);
+    }
+
+    public function scopeRejected($query)
+    {
+        return $query->where('approval_status', ProductApprovalStatus::REJECTED);
+    }
 
 }

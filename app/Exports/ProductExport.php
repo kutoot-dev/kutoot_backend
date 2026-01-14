@@ -47,8 +47,8 @@ class ProductExport implements FromCollection , WithHeadings
                 'is_best',
                 'status',
                 'is_specification',
-                'approve_by_admin',
-              
+                'approval_status',
+
             ] :
             [
                 'id',
@@ -79,8 +79,8 @@ class ProductExport implements FromCollection , WithHeadings
                 'is_best',
                 'status',
                 'is_specification',
-                'approve_by_admin',
-              
+                'approval_status',
+
             ]
             ;
     }
@@ -118,8 +118,8 @@ class ProductExport implements FromCollection , WithHeadings
                 'is_best',
                 'status',
                 'is_specification',
-                'approve_by_admin',
-              
+                'approval_status',
+
             ])
             ->limit(1)
             ->get();
@@ -159,8 +159,8 @@ class ProductExport implements FromCollection , WithHeadings
         'is_best',
         'status',
         'is_specification',
-        'approve_by_admin',
-        
+        'approval_status',
+
     ])->get();
 
     // Hide appended attributes if needed

@@ -30,7 +30,8 @@
                                     <th width="15%">{{__('admin.Photo')}}</th>
                                     <th width="15%">{{__('admin.Type')}}</th>
                                     <th width="10%">{{__('admin.Status')}}</th>
-                                    <th width="15%">{{__('admin.Action')}}</th>
+                                    <th width="12%">{{__('admin.Approval')}}</th>
+                                    <th width="13%">{{__('admin.Action')}}</th>
                                   </tr>
                             </thead>
                             <tbody>
@@ -70,6 +71,13 @@
                                             </a>
 
                                             @endif
+                                        </td>
+                                        <td>
+                                            <select class="form-control form-control-sm" onchange="changeApprovalStatus({{ $product->id }}, this.value)">
+                                                <option value="0" {{ $product->approval_status->value == 0 ? 'selected' : '' }}>{{__('admin.Pending')}}</option>
+                                                <option value="1" {{ $product->approval_status->value == 1 ? 'selected' : '' }}>{{__('admin.Approved')}}</option>
+                                                <option value="2" {{ $product->approval_status->value == 2 ? 'selected' : '' }}>{{__('admin.Rejected')}}</option>
+                                            </select>
                                         </td>
                                         <td>
                                         <a href="{{ route('admin.product.edit',$product->id) }}" class="btn btn-primary btn-sm"><i class="fa fa-edit" aria-hidden="true"></i></a>
@@ -145,6 +153,29 @@
             error:function(err){
                 console.log(err);
 
+            }
+        })
+    }
+
+    function changeApprovalStatus(id, status){
+        var isDemo = "{{ env('APP_VERSION') }}"
+        if(isDemo == 0){
+            toastr.error('This Is Demo Version. You Can Not Change Anything');
+            return;
+        }
+        $.ajax({
+            type:"put",
+            data: {
+                _token : '{{ csrf_token() }}',
+                approval_status: status
+            },
+            url:"{{url('/admin/product-approval-status/')}}"+"/"+id,
+            success:function(response){
+                toastr.success(response)
+            },
+            error:function(err){
+                toastr.error('Failed to update approval status');
+                console.log(err);
             }
         })
     }

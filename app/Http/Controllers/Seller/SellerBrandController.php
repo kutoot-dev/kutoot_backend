@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Seller;
 
 use App\Http\Controllers\Controller;
+use App\Enums\BrandApprovalStatus;
 use App\Models\Brand;
 use App\Models\Vendor;
 use Illuminate\Http\Request;
@@ -60,6 +61,7 @@ class SellerBrandController extends Controller
         $brand->slug = $request->slug;
         $brand->seller_id = $seller->id;
         $brand->status = $request->status ?? 1;
+        $brand->approval_status = BrandApprovalStatus::PENDING;
 
         if ($request->logo) {
             $upload_path = public_path('uploads/brands');

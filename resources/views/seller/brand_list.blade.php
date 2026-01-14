@@ -29,6 +29,7 @@
                                     <th>{{__('admin.Slug')}}</th>
                                     <th>{{__('admin.Logo')}}</th>
                                     <th>{{__('admin.Status')}}</th>
+                                    <th>{{__('admin.Approval')}}</th>
                                     <th>{{__('admin.Action')}}</th>
                                   </tr>
                             </thead>
@@ -53,13 +54,32 @@
                                             @endif
                                         </td>
                                         <td>
+                                            @php
+                                                $approvalStatus = $brand->approval_status->value;
+                                                $statusLabel = '';
+                                                $badgeClass = '';
+
+                                                if ($approvalStatus == 0) {
+                                                    $statusLabel = __('admin.Pending');
+                                                    $badgeClass = 'badge-warning';
+                                                } elseif ($approvalStatus == 1) {
+                                                    $statusLabel = __('admin.Approved');
+                                                    $badgeClass = 'badge-success';
+                                                } elseif ($approvalStatus == 2) {
+                                                    $statusLabel = __('admin.Rejected');
+                                                    $badgeClass = 'badge-danger';
+                                                }
+                                            @endphp
+                                            <span class="badge {{ $badgeClass }}">{{ $statusLabel }}</span>
+                                        </td>
+                                        <td>
                                         <a href="{{ route('seller.brand.edit',$brand->id) }}" class="btn btn-primary btn-sm"><i class="fa fa-edit" aria-hidden="true"></i></a>
                                         <a href="javascript:;" data-toggle="modal" data-target="#deleteModal" class="btn btn-danger btn-sm" onclick="deleteData({{ $brand->id }})"><i class="fa fa-trash" aria-hidden="true"></i></a>
                                         </td>
                                     </tr>
                                   @empty
                                     <tr>
-                                        <td colspan="6" class="text-center">{{__('admin.No brands found')}}</td>
+                                        <td colspan="7" class="text-center">{{__('admin.No brands found')}}</td>
                                     </tr>
                                 @endforelse
                             </tbody>

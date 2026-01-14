@@ -149,7 +149,7 @@
                                     </div>
                                 </div>
 
-                                @if ($product->approve_by_admin == 1)
+                                @if ($product->approval_status->value == 1)
                                     <div class="form-group col-12">
                                         <label>{{__('admin.Status')}} <span class="text-danger">*</span></label>
                                         <select name="status" class="form-control">

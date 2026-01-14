@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\WEB\Seller;
 use App\Http\Controllers\Controller;
 use App\Models\Product;
+use App\Enums\ProductApprovalStatus;
 use Illuminate\Http\Request;
 use App\Models\Category;
 use App\Models\SubCategory;
@@ -44,7 +45,7 @@ class SellerProductController extends Controller
     public function index()
     {
         $seller = Auth::guard('web')->user()->seller;
-        $products = Product::with('category','seller','brand')->orderBy('id','desc')->where('approve_by_admin',1)->where('vendor_id',$seller->id)->orderBy('id','desc')->get();
+        $products = Product::with('category','seller','brand')->orderBy('id','desc')->where('vendor_id',$seller->id)->orderBy('id','desc')->get();
         $orderProducts = OrderProduct::all();
         $setting = Setting::first();
         return view('seller.product',compact('products','orderProducts','setting'));
@@ -54,7 +55,7 @@ class SellerProductController extends Controller
 
     public function pendingProduct(){
         $seller = Auth::guard('web')->user()->seller;
-        $products = Product::with('category','seller','brand')->orderBy('id','desc')->where('approve_by_admin',0)->where('vendor_id',$seller->id)->orderBy('id','desc')->get();
+        $products = Product::with('category','seller','brand')->orderBy('id','desc')->where('approval_status', ProductApprovalStatus::PENDING)->where('vendor_id',$seller->id)->orderBy('id','desc')->get();
         $orderProducts = OrderProduct::all();
         $setting = Setting::first();
         return view('seller.pending_product',compact('products','orderProducts','setting'));
@@ -300,7 +301,7 @@ class SellerProductController extends Controller
         $product->new_product = $request->new_arrival ? 1 : 0;
         $product->is_best = $request->best_product ? 1 : 0;
         $product->is_featured = $request->is_featured ? 1 : 0;
-        if($product->approve_by_admin == 1){
+        if($product->approval_status === ProductApprovalStatus::APPROVED){
             $product->status = $request->status;
         }
         $product->save();

@@ -148,6 +148,8 @@
   'Edit Brand' => 'Edit Brand',
   'Select Brand' => 'Select Brand',
   'SKU' => 'SKU',
+  'Approval' => 'Approval',
+  'Rejected' => 'Rejected',
   'Price' => 'Price',
   'Offer Price' => 'Offer Price',
   'Stock Quantity' => 'Stock Quantity',
