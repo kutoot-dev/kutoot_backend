@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Product;
+use App\Enums\ProductApprovalStatus;
 use Illuminate\Http\Request;
 use App\Models\Category;
 use App\Models\SubCategory;
@@ -52,7 +53,7 @@ class ProductController extends Controller
     }
 
     public function sellerPendingProduct(){
-        $products = Product::with('category','seller','brand')->where('approve_by_admin','=',0)->get();
+        $products = Product::with('category','seller','brand')->where('approval_status', ProductApprovalStatus::PENDING)->get();
         $orderProducts = OrderProduct::all();
         $setting = Setting::first();
 
@@ -80,6 +81,9 @@ class ProductController extends Controller
             'short_description' => 'required',
             'long_description' => 'required',
             'price' => 'required|numeric',
+            'cgst' => 'required|numeric',
+            'sgst' => 'required|numeric',
+            'igst' => 'required|numeric',
             'status' => 'required',
             'weight' => 'required',
             'quantity' => 'required|numeric',
@@ -96,6 +100,9 @@ class ProductController extends Controller
             'short_description.required' => trans('Short description is required'),
             'long_description.required' => trans('Long description is required'),
             'price.required' => trans('Price is required'),
+            'cgst.required' => trans('CGST is required'),
+            'sgst.required' => trans('SGST is required'),
+            'igst.required' => trans('IGST is required'),
             'status.required' => trans('Status is required'),
             'quantity.required' => trans('Quantity is required'),
             'weight.required' => trans('Weight is required'),
@@ -106,6 +113,10 @@ class ProductController extends Controller
         if($request->thumb_image){
             $extention = $request->thumb_image->getClientOriginalExtension();
             $image_name = Str::slug($request->name).date('-Y-m-d-h-i-s-').rand(999,9999).'.'.$extention;
+            $path = public_path().'/uploads/custom-images/';
+            if (!File::exists($path)) {
+                File::makeDirectory($path, 0777, true, true);
+            }
             $image_name = 'uploads/custom-images/'.$image_name;
             Image::make($request->thumb_image)
                 ->save(public_path().'/'.$image_name);
@@ -120,7 +131,11 @@ class ProductController extends Controller
         $product->child_category_id = $request->child_category ? $request->child_category : 0;
         $product->brand_id = $request->brand ? $request->brand : 0;
         $product->sku = $request->sku;
+        $product->hsn = $request->hsn;
         $product->price = $request->price;
+        $product->cgst = $request->cgst;
+        $product->sgst = $request->sgst;
+        $product->igst = $request->igst;
         $product->offer_price = $request->offer_price;
         $product->qty = $request->quantity ? $request->quantity : 0;
         $product->short_description = $request->short_description;
@@ -206,7 +221,7 @@ class ProductController extends Controller
 
         // print_r($request->reedem_percentage);die;
 
-     
+
         $rules = [
             'short_name' => 'required',
             'name' => 'required',
@@ -215,6 +230,9 @@ class ProductController extends Controller
             'short_description' => 'required',
             'long_description' => 'required',
             'price' => 'required|numeric',
+            'cgst' => 'required|numeric',
+            'sgst' => 'required|numeric',
+            'igst' => 'required|numeric',
             'status' => 'required',
             'weight' => 'required',
             'quantity' => 'required|numeric',
@@ -243,6 +261,10 @@ class ProductController extends Controller
             $old_thumbnail = $product->thumb_image;
             $extention = $request->thumb_image->getClientOriginalExtension();
             $image_name = Str::slug($request->name).date('-Y-m-d-h-i-s-').rand(999,9999).'.'.$extention;
+            $path = public_path().'/uploads/custom-images/';
+            if (!File::exists($path)) {
+                File::makeDirectory($path, 0777, true, true);
+            }
             $image_name = 'uploads/custom-images/'.$image_name;
             Image::make($request->thumb_image)
                 ->save(public_path().'/'.$image_name);
@@ -264,7 +286,11 @@ class ProductController extends Controller
         $product->qty = $request->quantity ? $request->quantity : 0;
         $product->sold_qty = 0;
         $product->sku = $request->sku;
+        $product->hsn = $request->hsn;
         $product->price = $request->price;
+        $product->cgst = $request->cgst;
+        $product->sgst = $request->sgst;
+        $product->igst = $request->igst;
         $product->offer_price = $request->offer_price;
         $product->short_description = $request->short_description;
         $product->long_description = $request->long_description;
@@ -356,6 +382,36 @@ class ProductController extends Controller
             $product->save();
             $message = trans('Active Successfully');
         }
+        return response()->json($message);
+    }
+
+    public function changeApprovalStatus($id){
+        $product = Product::find($id);
+        if(!$product){
+            return response()->json(['error' => 'Product not found'], 404);
+        }
+
+        $approval_status = request()->input('approval_status');
+        $statusMap = [
+            0 => ProductApprovalStatus::PENDING,
+            1 => ProductApprovalStatus::APPROVED,
+            2 => ProductApprovalStatus::REJECTED,
+        ];
+
+        if(!isset($statusMap[$approval_status])){
+            return response()->json(['error' => 'Invalid status'], 400);
+        }
+
+        $product->approval_status = $statusMap[$approval_status];
+        $product->save();
+
+        $statusNames = [
+            ProductApprovalStatus::PENDING->value => 'Pending',
+            ProductApprovalStatus::APPROVED->value => 'Approved',
+            ProductApprovalStatus::REJECTED->value => 'Rejected',
+        ];
+
+        $message = $statusNames[$approval_status] . ' Successfully';
         return response()->json($message);
     }
 

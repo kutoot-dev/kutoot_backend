@@ -28,16 +28,17 @@
                                     <th width="30%">{{__('admin.Name')}}</th>
                                     <th width="10%">{{__('admin.Price')}}</th>
                                     <th width="15%">{{__('admin.Photo')}}</th>
-                                    <th width="15%">{{__('admin.Type')}}</th>
-                                    <th width="10%">{{__('admin.Status')}}</th>
-                                    <th width="15%">{{__('admin.Action')}}</th>
+                                    <th width="10%">{{__('admin.Type')}}</th>
+                                    <th width="12%">{{__('admin.Status')}}</th>
+                                    <th width="12%">{{__('admin.Approval')}}</th>
+                                    <th width="16%">{{__('admin.Action')}}</th>
                                   </tr>
                             </thead>
                             <tbody>
                                 @foreach ($products as $index => $product)
                                     <tr>
                                         <td>{{ ++$index }}</td>
-                                        <td><a href="javascript:;">{{ $product->short_name }}</a></td>
+                                        <td><a href="javascript:;">{{ $product->name }}</a></td>
                                         <td>{{ $setting->currency_icon }}{{ $product->price }}</td>
                                         <td> <img class="rounded-circle" src="{{ asset($product->thumb_image) }}" alt="" width="80px"></td>
                                         <td>
@@ -58,16 +59,26 @@
                                             @endif
                                         </td>
                                         <td>
-                                            @if ($product->approve_by_admin == 1)
                                             @if($product->status == 1)
-                                                <span class="badge badge-success">{{__('admin.Active')}}</span>
-                                            @else
-                                                <span class="badge badge-danger">{{__('admin.Inactive')}}</span>
-                                            @endif
-                                            @else
-                                                <span class="badge badge-danger">{{__('admin.Pending')}}</span>
-                                            @endif
+                                            <a href="javascript:;" onclick="changeProductStatus({{ $product->id }})">
+                                                <input id="status_toggle" type="checkbox" checked data-toggle="toggle" data-on="{{__('admin.Active')}}" data-off="{{__('admin.InActive')}}" data-onstyle="success" data-offstyle="danger">
+                                            </a>
 
+                                            @else
+                                            <a href="javascript:;" onclick="changeProductStatus({{ $product->id }})">
+                                                <input id="status_toggle" type="checkbox" data-toggle="toggle" data-on="{{__('admin.Active')}}" data-off="{{__('admin.InActive')}}" data-onstyle="success" data-offstyle="danger">
+                                            </a>
+
+                                            @endif
+                                        </td>
+                                        <td>
+                                            @if ($product->approval_status->value == 0)
+                                                <span class="badge badge-warning">{{__('admin.Pending')}}</span>
+                                            @elseif ($product->approval_status->value == 1)
+                                                <span class="badge badge-success">{{__('admin.Approved')}}</span>
+                                            @elseif ($product->approval_status->value == 2)
+                                                <span class="badge badge-danger">{{__('admin.Rejected')}}</span>
+                                            @endif
                                         </td>
                                         <td>
                                         <a href="{{ route('seller.product.edit',$product->id) }}" class="btn btn-primary btn-sm"><i class="fa fa-edit" aria-hidden="true"></i></a>
@@ -124,5 +135,25 @@
     function deleteData(id){
         $("#deleteForm").attr("action",'{{ url("seller/product/") }}'+"/"+id)
     }
+
+    function changeProductStatus(id){
+        var isDemo = "{{ env('APP_VERSION') }}"
+        if(isDemo == 0){
+            toastr.error('This Is Demo Version. You Can Not Change Anything');
+            return;
+        }
+        $.ajax({
+            type:"put",
+            data: { _token : '{{ csrf_token() }}' },
+            url:"{{url('/seller/product-status/')}}"+"/"+id,
+            success:function(response){
+                toastr.success(response)
+            },
+            error:function(err){
+                console.log(err);
+            }
+        })
+    }
 </script>
 @endsection
+

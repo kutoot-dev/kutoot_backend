@@ -102,8 +102,28 @@
                                 </div>
 
                                 <div class="form-group col-12">
+                                    <label>{{__('admin.HSN')}} </label>
+                                   <input type="text" class="form-control" name="hsn" value="{{ $product->hsn }}">
+                                </div>
+
+                                <div class="form-group col-12">
                                     <label>{{__('admin.Price')}} <span class="text-danger">* ({{__('INR Price')}})</span></label>
                                    <input type="text" class="form-control" name="price" value="{{ $product->price }}">
+                                </div>
+
+                                <div class="form-group col-12">
+                                    <label>{{__('admin.CGST (%)')}} <span class="text-danger">*</span></label>
+                                   <input type="text" class="form-control" name="cgst" value="{{ $product->cgst }}" required>
+                                </div>
+
+                                <div class="form-group col-12">
+                                    <label>{{__('admin.SGST (%)')}} <span class="text-danger">*</span></label>
+                                   <input type="text" class="form-control" name="sgst" value="{{ $product->sgst }}" required>
+                                </div>
+
+                                <div class="form-group col-12">
+                                    <label>{{__('admin.IGST (%)')}} <span class="text-danger">*</span></label>
+                                   <input type="text" class="form-control" name="igst" value="{{ $product->igst }}" required>
                                 </div>
 
                                 <div class="form-group col-12">
@@ -149,7 +169,7 @@
                                     </div>
                                 </div>
 
-                                @if ($product->approve_by_admin == 1)
+                                @if ($product->approval_status->value == 1)
                                     <div class="form-group col-12">
                                         <label>{{__('admin.Status')}} <span class="text-danger">*</span></label>
                                         <select name="status" class="form-control">

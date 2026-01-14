@@ -40,7 +40,7 @@
                                         <td>{{ $setting->currency_icon }}{{ $product->price }}</td>
                                         <td> <img class="rounded-circle" src="{{ asset($product->thumb_image) }}" alt="" width="100px" height="100px"></td>
                                         <td>
-                                            @if($product->approve_by_admin == 1)
+                                            @if($product->approval_status->value == 1)
                                             <a href="javascript:;" onclick="changeProductStatus({{ $product->id }})">
                                                 <input id="status_toggle" type="checkbox" checked data-toggle="toggle" data-on="{{__('admin.Approved')}}" data-off="{{__('admin.Awaiting')}}" data-onstyle="success" data-offstyle="danger">
                                             </a>

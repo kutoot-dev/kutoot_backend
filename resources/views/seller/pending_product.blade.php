@@ -58,7 +58,7 @@
                                             @endif
                                         </td>
                                         <td>
-                                            @if ($product->approve_by_admin == 1)
+                                            @if ($product->approval_status->value == 1)
                                             @if($product->status == 1)
                                                 <span class="badge badge-success">{{__('admin.Active')}}</span>
                                             @else

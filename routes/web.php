@@ -495,6 +495,7 @@ Route::group(['as'=> 'admin.', 'prefix' => 'admin'],function (){
 
     Route::resource('product-brand', ProductBrandController::class);
     Route::put('product-brand-status/{id}', [ProductBrandController::class,'changeStatus'])->name('product.brand.status');
+    Route::put('product-brand-approval-status/{id}', [ProductBrandController::class,'changeApprovalStatus'])->name('product.brand.approval.status');
 
     Route::resource('specification-key', SpecificationKeyController::class);
     Route::put('specification-key-status/{id}', [SpecificationKeyController::class,'changeStatus'])->name('specification-key.status');
@@ -505,6 +506,7 @@ Route::group(['as'=> 'admin.', 'prefix' => 'admin'],function (){
     Route::resource('product', ProductController::class);
     Route::get('create-product-info', [ProductController::class,'create'])->name('create-product-info');
     Route::put('product-status/{id}', [ProductController::class,'changeStatus'])->name('product.status');
+    Route::put('product-approval-status/{id}', [ProductController::class,'changeApprovalStatus'])->name('product-approval-status');
     Route::put('product-approved/{id}', [ProductController::class,'productApproved'])->name('product-approved');
     Route::put('removed-product-exist-specification/{id}', [ProductController::class,'removedProductExistSpecification'])->name('removed-product-exist-specification');
     Route::get('seller-product', [ProductController::class,'sellerProduct'])->name('seller-product');

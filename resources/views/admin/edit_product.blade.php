@@ -102,8 +102,28 @@
                                 </div>
 
                                 <div class="form-group col-12">
+                                    <label>{{__('admin.HSN')}} </label>
+                                   <input type="text" class="form-control" name="hsn" value="{{ $product->hsn }}">
+                                </div>
+
+                                <div class="form-group col-12">
                                     <label>{{__('admin.Price')}}<span class="text-danger">* ({{__('INR Price')}})</span></label>
                                    <input type="text" class="form-control" name="price" value="{{ $product->price }}">
+                                </div>
+
+                                <div class="form-group col-12">
+                                    <label>{{__('admin.CGST (%)')}} <span class="text-danger">*</span></label>
+                                   <input type="text" class="form-control" name="cgst" value="{{ $product->cgst }}" required>
+                                </div>
+
+                                <div class="form-group col-12">
+                                    <label>{{__('admin.SGST (%)')}} <span class="text-danger">*</span></label>
+                                   <input type="text" class="form-control" name="sgst" value="{{ $product->sgst }}" required>
+                                </div>
+
+                                <div class="form-group col-12">
+                                    <label>{{__('admin.IGST (%)')}} <span class="text-danger">*</span></label>
+                                   <input type="text" class="form-control" name="igst" value="{{ $product->igst }}" required>
                                 </div>
 
                                 <div class="form-group col-12">
@@ -152,9 +172,10 @@
                                 @if ($product->vendor_id != 0)
                                     <div class="form-group col-12">
                                         <label>{{__('admin.Administrator Status')}} <span data-toggle="tooltip" data-placement="top" class="fa fa-info-circle text--primary" title="Only for seller product"></span> <span class="text-danger">*</span></label>
-                                        <select name="approve_by_admin" class="form-control">
-                                            <option {{ $product->approve_by_admin == 1 ? 'selected' : '' }} value="1">{{__('admin.Approved')}}</option>
-                                            <option {{ $product->approve_by_admin == 0 ? 'selected' : '' }} value="0">{{__('admin.Pending')}}</option>
+                                        <select name="approval_status" class="form-control">
+                                            <option {{ $product->approval_status->value == 1 ? 'selected' : '' }} value="1">{{__('admin.Approved')}}</option>
+                                            <option {{ $product->approval_status->value == 0 ? 'selected' : '' }} value="0">{{__('admin.Pending')}}</option>
+                                            <option {{ $product->approval_status->value == 2 ? 'selected' : '' }} value="2">{{__('admin.Rejected')}}</option>
                                         </select>
                                     </div>
                                 @endif

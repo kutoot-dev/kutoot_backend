@@ -39,7 +39,7 @@
                                <td>{{__('admin.Product Status')}}</td>
                                <td>
 
-                                    @if ($report->product->approve_by_admin == 1)
+                                    @if ($report->product->approval_status->value == 1)
                                     @if($report->product->status == 1)
                                         <span class="badge badge-success">{{__('admin.Active')}}</span>
                                     @else

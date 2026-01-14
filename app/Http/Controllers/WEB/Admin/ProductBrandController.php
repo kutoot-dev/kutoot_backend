@@ -4,6 +4,7 @@ namespace App\Http\Controllers\WEB\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Brand;
+use App\Enums\BrandApprovalStatus;
 use Illuminate\Http\Request;
 use  Image;
 use File;
@@ -51,6 +52,10 @@ class ProductBrandController extends Controller
         if($request->logo){
             $extention = $request->logo->getClientOriginalExtension();
             $logo_name = Str::slug($request->name).date('-Y-m-d-h-i-s-').rand(999,9999).'.'.$extention;
+            $path = public_path().'/uploads/custom-images/';
+            if (!File::exists($path)) {
+                File::makeDirectory($path, 0777, true, true);
+            }
             $logo_name = 'uploads/custom-images/'.$logo_name;
             Image::make($request->logo)
                 ->save(public_path().'/'.$logo_name);
@@ -59,6 +64,7 @@ class ProductBrandController extends Controller
         $brand->name = $request->name;
         $brand->slug = $request->slug;
         $brand->status = $request->status;
+        $brand->approval_status = BrandApprovalStatus::APPROVED;
         $brand->save();
 
         $notification = trans('admin_validation.Created Successfully');
@@ -115,6 +121,9 @@ class ProductBrandController extends Controller
         $brand->name = $request->name;
         $brand->slug = $request->slug;
         $brand->status = $request->status;
+        if($request->has('approval_status')){
+            $brand->approval_status = $request->approval_status;
+        }
         $brand->save();
 
         $notification = trans('admin_validation.Update Successfully');
@@ -149,5 +158,28 @@ class ProductBrandController extends Controller
             $message = trans('admin_validation.Active Successfully');
         }
         return response()->json($message);
+    }
+
+    public function changeApprovalStatus(Request $request, $id)
+    {
+        $rules = [
+            'approval_status' => 'required|in:0,1,2',
+        ];
+        $customMessages = [
+            'approval_status.required' => trans('admin_validation.Approval status is required'),
+            'approval_status.in' => trans('admin_validation.Invalid approval status'),
+        ];
+        $this->validate($request, $rules, $customMessages);
+
+        $brand = Brand::find($id);
+        if (!$brand) {
+            return response()->json(['message' => trans('admin_validation.Brand not found')], 404);
+        }
+
+        $brand->approval_status = (int)$request->approval_status;
+        $brand->save();
+
+        $notification = trans('admin.Brand approval status updated successfully');
+        return response()->json(['message' => $notification, 'brand' => $brand], 200);
     }
 }

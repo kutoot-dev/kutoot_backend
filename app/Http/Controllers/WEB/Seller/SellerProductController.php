@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\WEB\Seller;
 use App\Http\Controllers\Controller;
 use App\Models\Product;
+use App\Enums\ProductApprovalStatus;
 use Illuminate\Http\Request;
 use App\Models\Category;
 use App\Models\SubCategory;
@@ -44,7 +45,7 @@ class SellerProductController extends Controller
     public function index()
     {
         $seller = Auth::guard('web')->user()->seller;
-        $products = Product::with('category','seller','brand')->orderBy('id','desc')->where('approve_by_admin',1)->where('vendor_id',$seller->id)->orderBy('id','desc')->get();
+        $products = Product::with('category','seller','brand')->orderBy('id','desc')->where('vendor_id',$seller->id)->orderBy('id','desc')->get();
         $orderProducts = OrderProduct::all();
         $setting = Setting::first();
         return view('seller.product',compact('products','orderProducts','setting'));
@@ -54,7 +55,7 @@ class SellerProductController extends Controller
 
     public function pendingProduct(){
         $seller = Auth::guard('web')->user()->seller;
-        $products = Product::with('category','seller','brand')->orderBy('id','desc')->where('approve_by_admin',0)->where('vendor_id',$seller->id)->orderBy('id','desc')->get();
+        $products = Product::with('category','seller','brand')->orderBy('id','desc')->where('approval_status', ProductApprovalStatus::PENDING)->where('vendor_id',$seller->id)->orderBy('id','desc')->get();
         $orderProducts = OrderProduct::all();
         $setting = Setting::first();
         return view('seller.pending_product',compact('products','orderProducts','setting'));
@@ -110,6 +111,9 @@ class SellerProductController extends Controller
             'short_description' => 'required',
             'long_description' => 'required',
             'price' => 'required|numeric',
+            'cgst' => 'required|numeric',
+            'sgst' => 'required|numeric',
+            'igst' => 'required|numeric',
             'weight' => 'required',
             'quantity' => 'required|numeric',
         ];
@@ -125,6 +129,9 @@ class SellerProductController extends Controller
             'short_description.required' => trans('admin_validation.Short description is required'),
             'long_description.required' => trans('admin_validation.Long description is required'),
             'price.required' => trans('admin_validation.Price is required'),
+            'cgst.required' => trans('admin_validation.CGST is required'),
+            'sgst.required' => trans('admin_validation.SGST is required'),
+            'igst.required' => trans('admin_validation.IGST is required'),
             'status.required' => trans('admin_validation.Status is required'),
             'quantity.required' => trans('admin_validation.Quantity is required'),
             'weight.required' => trans('admin_validation.Weight is required'),
@@ -137,6 +144,10 @@ class SellerProductController extends Controller
         if($request->thumb_image){
             $extention = $request->thumb_image->getClientOriginalExtension();
             $image_name = Str::slug($request->name).date('-Y-m-d-h-i-s-').rand(999,9999).'.'.$extention;
+            $path = public_path().'/uploads/custom-images/';
+            if (!File::exists($path)) {
+                File::makeDirectory($path, 0777, true, true);
+            }
             $image_name = 'uploads/custom-images/'.$image_name;
             Image::make($request->thumb_image)
                 ->save(public_path().'/'.$image_name);
@@ -152,7 +163,11 @@ class SellerProductController extends Controller
         $product->child_category_id = $request->child_category ? $request->child_category : 0;
         $product->brand_id = $request->brand ? $request->brand : 0;
         $product->sku = $request->sku;
+        $product->hsn = $request->hsn;
         $product->price = $request->price;
+        $product->cgst = $request->cgst;
+        $product->sgst = $request->sgst;
+        $product->igst = $request->igst;
         $product->offer_price = $request->offer_price;
         $product->qty = $request->quantity ? $request->quantity : 0;
         $product->short_description = $request->short_description;
@@ -238,6 +253,9 @@ class SellerProductController extends Controller
             'short_description' => 'required',
             'long_description' => 'required',
             'price' => 'required|numeric',
+            'cgst' => 'required|numeric',
+            'sgst' => 'required|numeric',
+            'igst' => 'required|numeric',
             'weight' => 'required',
             'quantity' => 'required|numeric',
         ];
@@ -300,7 +318,7 @@ class SellerProductController extends Controller
         $product->new_product = $request->new_arrival ? 1 : 0;
         $product->is_best = $request->best_product ? 1 : 0;
         $product->is_featured = $request->is_featured ? 1 : 0;
-        if($product->approve_by_admin == 1){
+        if($product->approval_status === ProductApprovalStatus::APPROVED){
             $product->status = $request->status;
         }
         $product->save();
