@@ -162,8 +162,8 @@ class ProductBrandController extends Controller
             'approval_status' => 'required|in:0,1,2',
         ];
         $customMessages = [
-            'approval_status.required' => trans('Approval status is required'),
-            'approval_status.in' => trans('Invalid approval status'),
+            'approval_status.required' => trans('admin.Approval status is required'),
+            'approval_status.in' => trans('admin.Invalid approval status'),
         ];
         $this->validate($request, $rules, $customMessages);
 
@@ -175,7 +175,7 @@ class ProductBrandController extends Controller
         $brand->approval_status = (int)$request->approval_status;
         $brand->save();
 
-        $notification = trans('Brand approval status updated successfully');
+        $notification = trans('admin.Brand approval status updated successfully');
         return response()->json(['message' => $notification, 'brand' => $brand], 200);
     }
 }

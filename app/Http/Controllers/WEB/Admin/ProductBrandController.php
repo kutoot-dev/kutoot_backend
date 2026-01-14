@@ -175,7 +175,7 @@ class ProductBrandController extends Controller
         $brand->approval_status = (int)$request->approval_status;
         $brand->save();
 
-        $notification = trans('admin_validation.Brand approval status updated successfully');
+        $notification = trans('admin.Brand approval status updated successfully');
         return response()->json(['message' => $notification, 'brand' => $brand], 200);
     }
 }
