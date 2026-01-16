@@ -9,6 +9,9 @@ use Illuminate\Support\Facades\Mail;
 class MailHelper
 {
 
+    /**
+     * Set mail config from database (EmailConfiguration model)
+     */
     public static function setMailConfig(){
 
         $email_setting=EmailConfiguration::first();
@@ -25,6 +28,26 @@ class MailHelper
 
         config(['mail.mailers.smtp' => $mailConfig]);
         config(['mail.from.address' => $email_setting->email]);
+    }
+
+    /**
+     * Set mail config from .env file (for SendGrid or other SMTP)
+     * Uses MAIL_HOST, MAIL_PORT, MAIL_USERNAME, MAIL_PASSWORD, MAIL_ENCRYPTION, MAIL_FROM_ADDRESS from .env
+     */
+    public static function setEnvMailConfig(){
+        $mailConfig = [
+            'transport' => 'smtp',
+            'host' => env('MAIL_HOST', 'smtp.sendgrid.net'),
+            'port' => env('MAIL_PORT', 587),
+            'encryption' => env('MAIL_ENCRYPTION', 'tls'),
+            'username' => env('MAIL_USERNAME', 'apikey'),
+            'password' => env('MAIL_PASSWORD'),
+            'timeout' => null
+        ];
+
+        config(['mail.mailers.smtp' => $mailConfig]);
+        config(['mail.from.address' => env('MAIL_FROM_ADDRESS', 'noreply@kutoot.com')]);
+        config(['mail.from.name' => env('MAIL_FROM_NAME', 'Kutoot')]);
     }
 
     // public static function sendOtp($email, $otp)

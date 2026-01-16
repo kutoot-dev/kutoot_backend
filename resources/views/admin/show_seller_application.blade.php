@@ -72,6 +72,12 @@
                                             <td class="text-muted">Owner Mobile</td>
                                             <td><a href="tel:{{ $application->owner_mobile }}">{{ $application->owner_mobile }}</a></td>
                                         </tr>
+                                        @if($application->owner_email)
+                                        <tr>
+                                            <td class="text-muted">Owner Email</td>
+                                            <td><a href="mailto:{{ $application->owner_email }}">{{ $application->owner_email }}</a></td>
+                                        </tr>
+                                        @endif
                                         <tr>
                                             <td class="text-muted">Store Type</td>
                                             <td>{{ $application->store_type }}</td>
@@ -172,7 +178,7 @@
                                 @csrf
                                 <div class="form-group">
                                     <label>Seller Email <span class="text-danger">*</span></label>
-                                    <input type="email" name="seller_email" class="form-control" required placeholder="seller@example.com">
+                                    <input type="email" name="seller_email" class="form-control" required placeholder="seller@example.com" value="{{ $application->owner_email }}">
                                     <small class="text-muted">Credentials will be sent to this email</small>
                                 </div>
                                 <button type="submit" class="btn btn-success btn-block">
@@ -191,7 +197,7 @@
                                 @csrf
                                 <div class="form-group">
                                     <label>Seller Email (Optional)</label>
-                                    <input type="email" name="seller_email" class="form-control" placeholder="seller@example.com">
+                                    <input type="email" name="seller_email" class="form-control" placeholder="seller@example.com" value="{{ $application->owner_email }}">
                                     <small class="text-muted">Rejection reason will be sent to this email</small>
                                 </div>
                                 <div class="form-group">

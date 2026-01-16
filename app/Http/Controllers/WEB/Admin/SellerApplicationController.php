@@ -394,7 +394,7 @@ class SellerApplicationController extends Controller
 
             // Send email with credentials (outside transaction)
             try {
-                MailHelper::setMailConfig();
+                MailHelper::setEnvMailConfig();
                 $loginUrl = url('/store/login');
                 Mail::to($request->sellerEmail)->send(
                     new SellerApplicationApproved(
@@ -478,7 +478,7 @@ class SellerApplicationController extends Controller
         // Send rejection email if we have an email
         if ($application->seller_email) {
             try {
-                MailHelper::setMailConfig();
+                MailHelper::setEnvMailConfig();
                 Mail::to($application->seller_email)->send(
                     new SellerApplicationRejected(
                         $application->store_name,
@@ -621,7 +621,7 @@ class SellerApplicationController extends Controller
             // Send email (outside transaction - don't fail if email fails)
             $emailSent = false;
             try {
-                MailHelper::setMailConfig();
+                MailHelper::setEnvMailConfig();
                 $loginUrl = url('/store/login');
                 Mail::to($request->seller_email)->send(
                     new SellerApplicationApproved(
@@ -679,7 +679,7 @@ class SellerApplicationController extends Controller
         // Send rejection email if we have an email
         if ($request->seller_email) {
             try {
-                MailHelper::setMailConfig();
+                MailHelper::setEnvMailConfig();
                 Mail::to($request->seller_email)->send(
                     new SellerApplicationRejected(
                         $application->store_name,
