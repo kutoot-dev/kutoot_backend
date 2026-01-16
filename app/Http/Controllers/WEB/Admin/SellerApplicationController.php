@@ -147,6 +147,76 @@ class SellerApplicationController extends Controller
     }
 
     /**
+     * API: Update application info (admin edits)
+     * PATCH /api/admin/seller-applications/{applicationId}
+     */
+    public function apiUpdate(Request $request, $applicationId)
+    {
+        $application = SellerApplication::where('application_id', $applicationId)->first();
+
+        if (!$application) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Application not found'
+            ], 404);
+        }
+
+        if ($application->isApproved()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Cannot update an already approved application'
+            ], 400);
+        }
+
+        $validator = Validator::make($request->all(), [
+            'storeName' => 'sometimes|string|max:255',
+            'ownerMobile' => 'sometimes|string|max:15',
+            'storeType' => 'sometimes|string|max:100',
+            'storeAddress' => 'sometimes|string|max:500',
+            'lat' => 'sometimes|numeric',
+            'lng' => 'sometimes|numeric',
+            'minBillAmount' => 'sometimes|numeric|min:0',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Validation failed',
+                'errors' => $validator->errors()
+            ], 422);
+        }
+
+        $updateData = [];
+        if ($request->has('storeName')) $updateData['store_name'] = $request->storeName;
+        if ($request->has('ownerMobile')) $updateData['owner_mobile'] = $request->ownerMobile;
+        if ($request->has('storeType')) $updateData['store_type'] = $request->storeType;
+        if ($request->has('storeAddress')) $updateData['store_address'] = $request->storeAddress;
+        if ($request->has('lat')) $updateData['lat'] = $request->lat;
+        if ($request->has('lng')) $updateData['lng'] = $request->lng;
+        if ($request->has('minBillAmount')) $updateData['min_bill_amount'] = $request->minBillAmount;
+
+        if (!empty($updateData)) {
+            $application->update($updateData);
+        }
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Application updated successfully',
+            'data' => [
+                'applicationId' => $application->application_id,
+                'storeName' => $application->store_name,
+                'ownerMobile' => $application->owner_mobile,
+                'storeType' => $application->store_type,
+                'storeAddress' => $application->store_address,
+                'lat' => $application->lat,
+                'lng' => $application->lng,
+                'minBillAmount' => $application->min_bill_amount,
+                'status' => $application->status,
+            ]
+        ]);
+    }
+
+    /**
      * API: Verify application (after manual call)
      * PATCH /api/admin/seller-applications/{applicationId}/verify
      */

@@ -438,6 +438,7 @@ Route::get('/seller/application-status', [\App\Http\Controllers\API\SellerApplic
 Route::prefix('admin')->middleware('auth:admin-api')->group(function () {
     Route::get('/seller-applications', [\App\Http\Controllers\WEB\Admin\SellerApplicationController::class, 'apiIndex']);
     Route::get('/seller-applications/{applicationId}', [\App\Http\Controllers\WEB\Admin\SellerApplicationController::class, 'apiShow']);
+    Route::patch('/seller-applications/{applicationId}', [\App\Http\Controllers\WEB\Admin\SellerApplicationController::class, 'apiUpdate']);
     Route::patch('/seller-applications/{applicationId}/verify', [\App\Http\Controllers\WEB\Admin\SellerApplicationController::class, 'apiVerify']);
     Route::patch('/seller-applications/{applicationId}/approve', [\App\Http\Controllers\WEB\Admin\SellerApplicationController::class, 'apiApprove']);
     Route::patch('/seller-applications/{applicationId}/reject', [\App\Http\Controllers\WEB\Admin\SellerApplicationController::class, 'apiReject']);
