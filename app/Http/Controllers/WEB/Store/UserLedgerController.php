@@ -228,6 +228,144 @@ class UserLedgerController extends Controller
             'data' => $data,
         ]);
     }
+
+    public function campaignData(Request $request, User $user)
+    {
+        $seller = Auth::guard('store')->user();
+        $seller->loadMissing('shop');
+        $shop = $seller->shop;
+
+        $draw = (int) $request->input('draw', 1);
+        $start = max(0, (int) $request->input('start', 0));
+        $rawLength = (int) $request->input('length', 10);
+        $length = $rawLength === -1 ? -1 : min(200, max(10, $rawLength));
+
+        if (!$shop || !$this->ensureUserBelongsToStore($shop->id, (int) $user->id)) {
+            return response()->json([
+                'draw' => $draw,
+                'recordsTotal' => 0,
+                'recordsFiltered' => 0,
+                'data' => [],
+            ]);
+        }
+
+        // Query campaign coins (coins earned from campaign purchases)
+        // Join: table_usercoins -> table_purchasecoins (on purchased_camp_id)
+        // For each purchase, show: campaign title, purchase date, coins earned (credit),
+        // coins used (sum of debits), expiry date
+        $base = UserCoins::query()
+            ->from('table_usercoins as uc')
+            ->join('table_purchasecoins as pc', 'pc.id', '=', 'uc.purchased_camp_id')
+            ->where('uc.user_id', (int) $user->id)
+            ->where('uc.type', 'credit')
+            ->where('uc.purchased_camp_id', '!=', null)
+            ->select([
+                'uc.id',
+                'uc.purchased_camp_id',
+                'uc.coins as coins_earned',
+                'uc.coin_expires',
+                'uc.created_at as purchase_date',
+                'pc.camp_title',
+                'pc.camp_ticket_price',
+                'pc.quantity',
+                'pc.payment_status',
+            ])
+            ->distinct();
+
+        // Add coins used (debits) as subquery
+        $base->selectRaw(
+            "(SELECT COALESCE(SUM(coins), 0) FROM table_usercoins WHERE purchased_camp_id = uc.purchased_camp_id AND user_id = ? AND type = 'debit') as coins_used",
+            [(int) $user->id]
+        );
+
+        // Datetime filters
+        $fromDt = $request->query('from_dt');
+        $toDt = $request->query('to_dt');
+        if ($fromDt || $toDt) {
+            $fromC = $this->parseIndianOrIsoDateTime($fromDt, Carbon::create(2000, 1, 1, 0, 0, 0))
+                ?? Carbon::create(2000, 1, 1, 0, 0, 0);
+            $toC = $this->parseIndianOrIsoDateTime($toDt, Carbon::now()->addYears(10))
+                ?? Carbon::now()->addYears(10);
+            if ($fromC->greaterThan($toC)) {
+                [$fromC, $toC] = [$toC, $fromC];
+            }
+            $base->whereBetween('uc.created_at', [$fromC->toDateTimeString(), $toC->toDateTimeString()]);
+        }
+
+        $recordsTotal = (clone $base)->count();
+
+        // Search
+        $search = (string) data_get($request->input('search'), 'value', '');
+        if ($search !== '') {
+            $base->where(function ($q) use ($search) {
+                $q->where('pc.camp_title', 'like', "%{$search}%")
+                    ->orWhere('pc.payment_status', 'like', "%{$search}%");
+                if (is_numeric($search)) {
+                    $q->orWhere('uc.coins', (int) $search)
+                        ->orWhere('pc.camp_ticket_price', (float) $search);
+                }
+            });
+        }
+
+        $recordsFiltered = (clone $base)->count();
+
+        if ($length === -1) {
+            $start = 0;
+            $length = $recordsFiltered;
+        }
+
+        // Ordering
+        $orderIdx = (int) data_get($request->input('order'), '0.column', 0);
+        $orderDir = strtolower((string) data_get($request->input('order'), '0.dir', 'desc')) === 'asc' ? 'asc' : 'desc';
+        $columns = (array) $request->input('columns', []);
+        $orderKey = (string) data_get($columns, "{$orderIdx}.data", 'purchase_date');
+        $orderMap = [
+            'camp_title' => 'pc.camp_title',
+            'purchase_date' => 'uc.created_at',
+            'coins_earned' => 'uc.coins',
+            'coins_used' => 'coins_used',
+            'coin_expires' => 'uc.coin_expires',
+            'payment_status' => 'pc.payment_status',
+        ];
+        $base->orderBy($orderMap[$orderKey] ?? 'uc.created_at', $orderDir);
+
+        $rows = $base->skip($start)->take($length)->get();
+
+        $data = $rows->values()->map(function ($r, $idx) use ($start) {
+            $expiresIn = null;
+            $isExpired = false;
+            if ($r->coin_expires) {
+                $expiryDate = Carbon::parse($r->coin_expires);
+                $now = Carbon::now();
+                $isExpired = $now->isAfter($expiryDate);
+                if (!$isExpired) {
+                    $expiresIn = $now->diffInDays($expiryDate);
+                }
+            }
+
+            return [
+                'sr_no' => $start + $idx + 1,
+                'camp_title' => $r->camp_title ?? '-',
+                'purchase_date' => $r->purchase_date,
+                'coins_earned' => (int) ($r->coins_earned ?? 0),
+                'coins_used' => (int) ($r->coins_used ?? 0),
+                'coins_balance' => (int) (($r->coins_earned ?? 0) - ($r->coins_used ?? 0)),
+                'coin_expires' => $r->coin_expires,
+                'expires_in' => $isExpired ? 'Expired' : ($expiresIn !== null ? $expiresIn . ' days' : '-'),
+                'is_expired' => $isExpired,
+                'payment_status' => $r->payment_status ?? '-',
+                'camp_ticket_price' => (float) ($r->camp_ticket_price ?? 0),
+                'quantity' => (int) ($r->quantity ?? 1),
+            ];
+        })->values();
+
+        return response()->json([
+            'draw' => $draw,
+            'recordsTotal' => $recordsTotal,
+            'recordsFiltered' => $recordsFiltered,
+            'data' => $data,
+        ]);
+    }
 }
 
 
