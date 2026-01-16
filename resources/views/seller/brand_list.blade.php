@@ -25,6 +25,7 @@
                             <thead>
                                 <tr>
                                     <th>{{__('admin.SN')}}</th>
+                                    <th>{{__('admin.Seller')}}</th>
                                     <th>{{__('admin.Name')}}</th>
                                     <th>{{__('admin.Slug')}}</th>
                                     <th>{{__('admin.Logo')}}</th>
@@ -37,6 +38,7 @@
                                 @forelse($brands ?? [] as $index => $brand)
                                     <tr>
                                         <td>{{ ++$index }}</td>
+                                        <td>{{ $brand->seller ? ($brand->seller->shop_name ?? $brand->seller->user->name ?? __('admin.Admin')) : __('admin.Admin') }}</td>
                                         <td>{{ $brand->name }}</td>
                                         <td>{{ $brand->slug }}</td>
                                         <td><img class="rounded-circle" src="{{ asset($brand->logo) }}" alt="" width="50px"></td>
@@ -79,7 +81,7 @@
                                     </tr>
                                   @empty
                                     <tr>
-                                        <td colspan="7" class="text-center">{{__('admin.No brands found')}}</td>
+                                        <td colspan="8" class="text-center">{{__('admin.No brands found')}}</td>
                                     </tr>
                                 @endforelse
                             </tbody>

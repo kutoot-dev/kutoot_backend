@@ -20,7 +20,8 @@ class SellerBrandController extends Controller
     public function index()
     {
         $seller = auth()->user()->seller;
-        $brands = Brand::where('seller_id', $seller->id)
+        $brands = Brand::with('seller.user')
+                        ->where('seller_id', $seller->id)
                         ->orderBy('id', 'desc')
                         ->get();
 

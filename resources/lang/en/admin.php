@@ -459,6 +459,7 @@
   'Product Tax' => 'Product Tax',
   'Tax' => 'Tax',
   'You can not delete this item. Because there are one or more products has been created in this item.' => 'You can not delete this item. Because there are one or more products has been created in this item.',
+  'You can not delete this brand. Because there are one or more products associated with this brand.' => 'You can not delete this brand. Because there are one or more products associated with this brand.',
   'Return Policy' => 'Return Policy',
   'Details' => 'Details',
   'Seller List' => 'Seller List',
