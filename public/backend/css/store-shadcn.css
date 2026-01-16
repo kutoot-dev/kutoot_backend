@@ -48,12 +48,14 @@
   --sh-radius-lg: 0.75rem;
   --sh-radius-xl: 1rem;
   
-  /* Sidebar */
-  --sh-sidebar-bg: #2D1C10;           /* Dark accents */
+  /* Sidebar - Warm gradient matching OTP email */
+  --sh-sidebar-bg: linear-gradient(180deg, #2D1C10 0%, #1A120D 100%);
+  --sh-sidebar-solid-bg: #2D1C10;     /* Fallback solid color */
   --sh-sidebar-border: #3D2A1C;
-  --sh-sidebar-item-hover: #3D2A1C;
-  --sh-sidebar-item-active: #EA6B1E;
-  --sh-sidebar-item-active-bg: rgba(234, 107, 30, 0.15);
+  --sh-sidebar-item-hover: rgba(234, 107, 30, 0.15);
+  --sh-sidebar-item-active: #31D7A9;  /* Accent teal for active */
+  --sh-sidebar-item-active-bg: rgba(49, 215, 169, 0.15);
+  --sh-sidebar-brand-gradient: linear-gradient(135deg, #EA6B1E 0%, #C1272D 100%);
   
   /* Navbar */
   --sh-navbar-bg: #2D1C10;            /* Dark accents for navbar */
@@ -106,12 +108,14 @@ html.dark,
   --sh-shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.4), 0 2px 4px -2px rgb(0 0 0 / 0.4);
   --sh-shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.4), 0 4px 6px -4px rgb(0 0 0 / 0.4);
   
-  /* Sidebar */
-  --sh-sidebar-bg: #2D1C10;
+  /* Sidebar - Warm gradient for dark mode */
+  --sh-sidebar-bg: linear-gradient(180deg, #2D1C10 0%, #1A120D 100%);
+  --sh-sidebar-solid-bg: #2D1C10;
   --sh-sidebar-border: #4D3A2C;
-  --sh-sidebar-item-hover: #3D2A1C;
-  --sh-sidebar-item-active: #EA6B1E;
-  --sh-sidebar-item-active-bg: rgba(234, 107, 30, 0.2);
+  --sh-sidebar-item-hover: rgba(234, 107, 30, 0.15);
+  --sh-sidebar-item-active: #31D7A9;  /* Accent teal */
+  --sh-sidebar-item-active-bg: rgba(49, 215, 169, 0.2);
+  --sh-sidebar-brand-gradient: linear-gradient(135deg, #EA6B1E 0%, #C1272D 100%);
   
   /* Navbar */
   --sh-navbar-bg: #2D1C10;
@@ -217,7 +221,7 @@ html[data-theme="dark"] .table-striped tbody tr:nth-of-type(even) {
 
 html.dark .table tbody tr:hover,
 html[data-theme="dark"] .table tbody tr:hover {
-  background-color: #3D2A1C !important;
+  background-color: rgba(234, 107, 30, 0.12) !important;  /* Warm orange tint for dark mode */
 }
 
 html.dark .text-muted,
@@ -233,65 +237,68 @@ html[data-theme="dark"] .navbar-bg {
 
 html.dark .main-sidebar,
 html[data-theme="dark"] .main-sidebar {
-  background-color: #2D1C10 !important;
+  background: #1A120D !important;
+  background-image: linear-gradient(180deg, #2D1C10 0%, #1A120D 100%) !important;
   border-color: #4D3A2C !important;
 }
 
 html.dark .sidebar-brand,
 html[data-theme="dark"] .sidebar-brand {
-  border-color: #4D3A2C !important;
+  background: linear-gradient(135deg, #EA6B1E 0%, #C1272D 100%) !important;
+  border-color: transparent !important;
 }
 
 html.dark .sidebar-brand a,
 html[data-theme="dark"] .sidebar-brand a {
-  color: #FFF6EE !important;
+  color: #ffffff !important;
 }
 
 html.dark .sidebar-menu li a,
 html[data-theme="dark"] .sidebar-menu li a {
-  color: #B8A99A !important;
+  color: rgba(255, 246, 238, 0.7) !important;
 }
 
 html.dark .sidebar-menu li a:hover,
 html[data-theme="dark"] .sidebar-menu li a:hover {
-  background-color: #3D2A1C !important;
+  background-color: rgba(234, 107, 30, 0.15) !important;
   color: #FFF6EE !important;
 }
 
 html.dark .sidebar-menu li.active > a,
 html[data-theme="dark"] .sidebar-menu li.active > a {
-  background-color: rgba(234, 107, 30, 0.2) !important;
-  color: #EA6B1E !important;
+  background: linear-gradient(90deg, rgba(49, 215, 169, 0.2) 0%, rgba(49, 215, 169, 0.05) 100%) !important;
+  color: #31D7A9 !important;
+  border-left: 3px solid #31D7A9 !important;
 }
 
 html.dark .sidebar-menu li.menu-header,
 html[data-theme="dark"] .sidebar-menu li.menu-header {
-  color: #B8A99A !important;
+  color: rgba(234, 107, 30, 0.8) !important;
 }
 
 /* Dark Mode Sidebar Sub-menu/Dropdown */
 html.dark .sidebar-menu li ul.dropdown-menu,
 html[data-theme="dark"] .sidebar-menu li ul.dropdown-menu {
-  background-color: transparent !important;
+  background-color: rgba(0, 0, 0, 0.2) !important;
   border: none !important;
 }
 
 html.dark .sidebar-menu li ul.dropdown-menu li a,
 html[data-theme="dark"] .sidebar-menu li ul.dropdown-menu li a {
-  color: #B8A99A !important;
+  color: rgba(255, 246, 238, 0.6) !important;
   background-color: transparent !important;
 }
 
 html.dark .sidebar-menu li ul.dropdown-menu li a:hover,
 html[data-theme="dark"] .sidebar-menu li ul.dropdown-menu li a:hover {
   color: #FFF6EE !important;
-  background-color: #3D2A1C !important;
+  background-color: rgba(234, 107, 30, 0.1) !important;
 }
 
 html.dark .sidebar-menu li ul.dropdown-menu li.active a,
 html[data-theme="dark"] .sidebar-menu li ul.dropdown-menu li.active a {
-  color: #EA6B1E !important;
-  background-color: rgba(234, 107, 30, 0.15) !important;
+  color: #31D7A9 !important;
+  background-color: rgba(49, 215, 169, 0.1) !important;
 }
 
 html.dark .navbar .nav-link,
@@ -1076,7 +1083,7 @@ select.form-control {
 }
 
 .table tbody tr:hover {
-  background-color: var(--sh-accent) !important;
+  background-color: rgba(234, 107, 30, 0.08) !important;  /* Warm orange tint */
 }
 
 /* DataTables */
@@ -1164,44 +1171,96 @@ select.form-control {
 }
 
 /* ========================================
-   8. Sidebar
+   8. Sidebar - OTP Email Inspired Design
    ======================================== */
 
-.main-sidebar {
-  background-color: var(--sh-sidebar-bg) !important;
-  border-right: 1px solid var(--sh-sidebar-border) !important;
-  box-shadow: none !important;
+.main-sidebar,
+.main-sidebar aside,
+.main-sidebar #sidebar-wrapper {
+  background: #2D1C10 !important;
+  background-color: #2D1C10 !important;
+  background-image: linear-gradient(180deg, #2D1C10 0%, #1A120D 100%) !important;
 }
 
+.main-sidebar {
+  border-right: 1px solid var(--sh-sidebar-border) !important;
+  box-shadow: 2px 0 10px rgba(45, 28, 16, 0.3) !important;
+}
+
+/* Sidebar Brand with OTP-style gradient */
 .main-sidebar .sidebar-brand {
-  background-color: transparent !important;
-  border-bottom: 1px solid var(--sh-sidebar-border) !important;
+  background: linear-gradient(135deg, #EA6B1E 0%, #C1272D 100%) !important;
+  border-bottom: none !important;
+  padding: 1rem !important;
+  position: relative;
+  overflow: hidden;
+}
+
+.main-sidebar .sidebar-brand::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, transparent 100%);
+  pointer-events: none;
 }
 
 .main-sidebar .sidebar-brand a {
-  color: var(--sh-foreground) !important;
+  color: #ffffff !important;
   font-weight: 700 !important;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.2) !important;
+  position: relative;
+  z-index: 1;
 }
 
+.main-sidebar .sidebar-brand-sm {
+  background: linear-gradient(135deg, #EA6B1E 0%, #C1272D 100%) !important;
+}
+
+.main-sidebar .sidebar-brand-sm a {
+  color: #ffffff !important;
+}
+
+/* Sidebar Menu - ensure proper background */
+.sidebar-menu {
+  background: transparent !important;
+}
+
+/* Sidebar Menu Items */
 .sidebar-menu li a {
-  color: var(--sh-muted-foreground) !important;
+  color: #FFF6EE !important;
   padding: 0.75rem 1.25rem !important;
   border-radius: 0 !important;
   margin: 0.125rem 0.75rem !important;
   border-radius: var(--sh-radius) !important;
-  transition: all 0.15s ease !important;
+  transition: all 0.2s ease !important;
+  position: relative;
+}
+
+.sidebar-menu li a i,
+.sidebar-menu li a .fas,
+.sidebar-menu li a .far,
+.sidebar-menu li a .fab {
+  color: #FFF6EE !important;
 }
 
 .sidebar-menu li a:hover {
-  background-color: var(--sh-sidebar-item-hover) !important;
-  color: var(--sh-foreground) !important;
+  background-color: rgba(234, 107, 30, 0.15) !important;
+  color: #FFF6EE !important;
+  transform: translateX(2px);
 }
 
+/* Active State - Teal accent from OTP email */
 .sidebar-menu li.active > a,
 .sidebar-menu li a.active {
-  background-color: var(--sh-sidebar-item-active-bg) !important;
-  color: var(--sh-sidebar-item-active) !important;
+  background: linear-gradient(90deg, rgba(49, 215, 169, 0.2) 0%, rgba(49, 215, 169, 0.05) 100%) !important;
+  color: #31D7A9 !important;
   font-weight: 600 !important;
+  border-left: 3px solid #31D7A9 !important;
+  margin-left: 0.5rem !important;
+  padding-left: calc(1.25rem - 3px) !important;
 }
 
 .sidebar-menu li.active > a::before {
@@ -1215,17 +1274,33 @@ select.form-control {
   color: inherit !important;
   width: 1.5rem !important;
   margin-right: 0.5rem !important;
+  transition: transform 0.2s ease !important;
 }
 
-/* Menu Headers */
+.sidebar-menu li a:hover i {
+  transform: scale(1.1);
+}
+
+/* Menu Headers - Styled like OTP email section headers */
 .sidebar-menu li.menu-header {
-  padding: 0.75rem 1.25rem 0.5rem !important;
+  padding: 1rem 1.25rem 0.5rem !important;
   font-size: 0.65rem !important;
   text-transform: uppercase !important;
-  letter-spacing: 0.08em !important;
-  color: var(--sh-muted-foreground) !important;
-  font-weight: 600 !important;
+  letter-spacing: 0.1em !important;
+  color: rgba(234, 107, 30, 0.8) !important;
+  font-weight: 700 !important;
   margin-top: 0.5rem !important;
+  position: relative;
+}
+
+.sidebar-menu li.menu-header::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 1.25rem;
+  right: 1.25rem;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(234, 107, 30, 0.3) 0%, transparent 100%);
 }
 
 .sidebar-menu li.menu-header:first-child {
@@ -1235,36 +1310,41 @@ select.form-control {
 /* Dropdown menus in sidebar (sub-navigation) */
 .sidebar-menu li .dropdown-menu,
 .sidebar-menu li ul.dropdown-menu {
-  background-color: transparent !important;
+  background-color: rgba(0, 0, 0, 0.15) !important;
   box-shadow: none !important;
   border: none !important;
   padding-left: 0.5rem !important;
-  margin: 0 !important;
+  margin: 0.25rem 0 !important;
   position: static !important;
+  border-radius: var(--sh-radius) !important;
+  margin-left: 0.75rem !important;
+  margin-right: 0.75rem !important;
   /* Let JavaScript control display property for slideUp/slideDown animations */
   float: none !important;
 }
 
 .sidebar-menu li .dropdown-menu li a,
 .sidebar-menu li ul.dropdown-menu li a {
-  padding: 0.6rem 1rem 0.6rem 2.75rem !important;
+  padding: 0.6rem 1rem 0.6rem 2.5rem !important;
   font-size: 0.85rem !important;
-  color: rgba(255, 246, 238, 0.7) !important;
+  color: rgba(255, 246, 238, 0.65) !important;
   background-color: transparent !important;
-  border-radius: 0 !important;
+  border-radius: var(--sh-radius) !important;
   transition: all 0.15s ease !important;
+  margin: 0.125rem 0.5rem !important;
 }
 
 .sidebar-menu li .dropdown-menu li a:hover,
 .sidebar-menu li ul.dropdown-menu li a:hover {
   color: #FFF6EE !important;
-  background-color: rgba(255, 255, 255, 0.05) !important;
+  background-color: rgba(234, 107, 30, 0.1) !important;
 }
 
+/* Active dropdown item - Teal accent */
 .sidebar-menu li .dropdown-menu li.active a,
 .sidebar-menu li ul.dropdown-menu li.active a {
-  color: #EA6B1E !important;
-  background-color: rgba(234, 107, 30, 0.1) !important;
+  color: #31D7A9 !important;
+  background-color: rgba(49, 215, 169, 0.1) !important;
   font-weight: 500 !important;
 }
 
@@ -1282,7 +1362,14 @@ select.form-control {
 /* Mini Sidebar Base Styles */
 body.sidebar-mini .main-sidebar {
   width: 65px !important;
-  background-color: var(--sh-sidebar-bg) !important;
+  background: #2D1C10 !important;
+  background-color: #2D1C10 !important;
+  background-image: linear-gradient(180deg, #2D1C10 0%, #1A120D 100%) !important;
+}
+
+body.sidebar-mini .main-sidebar #sidebar-wrapper,
+body.sidebar-mini .main-sidebar aside {
+  background: transparent !important;
 }
 
 body.sidebar-mini .main-sidebar .sidebar-brand {
@@ -1291,17 +1378,18 @@ body.sidebar-mini .main-sidebar .sidebar-brand {
 
 body.sidebar-mini .main-sidebar .sidebar-brand-sm {
   display: block !important;
-  background-color: transparent !important;
-  border-bottom: 1px solid var(--sh-sidebar-border) !important;
+  background: linear-gradient(135deg, #EA6B1E 0%, #C1272D 100%) !important;
+  border-bottom: none !important;
   height: 60px !important;
   line-height: 60px !important;
   text-align: center !important;
 }
 
 body.sidebar-mini .main-sidebar .sidebar-brand-sm a {
-  color: var(--sh-foreground) !important;
+  color: #ffffff !important;
   font-weight: 700 !important;
   font-size: 1.25rem !important;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.2) !important;
 }
 
 /* Mini Sidebar Menu Items - Icon Only */
@@ -1315,8 +1403,8 @@ body.sidebar-mini .main-sidebar .sidebar-menu > li.menu-header {
   font-size: 0 !important;
   height: 2px !important;
   margin: 0.5rem 0 !important;
-  background-color: var(--sh-sidebar-border) !important;
-  opacity: 0.3 !important;
+  background-color: rgba(255, 246, 238, 0.1) !important;
+  opacity: 1 !important;
 }
 
 body.sidebar-mini .main-sidebar .sidebar-menu > li > a {
@@ -1327,19 +1415,34 @@ body.sidebar-mini .main-sidebar .sidebar-menu > li > a {
   align-items: center !important;
   margin: 0.125rem 0 !important;
   display: flex !important;
-  color: rgba(255, 246, 238, 0.7) !important;
+  color: #FFF6EE !important;
   transition: all 0.15s ease !important;
 }
 
 body.sidebar-mini .main-sidebar .sidebar-menu > li > a:hover {
-  background-color: var(--sh-sidebar-item-hover) !important;
+  background-color: rgba(234, 107, 30, 0.2) !important;
+  color: #ffffff !important;
+}
+
+body.sidebar-mini .main-sidebar .sidebar-menu > li > a i,
+body.sidebar-mini .main-sidebar .sidebar-menu > li > a .fas,
+body.sidebar-mini .main-sidebar .sidebar-menu > li > a .far,
+body.sidebar-mini .main-sidebar .sidebar-menu > li > a .fab {
   color: #FFF6EE !important;
+  font-size: 1.25rem !important;
 }
 
 body.sidebar-mini .main-sidebar .sidebar-menu > li.active > a {
-  background-color: var(--sh-sidebar-item-active-bg) !important;
-  color: var(--sh-sidebar-item-active) !important;
-  box-shadow: 0 2px 4px rgba(234, 107, 30, 0.2) !important;
+  background-color: rgba(234, 107, 30, 0.35) !important;
+  color: #EA6B1E !important;
+  box-shadow: 0 2px 8px rgba(234, 107, 30, 0.4) !important;
+}
+
+body.sidebar-mini .main-sidebar .sidebar-menu > li.active > a i,
+body.sidebar-mini .main-sidebar .sidebar-menu > li.active > a .fas,
+body.sidebar-mini .main-sidebar .sidebar-menu > li.active > a .far,
+body.sidebar-mini .main-sidebar .sidebar-menu > li.active > a .fab {
+  color: #EA6B1E !important;
 }
 
 /* Hide text, show only icons */
@@ -1415,9 +1518,13 @@ body.sidebar-mini .main-sidebar .sidebar-menu > li ul.dropdown-menu li a:hover {
 }
 
 body.sidebar-mini .main-sidebar .sidebar-menu > li ul.dropdown-menu li.active > a {
-  background-color: var(--sh-sidebar-item-active-bg) !important;
-  color: var(--sh-sidebar-item-active) !important;
+  background-color: rgba(234, 107, 30, 0.2) !important;
+  color: #EA6B1E !important;
   font-weight: 500 !important;
+}
+
+body.sidebar-mini .main-sidebar .sidebar-menu > li ul.dropdown-menu li.active > a i {
+  color: #EA6B1E !important;
 }
 
 body.sidebar-mini .main-sidebar .sidebar-menu > li ul.dropdown-menu li a i {
@@ -1440,23 +1547,35 @@ body.sidebar-mini .main-footer {
 /* Dark Mode Mini Sidebar */
 html.dark body.sidebar-mini .main-sidebar,
 html[data-theme="dark"] body.sidebar-mini .main-sidebar {
-  background-color: #2D1C10 !important;
+  background: #1A120D !important;
+  background-image: linear-gradient(180deg, #2D1C10 0%, #1A120D 100%) !important;
+}
+
+html.dark body.sidebar-mini .main-sidebar .sidebar-brand-sm,
+html[data-theme="dark"] body.sidebar-mini .main-sidebar .sidebar-brand-sm {
+  background: linear-gradient(135deg, #EA6B1E 0%, #C1272D 100%) !important;
 }
 
 html.dark body.sidebar-mini .main-sidebar .sidebar-menu > li > a,
 html[data-theme="dark"] body.sidebar-mini .main-sidebar .sidebar-menu > li > a {
-  color: #B8A99A !important;
+  color: rgba(255, 246, 238, 0.85) !important;
 }
 
 html.dark body.sidebar-mini .main-sidebar .sidebar-menu > li > a:hover,
 html[data-theme="dark"] body.sidebar-mini .main-sidebar .sidebar-menu > li > a:hover {
-  background-color: #3D2A1C !important;
+  background-color: rgba(234, 107, 30, 0.2) !important;
   color: #FFF6EE !important;
 }
 
 html.dark body.sidebar-mini .main-sidebar .sidebar-menu > li.active > a,
 html[data-theme="dark"] body.sidebar-mini .main-sidebar .sidebar-menu > li.active > a {
-  background-color: rgba(234, 107, 30, 0.2) !important;
+  background-color: rgba(234, 107, 30, 0.3) !important;
+  color: #EA6B1E !important;
+  box-shadow: 0 2px 6px rgba(234, 107, 30, 0.3) !important;
+}
+
+html.dark body.sidebar-mini .main-sidebar .sidebar-menu > li.active > a i,
+html[data-theme="dark"] body.sidebar-mini .main-sidebar .sidebar-menu > li.active > a i {
   color: #EA6B1E !important;
 }
 
@@ -1468,18 +1587,23 @@ html[data-theme="dark"] body.sidebar-mini .main-sidebar .sidebar-menu > li ul.dr
 
 html.dark body.sidebar-mini .main-sidebar .sidebar-menu > li ul.dropdown-menu li a,
 html[data-theme="dark"] body.sidebar-mini .main-sidebar .sidebar-menu > li ul.dropdown-menu li a {
-  color: #B8A99A !important;
+  color: rgba(255, 246, 238, 0.65) !important;
 }
 
 html.dark body.sidebar-mini .main-sidebar .sidebar-menu > li ul.dropdown-menu li a:hover,
 html[data-theme="dark"] body.sidebar-mini .main-sidebar .sidebar-menu > li ul.dropdown-menu li a:hover {
-  background-color: #3D2A1C !important;
+  background-color: rgba(234, 107, 30, 0.1) !important;
   color: #FFF6EE !important;
 }
 
 html.dark body.sidebar-mini .main-sidebar .sidebar-menu > li ul.dropdown-menu li.active > a,
 html[data-theme="dark"] body.sidebar-mini .main-sidebar .sidebar-menu > li ul.dropdown-menu li.active > a {
-  background-color: rgba(234, 107, 30, 0.15) !important;
+  background-color: rgba(234, 107, 30, 0.2) !important;
+  color: #EA6B1E !important;
+}
+
+html.dark body.sidebar-mini .main-sidebar .sidebar-menu > li ul.dropdown-menu li.active > a i,
+html[data-theme="dark"] body.sidebar-mini .main-sidebar .sidebar-menu > li ul.dropdown-menu li.active > a i {
   color: #EA6B1E !important;
 }
 
@@ -1983,5 +2107,48 @@ table.dataTable > tbody > tr.child span.dtr-data {
     margin: 0 !important;
     padding: 0 !important;
   }
+}
+
+/* ========================================
+   24. Sidebar Fix - Ensure Visibility
+   ======================================== */
+
+/* Force sidebar z-index above charts */
+.main-sidebar {
+  z-index: 880 !important;
+  position: fixed !important;
+}
+
+/* Ensure sidebar toggle button works */
+[data-toggle="sidebar"] {
+  cursor: pointer !important;
+  z-index: 900 !important;
+}
+
+/* Force sidebar mini state background and icon colors */
+body.sidebar-mini .main-sidebar,
+body.sidebar-mini .main-sidebar aside,
+body.sidebar-mini .main-sidebar #sidebar-wrapper,
+body.sidebar-mini .main-sidebar .sidebar-menu {
+  background: #2D1C10 !important;
+  background-color: #2D1C10 !important;
+}
+
+/* Ensure all sidebar icons are visible in both states */
+.main-sidebar .sidebar-menu li a i {
+  color: #FFF6EE !important;
+}
+
+.main-sidebar .sidebar-menu li.active a i {
+  color: #EA6B1E !important;
+}
+
+body.sidebar-mini .main-sidebar .sidebar-menu li a i {
+  color: #FFF6EE !important;
+  font-size: 1.25rem !important;
+}
+
+body.sidebar-mini .main-sidebar .sidebar-menu li.active a i {
+  color: #EA6B1E !important;
 }
 
