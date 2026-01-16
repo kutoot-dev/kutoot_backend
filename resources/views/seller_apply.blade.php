@@ -369,6 +369,160 @@
             color: var(--sh-success);
         }
         
+        /* Location Permission Modal */
+        .location-modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.6);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            padding: 1rem;
+        }
+        
+        .location-modal-overlay.show {
+            display: flex;
+        }
+        
+        .location-modal {
+            background: var(--sh-card);
+            border-radius: var(--sh-radius-lg);
+            max-width: 500px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        }
+        
+        .location-modal-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--sh-border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .location-modal-header h3 {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: var(--sh-foreground);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .location-modal-header .close-btn {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--sh-muted-foreground);
+            padding: 0.25rem;
+            line-height: 1;
+        }
+        
+        .location-modal-header .close-btn:hover {
+            color: var(--sh-foreground);
+        }
+        
+        .location-modal-body {
+            padding: 1.5rem;
+        }
+        
+        .location-modal-body p {
+            color: var(--sh-muted-foreground);
+            font-size: 0.875rem;
+            margin-bottom: 1.25rem;
+        }
+        
+        .browser-tabs {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+        
+        .browser-tab {
+            padding: 0.5rem 1rem;
+            border: 1px solid var(--sh-border);
+            border-radius: var(--sh-radius);
+            background: var(--sh-muted);
+            cursor: pointer;
+            font-size: 0.75rem;
+            font-weight: 500;
+            color: var(--sh-muted-foreground);
+            transition: all 0.15s ease;
+        }
+        
+        .browser-tab:hover {
+            background: var(--sh-secondary);
+        }
+        
+        .browser-tab.active {
+            background: var(--sh-primary);
+            color: var(--sh-primary-foreground);
+            border-color: var(--sh-primary);
+        }
+        
+        .browser-instructions {
+            display: none;
+        }
+        
+        .browser-instructions.active {
+            display: block;
+        }
+        
+        .browser-instructions ol {
+            padding-left: 1.25rem;
+            margin: 0;
+        }
+        
+        .browser-instructions li {
+            font-size: 0.875rem;
+            color: var(--sh-foreground);
+            margin-bottom: 0.75rem;
+            line-height: 1.5;
+        }
+        
+        .browser-instructions li:last-child {
+            margin-bottom: 0;
+        }
+        
+        .browser-instructions .highlight {
+            background: rgba(234, 107, 30, 0.15);
+            color: var(--sh-primary);
+            padding: 0.125rem 0.375rem;
+            border-radius: 4px;
+            font-weight: 500;
+        }
+        
+        .location-modal-footer {
+            padding: 1rem 1.5rem;
+            border-top: 1px solid var(--sh-border);
+            display: flex;
+            gap: 0.75rem;
+            justify-content: flex-end;
+        }
+        
+        .location-tip {
+            background: rgba(234, 107, 30, 0.1);
+            border: 1px solid var(--sh-primary);
+            border-radius: var(--sh-radius);
+            padding: 0.75rem 1rem;
+            margin-top: 1rem;
+            font-size: 0.75rem;
+            color: var(--sh-primary);
+        }
+        
+        .location-tip strong {
+            display: block;
+            margin-bottom: 0.25rem;
+        }
+        
         .submit-section {
             text-align: right;
             margin-top: 2rem;
@@ -411,6 +565,80 @@
     </style>
 </head>
 <body>
+    <!-- Location Permission Modal -->
+    <div class="location-modal-overlay" id="locationPermissionModal">
+        <div class="location-modal">
+            <div class="location-modal-header">
+                <h3>📍 Enable Location Access</h3>
+                <button type="button" class="close-btn" onclick="closeLocationModal()">&times;</button>
+            </div>
+            <div class="location-modal-body">
+                <p>To automatically detect your store location, please allow location access in your browser. Select your browser below for instructions:</p>
+                
+                <div class="browser-tabs">
+                    <button type="button" class="browser-tab active" onclick="showBrowserInstructions('chrome')">Chrome</button>
+                    <button type="button" class="browser-tab" onclick="showBrowserInstructions('edge')">Edge</button>
+                    <button type="button" class="browser-tab" onclick="showBrowserInstructions('firefox')">Firefox</button>
+                    <button type="button" class="browser-tab" onclick="showBrowserInstructions('safari')">Safari</button>
+                    <button type="button" class="browser-tab" onclick="showBrowserInstructions('mobile')">Mobile</button>
+                </div>
+                
+                <div id="chrome-instructions" class="browser-instructions active">
+                    <ol>
+                        <li>Click the <span class="highlight">🔒 lock icon</span> in the address bar (left side of URL)</li>
+                        <li>Find <span class="highlight">Location</span> in the permissions list</li>
+                        <li>Change it from "Block" to <span class="highlight">Allow</span></li>
+                        <li>Click the <span class="highlight">Use Current Location</span> button again</li>
+                    </ol>
+                </div>
+                
+                <div id="edge-instructions" class="browser-instructions">
+                    <ol>
+                        <li>Click the <span class="highlight">🔒 lock icon</span> in the address bar</li>
+                        <li>Click on <span class="highlight">Permissions for this site</span></li>
+                        <li>Find <span class="highlight">Location</span> and set it to <span class="highlight">Allow</span></li>
+                        <li>Refresh the page and try again</li>
+                    </ol>
+                </div>
+                
+                <div id="firefox-instructions" class="browser-instructions">
+                    <ol>
+                        <li>Click the <span class="highlight">🔒 lock icon</span> in the address bar</li>
+                        <li>Click <span class="highlight">Clear Permissions</span> or find Location settings</li>
+                        <li>Click the location button again and select <span class="highlight">Allow</span> when prompted</li>
+                    </ol>
+                </div>
+                
+                <div id="safari-instructions" class="browser-instructions">
+                    <ol>
+                        <li>Go to <span class="highlight">Safari → Settings → Websites</span></li>
+                        <li>Click on <span class="highlight">Location</span> in the left sidebar</li>
+                        <li>Find this website and change to <span class="highlight">Allow</span></li>
+                        <li>Refresh the page and try again</li>
+                    </ol>
+                </div>
+                
+                <div id="mobile-instructions" class="browser-instructions">
+                    <ol>
+                        <li><strong>Android:</strong> Go to <span class="highlight">Settings → Apps → Browser → Permissions → Location → Allow</span></li>
+                        <li><strong>iPhone:</strong> Go to <span class="highlight">Settings → Privacy → Location Services → Safari/Browser → Allow</span></li>
+                        <li>Also enable <span class="highlight">GPS/Location</span> in your device settings</li>
+                        <li>Refresh the page and try again</li>
+                    </ol>
+                </div>
+                
+                <div class="location-tip">
+                    <strong>💡 Tip:</strong>
+                    If you still can't enable location, you can enter your store coordinates manually using the "Enter coordinates manually" option below.
+                </div>
+            </div>
+            <div class="location-modal-footer">
+                <button type="button" class="btn btn-secondary" onclick="closeLocationModal()">Use Manual Entry</button>
+                <button type="button" class="btn btn-primary" onclick="retryLocation()">Try Again</button>
+            </div>
+        </div>
+    </div>
+
     <div class="seller-form-container">
         <div class="seller-form-header">
             <div class="logo">
@@ -471,6 +699,26 @@
                         </div>
                         <div class="form-error" id="otp_error"></div>
                         <div class="form-success" id="otp_success"></div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>
+                            Owner Email Address <span class="required">*</span>
+                        </label>
+                        <div class="phone-input-group">
+                            <input type="email" id="owner_email" name="owner_email" class="form-control" 
+                                   placeholder="Enter your email address"
+                                   value="{{ old('owner_email') }}" required>
+                            <button type="button" id="btnSendEmailOtp" class="btn btn-primary">Send OTP</button>
+                        </div>
+                        <div class="form-hint">We'll send a verification code to this email</div>
+                        <div class="form-error" id="owner_email_error"></div>
+                        <div class="otp-group" id="emailOtpGroup">
+                            <input type="text" id="emailOtpInput" class="form-control" placeholder="Enter OTP" maxlength="6" pattern="[0-9]{6}">
+                            <button type="button" id="btnVerifyEmailOtp" class="btn btn-primary">Verify</button>
+                        </div>
+                        <div class="form-error" id="email_otp_error"></div>
+                        <div class="form-success" id="email_otp_success"></div>
                     </div>
                     
                     <div class="form-group">
@@ -568,6 +816,7 @@
                 </div>
                 
                 <input type="hidden" id="otpVerified" value="0">
+                <input type="hidden" id="emailOtpVerified" value="0">
                 
                 <div class="submit-section">
                     <button type="submit" id="btnSubmit" class="btn btn-primary" disabled>
@@ -581,6 +830,69 @@
     <script>
         const csrfToken = document.querySelector('meta[name="csrf-token"]').content;
         let otpVerified = false;
+        let emailOtpVerified = false;
+        
+        // Location Permission Modal Functions
+        function closeLocationModal() {
+            document.getElementById('locationPermissionModal').classList.remove('show');
+            document.body.style.overflow = '';
+            document.getElementById('manualLocation').classList.add('show');
+            document.getElementById('toggleManual').textContent = 'Hide manual entry';
+        }
+        
+        function showBrowserInstructions(browser) {
+            // Remove active from all tabs and instructions
+            document.querySelectorAll('.browser-tab').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.browser-instructions').forEach(inst => inst.classList.remove('active'));
+            
+            // Add active to clicked tab and corresponding instructions
+            event.target.classList.add('active');
+            document.getElementById(browser + '-instructions').classList.add('active');
+        }
+        
+        function retryLocation() {
+            closeLocationModal();
+            setTimeout(() => {
+                document.getElementById('btnUseLocation').click();
+            }, 300);
+        }
+        
+        function detectBrowser() {
+            const ua = navigator.userAgent.toLowerCase();
+            if (/android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini/i.test(ua)) {
+                return 'mobile';
+            } else if (ua.indexOf('edg') > -1) {
+                return 'edge';
+            } else if (ua.indexOf('chrome') > -1) {
+                return 'chrome';
+            } else if (ua.indexOf('safari') > -1) {
+                return 'safari';
+            } else if (ua.indexOf('firefox') > -1) {
+                return 'firefox';
+            }
+            return 'chrome';
+        }
+        
+        function showLocationModal() {
+            const browser = detectBrowser();
+            
+            // Reset all tabs and instructions
+            document.querySelectorAll('.browser-tab').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.browser-instructions').forEach(inst => inst.classList.remove('active'));
+            
+            // Activate detected browser tab and instructions
+            const tabs = document.querySelectorAll('.browser-tab');
+            tabs.forEach(tab => {
+                if (tab.textContent.toLowerCase() === browser || 
+                    (browser === 'mobile' && tab.textContent === 'Mobile')) {
+                    tab.classList.add('active');
+                }
+            });
+            document.getElementById(browser + '-instructions').classList.add('active');
+            
+            document.getElementById('locationPermissionModal').classList.add('show');
+            document.body.style.overflow = 'hidden';
+        }
         
         function showError(fieldId, message) {
             const errorEl = document.getElementById(fieldId + '_error');
@@ -625,6 +937,7 @@
             const btnSubmit = document.getElementById('btnSubmit');
             
             const isValid = otpVerified && 
+                           emailOtpVerified &&
                            lat && lng && 
                            storeName.length >= 3 && 
                            storeType && 
@@ -797,6 +1110,128 @@
             }
         });
         
+        // Email validation
+        document.getElementById('owner_email').addEventListener('blur', function() {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(this.value)) {
+                showError('owner_email', 'Please enter a valid email address');
+            } else {
+                hideFeedback('owner_email');
+                this.classList.remove('error');
+                this.classList.add('success');
+            }
+        });
+        
+        // Send Email OTP
+        document.getElementById('btnSendEmailOtp').addEventListener('click', async function() {
+            const email = document.getElementById('owner_email').value.trim();
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            
+            if (!emailRegex.test(email)) {
+                showError('owner_email', 'Please enter a valid email address');
+                return;
+            }
+            
+            this.classList.add('loading');
+            this.disabled = true;
+            const originalText = this.textContent;
+            
+            try {
+                const response = await fetch('/api/otp/send-email', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': csrfToken
+                    },
+                    body: JSON.stringify({ email })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    document.getElementById('emailOtpGroup').classList.add('show');
+                    document.getElementById('emailOtpInput').focus();
+                    this.textContent = 'Resend OTP';
+                    this.disabled = false;
+                    this.classList.remove('loading');
+                    showSuccess('owner_email', 'OTP sent to your email!');
+                    
+                    if (data.debug_otp) {
+                        showSuccess('email_otp', 'Debug OTP: ' + data.debug_otp);
+                    }
+                } else {
+                    showError('owner_email', data.message || 'Failed to send OTP');
+                    this.disabled = false;
+                    this.textContent = originalText;
+                    this.classList.remove('loading');
+                }
+            } catch (err) {
+                showError('owner_email', 'Network error. Please try again.');
+                this.disabled = false;
+                this.textContent = originalText;
+                this.classList.remove('loading');
+            }
+        });
+        
+        // Verify Email OTP
+        document.getElementById('btnVerifyEmailOtp').addEventListener('click', async function() {
+            const email = document.getElementById('owner_email').value.trim();
+            const otp = document.getElementById('emailOtpInput').value;
+            
+            if (!/^[0-9]{6}$/.test(otp)) {
+                showError('email_otp', 'Please enter a valid 6-digit OTP');
+                return;
+            }
+            
+            this.classList.add('loading');
+            this.disabled = true;
+            const originalText = this.textContent;
+            
+            try {
+                const response = await fetch('/api/otp/verify-email', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': csrfToken
+                    },
+                    body: JSON.stringify({ email, otp })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    emailOtpVerified = true;
+                    document.getElementById('emailOtpVerified').value = '1';
+                    document.getElementById('btnSendEmailOtp').textContent = '✓ Verified';
+                    document.getElementById('btnSendEmailOtp').classList.remove('btn-primary');
+                    document.getElementById('btnSendEmailOtp').classList.add('btn-success');
+                    document.getElementById('btnSendEmailOtp').disabled = true;
+                    document.getElementById('owner_email').readOnly = true;
+                    document.getElementById('emailOtpGroup').style.display = 'none';
+                    showSuccess('email_otp', 'Email verified successfully');
+                    checkFormValidity();
+                } else {
+                    showError('email_otp', data.message || 'Invalid OTP');
+                    document.getElementById('emailOtpInput').value = '';
+                    document.getElementById('emailOtpInput').focus();
+                    this.disabled = false;
+                    this.textContent = originalText;
+                    this.classList.remove('loading');
+                }
+            } catch (err) {
+                showError('email_otp', 'Network error. Please try again.');
+                this.disabled = false;
+                this.textContent = originalText;
+                this.classList.remove('loading');
+            }
+        });
+        
+        document.getElementById('emailOtpInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                document.getElementById('btnVerifyEmailOtp').click();
+            }
+        });
+        
         // Use Current Location
         document.getElementById('btnUseLocation').addEventListener('click', function() {
             if (!navigator.geolocation) {
@@ -844,21 +1279,31 @@
                 },
                 (error) => {
                     let message = 'Unable to get location.';
+                    let showModal = false;
+                    
                     switch(error.code) {
                         case error.PERMISSION_DENIED:
-                            message = 'Location access denied. Please enable location permission.';
+                            message = 'Location access denied. Click below for instructions to enable it.';
+                            showModal = true;
                             break;
                         case error.POSITION_UNAVAILABLE:
-                            message = 'Location unavailable. Please check GPS settings.';
+                            message = 'Location unavailable. Please check if GPS/Location is enabled on your device.';
+                            showModal = true;
                             break;
                         case error.TIMEOUT:
                             message = 'Location request timed out. Please try again.';
                             break;
                     }
+                    
                     showError('location', message);
                     btn.textContent = '📍 Use Current Location';
                     btn.disabled = false;
-                    document.getElementById('manualLocation').classList.add('show');
+                    
+                    if (showModal) {
+                        showLocationModal();
+                    } else {
+                        document.getElementById('manualLocation').classList.add('show');
+                    }
                 },
                 { enableHighAccuracy: true, timeout: 15000, maximumAge: 0 }
             );
@@ -917,6 +1362,11 @@
             if (!otpVerified) {
                 errors.push('Please verify your mobile number with OTP');
                 showError('owner_mobile', 'Mobile number must be verified');
+            }
+            
+            if (!emailOtpVerified) {
+                errors.push('Please verify your email address with OTP');
+                showError('owner_email', 'Email address must be verified');
             }
             
             const storeName = document.getElementById('store_name').value.trim();
