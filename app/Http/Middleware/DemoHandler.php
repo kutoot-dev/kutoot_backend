@@ -21,7 +21,16 @@ class DemoHandler
     {
 
 
-        if(Route::is('admin.login') || Route::is('store-login') || Route::is('admin.logout') || Route::is('seller.login') || Route::is('subscribe-request') || Route::is('send-contact-message')){
+        if(
+            Route::is('admin.login')
+            || Route::is('store-login')
+            || Route::is('admin.logout')
+            || Route::is('seller.login')
+            || Route::is('store.login')
+            || Route::is('store.logout')
+            || Route::is('subscribe-request')
+            || Route::is('send-contact-message')
+        ){
 
             return $next($request);
 

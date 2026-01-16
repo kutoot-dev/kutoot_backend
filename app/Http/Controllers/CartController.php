@@ -207,7 +207,12 @@ class CartController extends Controller
         }
 
 
-        return response()->json(['reedem_coins' => $request->reedem_coins,'total_balance'=>$balanceCoins,'reedem_amount' => $request->reedem_coins*0.25]);
+        $coinValue = (float) config('kutoot.coin_value', 0.25);
+        return response()->json([
+            'reedem_coins' => $request->reedem_coins,
+            'total_balance' => $balanceCoins,
+            'reedem_amount' => $request->reedem_coins * $coinValue,
+        ]);
     }
 
 

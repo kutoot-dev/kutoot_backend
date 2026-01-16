@@ -458,6 +458,7 @@
   'You can not delete this sub category. Because there are one or more child categories or popular sub categories or home page three column categories or products has been created in this sub category.' => 'You can not delete this sub category. Because there are one or more child categories or popular sub categories or home page three column categories or products has been created in this sub category.',
   'Product Tax' => 'Product Tax',
   'Tax' => 'Tax',
+  'Store Applications' => 'Store Applications',
   'You can not delete this item. Because there are one or more products has been created in this item.' => 'You can not delete this item. Because there are one or more products has been created in this item.',
   'You can not delete this brand. Because there are one or more products associated with this brand.' => 'You can not delete this brand. Because there are one or more products associated with this brand.',
   'Return Policy' => 'Return Policy',
