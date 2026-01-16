@@ -226,6 +226,20 @@ img.mr-3.ml-3.rounded-circle {
     scrollbar-width: none !important;
 }
 
+/* ---- Bootstrap Datepicker fixes (Store dashboard/visitors/ledger) ----
+   Some theme overlays can sit above the datepicker, making month navigation
+   (<< / >>) unclickable. Keep the dropdown on top and ensure nav cells accept clicks. */
+.datepicker.datepicker-dropdown,
+.datepicker.dropdown-menu {
+    z-index: 100000 !important;
+}
+.datepicker table tr th.prev,
+.datepicker table tr th.next,
+.datepicker table tr th.datepicker-switch {
+    pointer-events: auto;
+    cursor: pointer;
+}
+
 .sms-body .custom-switch {
     padding-left: 0 !important;
 }

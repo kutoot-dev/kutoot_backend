@@ -24,6 +24,8 @@ class RedirectIfAuthenticated
             if (Auth::guard($guard)->check()) {
                 if($guard=='admin'){
                     return redirect()->route('admin.dashboard');
+                }elseif($guard=='store'){
+                    return redirect()->route('store.dashboard');
                 }else{
                     return redirect()->route('seller.dashboard');
                 }

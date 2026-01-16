@@ -229,6 +229,17 @@ Route::prefix('seller')->name('seller.')->group(function () {
 
 Route::get('/', [HomeController::class, 'index'])->name('site.home');
 
+// =======================
+// SELLER APPLICATION (PUBLIC)
+// =======================
+Route::prefix('become-a-seller')->name('seller.apply.')->group(function () {
+    Route::get('/', [\App\Http\Controllers\WEB\SellerApplyController::class, 'showForm'])->name('form');
+    Route::post('/', [\App\Http\Controllers\WEB\SellerApplyController::class, 'submit'])->name('submit');
+    Route::post('/send-otp', [\App\Http\Controllers\WEB\SellerApplyController::class, 'sendOtp'])->name('send-otp');
+    Route::post('/verify-otp', [\App\Http\Controllers\WEB\SellerApplyController::class, 'verifyOtp'])->name('verify-otp');
+    Route::get('/success', [\App\Http\Controllers\WEB\SellerApplyController::class, 'success'])->name('success');
+});
+
 // Public login page (same as live /login)
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
 
@@ -662,6 +673,14 @@ Route::group(['as'=> 'admin.', 'prefix' => 'admin'],function (){
     Route::get('state-by-country/{id}',[SellerController::class,'stateByCountry'])->name('state-by-country');
     Route::get('city-by-state/{id}',[SellerController::class,'cityByState'])->name('city-by-state');
 
+    // Seller Applications (Onboarding)
+    Route::get('seller-applications', [\App\Http\Controllers\WEB\Admin\SellerApplicationController::class, 'index'])->name('seller-applications.index');
+    Route::get('seller-applications/{id}', [\App\Http\Controllers\WEB\Admin\SellerApplicationController::class, 'show'])->name('seller-applications.show');
+    Route::delete('seller-applications/{id}', [\App\Http\Controllers\WEB\Admin\SellerApplicationController::class, 'destroy'])->name('seller-applications.destroy');
+    Route::post('seller-applications/{id}/verify', [\App\Http\Controllers\WEB\Admin\SellerApplicationController::class, 'webVerify'])->name('seller-applications.verify');
+    Route::post('seller-applications/{id}/approve', [\App\Http\Controllers\WEB\Admin\SellerApplicationController::class, 'webApprove'])->name('seller-applications.approve');
+    Route::post('seller-applications/{id}/reject', [\App\Http\Controllers\WEB\Admin\SellerApplicationController::class, 'webReject'])->name('seller-applications.reject');
+
     Route::resource('error-page', ErrorPageController::class);
 
     Route::get('maintainance-mode',[ContentController::class,'maintainanceMode'])->name('maintainance-mode');
@@ -950,3 +969,11 @@ Route::group(['as'=> 'admin.', 'prefix' => 'admin'],function (){
 });
 
 });
+
+/*
+|--------------------------------------------------------------------------
+| Store (Blade) Panel Routes (New)
+|--------------------------------------------------------------------------
+| Kept in separate file to keep store module organized.
+*/
+require __DIR__.'/store_web.php';

@@ -70,6 +70,23 @@ return [
             'provider' => 'deliverymans',
         ],
 
+        /*
+        |--------------------------------------------------------------------------
+        | Store / Seller Panel (New)
+        |--------------------------------------------------------------------------
+        | - store: Session guard for Blade Store panel
+        | - store-api: JWT guard for /api/seller/... endpoints
+        */
+        'store' => [
+            'driver' => 'session',
+            'provider' => 'store_sellers',
+        ],
+
+        'store-api' => [
+            'driver' => 'jwt',
+            'provider' => 'store_sellers',
+        ],
+
 
 
     ],
@@ -105,6 +122,11 @@ return [
         'deliverymans' => [
             'driver' => 'eloquent',
             'model' => App\Models\DeliveryMan::class,
+        ],
+
+        'store_sellers' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Store\Seller::class,
         ],
 
 

@@ -212,7 +212,8 @@ class PaymentController extends Controller
         $total = $this->calculateCartTotal($user, $request->coupon, $request->shipping_method_id);
         $razorpay = RazorpayPayment::first();
         $total_price = $total['total_price'];
-        $payable_amount = $total_price-($reedem_coins*0.25);
+        $coinValue = (float) config('kutoot.coin_value', 0.25);
+        $payable_amount = $total_price - ($reedem_coins * $coinValue);
         $payable_amount = (int) round($payable_amount, 2);
         $api = new Api($razorpay->key,$razorpay->secret_key);
         $order = $api->order->create(

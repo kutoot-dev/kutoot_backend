@@ -1,0 +1,314 @@
+{
+  "info": {
+    "name": "Kutoot - Seller Onboarding APIs",
+    "description": "Seller Onboarding API List (Master Admin Approval Flow)\n\nFlow Summary:\n1. Seller submits application from frontend\n2. Application saved to Master Admin Panel (Pending)\n3. Admin calls seller manually and verifies details\n4. Admin chooses Approve / Reject\n5. System sends email/sms:\n   - Approved → send seller panel credentials\n   - Rejected → send rejection reason",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Public APIs",
+      "item": [
+        {
+          "name": "1. Submit Seller Application",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"storeName\": \"Kutoot Cafe\",\n    \"ownerMobile\": \"9876543210\",\n    \"storeType\": \"Cafe\",\n    \"storeAddress\": \"Kukatpally, Hyderabad, Telangana, India\",\n    \"lat\": 17.493512,\n    \"lng\": 78.399261,\n    \"minBillAmount\": 500\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/seller/apply",
+              "host": ["{{base_url}}"],
+              "path": ["api", "seller", "apply"]
+            },
+            "description": "Submit a new seller application. Saves seller application in DB and appears in Master Admin Panel.\n\nSuccess Response:\n```json\n{\n  \"success\": true,\n  \"message\": \"Seller application submitted successfully\",\n  \"applicationId\": \"KT-928341\",\n  \"status\": \"PENDING\"\n}\n```"
+          },
+          "response": []
+        },
+        {
+          "name": "Check Application Status",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/seller/application-status?mobile=9876543210",
+              "host": ["{{base_url}}"],
+              "path": ["api", "seller", "application-status"],
+              "query": [
+                {
+                  "key": "mobile",
+                  "value": "9876543210",
+                  "description": "Mobile number used in application"
+                }
+              ]
+            },
+            "description": "Check the status of a seller application by mobile number."
+          },
+          "response": []
+        },
+        {
+          "name": "Get Store Categories",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/store-categories",
+              "host": ["{{base_url}}"],
+              "path": ["api", "store-categories"]
+            },
+            "description": "Get list of available store categories for dropdown in application form."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Admin APIs (Requires Auth)",
+      "item": [
+        {
+          "name": "2. Get Seller Applications List",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}",
+                "description": "Admin JWT Token"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/admin/seller-applications?status=PENDING",
+              "host": ["{{base_url}}"],
+              "path": ["api", "admin", "seller-applications"],
+              "query": [
+                {
+                  "key": "status",
+                  "value": "PENDING",
+                  "description": "Filter by status: PENDING | VERIFIED | APPROVED | REJECTED"
+                }
+              ]
+            },
+            "description": "Master admin sees list to call & verify manually.\n\nQuery Params:\n- status = PENDING | VERIFIED | APPROVED | REJECTED\n\nSuccess Response:\n```json\n{\n  \"success\": true,\n  \"data\": [\n    {\n      \"applicationId\": \"KT-928341\",\n      \"storeName\": \"Kutoot Cafe\",\n      \"ownerMobile\": \"9876543210\",\n      \"storeType\": \"Cafe\",\n      \"storeAddress\": \"Kukatpally, Hyderabad\",\n      \"lat\": 17.493512,\n      \"lng\": 78.399261,\n      \"minBillAmount\": 500,\n      \"status\": \"PENDING\",\n      \"createdAt\": \"2026-01-15T10:20:00Z\"\n    }\n  ]\n}\n```"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Single Application Details",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}",
+                "description": "Admin JWT Token"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/admin/seller-applications/KT-928341",
+              "host": ["{{base_url}}"],
+              "path": ["api", "admin", "seller-applications", "KT-928341"]
+            },
+            "description": "Get detailed information about a specific seller application."
+          },
+          "response": []
+        },
+        {
+          "name": "Update Seller Application Info",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}",
+                "description": "Admin JWT Token"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"storeName\": \"Updated Cafe Name\",\n    \"storeAddress\": \"New Address, Hyderabad\",\n    \"minBillAmount\": 600\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/admin/seller-applications/KT-928341",
+              "host": ["{{base_url}}"],
+              "path": ["api", "admin", "seller-applications", "KT-928341"]
+            },
+            "description": "Update seller application info (if admin edits). Can update any of the following fields:\n- storeName\n- ownerMobile\n- storeType\n- storeAddress\n- lat\n- lng\n- minBillAmount\n\nNote: Cannot update already approved applications."
+          },
+          "response": []
+        },
+        {
+          "name": "3. Verify Seller Application",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}",
+                "description": "Admin JWT Token"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"verifiedBy\": \"admin_user_id_101\",\n    \"verificationNotes\": \"Called seller, verified store exists, GST verified\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/admin/seller-applications/KT-928341/verify",
+              "host": ["{{base_url}}"],
+              "path": ["api", "admin", "seller-applications", "KT-928341", "verify"]
+            },
+            "description": "After call + data collection, admin marks application as verified.\n\nStatus changes from PENDING → VERIFIED\n\nSuccess Response:\n```json\n{\n  \"success\": true,\n  \"message\": \"Seller verified successfully\",\n  \"status\": \"VERIFIED\"\n}\n```"
+          },
+          "response": []
+        },
+        {
+          "name": "4. Approve Seller Application",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}",
+                "description": "Admin JWT Token"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"approvedBy\": \"admin_user_id_101\",\n    \"sellerEmail\": \"seller@gmail.com\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/admin/seller-applications/KT-928341/approve",
+              "host": ["{{base_url}}"],
+              "path": ["api", "admin", "seller-applications", "KT-928341", "approve"]
+            },
+            "description": "Admin clicks Approve, system creates seller credentials and emails them.\n\nBackend will auto generate credentials and trigger email:\n- Email Subject: Seller Panel Credentials – Kutoot\n- Email Body: Username + Password + Login URL\n\nSuccess Response:\n```json\n{\n  \"success\": true,\n  \"message\": \"Seller approved & credentials sent\",\n  \"status\": \"APPROVED\",\n  \"sellerId\": \"SELL-20261\",\n  \"credentials\": {\n    \"username\": \"seller_9876543210\",\n    \"temporaryPassword\": \"Kutoot@123\"\n  }\n}\n```"
+          },
+          "response": []
+        },
+        {
+          "name": "5. Reject Seller Application",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}",
+                "description": "Admin JWT Token"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"rejectedBy\": \"admin_user_id_101\",\n    \"reason\": \"Store documents not valid / location mismatch\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/admin/seller-applications/KT-928341/reject",
+              "host": ["{{base_url}}"],
+              "path": ["api", "admin", "seller-applications", "KT-928341", "reject"]
+            },
+            "description": "Admin clicks Reject and sends reason.\n\nBackend triggers email/sms with rejection reason.\n\nSuccess Response:\n```json\n{\n  \"success\": true,\n  \"message\": \"Seller rejected & reason sent to seller\",\n  \"status\": \"REJECTED\"\n}\n```"
+          },
+          "response": []
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "https://admin.kutoot.com",
+      "type": "string",
+      "description": "Base URL for the API"
+    },
+    {
+      "key": "admin_token",
+      "value": "your_admin_jwt_token_here",
+      "type": "string",
+      "description": "Admin JWT Token for authenticated requests"
+    }
+  ]
+}
+

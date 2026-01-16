@@ -1,0 +1,623 @@
+{
+  "info": {
+    "name": "Kutoot - Seller Panel APIs",
+    "description": "Seller Panel Required APIs (Backend Spec)\n\nThis collection contains all APIs for the Seller Panel including:\n- Authentication\n- Dashboard Analytics\n- Store Profile Management\n- Visitors\n- Settings (Password, Bank, Notifications)\n- Master Admin Settings (Read Only)",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "1. Auth APIs",
+      "item": [
+        {
+          "name": "1.1 Seller Login",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"username\": \"seller_9876543210\",\n    \"password\": \"Kutoot@123\",\n    \"device\": {\n        \"platform\": \"web\",\n        \"browser\": \"chrome\",\n        \"ip\": \"optional\"\n    }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/seller/auth/login",
+              "host": ["{{base_url}}"],
+              "path": ["api", "seller", "auth", "login"]
+            },
+            "description": "Seller login endpoint. After success, store token + seller basic info in localStorage.\n\nSuccess Response (200):\n```json\n{\n  \"success\": true,\n  \"message\": \"Login successful\",\n  \"data\": {\n    \"token\": \"jwt_token_here\",\n    \"seller\": {\n      \"sellerId\": \"SELLER001\",\n      \"shopId\": \"SHOP001\",\n      \"shopName\": \"Gourmet Delight\",\n      \"ownerName\": \"Sai Prasad\",\n      \"email\": \"seller@kutoot.com\",\n      \"phone\": \"98XXXXXX12\",\n      \"status\": \"ACTIVE\"\n    }\n  }\n}\n```\n\nError Response (401):\n```json\n{\n  \"success\": false,\n  \"message\": \"Invalid credentials\"\n}\n```"
+          },
+          "response": []
+        },
+        {
+          "name": "1.2 Seller Logout",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{seller_token}}",
+                "description": "Seller JWT Token"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/seller/auth/logout",
+              "host": ["{{base_url}}"],
+              "path": ["api", "seller", "auth", "logout"]
+            },
+            "description": "Logout seller and invalidate token.\n\nSuccess Response:\n```json\n{\n  \"success\": true,\n  \"message\": \"Logged out successfully\"\n}\n```"
+          },
+          "response": []
+        },
+        {
+          "name": "1.3 Get Logged-in Seller Profile",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{seller_token}}",
+                "description": "Seller JWT Token"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/seller/me",
+              "host": ["{{base_url}}"],
+              "path": ["api", "seller", "me"]
+            },
+            "description": "Get logged-in seller profile. Used on every page load after login to avoid frontend using outdated localStorage details.\n\nLogic:\n- On app mount → call this API\n- If token invalid → redirect to login\n\nSuccess Response:\n```json\n{\n  \"success\": true,\n  \"data\": {\n    \"sellerId\": \"SELLER001\",\n    \"shopId\": \"SHOP001\",\n    \"shopName\": \"Gourmet Delight\",\n    \"ownerName\": \"Sai Prasad\",\n    \"email\": \"seller@kutoot.com\",\n    \"phone\": \"98XXXXXX12\"\n  }\n}\n```"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "2. Dashboard Analytics APIs",
+      "item": [
+        {
+          "name": "2.1 Dashboard Summary",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{seller_token}}",
+                "description": "Seller JWT Token"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/seller/dashboard/summary?from=2026-01-01&to=2026-01-16",
+              "host": ["{{base_url}}"],
+              "path": ["api", "seller", "dashboard", "summary"],
+              "query": [
+                {
+                  "key": "from",
+                  "value": "2026-01-01",
+                  "description": "Start date (YYYY-MM-DD)"
+                },
+                {
+                  "key": "to",
+                  "value": "2026-01-16",
+                  "description": "End date (YYYY-MM-DD)"
+                }
+              ]
+            },
+            "description": "Get dashboard summary including:\n- Balance payout calculation\n- Total sales & transactions\n- Visitor conversion stats\n- Commission calculations\n\nBalance Calculation:\nsellerBalance = totalSales - (totalSales * commissionPercent/100)\n\nConversion:\nconversionPercent = (redeemedVisitors / totalVisitors) * 100"
+          },
+          "response": []
+        },
+        {
+          "name": "2.2 Revenue Trend",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{seller_token}}",
+                "description": "Seller JWT Token"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/seller/dashboard/revenue-trend?days=7",
+              "host": ["{{base_url}}"],
+              "path": ["api", "seller", "dashboard", "revenue-trend"],
+              "query": [
+                {
+                  "key": "days",
+                  "value": "7",
+                  "description": "Number of days for trend (default: 7, max: 365)"
+                }
+              ]
+            },
+            "description": "Return last N days successful settlement amounts.\n\nSuccess Response:\n```json\n{\n  \"success\": true,\n  \"data\": {\n    \"days\": 7,\n    \"trend\": [\n      { \"date\": \"2026-01-10\", \"amount\": 5000 },\n      { \"date\": \"2026-01-11\", \"amount\": 7500 }\n    ]\n  }\n}\n```"
+          },
+          "response": []
+        },
+        {
+          "name": "2.3 Visitors Trend",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{seller_token}}",
+                "description": "Seller JWT Token"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/seller/dashboard/visitors-trend?days=7",
+              "host": ["{{base_url}}"],
+              "path": ["api", "seller", "dashboard", "visitors-trend"],
+              "query": [
+                {
+                  "key": "days",
+                  "value": "7",
+                  "description": "Number of days for trend (default: 7, max: 365)"
+                }
+              ]
+            },
+            "description": "Return last N days visitor counts.\n\nSuccess Response:\n```json\n{\n  \"success\": true,\n  \"data\": {\n    \"days\": 7,\n    \"trend\": [\n      { \"date\": \"2026-01-10\", \"visitors\": 25 },\n      { \"date\": \"2026-01-11\", \"visitors\": 32 }\n    ]\n  }\n}\n```"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "3. Store Profile APIs",
+      "item": [
+        {
+          "name": "3.1 Get Store Profile",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{seller_token}}",
+                "description": "Seller JWT Token"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/seller/store/profile",
+              "host": ["{{base_url}}"],
+              "path": ["api", "seller", "store", "profile"]
+            },
+            "description": "Get store profile including shop details, location, images, and master admin settings."
+          },
+          "response": []
+        },
+        {
+          "name": "3.2 Update Store Profile",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{seller_token}}",
+                "description": "Seller JWT Token"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"shopName\": \"Gourmet Delight Cafe\",\n    \"category\": \"Cafe\",\n    \"ownerName\": \"Sai Prasad\",\n    \"phone\": \"9876543210\",\n    \"email\": \"seller@kutoot.com\",\n    \"gstNumber\": \"29ABCDE1234F1Z5\",\n    \"address\": \"123 Main Street, Hyderabad\",\n    \"googleMapUrl\": \"https://maps.google.com/?q=17.493512,78.399261\",\n    \"location\": {\n        \"lat\": 17.493512,\n        \"lng\": 78.399261\n    }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/seller/store/profile",
+              "host": ["{{base_url}}"],
+              "path": ["api", "seller", "store", "profile"]
+            },
+            "description": "Update store profile. All fields are optional - only send fields you want to update."
+          },
+          "response": []
+        },
+        {
+          "name": "3.3 Upload Store Images",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{seller_token}}",
+                "description": "Seller JWT Token"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "images[]",
+                  "type": "file",
+                  "description": "Store images (can upload multiple)"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{base_url}}/api/seller/store/images/upload",
+              "host": ["{{base_url}}"],
+              "path": ["api", "seller", "store", "images", "upload"]
+            },
+            "description": "Upload store images (multipart form-data). Can upload single or multiple images.\n\nSuccess Response:\n```json\n{\n  \"success\": true,\n  \"message\": \"Images uploaded\",\n  \"data\": {\n    \"uploaded\": [\n      \"https://admin.kutoot.com/uploads/store/shops/SHOP001/shop_123.jpg\"\n    ]\n  }\n}\n```"
+          },
+          "response": []
+        },
+        {
+          "name": "3.4 Delete Store Image",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{seller_token}}",
+                "description": "Seller JWT Token"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"imageUrl\": \"https://admin.kutoot.com/uploads/store/shops/SHOP001/shop_123.jpg\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/seller/store/images/delete",
+              "host": ["{{base_url}}"],
+              "path": ["api", "seller", "store", "images", "delete"]
+            },
+            "description": "Delete a store image by URL."
+          },
+          "response": []
+        },
+        {
+          "name": "Get Store Categories",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{seller_token}}",
+                "description": "Seller JWT Token"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/seller/store/categories",
+              "host": ["{{base_url}}"],
+              "path": ["api", "seller", "store", "categories"]
+            },
+            "description": "Get list of available store categories."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "4. Visitors API",
+      "item": [
+        {
+          "name": "4.1 Get Visitors List",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{seller_token}}",
+                "description": "Seller JWT Token"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/seller/visitors?from=2026-01-01&to=2026-01-16&page=1&limit=20",
+              "host": ["{{base_url}}"],
+              "path": ["api", "seller", "visitors"],
+              "query": [
+                {
+                  "key": "from",
+                  "value": "2026-01-01",
+                  "description": "Start date filter (optional)"
+                },
+                {
+                  "key": "to",
+                  "value": "2026-01-16",
+                  "description": "End date filter (optional)"
+                },
+                {
+                  "key": "search",
+                  "value": "",
+                  "description": "Search by name or phone (optional)",
+                  "disabled": true
+                },
+                {
+                  "key": "page",
+                  "value": "1",
+                  "description": "Page number (default: 1)"
+                },
+                {
+                  "key": "limit",
+                  "value": "20",
+                  "description": "Items per page (default: 20, max: 100)"
+                }
+              ]
+            },
+            "description": "Return each visitor record + linked transaction summary (txnId + amount).\n\nSuccess Response:\n```json\n{\n  \"success\": true,\n  \"data\": {\n    \"page\": 1,\n    \"limit\": 20,\n    \"total\": 50,\n    \"rows\": [\n      {\n        \"visitorId\": 123,\n        \"name\": \"John Doe\",\n        \"phone\": \"98XXXX1234\",\n        \"visitedOn\": \"2026-01-15\",\n        \"redeemed\": true,\n        \"transaction\": {\n          \"txnId\": \"TXN001\",\n          \"totalAmount\": 1500,\n          \"discountAmount\": 150,\n          \"redeemedCoins\": 100,\n          \"status\": \"SUCCESS\"\n        }\n      }\n    ]\n  }\n}\n```"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "5. Settings APIs",
+      "item": [
+        {
+          "name": "5.1 Change Password",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{seller_token}}",
+                "description": "Seller JWT Token"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"oldPassword\": \"Kutoot@123\",\n    \"newPassword\": \"NewSecure@456\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/seller/settings/change-password",
+              "host": ["{{base_url}}"],
+              "path": ["api", "seller", "settings", "change-password"]
+            },
+            "description": "Change seller password.\n\nSuccess Response:\n```json\n{\n  \"success\": true,\n  \"message\": \"Password updated successfully\"\n}\n```\n\nError Response (401):\n```json\n{\n  \"success\": false,\n  \"message\": \"Old password incorrect\"\n}\n```"
+          },
+          "response": []
+        },
+        {
+          "name": "5.2 Get Bank Details",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{seller_token}}",
+                "description": "Seller JWT Token"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/seller/settings/bank",
+              "host": ["{{base_url}}"],
+              "path": ["api", "seller", "settings", "bank"]
+            },
+            "description": "Get seller bank account details.\n\nSuccess Response:\n```json\n{\n  \"success\": true,\n  \"data\": {\n    \"bankName\": \"HDFC Bank\",\n    \"accountNumber\": \"XXXXXX1234\",\n    \"ifsc\": \"HDFC0001234\",\n    \"upiId\": \"seller@upi\",\n    \"beneficiaryName\": \"Sai Prasad\"\n  }\n}\n```"
+          },
+          "response": []
+        },
+        {
+          "name": "5.3 Update Bank Details",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{seller_token}}",
+                "description": "Seller JWT Token"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"bankName\": \"HDFC Bank\",\n    \"accountNumber\": \"1234567890123456\",\n    \"ifsc\": \"HDFC0001234\",\n    \"upiId\": \"seller@upi\",\n    \"beneficiaryName\": \"Sai Prasad\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/seller/settings/bank",
+              "host": ["{{base_url}}"],
+              "path": ["api", "seller", "settings", "bank"]
+            },
+            "description": "Update seller bank account details.\n\nRequired fields:\n- bankName\n- accountNumber\n- ifsc (format: 4 letters + 0 + 6 alphanumeric)\n- beneficiaryName\n\nOptional:\n- upiId\n\nSuccess Response:\n```json\n{\n  \"success\": true,\n  \"message\": \"Bank details updated successfully\"\n}\n```"
+          },
+          "response": []
+        },
+        {
+          "name": "5.4 Get Notification Settings",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{seller_token}}",
+                "description": "Seller JWT Token"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/seller/settings/notifications",
+              "host": ["{{base_url}}"],
+              "path": ["api", "seller", "settings", "notifications"]
+            },
+            "description": "Get notification preferences.\n\nSuccess Response:\n```json\n{\n  \"success\": true,\n  \"data\": {\n    \"enabled\": true,\n    \"channels\": {\n      \"email\": true,\n      \"sms\": false,\n      \"whatsapp\": true\n    }\n  }\n}\n```"
+          },
+          "response": []
+        },
+        {
+          "name": "5.5 Update Notification Settings",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{seller_token}}",
+                "description": "Seller JWT Token"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"enabled\": true,\n    \"channels\": {\n        \"email\": true,\n        \"sms\": false,\n        \"whatsapp\": true\n    }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/seller/settings/notifications",
+              "host": ["{{base_url}}"],
+              "path": ["api", "seller", "settings", "notifications"]
+            },
+            "description": "Update notification preferences.\n\nSuccess Response:\n```json\n{\n  \"success\": true,\n  \"message\": \"Notification preferences updated\"\n}\n```"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "6. Master Admin Settings (Read Only)",
+      "item": [
+        {
+          "name": "6.1 Get Master Admin Settings",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{seller_token}}",
+                "description": "Seller JWT Token"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/api/seller/master-admin/settings",
+              "host": ["{{base_url}}"],
+              "path": ["api", "seller", "master-admin", "settings"]
+            },
+            "description": "Get master admin settings (read-only). Used in sidebar small pills and Dashboard KPI.\n\nNote: Seller does not edit these. If admin changes discount, it auto updates seller UI.\n\nSuccess Response:\n```json\n{\n  \"success\": true,\n  \"data\": {\n    \"commissionPercent\": 6,\n    \"discountPercent\": 10,\n    \"minimumBillAmount\": 500,\n    \"lastUpdatedOn\": \"2026-01-15\"\n  }\n}\n```"
+          },
+          "response": []
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "https://admin.kutoot.com",
+      "type": "string",
+      "description": "Base URL for the API"
+    },
+    {
+      "key": "seller_token",
+      "value": "your_seller_jwt_token_here",
+      "type": "string",
+      "description": "Seller JWT Token obtained from login"
+    }
+  ]
+}
+

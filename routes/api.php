@@ -423,6 +423,35 @@ Route::group([], function () {
     });
 });
 
+/*
+|--------------------------------------------------------------------------
+| Seller Application APIs (Onboarding)
+|--------------------------------------------------------------------------
+*/
+
+// Public APIs
+Route::get('/store-categories', [\App\Http\Controllers\API\SellerApplicationController::class, 'getCategories']);
+Route::post('/seller/apply', [\App\Http\Controllers\API\SellerApplicationController::class, 'apply']);
+Route::get('/seller/application-status', [\App\Http\Controllers\API\SellerApplicationController::class, 'checkStatus']);
+
+// Admin APIs for Seller Applications
+Route::prefix('admin')->middleware('auth:admin-api')->group(function () {
+    Route::get('/seller-applications', [\App\Http\Controllers\WEB\Admin\SellerApplicationController::class, 'apiIndex']);
+    Route::get('/seller-applications/{applicationId}', [\App\Http\Controllers\WEB\Admin\SellerApplicationController::class, 'apiShow']);
+    Route::patch('/seller-applications/{applicationId}', [\App\Http\Controllers\WEB\Admin\SellerApplicationController::class, 'apiUpdate']);
+    Route::patch('/seller-applications/{applicationId}/verify', [\App\Http\Controllers\WEB\Admin\SellerApplicationController::class, 'apiVerify']);
+    Route::patch('/seller-applications/{applicationId}/approve', [\App\Http\Controllers\WEB\Admin\SellerApplicationController::class, 'apiApprove']);
+    Route::patch('/seller-applications/{applicationId}/reject', [\App\Http\Controllers\WEB\Admin\SellerApplicationController::class, 'apiReject']);
+});
+
+/*
+|--------------------------------------------------------------------------
+| Store/Seller Panel APIs (New)
+|--------------------------------------------------------------------------
+| Kept in separate file to keep store module organized.
+*/
+require __DIR__.'/store_api.php';
+
     //delivery man routes
     Route::post('deliveryman/registration', [DeliveryManRegistrationController::class,'registration'])->name('delivery.man.registration');
     Route::post('deliveryman/login', [DeliveryManLoginController::class,'dashboardLogin'])->name('delivery.man.login');
