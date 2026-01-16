@@ -163,10 +163,10 @@ class OtpController extends Controller
         Cache::put('otp_email_' . $email, $otp, now()->addMinutes(10));
         Cache::put('otp_email_last_sent_' . $email, now(), now()->addMinutes(1));
 
-        // Send email
+        // Send email using .env credentials (SendGrid)
         $emailSent = false;
         try {
-            MailHelper::setMailConfig();
+            MailHelper::setEnvMailConfig();
             Mail::to($email)->send(new OtpMail($otp));
             $emailSent = true;
         } catch (\Exception $e) {
