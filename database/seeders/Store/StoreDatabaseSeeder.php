@@ -14,6 +14,9 @@ class StoreDatabaseSeeder extends Seeder
             StoreMasterAdminSettingsSeeder::class,
             StoreDemoVisitorsSeeder::class,
             StoreDemoBulkTransactionsSeeder::class,
+            StoreCoinCampaignSeeder::class,
+            StorePurchasedCoinsSeeder::class,
+            StoreUserCoinsSeeder::class,
         ]);
     }
 }

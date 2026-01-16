@@ -43,6 +43,7 @@ Route::middleware(['demo', 'XSS', 'maintainance'])->prefix('store')->name('store
 
             Route::get('users/{user}/ledger', [StoreUserLedgerController::class, 'show'])->name('users.ledger');
             Route::get('users/{user}/ledger/data', [StoreUserLedgerController::class, 'data'])->name('users.ledger.data');
+            Route::get('users/{user}/ledger/campaign-data', [StoreUserLedgerController::class, 'campaignData'])->name('users.ledger.campaign-data');
 
         Route::get('settings/change-password', [StoreSettingsController::class, 'changePasswordForm'])->name('settings.change-password');
         Route::post('settings/change-password', [StoreSettingsController::class, 'changePassword'])->name('settings.change-password.submit');
