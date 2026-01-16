@@ -25,32 +25,42 @@
                             <thead>
                                 <tr>
                                     <th width="5%">{{__('admin.SN')}}</th>
-                                    <th width="30%">{{__('admin.Name')}}</th>
+                                    <th width="18%">{{__('admin.Seller')}}</th>
+                                    <th width="17%">{{__('admin.Name')}}</th>
                                     <th width="10%">{{__('admin.Price')}}</th>
                                     <th width="15%">{{__('admin.Photo')}}</th>
                                     <th width="10%">{{__('admin.Status')}}</th>
-                                    <th width="15%">{{__('admin.Action')}}</th>
+                                    <th width="12%">{{__('admin.Approval')}}</th>
+                                    <th width="13%">{{__('admin.Action')}}</th>
                                   </tr>
                             </thead>
                             <tbody>
                                 @foreach ($products as $index => $product)
                                     <tr>
                                         <td>{{ ++$index }}</td>
-                                        <td><a target="_blank" href="{{ $frontend_url.$product->slug }}">{{ $product->short_name }}</a></td>
+                                        <td><x-product-seller-label :product="$product" /></td>
+                                        <td><a target="_blank" href="{{ $frontend_url.$product->slug }}">{{ $product->name }}</a></td>
                                         <td>{{ $setting->currency_icon }}{{ $product->price }}</td>
                                         <td> <img class="rounded-circle" src="{{ asset($product->thumb_image) }}" alt="" width="100px" height="100px"></td>
                                         <td>
-                                            @if($product->approval_status->value == 1)
+                                            @if($product->status == 1)
                                             <a href="javascript:;" onclick="changeProductStatus({{ $product->id }})">
-                                                <input id="status_toggle" type="checkbox" checked data-toggle="toggle" data-on="{{__('admin.Approved')}}" data-off="{{__('admin.Awaiting')}}" data-onstyle="success" data-offstyle="danger">
+                                                <input id="status_toggle" type="checkbox" checked data-toggle="toggle" data-on="{{__('admin.Active')}}" data-off="{{__('admin.InActive')}}" data-onstyle="success" data-offstyle="danger">
                                             </a>
 
                                             @else
                                             <a href="javascript:;" onclick="changeProductStatus({{ $product->id }})">
-                                                <input id="status_toggle" type="checkbox" data-toggle="toggle" data-on="{{__('admin.Approved')}}" data-off="{{__('admin.Awaiting')}}" data-onstyle="success" data-offstyle="danger">
+                                                <input id="status_toggle" type="checkbox" data-toggle="toggle" data-on="{{__('admin.Active')}}" data-off="{{__('admin.InActive')}}" data-onstyle="success" data-offstyle="danger">
                                             </a>
 
                                             @endif
+                                        </td>
+                                        <td>
+                                            <select class="form-control form-control-sm" onchange="changeApprovalStatus({{ $product->id }}, this.value)">
+                                                <option value="0" {{ $product->approval_status->value == 0 ? 'selected' : '' }}>{{__('admin.Pending')}}</option>
+                                                <option value="1" {{ $product->approval_status->value == 1 ? 'selected' : '' }}>{{__('admin.Approved')}}</option>
+                                                <option value="2" {{ $product->approval_status->value == 2 ? 'selected' : '' }}>{{__('admin.Rejected')}}</option>
+                                            </select>
                                         </td>
                                         <td>
                                         <a href="{{ route('admin.product.edit',$product->id) }}" class="btn btn-primary btn-sm"><i class="fa fa-edit" aria-hidden="true"></i></a>
@@ -119,13 +129,36 @@
         $.ajax({
             type:"put",
             data: { _token : '{{ csrf_token() }}' },
-            url:"{{url('/admin/product-approved/')}}"+"/"+id,
+            url:"{{url('/admin/product-status/')}}"+"/"+id,
             success:function(response){
                 toastr.success(response)
             },
             error:function(err){
                 console.log(err);
 
+            }
+        })
+    }
+
+    function changeApprovalStatus(id, status){
+        var isDemo = "{{ env('APP_VERSION') }}"
+        if(isDemo == 0){
+            toastr.error('This Is Demo Version. You Can Not Change Anything');
+            return;
+        }
+        $.ajax({
+            type:"put",
+            data: {
+                _token : '{{ csrf_token() }}',
+                approval_status: status
+            },
+            url:"{{url('/admin/product-approval-status/')}}"+"/"+id,
+            success:function(response){
+                toastr.success(response)
+            },
+            error:function(err){
+                toastr.error('Failed to update approval status');
+                console.log(err);
             }
         })
     }

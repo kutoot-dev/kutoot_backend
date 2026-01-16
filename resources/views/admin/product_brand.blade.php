@@ -66,6 +66,8 @@
                                         <a href="{{ route('admin.product-brand.edit',$brand->id) }}" class="btn btn-primary btn-sm"><i class="fa fa-edit" aria-hidden="true"></i></a>
                                         @if ($brand->products->count() == 0)
                                             <a href="javascript:;" data-toggle="modal" data-target="#deleteModal" class="btn btn-danger btn-sm" onclick="deleteData({{ $brand->id }})"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                                        @else
+                                            <a href="javascript:;" data-toggle="modal" data-target="#canNotDeleteModal" class="btn btn-danger btn-sm" disabled><i class="fa fa-trash" aria-hidden="true"></i></a>
                                         @endif
 
                                         </td>
@@ -79,6 +81,21 @@
                 </div>
           </div>
         </section>
+      </div>
+
+      <!-- Modal -->
+      <div class="modal fade" id="canNotDeleteModal" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                        <div class="modal-body">
+                            {{__('admin.You can not delete this brand. Because there are one or more products associated with this brand.')}}
+                        </div>
+
+                  <div class="modal-footer">
+                      <button type="button" class="btn btn-danger" data-dismiss="modal">{{__('admin.Close')}}</button>
+                  </div>
+              </div>
+          </div>
       </div>
 
 <script>

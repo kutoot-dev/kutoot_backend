@@ -310,7 +310,10 @@
                                                 width="100px" height="100px" class="img-fluid">
                                         </div>
                                         <div class="product-item-text">
-                                            <p>{{$product->short_name}}</p>
+                                            <p>{{$product->name}}</p>
+                                            <small class="text-muted">
+                                                <x-product-seller-label :product="$product" />
+                                            </small>
 
                                             <div class="product-item-text-btm">
                                                 @if ($product->offer_price == '')

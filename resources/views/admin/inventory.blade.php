@@ -21,7 +21,8 @@
                             <thead>
                                 <tr>
                                     <th width="5%">{{__('admin.SN')}}</th>
-                                    <th width="30%">{{__('admin.Name')}}</th>
+                                    <th width="18%">{{__('admin.Seller')}}</th>
+                                    <th width="22%">{{__('admin.Name')}}</th>
                                     <th width="15%">{{__('admin.SKU')}}</th>
                                     <th width="15%">{{__('admin.Stock')}}</th>
                                     <th width="15%">{{__('admin.Sold')}}</th>
@@ -32,8 +33,9 @@
                                 @foreach ($products as $index => $product)
                                     <tr>
                                         <td>{{ ++$index }}</td>
+                                        <td><x-product-seller-label :product="$product" /></td>
                                         <td>
-                                            <a href="{{ route('admin.product.edit', $product->id) }}">{{ $product->short_name }}</a>
+                                            <a href="{{ route('admin.product.edit', $product->id) }}">{{ $product->name }}</a>
                                         </td>
                                         <td>{{ $product->sku }}</td>
                                         <td>{{ $product->qty }}</td>

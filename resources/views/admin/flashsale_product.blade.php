@@ -68,7 +68,7 @@
                                 @foreach ($flash_sale_products as $index => $flash_sale_product)
                                     <tr>
                                         <td>{{ ++$index }}</td>
-                                        <td>{{ $flash_sale_product->product->short_name ?? '' }}</td>
+                                        <td>{{ $flash_sale_product->product->name ?? '' }}</td>
 
                                         <td>
                                             @if($flash_sale_product->status == 1)

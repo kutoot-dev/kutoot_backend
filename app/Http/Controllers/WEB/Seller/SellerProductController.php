@@ -45,7 +45,7 @@ class SellerProductController extends Controller
     public function index()
     {
         $seller = Auth::guard('web')->user()->seller;
-        $products = Product::with('category','seller','brand')->orderBy('id','desc')->where('vendor_id',$seller->id)->orderBy('id','desc')->get();
+        $products = Product::with('category','seller.user','brand')->orderBy('id','desc')->where('vendor_id',$seller->id)->orderBy('id','desc')->get();
         $orderProducts = OrderProduct::all();
         $setting = Setting::first();
         return view('seller.product',compact('products','orderProducts','setting'));
@@ -55,7 +55,7 @@ class SellerProductController extends Controller
 
     public function pendingProduct(){
         $seller = Auth::guard('web')->user()->seller;
-        $products = Product::with('category','seller','brand')->orderBy('id','desc')->where('approval_status', ProductApprovalStatus::PENDING)->where('vendor_id',$seller->id)->orderBy('id','desc')->get();
+        $products = Product::with('category','seller.user','brand')->orderBy('id','desc')->where('approval_status', ProductApprovalStatus::PENDING)->where('vendor_id',$seller->id)->orderBy('id','desc')->get();
         $orderProducts = OrderProduct::all();
         $setting = Setting::first();
         return view('seller.pending_product',compact('products','orderProducts','setting'));
@@ -63,7 +63,7 @@ class SellerProductController extends Controller
 
     public function stockoutProduct(){
         $seller = Auth::guard('web')->user()->seller;
-        $products = Product::with('category','seller','brand')->orderBy('id','desc')->where('qty',0)->where('vendor_id',$seller->id)->get();
+        $products = Product::with('category','seller.user','brand')->orderBy('id','desc')->where('qty',0)->where('vendor_id',$seller->id)->get();
         $setting = Setting::first();
 
         return view('seller.stockout_product',compact('products','setting'));

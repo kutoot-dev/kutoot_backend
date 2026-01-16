@@ -42,7 +42,7 @@ class ProductController extends Controller
     public function index()
     {
 
-        $products = Product::with('category','seller','brand')->orderBy('id','desc')->get();
+        $products = Product::with('category','seller.user','brand')->orderBy('id','desc')->get();
         $orderProducts = OrderProduct::all();
         $setting = Setting::first();
         $frontend_url = $setting->frontend_url;
@@ -52,7 +52,7 @@ class ProductController extends Controller
 
     public function sellerProduct(){
 
-        $products = Product::with('category','seller','brand')->where('vendor_id','!=',0)->where('approval_status', ProductApprovalStatus::APPROVED)->orderBy('id','desc')->get();
+        $products = Product::with('category','seller.user','brand')->where('vendor_id','!=',0)->where('approval_status', ProductApprovalStatus::APPROVED)->orderBy('id','desc')->get();
         $orderProducts = OrderProduct::all();
         $setting = Setting::first();
         $frontend_url = $setting->frontend_url;
@@ -61,7 +61,7 @@ class ProductController extends Controller
     }
 
     public function sellerPendingProduct(){
-        $products = Product::with('category','seller','brand')->where('vendor_id','!=',0)->where('approval_status', ProductApprovalStatus::PENDING)->orderBy('id','desc')->get();
+        $products = Product::with('category','seller.user','brand')->where('vendor_id','!=',0)->where('approval_status', ProductApprovalStatus::PENDING)->orderBy('id','desc')->get();
         $orderProducts = OrderProduct::all();
         $setting = Setting::first();
         $frontend_url = $setting->frontend_url;
@@ -72,7 +72,7 @@ class ProductController extends Controller
     }
 
     public function stockoutProduct(){
-        $products = Product::with('category','seller','brand')->where('vendor_id',0)->where('qty',0)->get();
+        $products = Product::with('category','seller.user','brand')->where('vendor_id',0)->where('qty',0)->get();
         $orderProducts = OrderProduct::all();
         $setting = Setting::first();
         $frontend_url = $setting->frontend_url;

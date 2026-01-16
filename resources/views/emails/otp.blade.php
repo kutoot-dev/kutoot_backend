@@ -30,7 +30,7 @@
         }
 
         .header {
-            background: linear-gradient(135deg, #EA6B1E 0%, #C1272D 100%); /* Primary -> Secondary */
+            background-color: #2D1C10; /* Dark Accents */
             padding: 40px 30px;
             text-align: center;
         }

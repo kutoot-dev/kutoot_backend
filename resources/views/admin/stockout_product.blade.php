@@ -21,7 +21,8 @@
                             <thead>
                                 <tr>
                                     <th width="5%">{{__('admin.SN')}}</th>
-                                    <th width="30%">{{__('admin.Name')}}</th>
+                                    <th width="18%">{{__('admin.Seller')}}</th>
+                                    <th width="22%">{{__('admin.Name')}}</th>
                                     <th width="10%">{{__('admin.Price')}}</th>
                                     <th width="15%">{{__('admin.Photo')}}</th>
                                     <th width="15%">{{__('admin.Action')}}</th>
@@ -31,7 +32,8 @@
                                 @foreach ($products as $index => $product)
                                     <tr>
                                         <td>{{ ++$index }}</td>
-                                        <td><a target="_blank" href="{{ $frontend_url.$product->slug }}">{{ $product->short_name }}</a></td>
+                                        <td><x-product-seller-label :product="$product" /></td>
+                                        <td><a target="_blank" href="{{ $frontend_url.$product->slug }}">{{ $product->name }}</a></td>
                                         <td>{{ $setting->currency_icon }}{{ $product->price }}</td>
                                         <td> <img class="rounded-circle" src="{{ asset($product->thumb_image) }}" alt="" width="100px" height="100px"></td>
 
