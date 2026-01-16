@@ -118,11 +118,19 @@ class SellerApplyController extends Controller
                 ->withInput();
         }
 
-        // Verify OTP was completed
-        $isVerified = Cache::get('seller_apply_verified_' . $request->owner_mobile);
-        if (!$isVerified) {
+        // Verify mobile OTP was completed
+        $isMobileVerified = Cache::get('seller_apply_verified_' . $request->owner_mobile);
+        if (!$isMobileVerified) {
             return redirect()->back()
                 ->with('error', 'Please verify your mobile number with OTP first')
+                ->withInput();
+        }
+        
+        // Verify email OTP was completed
+        $isEmailVerified = Cache::get('otp_email_verified_' . $request->owner_email);
+        if (!$isEmailVerified) {
+            return redirect()->back()
+                ->with('error', 'Please verify your email address with OTP first')
                 ->withInput();
         }
 
@@ -154,6 +162,8 @@ class SellerApplyController extends Controller
         // Clear verification cache
         Cache::forget('seller_apply_verified_' . $request->owner_mobile);
         Cache::forget('seller_apply_otp_' . $request->owner_mobile);
+        Cache::forget('otp_email_verified_' . $request->owner_email);
+        Cache::forget('otp_email_' . $request->owner_email);
 
         return redirect()->route('seller.apply.success')
             ->with('application_id', $application->application_id);
