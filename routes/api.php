@@ -425,6 +425,18 @@ Route::group([], function () {
 
 /*
 |--------------------------------------------------------------------------
+| OTP APIs (Optional - for phone/email verification)
+|--------------------------------------------------------------------------
+*/
+Route::prefix('otp')->group(function () {
+    Route::post('/send', [\App\Http\Controllers\API\OtpController::class, 'send']);
+    Route::post('/verify', [\App\Http\Controllers\API\OtpController::class, 'verify']);
+    Route::post('/send-email', [\App\Http\Controllers\API\OtpController::class, 'sendEmail']);
+    Route::post('/verify-email', [\App\Http\Controllers\API\OtpController::class, 'verifyEmail']);
+});
+
+/*
+|--------------------------------------------------------------------------
 | Seller Application APIs (Onboarding)
 |--------------------------------------------------------------------------
 */

@@ -99,6 +99,7 @@ class SellerApplicationController extends Controller
                 'applicationId' => $app->application_id,
                 'storeName' => $app->store_name,
                 'ownerMobile' => $app->owner_mobile,
+                'ownerEmail' => $app->owner_email,
                 'storeType' => $app->store_type,
                 'storeAddress' => $app->store_address,
                 'lat' => $app->lat,
@@ -131,6 +132,7 @@ class SellerApplicationController extends Controller
                 'applicationId' => $application->application_id,
                 'storeName' => $application->store_name,
                 'ownerMobile' => $application->owner_mobile,
+                'ownerEmail' => $application->owner_email,
                 'storeType' => $application->store_type,
                 'storeAddress' => $application->store_address,
                 'lat' => $application->lat,
@@ -171,6 +173,7 @@ class SellerApplicationController extends Controller
         $validator = Validator::make($request->all(), [
             'storeName' => 'sometimes|string|max:255',
             'ownerMobile' => 'sometimes|string|max:15',
+            'ownerEmail' => 'sometimes|email|max:255',
             'storeType' => 'sometimes|string|max:100',
             'storeAddress' => 'sometimes|string|max:500',
             'lat' => 'sometimes|numeric',
@@ -189,6 +192,7 @@ class SellerApplicationController extends Controller
         $updateData = [];
         if ($request->has('storeName')) $updateData['store_name'] = $request->storeName;
         if ($request->has('ownerMobile')) $updateData['owner_mobile'] = $request->ownerMobile;
+        if ($request->has('ownerEmail')) $updateData['owner_email'] = $request->ownerEmail;
         if ($request->has('storeType')) $updateData['store_type'] = $request->storeType;
         if ($request->has('storeAddress')) $updateData['store_address'] = $request->storeAddress;
         if ($request->has('lat')) $updateData['lat'] = $request->lat;
@@ -206,6 +210,7 @@ class SellerApplicationController extends Controller
                 'applicationId' => $application->application_id,
                 'storeName' => $application->store_name,
                 'ownerMobile' => $application->owner_mobile,
+                'ownerEmail' => $application->owner_email,
                 'storeType' => $application->store_type,
                 'storeAddress' => $application->store_address,
                 'lat' => $application->lat,

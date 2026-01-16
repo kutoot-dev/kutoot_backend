@@ -104,6 +104,7 @@ class SellerApplyController extends Controller
         $validator = Validator::make($request->all(), [
             'store_name' => 'required|string|max:255',
             'owner_mobile' => 'required|string|regex:/^[0-9]{10}$/',
+            'owner_email' => 'required|email|max:255',
             'store_type' => 'required|string|max:100',
             'store_address' => 'required|string|max:500',
             'lat' => 'required|numeric',
@@ -141,6 +142,7 @@ class SellerApplyController extends Controller
             'application_id' => SellerApplication::generateApplicationId(),
             'store_name' => $request->store_name,
             'owner_mobile' => $request->owner_mobile,
+            'owner_email' => $request->owner_email,
             'store_type' => $request->store_type,
             'store_address' => $request->store_address,
             'lat' => $request->lat,
