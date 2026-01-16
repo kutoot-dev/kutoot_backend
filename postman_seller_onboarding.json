@@ -6,6 +6,139 @@
   },
   "item": [
     {
+      "name": "OTP APIs (Optional)",
+      "item": [
+        {
+          "name": "6. Send OTP (Phone)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"phone\": \"9876543210\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/otp/send",
+              "host": ["{{base_url}}"],
+              "path": ["api", "otp", "send"]
+            },
+            "description": "Send OTP to phone number for verification.\n\nRequest Body:\n```json\n{\n  \"phone\": \"9876543210\"\n}\n```\n\nSuccess Response:\n```json\n{\n  \"success\": true,\n  \"message\": \"OTP sent successfully\"\n}\n```\n\nRate Limited Response (429):\n```json\n{\n  \"success\": false,\n  \"message\": \"Please wait 60 seconds before requesting another OTP\"\n}\n```\n\nNote: In debug mode, the response includes `debug_otp` field for testing."
+          },
+          "response": []
+        },
+        {
+          "name": "7. Verify OTP (Phone)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"phone\": \"9876543210\",\n    \"otp\": \"123456\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/otp/verify",
+              "host": ["{{base_url}}"],
+              "path": ["api", "otp", "verify"]
+            },
+            "description": "Verify OTP sent to phone number.\n\nRequest Body:\n```json\n{\n  \"phone\": \"9876543210\",\n  \"otp\": \"123456\"\n}\n```\n\nSuccess Response:\n```json\n{\n  \"success\": true,\n  \"message\": \"OTP verified\"\n}\n```\n\nError Response (Invalid/Expired):\n```json\n{\n  \"success\": false,\n  \"message\": \"OTP invalid or expired\"\n}\n```"
+          },
+          "response": []
+        },
+        {
+          "name": "Send OTP (Email)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"email\": \"seller@example.com\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/otp/send-email",
+              "host": ["{{base_url}}"],
+              "path": ["api", "otp", "send-email"]
+            },
+            "description": "Send OTP to email address for verification.\n\nRequest Body:\n```json\n{\n  \"email\": \"seller@example.com\"\n}\n```\n\nSuccess Response:\n```json\n{\n  \"success\": true,\n  \"message\": \"OTP sent successfully to your email\"\n}\n```"
+          },
+          "response": []
+        },
+        {
+          "name": "Verify OTP (Email)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"email\": \"seller@example.com\",\n    \"otp\": \"123456\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/otp/verify-email",
+              "host": ["{{base_url}}"],
+              "path": ["api", "otp", "verify-email"]
+            },
+            "description": "Verify OTP sent to email address.\n\nRequest Body:\n```json\n{\n  \"email\": \"seller@example.com\",\n  \"otp\": \"123456\"\n}\n```\n\nSuccess Response:\n```json\n{\n  \"success\": true,\n  \"message\": \"OTP verified\"\n}\n```"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
       "name": "Public APIs",
       "item": [
         {
@@ -24,7 +157,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n    \"storeName\": \"Kutoot Cafe\",\n    \"ownerMobile\": \"9876543210\",\n    \"storeType\": \"Cafe\",\n    \"storeAddress\": \"Kukatpally, Hyderabad, Telangana, India\",\n    \"lat\": 17.493512,\n    \"lng\": 78.399261,\n    \"minBillAmount\": 500\n}",
+              "raw": "{\n    \"storeName\": \"Kutoot Cafe\",\n    \"ownerMobile\": \"9876543210\",\n    \"ownerEmail\": \"owner@kutootcafe.com\",\n    \"storeType\": \"Cafe\",\n    \"storeAddress\": \"Kukatpally, Hyderabad, Telangana, India\",\n    \"lat\": 17.493512,\n    \"lng\": 78.399261,\n    \"minBillAmount\": 500\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -166,7 +299,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n    \"storeName\": \"Updated Cafe Name\",\n    \"storeAddress\": \"New Address, Hyderabad\",\n    \"minBillAmount\": 600\n}",
+              "raw": "{\n    \"storeName\": \"Updated Cafe Name\",\n    \"ownerEmail\": \"updated@kutootcafe.com\",\n    \"storeAddress\": \"New Address, Hyderabad\",\n    \"minBillAmount\": 600\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -178,7 +311,7 @@
               "host": ["{{base_url}}"],
               "path": ["api", "admin", "seller-applications", "KT-928341"]
             },
-            "description": "Update seller application info (if admin edits). Can update any of the following fields:\n- storeName\n- ownerMobile\n- storeType\n- storeAddress\n- lat\n- lng\n- minBillAmount\n\nNote: Cannot update already approved applications."
+            "description": "Update seller application info (if admin edits). Can update any of the following fields:\n- storeName\n- ownerMobile\n- ownerEmail\n- storeType\n- storeAddress\n- lat\n- lng\n- minBillAmount\n\nNote: Cannot update already approved applications."
           },
           "response": []
         },

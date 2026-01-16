@@ -35,6 +35,7 @@ class SellerApplicationController extends Controller
         $validator = Validator::make($request->all(), [
             'storeName' => 'required|string|max:255',
             'ownerMobile' => 'required|string|max:15',
+            'ownerEmail' => 'required|email|max:255',
             'storeType' => 'required|string|max:100',
             'storeAddress' => 'required|string|max:500',
             'lat' => 'required|numeric',
@@ -68,6 +69,7 @@ class SellerApplicationController extends Controller
             'application_id' => SellerApplication::generateApplicationId(),
             'store_name' => $request->storeName,
             'owner_mobile' => $request->ownerMobile,
+            'owner_email' => $request->ownerEmail,
             'store_type' => $request->storeType,
             'store_address' => $request->storeAddress,
             'lat' => $request->lat,

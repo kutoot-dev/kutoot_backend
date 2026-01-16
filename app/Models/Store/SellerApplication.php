@@ -19,6 +19,7 @@ class SellerApplication extends Model
         'application_id',
         'store_name',
         'owner_mobile',
+        'owner_email',
         'store_type',
         'store_address',
         'lat',
