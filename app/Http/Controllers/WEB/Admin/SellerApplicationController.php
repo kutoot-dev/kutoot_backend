@@ -395,7 +395,7 @@ class SellerApplicationController extends Controller
             // Send email with credentials (outside transaction)
             try {
                 MailHelper::setEnvMailConfig();
-                $loginUrl = url('/store/login');
+                $loginUrl = "https://www.kutoot.com/store/login";
                 Mail::to($request->sellerEmail)->send(
                     new SellerApplicationApproved(
                         $application->store_name,
@@ -622,7 +622,7 @@ class SellerApplicationController extends Controller
             $emailSent = false;
             try {
                 MailHelper::setEnvMailConfig();
-                $loginUrl = url('/store/login');
+                $loginUrl = "https://www.kutoot.com/store/login";
                 Mail::to($request->seller_email)->send(
                     new SellerApplicationApproved(
                         $application->store_name,
