@@ -1,0 +1,241 @@
+{
+    "info": {
+        "_postman_id": "c7a8b9e0-d1f2-4e3a-b4c5-d6e7f8a9b0c1",
+        "name": "Kutoot - My Orders APIs",
+        "description": "Collection for fetching and managing user orders (Campaigns and Store transactions).",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "item": [
+        {
+            "name": "Get My Orders (All + Filters)",
+            "request": {
+                "method": "GET",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "Bearer <user_token>",
+                        "type": "text"
+                    },
+                    {
+                        "key": "Accept",
+                        "value": "application/json",
+                        "type": "text"
+                    }
+                ],
+                "url": {
+                    "raw": "{{base_url}}/api/user/orders?type=Campaign&page=1&limit=10&status=Success&fromDate=2026-01-01&toDate=2026-01-31",
+                    "host": [
+                        "{{base_url}}"
+                    ],
+                    "path": [
+                        "api",
+                        "user",
+                        "orders"
+                    ],
+                    "query": [
+                        {
+                            "key": "type",
+                            "value": "Campaign",
+                            "description": "Campaign / Store"
+                        },
+                        {
+                            "key": "page",
+                            "value": "1"
+                        },
+                        {
+                            "key": "limit",
+                            "value": "10"
+                        },
+                        {
+                            "key": "status",
+                            "value": "Success",
+                            "description": "Success / Failed / Pending"
+                        },
+                        {
+                            "key": "fromDate",
+                            "value": "2026-01-01",
+                            "description": "YYYY-MM-DD"
+                        },
+                        {
+                            "key": "toDate",
+                            "value": "2026-01-31",
+                            "description": "YYYY-MM-DD"
+                        }
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Get Single Order Details",
+            "request": {
+                "method": "GET",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "Bearer <user_token>",
+                        "type": "text"
+                    },
+                    {
+                        "key": "Accept",
+                        "value": "application/json",
+                        "type": "text"
+                    }
+                ],
+                "url": {
+                    "raw": "{{base_url}}/api/user/orders/ORD-STR-2001",
+                    "host": [
+                        "{{base_url}}"
+                    ],
+                    "path": [
+                        "api",
+                        "user",
+                        "orders",
+                        "ORD-STR-2001"
+                    ]
+                },
+                "description": "Use ORD-CAM-{id} for campaign orders and ORD-STR-{id} for store orders."
+            },
+            "response": []
+        },
+        {
+            "name": "Get Orders Count",
+            "request": {
+                "method": "GET",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "Bearer <user_token>",
+                        "type": "text"
+                    },
+                    {
+                        "key": "Accept",
+                        "value": "application/json",
+                        "type": "text"
+                    }
+                ],
+                "url": {
+                    "raw": "{{base_url}}/api/user/orders/count",
+                    "host": [
+                        "{{base_url}}"
+                    ],
+                    "path": [
+                        "api",
+                        "user",
+                        "orders",
+                        "count"
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Get Campaign Orders Only",
+            "request": {
+                "method": "GET",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "Bearer <user_token>",
+                        "type": "text"
+                    },
+                    {
+                        "key": "Accept",
+                        "value": "application/json",
+                        "type": "text"
+                    }
+                ],
+                "url": {
+                    "raw": "{{base_url}}/api/user/orders/campaign?page=1&limit=10",
+                    "host": [
+                        "{{base_url}}"
+                    ],
+                    "path": [
+                        "api",
+                        "user",
+                        "orders",
+                        "campaign"
+                    ],
+                    "query": [
+                        {
+                            "key": "page",
+                            "value": "1"
+                        },
+                        {
+                            "key": "limit",
+                            "value": "10"
+                        }
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Get Store Orders Only",
+            "request": {
+                "method": "GET",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "Bearer <user_token>",
+                        "type": "text"
+                    },
+                    {
+                        "key": "Accept",
+                        "value": "application/json",
+                        "type": "text"
+                    }
+                ],
+                "url": {
+                    "raw": "{{base_url}}/api/user/orders/store?page=1&limit=10",
+                    "host": [
+                        "{{base_url}}"
+                    ],
+                    "path": [
+                        "api",
+                        "user",
+                        "orders",
+                        "store"
+                    ],
+                    "query": [
+                        {
+                            "key": "page",
+                            "value": "1"
+                        },
+                        {
+                            "key": "limit",
+                            "value": "10"
+                        }
+                    ]
+                }
+            },
+            "response": []
+        }
+    ],
+    "event": [
+        {
+            "listen": "prerequest",
+            "script": {
+                "type": "text/javascript",
+                "exec": [
+                    ""
+                ]
+            }
+        },
+        {
+            "listen": "test",
+            "script": {
+                "type": "text/javascript",
+                "exec": [
+                    ""
+                ]
+            }
+        }
+    ],
+    "variable": [
+        {
+            "key": "base_url",
+            "value": "https://admin.kutoot.com"
+        }
+    ]
+}
