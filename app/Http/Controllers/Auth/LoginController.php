@@ -742,8 +742,6 @@ class LoginController extends Controller
                         'name' => $name,
                         'email_verified' => 1,
                         'status' => 1,
-                        'provider' => $provider,
-                        'provider_id' => $uid,
                     ]
                 );
             } else {
@@ -754,8 +752,6 @@ class LoginController extends Controller
                         'name' => $name,
                         'email_verified' => 0,
                         'status' => 1,
-                        'provider' => $provider,
-                        'provider_id' => $uid,
                     ]
                 );
             }
