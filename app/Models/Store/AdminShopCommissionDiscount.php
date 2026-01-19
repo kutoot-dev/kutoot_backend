@@ -14,6 +14,11 @@ class AdminShopCommissionDiscount extends Model
         'commission_percent',
         'discount_percent',
         'minimum_bill_amount',
+        'rating',
+        'total_ratings',
+        'is_active',
+        'is_featured',
+        'offer_tag',
         'last_updated_on',
     ];
 
@@ -22,6 +27,10 @@ class AdminShopCommissionDiscount extends Model
         'commission_percent' => 'int',
         'discount_percent' => 'int',
         'minimum_bill_amount' => 'float',
+        'rating' => 'float',
+        'total_ratings' => 'int',
+        'is_active' => 'boolean',
+        'is_featured' => 'boolean',
         'last_updated_on' => 'date',
     ];
 

@@ -474,6 +474,19 @@ Route::group(['middleware' => ['demo', 'XSS']], function () {
     */
     require __DIR__ . '/store_api.php';
 
+    /*
+    |--------------------------------------------------------------------------
+    | Customer Redeem APIs
+    |--------------------------------------------------------------------------
+    */
+    Route::prefix('v1/customer')->group(function () {
+        Route::get('redeem/home', [\App\Http\Controllers\API\Customer\RedeemController::class, 'home']);
+        Route::get('stores', [\App\Http\Controllers\API\Customer\RedeemController::class, 'stores']);
+        Route::get('stores/{storeId}', [\App\Http\Controllers\API\Customer\RedeemController::class, 'storeDetails']);
+        Route::post('redeem/preview', [\App\Http\Controllers\API\Customer\RedeemController::class, 'preview']);
+        Route::post('redeem/pay', [\App\Http\Controllers\API\Customer\RedeemController::class, 'pay']);
+    });
+
     //delivery man routes
     Route::post('deliveryman/registration', [DeliveryManRegistrationController::class, 'registration'])->name('delivery.man.registration');
     Route::post('deliveryman/login', [DeliveryManLoginController::class, 'dashboardLogin'])->name('delivery.man.login');
