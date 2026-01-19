@@ -107,7 +107,7 @@ use App\Http\Controllers\User\PaypalController;
 use App\Http\Controllers\User\MessageController;
 use App\Http\Controllers\User\AddressCotroller;
 use App\Http\Controllers\User\UserDashboardController;
-use App\Http\Controllers\Api\UserOrderController;
+use App\Http\Controllers\API\UserOrderController;
 
 
 use App\Http\Controllers\ShippingController;
