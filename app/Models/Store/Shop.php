@@ -49,6 +49,11 @@ class Shop extends Model
     {
         return $this->hasMany(Transaction::class, 'shop_id');
     }
+
+    public function adminSettings()
+    {
+        return $this->hasMany(AdminShopCommissionDiscount::class, 'shop_id');
+    }
 }
 
 

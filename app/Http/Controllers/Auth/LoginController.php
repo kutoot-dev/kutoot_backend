@@ -279,6 +279,7 @@ class LoginController extends Controller
     public function sendOtpEmail($email, $otp)
     {
         try {
+            MailHelper::setMailConfig();
             Mail::to($email)->send(new OtpMail($otp));
 
             if (count(Mail::failures()) > 0) {
@@ -690,93 +691,93 @@ class LoginController extends Controller
 
     // Firebase Social Login
     public function sociallogin(Request $request)
-{
-    
-    $request->validate([
-        'token' => 'required'
-    ]);
+    {
 
-    try {
-        $idToken = $request->token;
-        // $idToken = 'eyJhbGciOiJSUzI1NiIsImtpZCI6Ijk4OGQ1YTM3OWI3OGJkZjFlNTBhNDA5MTEzZjJiMGM3NWU0NTJlNDciLCJ0eXAiOiJKV1QifQ.eyJuYW1lIjoiUml0dXJhaiBTYXhlbmEiLCJwaWN0dXJlIjoiaHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzIwMDI3NTIwNTY4MzEyMjk5NTIvbjVHUDE3YUJfbm9ybWFsLmpwZyIsImlzcyI6Imh0dHBzOi8vc2VjdXJldG9rZW4uZ29vZ2xlLmNvbS9rdXRvb3QtM2ZjYWQiLCJhdWQiOiJrdXRvb3QtM2ZjYWQiLCJhdXRoX3RpbWUiOjE3NjYzMzg5NzIsInVzZXJfaWQiOiJ5cFFYeFZYVEFMYURBd2dxT0NHUWYwYWdhQ0syIiwic3ViIjoieXBRWHhWWFRBTGFEQXdncU9DR1FmMGFnYUNLMiIsImlhdCI6MTc2NjMzODk3NSwiZXhwIjoxNzY2MzQyNTc1LCJmaXJlYmFzZSI6eyJpZGVudGl0aWVzIjp7InR3aXR0ZXIuY29tIjpbIjIwMDI3NTE5OTEyMjM4NTcxNTIiXX0sInNpZ25faW5fcHJvdmlkZXIiOiJ0d2l0dGVyLmNvbSJ9fQ.bJ3xHJVi3l2k1zc7rCuw2OcnKt_aM68eDeqfi71r3yKABahDvy0iIjW0HfMDdzSVeLNW4ijLngeN-1Ege9F00z1gYOfQ2bgNQ1nKPOtiv9OedLj419xiWt14Oht_2SblVUqLgwelULO4BhDLYBL5j0nPVkSdBdg6SauWNr3NmmAnVukeuXV-WZ4IUJZTyjL3yNoW5Y7ylqFc6RTyW1uXaJp8XiAdXG7VQ7-cYgE_P7QmjkY7gJOBYoGyi_XOVY0abNSPfYn2b45HEyp2D_I6ysj39ADtoPUnFuPOXfS57XFc1t_tC5tOmSY8adZ0n3tjSuBHoVayDsTqLwEj8VGx5Q';
-        // 1️⃣ Fetch Firebase public keys
-        
-        $keys = Http::get(
-            'https://www.googleapis.com/service_accounts/v1/jwk/securetoken@system.gserviceaccount.com'
-        )->json();
-
-        // 2️⃣ Decode & verify JWT
-        $decoded = JWT::decode(
-            $idToken,
-            JWK::parseKeySet($keys)
-        );
-
-        // 3️⃣ Validate issuer & audience
-        $projectId = env('FIREBASE_PROJECT_ID');
-
-        if ($decoded->iss !== "https://securetoken.google.com/{$projectId}") {
-            throw new \Exception('Invalid token issuer');
-        }
-
-        if ($decoded->aud !== $projectId) {
-            throw new \Exception('Invalid token audience');
-        }
-
-        // 4️⃣ Extract user info
-        $uid      = $decoded->sub; // Firebase UID (always present)
-        $email    = $decoded->email ?? null;
-        $name     = $decoded->name ?? 'User';
-        $photo    = $decoded->picture ?? null;
-        $provider = $decoded->firebase->sign_in_provider ?? 'unknown';
-
-        /**
-         * 5️⃣ User handling
-         * - If email exists → normal flow
-         * - If email is null (Twitter) → temporary internal email
-         */
-        if ($email) {
-            // Google / Facebook / Apple
-            $user = User::updateOrCreate(
-                ['email' => $email],
-                [
-                    'name' => $name,
-                    'email_verified' => 1,
-                    'status' => 1,
-                ]
-            );
-        } else {
-            // Twitter (email is often null)
-            $tempEmail = 'twitter_' . $uid . '@noemail.local';
-
-            $user = User::updateOrCreate(
-                ['email' => $tempEmail],
-                [
-                    'name' => $name,
-                    'email_verified' => 0,
-                    'status' => 1,
-                ]
-            );
-        }
-       
-        // 6️⃣ Login user & issue Laravel JWT
-        $token = Auth::guard('api')->login($user);
-      
-
-        return response()->json(data: [
-            'status' => true,
-            'access_token' => $token,
-            'token_type' => 'bearer',
-            'provider' => $provider,
-            'user' => $user
+        $request->validate([
+            'token' => 'required'
         ]);
-    } catch (\Throwable $e) {
-        return response()->json([
-            'status' => false,
-            'message' => 'Invalid Firebase token',
-            'error' => $e->getMessage()
-        ], 401);
+
+        try {
+            $idToken = $request->token;
+            // $idToken = 'eyJhbGciOiJSUzI1NiIsImtpZCI6Ijk4OGQ1YTM3OWI3OGJkZjFlNTBhNDA5MTEzZjJiMGM3NWU0NTJlNDciLCJ0eXAiOiJKV1QifQ.eyJuYW1lIjoiUml0dXJhaiBTYXhlbmEiLCJwaWN0dXJlIjoiaHR0cHM6Ly9wYnMudHdpbWcuY29tL3Byb2ZpbGVfaW1hZ2VzLzIwMDI3NTIwNTY4MzEyMjk5NTIvbjVHUDE3YUJfbm9ybWFsLmpwZyIsImlzcyI6Imh0dHBzOi8vc2VjdXJldG9rZW4uZ29vZ2xlLmNvbS9rdXRvb3QtM2ZjYWQiLCJhdWQiOiJrdXRvb3QtM2ZjYWQiLCJhdXRoX3RpbWUiOjE3NjYzMzg5NzIsInVzZXJfaWQiOiJ5cFFYeFZYVEFMYURBd2dxT0NHUWYwYWdhQ0syIiwic3ViIjoieXBRWHhWWFRBTGFEQXdncU9DR1FmMGFnYUNLMiIsImlhdCI6MTc2NjMzODk3NSwiZXhwIjoxNzY2MzQyNTc1LCJmaXJlYmFzZSI6eyJpZGVudGl0aWVzIjp7InR3aXR0ZXIuY29tIjpbIjIwMDI3NTE5OTEyMjM4NTcxNTIiXX0sInNpZ25faW5fcHJvdmlkZXIiOiJ0d2l0dGVyLmNvbSJ9fQ.bJ3xHJVi3l2k1zc7rCuw2OcnKt_aM68eDeqfi71r3yKABahDvy0iIjW0HfMDdzSVeLNW4ijLngeN-1Ege9F00z1gYOfQ2bgNQ1nKPOtiv9OedLj419xiWt14Oht_2SblVUqLgwelULO4BhDLYBL5j0nPVkSdBdg6SauWNr3NmmAnVukeuXV-WZ4IUJZTyjL3yNoW5Y7ylqFc6RTyW1uXaJp8XiAdXG7VQ7-cYgE_P7QmjkY7gJOBYoGyi_XOVY0abNSPfYn2b45HEyp2D_I6ysj39ADtoPUnFuPOXfS57XFc1t_tC5tOmSY8adZ0n3tjSuBHoVayDsTqLwEj8VGx5Q';
+            // 1️⃣ Fetch Firebase public keys
+
+            $keys = Http::get(
+                'https://www.googleapis.com/service_accounts/v1/jwk/securetoken@system.gserviceaccount.com'
+            )->json();
+
+            // 2️⃣ Decode & verify JWT
+            $decoded = JWT::decode(
+                $idToken,
+                JWK::parseKeySet($keys)
+            );
+
+            // 3️⃣ Validate issuer & audience
+            $projectId = env('FIREBASE_PROJECT_ID');
+
+            if ($decoded->iss !== "https://securetoken.google.com/{$projectId}") {
+                throw new \Exception('Invalid token issuer');
+            }
+
+            if ($decoded->aud !== $projectId) {
+                throw new \Exception('Invalid token audience');
+            }
+
+            // 4️⃣ Extract user info
+            $uid = $decoded->sub; // Firebase UID (always present)
+            $email = $decoded->email ?? null;
+            $name = $decoded->name ?? 'User';
+            $photo = $decoded->picture ?? null;
+            $provider = $decoded->firebase->sign_in_provider ?? 'unknown';
+
+            /**
+             * 5️⃣ User handling
+             * - If email exists → normal flow
+             * - If email is null (Twitter) → temporary internal email
+             */
+            if ($email) {
+                // Google / Facebook / Apple
+                $user = User::updateOrCreate(
+                    ['email' => $email],
+                    [
+                        'name' => $name,
+                        'email_verified' => 1,
+                        'status' => 1,
+                    ]
+                );
+            } else {
+                // Twitter (email is often null)
+                $tempEmail = 'twitter_' . $uid . '@noemail.local';
+
+                $user = User::updateOrCreate(
+                    ['email' => $tempEmail],
+                    [
+                        'name' => $name,
+                        'email_verified' => 0,
+                        'status' => 1,
+                    ]
+                );
+            }
+
+            // 6️⃣ Login user & issue Laravel JWT
+            $token = Auth::guard('api')->login($user);
+
+
+            return response()->json(data: [
+                'status' => true,
+                'access_token' => $token,
+                'token_type' => 'bearer',
+                'provider' => $provider,
+                'user' => $user
+            ]);
+        } catch (\Throwable $e) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Invalid Firebase token',
+                'error' => $e->getMessage()
+            ], 401);
+        }
     }
-}
 
 }
 
