@@ -38,6 +38,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Razorpay\Api\Api;
 use App\Models\BaseplanCampaignLinked;
+use DB;
 
 class CheckoutController extends Controller
 {
@@ -51,7 +52,7 @@ class CheckoutController extends Controller
     {
         $query = UserCoupons::with('purchasedCampaign');
 
-        $user =  Auth::guard('api')->user();
+        $user = Auth::guard('api')->user();
 
         if ($user) {
             $userId = $user->id;
@@ -107,7 +108,7 @@ class CheckoutController extends Controller
     {
         $query = UserCoins::with('purchasedCampaign');
 
-        $user =  Auth::guard('api')->user();
+        $user = Auth::guard('api')->user();
 
         if ($user) {
             $userId = $user->id;
@@ -140,35 +141,37 @@ class CheckoutController extends Controller
 
     public function purchasestore(Request $request)
     {
+        // try {
+        $validator = Validator::make($request->all(), [
+            'camp_id' => 'required',
+            'base_plan_id' => 'required',
+            'amount' => 'required|numeric',
+            'quantity' => 'required|numeric'
+        ]);
+
+        if ($validator->fails()) {
+            throw new HttpResponseException(response()->json([
+                'errors' => $validator->errors()
+            ], 422));
+        }
+
+        if ($request->quantity > 5) {
+            return response()->json(['message' => 'Qty is more!'], 400);
+        }
+
+        $baseplan = Baseplans::find($request->base_plan_id);
+        if (!$baseplan) {
+            return response()->json(['message' => 'Base plan not found!'], 404);
+        }
+
+        $user = Auth::guard('api')->user();
+        $campaign = CoinCampaigns::find($request->camp_id);
+        if (!$campaign) {
+            return response()->json(['message' => 'Campaign not found!'], 404);
+        }
+
+        DB::beginTransaction();
         try {
-            $validator = Validator::make($request->all(), [
-                'camp_id' => 'required',
-                'base_plan_id' => 'required',
-                'amount' => 'required|numeric',
-                'quantity' => 'required|numeric'
-            ]);
-
-            if ($validator->fails()) {
-                throw new HttpResponseException(response()->json([
-                    'errors' => $validator->errors()
-                ], 422));
-            }
-
-            if($request->quantity > 5){
-                return response()->json(['message' => 'Qty is more!'],400);
-            }
-
-            $baseplan = Baseplans::find($request->base_plan_id);
-            if (!$baseplan) {
-                return response()->json(['message' => 'Base plan not found!'], 404);
-            }
-
-            $user =  Auth::guard('api')->user();
-            $campaign = CoinCampaigns::find($request->camp_id);
-            if (!$campaign) {
-                return response()->json(['message' => 'Campaign not found!'], 404);
-            }
-           
             $purchase = PurchasedCoins::create([
                 'camp_id' => $request->camp_id,
                 'user_id' => $user->id,
@@ -188,35 +191,36 @@ class CheckoutController extends Controller
             $single_length_tickets = $campaign->total_tickets;
             $prefix = null;
             $seriesLabels = []; // Array to hold series A, B, C...
-            
-            if($campaign->series_prefix){
+
+            if ($campaign->series_prefix) {
                 $prefix = strtoupper($campaign->series_prefix);
                 $firstChar = $prefix[0];
                 if (ctype_alpha($firstChar)) {
                     // Calculate number of series (e.g., 'D' = 4 series: A, B, C, D)
                     $numberOfSeries = ord($firstChar) - 64; // 'A'=1, 'B'=2, 'C'=3, 'D'=4, etc.
-                    
+
                     // Calculate tickets per series
                     $single_length_tickets = round($campaign->total_tickets / $numberOfSeries);
-                    
+
                     // Generate series labels from A to the prefix letter
                     for ($i = 0; $i < $numberOfSeries; $i++) {
                         $seriesLabels[] = chr(65 + $i); // 65 is ASCII for 'A'
                     }
                 }
             }
-            
+
             $alreadyPurchasedCouponsCount = PurchasedCoins::where('camp_id', $request->camp_id)
                 ->where('payment_status', 'success')
                 ->sum(\DB::raw('camp_coupons_per_campaign * quantity'));
 
             if (($alreadyPurchasedCouponsCount + ($baseplan->coupons_per_campaign * $request->quantity)) > $totaltickets) {
+                DB::rollBack();
                 return response()->json(['message' => 'Not enough tickets available!'], 400);
             }
-            
+
             $couponslist = [];
             $generatedCodes = []; // Track codes generated in this session
-            
+
             for ($j = 0; $j < $baseplan->coupons_per_campaign * $purchase->quantity; $j++) {
 
                 // Determine current series label based on already purchased count
@@ -230,7 +234,13 @@ class CheckoutController extends Controller
                 }
 
                 // Generate a code as a combination of N pairs of two-digit numbers (01-49)
+                $maxRetries = 50;
+                $retryCount = 0;
                 do {
+                    if ($retryCount >= $maxRetries) {
+                        DB::rollBack();
+                        return response()->json(['message' => 'Failed to generate unique coupon code. Please try again.'], 500);
+                    }
                     $numbers = [];
                     // Generate unique numbers between number_min and number_max, formatted as two digits
                     while (count($numbers) < $campaign->numbers_per_ticket) {
@@ -250,7 +260,8 @@ class CheckoutController extends Controller
                         ->where('series_label', $currentSeriesLabel)
                         ->exists();
                     $existsInSession = in_array($code . '_' . $currentSeriesLabel, $generatedCodes);
-                    
+
+                    $retryCount++;
                 } while ($existsInDb || $existsInSession);
 
                 // Add to session tracker with series label
@@ -262,8 +273,8 @@ class CheckoutController extends Controller
                     'coupon_expires' => now()->addDays(30),
                     'is_claimed' => 0,
                     'status' => 0,
-                    'main_campaign_id'=>$campaign->id,
-                    'series_label'=>$currentSeriesLabel
+                    'main_campaign_id' => $campaign->id,
+                    'series_label' => $currentSeriesLabel
                 ]);
 
                 array_push($couponslist, $newone);
@@ -271,16 +282,17 @@ class CheckoutController extends Controller
 
             $razorpay = RazorpayPayment::first();
             if (!$razorpay) {
+                DB::rollBack();
                 return response()->json(['message' => 'Razorpay configuration not found!'], 500);
             }
 
             $total_price = $baseplan->ticket_price;
             $payable_amount = $total_price * 1;
             $payable_amount = round($payable_amount, 2);
-            
+
             $api = new Api($razorpay->key, $razorpay->secret_key);
             $order = $api->order->create(
-                array('receipt' => "OID".$purchase->id, 'amount' => ($payable_amount * 100), 'currency' => 'INR')
+                array('receipt' => "OID" . $purchase->id, 'amount' => ($payable_amount * 100), 'currency' => 'INR')
             );
 
             $purchase->razor_order_id = $order->id;
@@ -288,20 +300,23 @@ class CheckoutController extends Controller
             $purchase->camp_ticket_price = $payable_amount;
             $purchase->save();
 
-            if($baseplan->coupons_per_campaign*$request->quantity > 5000){
-                return response()->json(['message' => 'Coupons count is more!'],400);
+            if ($baseplan->coupons_per_campaign * $request->quantity > 5000) {
+                DB::rollBack();
+                return response()->json(['message' => 'Coupons count is more!'], 400);
             }
 
-            $purchase = PurchasedCoins::with('coupons')->where('id',$purchase->id)->where('user_id' , $user->id)->first();
+            DB::commit();
+
+            $purchase = PurchasedCoins::with('coupons')->where('id', $purchase->id)->where('user_id', $user->id)->first();
             $purchase['series-prefix'] = $campaign->series_prefix;
             $purchase['number_min'] = $campaign->number_min;
             $purchase['number_max'] = $campaign->number_max;
             $purchase['numbers_per_ticket'] = $campaign->numbers_per_ticket;
-            $purchase['basedetails']=$purchase->basedetails;
-            
+            $purchase['basedetails'] = $purchase->basedetails;
+
             return response()->json(['message' => 'Payment pending. Please complete the payment to activate your campaign', 'data' => $purchase]);
-            
         } catch (\Exception $e) {
+            DB::rollBack();
             return response()->json([
                 'message' => 'An error occurred during purchase',
                 'error' => $e->getMessage()
@@ -323,10 +338,10 @@ class CheckoutController extends Controller
                 'errors' => $validator->errors()
             ], 422));
         }
-        
-        $user =  Auth::guard('api')->user();
+
+        $user = Auth::guard('api')->user();
         $purchase = PurchasedCoins::find($request->order_id);
-        
+
         $referenceexists = UserCoupons::where('id', $request->coupon_id)->first();
 
         // do {
@@ -341,112 +356,112 @@ class CheckoutController extends Controller
 
         $exists = UserCoupons::where('coupon_code', $request->coupon_code)->exists();
 
-        if($exists){
-            return response()->json(['message' => 'Coupon code exists Already!'],400);
+        if ($exists) {
+            return response()->json(['message' => 'Coupon code exists Already!'], 400);
         }
 
-        $referenceexists->coupon_code=$request->coupon_code;
+        $referenceexists->coupon_code = $request->coupon_code;
         $referenceexists->save();
 
         return response()->json(['message' => 'Campaign purchased successfully', 'data' => $referenceexists]);
     }
 
     public function payment_status(Request $request)
-{
-    $validator = Validator::make($request->all(), [
-        'razorpay_order_id' => 'required|string',
-        'payment_id' => 'required|string',
-        'payment_status' => 'required|string',
-        'razorpay_signature' => 'required|string',
-    ]);
+    {
+        $validator = Validator::make($request->all(), [
+            'razorpay_order_id' => 'required|string',
+            'payment_id' => 'required|string',
+            'payment_status' => 'required|string',
+            'razorpay_signature' => 'required|string',
+        ]);
 
-    if ($validator->fails()) {
-        throw new HttpResponseException(response()->json([
-            'errors' => $validator->errors()
-        ], 422));
+        if ($validator->fails()) {
+            throw new HttpResponseException(response()->json([
+                'errors' => $validator->errors()
+            ], 422));
+        }
+
+        $user = Auth::guard('api')->user();
+
+        $purchase = PurchasedCoins::with('coupons')
+            ->where('razor_order_id', $request->razorpay_order_id)
+            ->where('user_id', $user->id)
+            ->first();
+
+        if (!$purchase) {
+            throw new HttpResponseException(response()->json([
+                'errors' => 'Invalid Order Id'
+            ], 422));
+        }
+
+        if (in_array($purchase->payment_status, ['success', 'failed'])) {
+            throw new HttpResponseException(response()->json([
+                'errors' => 'Status Already Updated'
+            ], 422));
+        }
+
+        // ✅ Update payment details
+        $purchase->payment_id = $request->payment_id;
+        $purchase->payment_status = $request->payment_status;
+        $purchase->razorpay_signature = $request->razorpay_signature;
+        $purchase->save();
+
+        $baseplan = Baseplans::find($purchase->base_plan_id);
+
+        if ($baseplan->coupons_per_campaign * $purchase->quantity > 50) {
+            return response()->json(['message' => 'Coupons count is more!'], 400);
+        }
+
+        $couponslist = [];
+        // for ($j = 0; $j < $baseplan->coupons_per_campaign * $purchase->quantity; $j++) {
+        //     do {
+        //         $code = '';
+        //         for ($i = 0; $i < 12; $i++) {
+        //             $code .= rand(0, 9);
+        //         }
+        //         $exists = UserCoupons::where('coupon_code', $code)->exists();
+        //     } while ($exists);
+
+        //     $newCoupon = UserCoupons::create([
+        //         'purchased_camp_id' => $purchase->id,
+        //         'coupon_code' => $code,
+        //         'coupon_expires' => now()->addDays(30),
+        //         'is_claimed' => 0,
+        //         'status' => 1,
+        //     ]);
+
+        //     $couponslist[] = $newCoupon;
+        // }
+
+        // Update all coupons status to 1 for this purchase
+        UserCoupons::where('purchased_camp_id', $purchase->id)->update(['status' => 1]);
+
+        $coinsdata = UserCoins::create([
+            'purchased_camp_id' => $purchase->id,
+            'user_id' => $user->id,
+            'coin_expires' => now()->addDays(30),
+            'coins' => $baseplan->coins_per_campaign * $purchase->quantity,
+            'type' => 'credit',
+            'status' => 1,
+        ]);
+
+        $purchase = PurchasedCoins::with('coupons')
+            ->where('razor_order_id', $request->razorpay_order_id)
+            ->where('user_id', $user->id)
+            ->first();
+
+        $purchase['coinsdata'] = $coinsdata;
+
+        return response()->json([
+            'data' => $purchase,
+            'message' => 'Payment Updated Successfully',
+        ]);
     }
-
-    $user = Auth::guard('api')->user();
-
-    $purchase = PurchasedCoins::with('coupons')
-        ->where('razor_order_id', $request->razorpay_order_id)
-        ->where('user_id', $user->id)
-        ->first();
-
-    if (!$purchase) {
-        throw new HttpResponseException(response()->json([
-            'errors' => 'Invalid Order Id'
-        ], 422));
-    }
-
-    if (in_array($purchase->payment_status, ['success', 'failed'])) {
-        throw new HttpResponseException(response()->json([
-            'errors' => 'Status Already Updated'
-        ], 422));
-    }
-
-    // ✅ Update payment details
-    $purchase->payment_id = $request->payment_id;
-    $purchase->payment_status = $request->payment_status;
-    $purchase->razorpay_signature = $request->razorpay_signature;
-    $purchase->save();
-
-    $baseplan = Baseplans::find($purchase->base_plan_id);
-
-    if ($baseplan->coupons_per_campaign * $purchase->quantity > 50) {
-        return response()->json(['message' => 'Coupons count is more!'], 400);
-    }
-
-    $couponslist = [];
-    // for ($j = 0; $j < $baseplan->coupons_per_campaign * $purchase->quantity; $j++) {
-    //     do {
-    //         $code = '';
-    //         for ($i = 0; $i < 12; $i++) {
-    //             $code .= rand(0, 9);
-    //         }
-    //         $exists = UserCoupons::where('coupon_code', $code)->exists();
-    //     } while ($exists);
-
-    //     $newCoupon = UserCoupons::create([
-    //         'purchased_camp_id' => $purchase->id,
-    //         'coupon_code' => $code,
-    //         'coupon_expires' => now()->addDays(30),
-    //         'is_claimed' => 0,
-    //         'status' => 1,
-    //     ]);
-
-    //     $couponslist[] = $newCoupon;
-    // }
-
-    // Update all coupons status to 1 for this purchase
-    UserCoupons::where('purchased_camp_id', $purchase->id)->update(['status' => 1]);
-
-    $coinsdata = UserCoins::create([
-        'purchased_camp_id' => $purchase->id,
-        'user_id' => $user->id,
-        'coin_expires' => now()->addDays(30),
-        'coins' => $baseplan->coins_per_campaign * $purchase->quantity,
-        'type' => 'credit',
-        'status' => 1,
-    ]);
-
-    $purchase = PurchasedCoins::with('coupons')
-        ->where('razor_order_id', $request->razorpay_order_id)
-        ->where('user_id', $user->id)
-        ->first();
-
-    $purchase['coinsdata'] = $coinsdata;
-
-    return response()->json([
-        'data' => $purchase,
-        'message' => 'Payment Updated Successfully',
-    ]);
-}
 
 
     public function myPurchases()
     {
-        $user =  Auth::guard('api')->user();
+        $user = Auth::guard('api')->user();
         $purchases = PurchasedCoins::where('user_id', $user->id)->get();
 
         return response()->json($purchases);
@@ -454,47 +469,48 @@ class CheckoutController extends Controller
 
     public function checkwinnerclaim(Request $request)
     {
-    
-        $data = Winners::with('campaign')->where('coupon_number', $request->coupon_code)->where('is_claimed',0)->first();
-        if($data){
-           return response()->json(['data'=>$data,'message'=>'Congratulations for winning prize!!']); 
+
+        $data = Winners::with('campaign')->where('coupon_number', $request->coupon_code)->where('is_claimed', 0)->first();
+        if ($data) {
+            return response()->json(['data' => $data, 'message' => 'Congratulations for winning prize!!']);
         }
 
-        return response()->json(['data'=>'','message'=>'No eligible']);
-        
+        return response()->json(['data' => '', 'message' => 'No eligible']);
+
     }
 
     public function Purchasedetails($id)
     {
-        $user =  Auth::guard('api')->user();
-        $purchases = PurchasedCoins::with('coupons')->where('id',$id)->where('user_id',$user->id)->first();
+        $user = Auth::guard('api')->user();
+        $purchases = PurchasedCoins::with('coupons')->where('id', $id)->where('user_id', $user->id)->first();
         $campaign = CoinCampaigns::find($purchases->camp_id);
-        $purchases['series-prefix'] = $campaign->series_prefix; 
-        $purchases['number_min'] =$campaign->number_min;
-        $purchases['number_max']=$campaign->number_max;
-        $purchases['numbers_per_ticket']=$campaign->numbers_per_ticket;
-        return response()->json(["data"=> $purchases]);
+        $purchases['series-prefix'] = $campaign->series_prefix;
+        $purchases['number_min'] = $campaign->number_min;
+        $purchases['number_max'] = $campaign->number_max;
+        $purchases['numbers_per_ticket'] = $campaign->numbers_per_ticket;
+        return response()->json(["data" => $purchases]);
     }
 
 
-    public function checkout(Request $request){
+    public function checkout(Request $request)
+    {
         $user = Auth::guard('api')->user();
-        $cartProducts = ShoppingCart::with('product','variants.variantItem')->where('user_id', $user->id)->select('id','product_id','qty')->get();
+        $cartProducts = ShoppingCart::with('product', 'variants.variantItem')->where('user_id', $user->id)->select('id', 'product_id', 'qty')->get();
 
-        if($cartProducts->count() == 0){
+        if ($cartProducts->count() == 0) {
             $notification = trans('user_validation.Your shopping cart is empty');
-            return response()->json(['message' => $notification],403);
+            return response()->json(['message' => $notification], 403);
         }
 
-        $addresses = Address::with('country','countryState','city')->where(['user_id' => $user->id])->get();
+        $addresses = Address::with('country', 'countryState', 'city')->where(['user_id' => $user->id])->get();
         $shippings = Shipping::all();
 
         $couponOffer = '';
-        if($request->coupon){
+        if ($request->coupon) {
             $coupon = Coupon::where(['code' => $request->coupon, 'status' => 1])->first();
-            if($coupon){
-                if($coupon->expired_date >= date('Y-m-d')){
-                    if($coupon->apply_qty <  $coupon->max_quantity ){
+            if ($coupon) {
+                if ($coupon->expired_date >= date('Y-m-d')) {
+                    if ($coupon->apply_qty < $coupon->max_quantity) {
                         $couponOffer = $coupon;
                     }
                 }
@@ -520,7 +536,7 @@ class CheckoutController extends Controller
         foreach ($cartProducts as $cart) {
             $reedem_percentage = $cart->product->reedem_percentage ?? 0;
             $redeemable_for_product = ($reedem_percentage / 100) * $balanceCoins;
-            
+
             // Optional: multiply by quantity if needed
             $redeemable_for_product *= $cart->qty;
 
@@ -529,7 +545,7 @@ class CheckoutController extends Controller
 
         // $reedem_coins_allowed=100;
 
-        $redeemcoupon = array("reedem_coins_allowed"=>$total_redeemable_coins,"balance_coins"=>$balanceCoins,"message"=>"Congratulations, You Can Redeem Coins on this purchase");
+        $redeemcoupon = array("reedem_coins_allowed" => $total_redeemable_coins, "balance_coins" => $balanceCoins, "message" => "Congratulations, You Can Redeem Coins on this purchase");
 
 
 
@@ -560,7 +576,7 @@ class CheckoutController extends Controller
             'instamojo' => $instamojo,
             'sslcommerz' => $sslcommerz,
             'myfatoorah' => $myfatoorah,
-        ],200);
+        ], 200);
 
     }
 
@@ -568,57 +584,57 @@ class CheckoutController extends Controller
 
 
     public function generateCoupons(Request $request)
-{
-    $validator = Validator::make($request->all(), [
-        'camp_id' => 'required',
-        'base_plan_id' => 'required',
-        'quantity' => 'required|numeric'
-    ]);
+    {
+        $validator = Validator::make($request->all(), [
+            'camp_id' => 'required',
+            'base_plan_id' => 'required',
+            'quantity' => 'required|numeric'
+        ]);
 
-    if ($validator->fails()) {
+        if ($validator->fails()) {
+            return response()->json([
+                'errors' => $validator->errors()
+            ], 422);
+        }
+
+        if ($request->quantity > 5) {
+            return response()->json(['message' => 'Qty is more!'], 400);
+        }
+
+        $baseplan = Baseplans::findOrFail($request->base_plan_id);
+        $campaign = CoinCampaigns::findOrFail($request->camp_id);
+        $user = Auth::guard('api')->user();
+
+        if ($baseplan->coupons_per_campaign * $request->quantity > 50) {
+            return response()->json(['message' => 'Coupons count is more!'], 400);
+        }
+
+        // Generate coupons only (no saving purchase)
+        $couponsList = [];
+
+        for ($j = 0; $j < $baseplan->coupons_per_campaign * $request->quantity; $j++) {
+            do {
+                $code = '';
+                for ($i = 0; $i < 12; $i++) {
+                    $code .= rand(0, 9);
+                }
+                $exists = UserCoupons::where('coupon_code', $code)->exists();
+            } while ($exists);
+
+            $newCoupon = [
+                'coupon_code' => $code,
+                'coupon_expires' => now()->addDays(30)->toDateTimeString(),
+                'is_claimed' => 0,
+                'status' => 0,
+            ];
+
+            $couponsList[] = $newCoupon;
+        }
+
         return response()->json([
-            'errors' => $validator->errors()
-        ], 422);
+            'message' => 'Coupons generated successfully',
+            'coupons' => $couponsList
+        ]);
     }
-
-    if ($request->quantity > 5) {
-        return response()->json(['message' => 'Qty is more!'], 400);
-    }
-
-    $baseplan = Baseplans::findOrFail($request->base_plan_id);
-    $campaign = CoinCampaigns::findOrFail($request->camp_id);
-    $user = Auth::guard('api')->user();
-
-    if ($baseplan->coupons_per_campaign * $request->quantity > 50) {
-        return response()->json(['message' => 'Coupons count is more!'], 400);
-    }
-
-    // Generate coupons only (no saving purchase)
-    $couponsList = [];
-
-    for ($j = 0; $j < $baseplan->coupons_per_campaign * $request->quantity; $j++) {
-        do {
-            $code = '';
-            for ($i = 0; $i < 12; $i++) {
-                $code .= rand(0, 9);
-            }
-            $exists = UserCoupons::where('coupon_code', $code)->exists();
-        } while ($exists);
-
-        $newCoupon = [
-            'coupon_code' => $code,
-            'coupon_expires' => now()->addDays(30)->toDateTimeString(),
-            'is_claimed' => 0,
-            'status' => 0,
-        ];
-
-        $couponsList[] = $newCoupon;
-    }
-
-    return response()->json([
-        'message' => 'Coupons generated successfully',
-        'coupons' => $couponsList
-    ]);
-}
 
 }
