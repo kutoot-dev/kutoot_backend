@@ -28,6 +28,9 @@ class MailHelper
 
         config(['mail.mailers.smtp' => $mailConfig]);
         config(['mail.from.address' => $email_setting->email]);
+
+        // Clear the mailer instance to pick up new config
+        Mail::purge('smtp');
     }
 
     /**
@@ -48,6 +51,9 @@ class MailHelper
         config(['mail.mailers.smtp' => $mailConfig]);
         config(['mail.from.address' => env('MAIL_FROM_ADDRESS', 'noreply@kutoot.com')]);
         config(['mail.from.name' => env('MAIL_FROM_NAME', 'Kutoot')]);
+
+        // Clear the mailer instance to pick up new config
+        Mail::purge('smtp');
     }
 
     // public static function sendOtp($email, $otp)
