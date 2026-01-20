@@ -1,0 +1,392 @@
+{
+    "info": {
+        "_postman_id": "b6a8c7d1-1234-4321-abcd-1234567890ab",
+        "name": "Kutoot Redemption APIs",
+        "description": "Collection for User Dashboard and Redemption flows.",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "item": [
+        {
+            "name": "1. User Dashboard",
+            "request": {
+                "method": "GET",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "Bearer {{access_token}}",
+                        "type": "text"
+                    },
+                    {
+                        "key": "Accept",
+                        "value": "application/json",
+                        "type": "text"
+                    }
+                ],
+                "url": {
+                    "raw": "{{base_url}}/api/user/my-dashboard",
+                    "host": [
+                        "{{base_url}}"
+                    ],
+                    "path": [
+                        "api",
+                        "user",
+                        "my-dashboard"
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "2. Redeem Home",
+            "request": {
+                "method": "GET",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "Bearer {{access_token}}",
+                        "type": "text"
+                    },
+                    {
+                        "key": "Accept",
+                        "value": "application/json",
+                        "type": "text"
+                    }
+                ],
+                "url": {
+                    "raw": "{{base_url}}/api/user/redeem/home",
+                    "host": [
+                        "{{base_url}}"
+                    ],
+                    "path": [
+                        "api",
+                        "user",
+                        "redeem",
+                        "home"
+                    ],
+                    "query": [
+                        {
+                            "key": "lat",
+                            "value": "12.9716",
+                            "description": "User Latitude"
+                        },
+                        {
+                            "key": "lng",
+                            "value": "77.5946",
+                            "description": "User Longitude"
+                        },
+                        {
+                            "key": "city",
+                            "value": "Bengaluru",
+                            "description": "User City"
+                        }
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "3. Filters (State + City)",
+            "request": {
+                "method": "GET",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "Bearer {{access_token}}",
+                        "type": "text"
+                    },
+                    {
+                        "key": "Accept",
+                        "value": "application/json",
+                        "type": "text"
+                    }
+                ],
+                "url": {
+                    "raw": "{{base_url}}/api/user/stores/filters",
+                    "host": [
+                        "{{base_url}}"
+                    ],
+                    "path": [
+                        "api",
+                        "user",
+                        "stores",
+                        "filters"
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "4. Stores Listing",
+            "request": {
+                "method": "GET",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "Bearer {{access_token}}",
+                        "type": "text"
+                    },
+                    {
+                        "key": "Accept",
+                        "value": "application/json",
+                        "type": "text"
+                    }
+                ],
+                "url": {
+                    "raw": "{{base_url}}/api/user/stores?category_id=1&state=Karnataka&city=Bengaluru&lat=12.9716&lng=77.5946",
+                    "host": [
+                        "{{base_url}}"
+                    ],
+                    "path": [
+                        "api",
+                        "user",
+                        "stores"
+                    ],
+                    "query": [
+                        {
+                            "key": "category_id",
+                            "value": "1",
+                            "description": "Category ID"
+                        },
+                        {
+                            "key": "state",
+                            "value": "Karnataka",
+                            "description": "Filter by State"
+                        },
+                        {
+                            "key": "city",
+                            "value": "Bengaluru",
+                            "description": "Filter by City"
+                        },
+                        {
+                            "key": "lat",
+                            "value": "12.9716",
+                            "description": "Required for distance"
+                        },
+                        {
+                            "key": "lng",
+                            "value": "77.5946",
+                            "description": "Required for distance"
+                        },
+                        {
+                            "key": "search",
+                            "value": "",
+                            "description": "Search by name",
+                            "disabled": true
+                        },
+                        {
+                            "key": "sort_by",
+                            "value": "rating",
+                            "description": "rating / name / nearest",
+                            "disabled": true
+                        },
+                        {
+                            "key": "page",
+                            "value": "1",
+                            "disabled": true
+                        }
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "5. Store Details",
+            "request": {
+                "method": "GET",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "Bearer {{access_token}}",
+                        "type": "text"
+                    },
+                    {
+                        "key": "Accept",
+                        "value": "application/json",
+                        "type": "text"
+                    }
+                ],
+                "url": {
+                    "raw": "{{base_url}}/api/user/stores/101",
+                    "host": [
+                        "{{base_url}}"
+                    ],
+                    "path": [
+                        "api",
+                        "user",
+                        "stores",
+                        "101"
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "6. Redeem Preview",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "Bearer {{access_token}}",
+                        "type": "text"
+                    },
+                    {
+                        "key": "Accept",
+                        "value": "application/json",
+                        "type": "text"
+                    },
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json",
+                        "type": "text"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n    \"store_id\": 101,\n    \"bill_amount\": 1200\n}"
+                },
+                "url": {
+                    "raw": "{{base_url}}/api/user/redeem/preview",
+                    "host": [
+                        "{{base_url}}"
+                    ],
+                    "path": [
+                        "api",
+                        "user",
+                        "redeem",
+                        "preview"
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "7. Redeem Confirm",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "Bearer {{access_token}}",
+                        "type": "text"
+                    },
+                    {
+                        "key": "Accept",
+                        "value": "application/json",
+                        "type": "text"
+                    },
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json",
+                        "type": "text"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n    \"store_id\": 101,\n    \"bill_amount\": 1200,\n    \"payment_method\": \"cash\"\n}"
+                },
+                "url": {
+                    "raw": "{{base_url}}/api/user/redeem/confirm",
+                    "host": [
+                        "{{base_url}}"
+                    ],
+                    "path": [
+                        "api",
+                        "user",
+                        "redeem",
+                        "confirm"
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "8. Transaction History",
+            "request": {
+                "method": "GET",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "Bearer {{access_token}}",
+                        "type": "text"
+                    },
+                    {
+                        "key": "Accept",
+                        "value": "application/json",
+                        "type": "text"
+                    }
+                ],
+                "url": {
+                    "raw": "{{base_url}}/api/user/coin-transactions?type=all&page=1&limit=10",
+                    "host": [
+                        "{{base_url}}"
+                    ],
+                    "path": [
+                        "api",
+                        "user",
+                        "coin-transactions"
+                    ],
+                    "query": [
+                        {
+                            "key": "type",
+                            "value": "all",
+                            "description": "credit / debit / all"
+                        },
+                        {
+                            "key": "page",
+                            "value": "1"
+                        },
+                        {
+                            "key": "limit",
+                            "value": "10"
+                        }
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "9. Redeem Settings",
+            "request": {
+                "method": "GET",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "Bearer {{access_token}}",
+                        "type": "text"
+                    },
+                    {
+                        "key": "Accept",
+                        "value": "application/json",
+                        "type": "text"
+                    }
+                ],
+                "url": {
+                    "raw": "{{base_url}}/api/user/redeem/settings",
+                    "host": [
+                        "{{base_url}}"
+                    ],
+                    "path": [
+                        "api",
+                        "user",
+                        "redeem",
+                        "settings"
+                    ]
+                }
+            },
+            "response": []
+        }
+    ],
+    "variable": [
+        {
+            "key": "base_url",
+            "value": "http://kutoot_backend.test",
+            "type": "string"
+        },
+        {
+            "key": "access_token",
+            "value": "YOUR_ACCESS_TOKEN",
+            "type": "string"
+        }
+    ]
+}

@@ -347,6 +347,29 @@ Route::group(['middleware' => ['demo', 'XSS']], function () {
                 Route::get('/{orderId}', [UserOrderController::class, 'show']);
             });
 
+            // -----------------------------------------------------
+            // NEW KUTOOT REDEMPTION APIS
+            // -----------------------------------------------------
+
+            // 1. Dashboard
+            // my-dashboard already exists but we will update controller logic
+            Route::get('/my-dashboard', [UserDashboardController::class, 'myDashboard'])->name('my-dashboard');
+
+            // 8. Transactions
+            Route::get('/coin-transactions', [UserDashboardController::class, 'coinTransactions']);
+
+            // Redemption & Stores
+            Route::get('/redeem/home', [\App\Http\Controllers\API\Customer\RedeemController::class, 'home']);
+            Route::get('/redeem/settings', [\App\Http\Controllers\API\Customer\RedeemController::class, 'settings']);
+
+            Route::get('/stores/filters', [\App\Http\Controllers\API\Customer\RedeemController::class, 'getFilters']);
+            Route::get('/stores', [\App\Http\Controllers\API\Customer\RedeemController::class, 'stores']); // Listing
+            Route::get('/stores/{id}', [\App\Http\Controllers\API\Customer\RedeemController::class, 'storeDetails']); // Details
+
+            Route::post('/redeem/preview', [\App\Http\Controllers\API\Customer\RedeemController::class, 'preview']);
+            Route::post('/redeem/confirm', [\App\Http\Controllers\API\Customer\RedeemController::class, 'confirm']);
+
+
         });
 
 
