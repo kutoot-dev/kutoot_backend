@@ -15,43 +15,48 @@
           </div>
 
           <div class="section-body">
-            <a href="{{ route('admin.country.create') }}" class="btn btn-primary"><i class="fas fa-plus"></i> {{__('admin.Add New')}}</a>
-
-            <a href="{{ route('admin.country-import-page') }}" class="btn btn-success"><i class="fas fa-plus"></i> {{__('Bulk Upload')}}</a>
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <a href="{{ route('admin.country.create') }}" class="btn btn-primary"><i class="fas fa-plus"></i> {{__('admin.Add New')}}</a>
+                </div>
+                <div class="col-md-6">
+                    <form action="" method="GET" class="float-right">
+                        <div class="input-group">
+                            <input type="text" name="search" class="form-control" placeholder="{{__('admin.Search')}}..." value="{{ request('search') }}">
+                            <div class="input-group-append">
+                                <button class="btn btn-primary" type="submit"><i class="fas fa-search"></i></button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
 
             <div class="row mt-4">
                 <div class="col-12">
                   <div class="card">
                     <div class="card-body">
-                        <table class="table table-striped" id="dataTable">
+                        <table class="table table-striped">
                             <thead>
                                 <tr>
                                     <th>{{__('admin.SN')}}</th>
                                     <th>{{__('admin.Name')}}</th>
-                                    <th>{{__('admin.Status')}}</th>
                                     <th>{{__('admin.Action')}}</th>
                                   </tr>
                             </thead>
                             <tbody>
                                 @foreach ($countries as $index => $country)
                                     <tr>
-                                        <td>{{ ++$index }}</td>
+                                        <td>{{ $countries->firstItem() + $index }}</td>
                                         <td>{{ $country->name }}</td>
-                                        <td>
-                                            @if($country->status == 1)
-                                                <a href="javascript:;" onclick="changeCountryStatus({{ $country->id }})">
-                                                    <input id="status_toggle" type="checkbox" checked data-toggle="toggle" data-on="{{__('admin.Active')}}" data-off="{{__('admin.InActive')}}" data-onstyle="success" data-offstyle="danger">
-                                                </a>
-                                                @else
-                                                <a href="javascript:;" onclick="changeCountryStatus({{ $country->id }})">
-                                                    <input id="status_toggle" type="checkbox" data-toggle="toggle" data-on="{{__('admin.Active')}}" data-off="{{__('admin.InActive')}}" data-onstyle="success" data-offstyle="danger">
-                                                </a>
-                                                @endif
-                                        </td>
                                         <td>
                                             <a href="{{ route('admin.country.edit',$country->id) }}" class="btn btn-primary btn-sm"><i class="fa fa-edit" aria-hidden="true"></i></a>
 
-                                            @if ($country->countryStates->count() == 0 && $country->addressCountires->count() == 0)
+                                            @php
+                                                $statesCount = $country->states->count();
+                                                $addressCount = \App\Models\Address::where('country_id', $country->id)->count();
+                                            @endphp
+
+                                            @if ($statesCount == 0 && $addressCount == 0)
                                             <a href="javascript:;" data-toggle="modal" data-target="#deleteModal" class="btn btn-danger btn-sm" onclick="deleteData({{ $country->id }})"><i class="fa fa-trash" aria-hidden="true"></i></a>
                                             @else
                                             <a href="javascript:;" data-toggle="modal" data-target="#canNotDeleteModal" class="btn btn-danger btn-sm" disabled><i class="fa fa-trash" aria-hidden="true"></i></a>
@@ -63,6 +68,9 @@
                                   @endforeach
                             </tbody>
                         </table>
+                        <div class="mt-3">
+                            {{ $countries->links('pagination::bootstrap-4') }}
+                        </div>
                     </div>
                   </div>
                 </div>
@@ -88,25 +96,6 @@
 <script>
     function deleteData(id){
         $("#deleteForm").attr("action",'{{ url("admin/country/") }}'+"/"+id)
-    }
-    function changeCountryStatus(id){
-        var isDemo = "{{ env('APP_VERSION') }}"
-        if(isDemo == 0){
-            toastr.error('This Is Demo Version. You Can Not Change Anything');
-            return;
-        }
-        $.ajax({
-            type:"put",
-            data: { _token : '{{ csrf_token() }}' },
-            url:"{{url('/admin/country-status/')}}"+"/"+id,
-            success:function(response){
-                toastr.success(response)
-            },
-            error:function(err){
-                console.log(err);
-
-            }
-        })
     }
 </script>
 @endsection

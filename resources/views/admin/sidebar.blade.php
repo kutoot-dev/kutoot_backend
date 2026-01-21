@@ -25,10 +25,10 @@
 
             <ul class="dropdown-menu">
 
-             
+
               {{-- <li class="{{ Route::is('admin.campaigns.index') || Route::is('admin.campaigns.create') || Route::is('campaigns.edit') || Route::is('campaigns.show') ? 'active' : '' }}"><a class="nav-link" href="{{ route('admin.campaigns.index') }}">{{__('Campaigns')}}</a></li>
              <li class="{{ Route::is ('admin.tickets.index') }}" ><a href="{{ route('admin.tickets.index', $campaign->id ?? '') }}" class="btn btn-sm btn-outline-primary">Tickets</a></li> --}}
-             
+
               <li class="{{ Route::is('admin.all-coin-campaigns') || Route::is('admin.create-coin-campaign') || Route::is('admin.edit-coin-campaign') || Route::is('admin.view-coin-campaign') ? 'active' : '' }}"><a class="nav-link" href="{{ route('admin.all-coin-campaigns') }}">{{__('All  Campaigns')}}</a></li>
 
 
@@ -46,7 +46,7 @@
               <li class="{{ Route::is('admin.winners.index') ? 'active' : '' }}"><a class="nav-link" href="{{ route('admin.winners.index') }}">Winners</a></li>
 
 
-              
+
             </ul>
           </li>
 
@@ -92,7 +92,7 @@
           </li>
 
 
-          <li class="nav-item dropdown {{ Route::is('admin.product.*') || Route::is('admin.product-brand.*') || Route::is('admin.product-variant') || Route::is('admin.create-product-variant') || Route::is('admin.edit-product-variant') || Route::is('admin.product-gallery') || Route::is('admin.product-variant-item') || Route::is('admin.create-product-variant-item') || Route::is('admin.edit-product-variant-item') || Route::is('admin.product-review') || Route::is('admin.show-product-review') || Route::is('admin.seller-product') || Route::is('admin.seller-pending-product') || Route::is('admin.wholesale') || Route::is('admin.create-wholesale') || Route::is('admin.edit-wholesale') || Route::is('admin.product-highlight') ||  Route::is('admin.product-report') || Route::is('admin.show-product-report') || Route::is('admin.specification-key.*') || Route::is('admin.stockout-product') || Route::is('admin.product-import-page') ? 'active' : '' }}">
+          <li class="nav-item dropdown {{ Route::is('admin.product.*') || Route::is('admin.product-brand.*') || Route::is('admin.product-variant') || Route::is('admin.create-product-variant') || Route::is('admin.edit-product-variant') || Route::is('admin.product-gallery') || Route::is('admin.product-variant-item') || Route::is('admin.create-product-variant-item') || Route::is('admin.edit-product-variant-item') || Route::is('admin.product-review') || Route::is('admin.show-product-review') || Route::is('admin.seller-product') || Route::is('admin.seller-pending-product') ||  Route::is('admin.product-report') || Route::is('admin.show-product-report') || Route::is('admin.specification-key.*') || Route::is('admin.stockout-product') || Route::is('admin.product-import-page') ? 'active' : '' }}">
             <a href="#" class="nav-link has-dropdown"><i class="fas fa-th-large"></i><span>{{__('admin.Manage Products')}}</span></a>
 
             <ul class="dropdown-menu">
@@ -139,7 +139,7 @@
             </ul>
 
           </li> -->
-          <li class="nav-item dropdown {{ Route::is('admin.country.*') || Route::is('admin.state.*') || Route::is('admin.city.*') || Route::is('admin.country-import-page') || Route::is('admin.state-import-page') || Route::is('admin.city-import-page') ? 'active' : '' }}">
+          <li class="nav-item dropdown {{ Route::is('admin.country.*') || Route::is('admin.state.*') || Route::is('admin.city.*') ? 'active' : '' }}">
             <a href="#" class="nav-link has-dropdown"><i class="fas fa-map-marker-alt"></i><span>{{__('admin.Locations')}}</span></a>
 
             <ul class="dropdown-menu">
@@ -153,7 +153,7 @@
             </ul>
           </li>
 
-          <!-- <li class="nav-item dropdown {{ Route::is('admin.delivery-man.*') || Route::is('admin.balance-list') || Route::is('admin.delivery-man-withdraw-list') || Route::is('admin.delivery-man-review') || Route::is('admin.delivery-man-order-amount') || Route::is('admin.delivery-man-order-amount.create') || Route::is('admin.state-import-page') || Route::is('admin.city-import-page') ? 'active' : '' }}">
+          <!-- <li class="nav-item dropdown {{ Route::is('admin.delivery-man.*') || Route::is('admin.balance-list') || Route::is('admin.delivery-man-withdraw-list') || Route::is('admin.delivery-man-review') || Route::is('admin.delivery-man-order-amount') || Route::is('admin.delivery-man-order-amount.create') ? 'active' : '' }}">
             <a href="#" class="nav-link has-dropdown"><i class="fas fa-walking"></i><span>{{__('Delivery Man')}}</span></a>
 
             <ul class="dropdown-menu">
@@ -169,7 +169,7 @@
             </ul>
           </li> -->
 
-          <!-- <li class="nav-item dropdown {{ Route::is('admin.delivery-man-withdraw-method.*') || Route::is('admin.delivery-man-withdraw') || Route::is('admin.show-delivery-man-withdraw') || Route::is('admin.pending-delivery-man-withdraw') || Route::is('admin.city.*') || Route::is('admin.country-import-page') || Route::is('admin.state-import-page') || Route::is('admin.city-import-page') ? 'active' : '' }}">
+          <!-- <li class="nav-item dropdown {{ Route::is('admin.delivery-man-withdraw-method.*') || Route::is('admin.delivery-man-withdraw') || Route::is('admin.show-delivery-man-withdraw') || Route::is('admin.pending-delivery-man-withdraw') || Route::is('admin.city.*') ? 'active' : '' }}">
             <a href="#" class="nav-link has-dropdown"><i class="far fa-newspaper"></i><span>{{__('Delivery Man Withdrow')}}</span></a>
 
             <ul class="dropdown-menu">

@@ -46,7 +46,7 @@
 
                                             @forelse ($countries as $country)
                                                 <option value="{{ $country->id }}"
-                                                    {{ optional(optional($city)->countryState)->country_id == $country->id ? 'selected' : '' }}>
+                                                    {{ $city->country_id == $country->id ? 'selected' : '' }}>
                                                     {{ $country->name }}
                                                 </option>
                                             @empty
@@ -63,7 +63,7 @@
 
                                             @forelse ($states as $state)
                                                 <option value="{{ $state->id }}"
-                                                    {{ optional($city)->country_state_id == $state->id ? 'selected' : '' }}>
+                                                    {{ $city->state_id == $state->id ? 'selected' : '' }}>
                                                     {{ $state->name }}
                                                 </option>
                                             @empty
@@ -79,19 +79,6 @@
                                                name="name"
                                                class="form-control"
                                                value="{{ $city->name ?? '' }}">
-                                    </div>
-
-                                    {{-- STATUS --}}
-                                    <div class="form-group col-12">
-                                        <label>{{ __('admin.Status') }} <span class="text-danger">*</span></label>
-                                        <select name="status" class="form-control">
-                                            <option value="1" {{ ($city->status ?? 1) == 1 ? 'selected' : '' }}>
-                                                {{ __('admin.Active') }}
-                                            </option>
-                                            <option value="0" {{ ($city->status ?? 1) == 0 ? 'selected' : '' }}>
-                                                {{ __('admin.Inactive') }}
-                                            </option>
-                                        </select>
                                     </div>
 
                                 </div>

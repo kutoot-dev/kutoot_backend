@@ -103,9 +103,9 @@ class SellerController extends Controller
             ],
         ])->data;
         $response='<option value="">'.trans('admin_validation.Select a State').'</option>';
-        if($states->count() > 0){
+        if(count($states) > 0){
             foreach($states as $state){
-                $response .= "<option value=".$state->id.">".$state->name."</option>";
+                $response .= "<option value=".$state['id'].">".$state['name']."</option>";
             }
         }
         return response()->json(['states'=>$response]);

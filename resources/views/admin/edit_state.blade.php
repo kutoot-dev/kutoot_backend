@@ -7,11 +7,11 @@
       <div class="main-content">
         <section class="section">
           <div class="section-header">
-            <h1>{{__('admin.Create State')}}</h1>
+            <h1>{{__('admin.Edit State')}}</h1>
             <div class="section-header-breadcrumb">
               <div class="breadcrumb-item active"><a href="{{ route('admin.dashboard') }}">{{__('admin.Dashboard')}}</a></div>
               <div class="breadcrumb-item active"><a href="{{ route('admin.state.index') }}">{{__('admin.State')}}</a></div>
-              <div class="breadcrumb-item">{{__('admin.Create State')}}</div>
+              <div class="breadcrumb-item">{{__('admin.Edit State')}}</div>
             </div>
           </div>
 
@@ -40,14 +40,6 @@
                                 <div class="form-group col-12">
                                     <label>{{__('admin.State Name')}} <span class="text-danger">*</span></label>
                                     <input type="text" id="name" class="form-control"  name="name" value="{{ $state->name }}">
-                                </div>
-
-                                <div class="form-group col-12">
-                                    <label>{{__('admin.Status')}} <span class="text-danger">*</span></label>
-                                    <select name="status" class="form-control">
-                                        <option {{ $state->status == 1 ? 'selected' : '' }} value="1">{{__('admin.Active')}}</option>
-                                        <option {{ $state->status == 0 ? 'selected' : '' }} value="0">{{__('admin.Inactive')}}</option>
-                                    </select>
                                 </div>
                             </div>
                             <div class="row">

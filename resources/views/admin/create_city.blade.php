@@ -48,14 +48,6 @@
                                     <label>{{__('admin.City Name / Delivery Area')}} <span class="text-danger">*</span></label>
                                     <input type="text" id="name" class="form-control"  name="name">
                                 </div>
-
-                                <div class="form-group col-12">
-                                    <label>{{__('admin.Status')}} <span class="text-danger">*</span></label>
-                                    <select name="status" class="form-control">
-                                        <option value="1">{{__('admin.Active')}}</option>
-                                        <option value="0">{{__('admin.Inactive')}}</option>
-                                    </select>
-                                </div>
                             </div>
                             <div class="row">
                                 <div class="col-12">

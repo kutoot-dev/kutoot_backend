@@ -19,6 +19,10 @@ use App\Http\Controllers\WEB\Admin\AdminController;
 use App\Http\Controllers\WEB\Admin\OrderController;
 use App\Http\Controllers\User\UserProfileController;
 use App\Http\Controllers\WEB\Admin\CouponController;
+use App\Http\Controllers\WEB\Admin\CurrencyController;
+use App\Http\Controllers\WEB\Admin\CountryController;
+use App\Http\Controllers\WEB\Admin\CountryStateController;
+use App\Http\Controllers\WEB\Admin\CityController;
 use App\Http\Controllers\WEB\Admin\FooterController;
 use App\Http\Controllers\WEB\Admin\SellerController;
 use App\Http\Controllers\WEB\Admin\SliderController;
@@ -756,6 +760,9 @@ Route::group(['as'=> 'admin.', 'prefix' => 'admin'],function (){
 
 
 // Location routes removed in favor of world package
+    Route::resource('country', CountryController::class);
+    Route::resource('state', CountryStateController::class);
+    Route::resource('city', CityController::class);
 
     Route::get('payment-method',[PaymentMethodController::class,'index'])->name('payment-method');
     Route::put('update-paypal',[PaymentMethodController::class,'updatePaypal'])->name('update-paypal');
@@ -846,7 +853,7 @@ Route::group(['as'=> 'admin.', 'prefix' => 'admin'],function (){
     Route::resource('coupon', CouponController::class);
     Route::put('coupon-status/{id}',[CouponController::class,'changeStatus'])->name('coupon-status');
 
-// Currency routes removed
+    Route::resource('currency', CurrencyController::class);
 
     Route::resource('banner-image', NewBreadcrumbController::class);
 
