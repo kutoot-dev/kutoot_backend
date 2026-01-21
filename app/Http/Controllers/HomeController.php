@@ -128,7 +128,7 @@ use App\Models\FooterLink;
 
 use App\Models\Footer;
 
-use App\Models\MultiCurrency;
+use Nnjeim\World\Models\Currency;
 
 use App\Models\MaintainanceText;
 use App\Models\PusherCredentail;
@@ -158,7 +158,7 @@ class HomeController extends Controller
 
         $listall = include(resource_path('lang/en/user.php'));
 
-        $currencies = MultiCurrency::where('status',1)->orderBy('currency_name','asc')->get();
+        $currencies = Currency::orderBy('name','asc')->get();
 
         $setting = Setting::with('currency')->select('currency_id','logo','favicon','enable_user_register','phone_number_required','default_phone_code','enable_multivendor','text_direction','timezone','topbar_phone','topbar_email','currency_icon','currency_name','show_product_progressbar','theme_one','theme_two','seller_condition')->first();
 

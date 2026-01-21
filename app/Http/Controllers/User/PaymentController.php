@@ -6,9 +6,6 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\BreadcrumbImage;
 use Auth;
-use App\Models\Country;
-use App\Models\CountryState;
-use App\Models\City;
 use App\Models\Vendor;
 use App\Models\Order;
 use App\Models\OrderProduct;
@@ -32,7 +29,6 @@ use App\Models\Shipping;
 use App\Models\Address;
 use App\Models\SslcommerzPayment;
 use App\Models\ShoppingCartVariant;
-use App\Models\MultiCurrency;
 use Mail;
 Use Stripe;
 use Cart;
@@ -54,6 +50,7 @@ use App\Models\MyfatoorahPayment;
 use MyFatoorah\Library\PaymentMyfatoorahApiV2;
 use App\Models\Setting;
 use App\Models\UserCoins;
+use Nnjeim\World\World;
 
 
 class PaymentController extends Controller
@@ -67,7 +64,8 @@ class PaymentController extends Controller
 
 
     public function cashOnDelivery(Request $request){
-       $currency= MultiCurrency::where('is_default','Yes')->first();
+       $setting = Setting::first();
+       $currency = $setting->currency;
         $rules = [
             'shipping_address_id'=>'required',
             'billing_address_id'=>'required',
@@ -243,7 +241,7 @@ class PaymentController extends Controller
 
         $user = Auth::guard('api')->user();
         $cartProducts = ShoppingCart::with('product','variants.variantItem')->where('user_id', $user->id)->select('id','product_id','qty')->get();
-        
+
         if($cartProducts->count() == 0){
             $notification = trans('user_validation.Your shopping cart is empty');
             return response()->json(['message' => $notification],403);
@@ -1153,7 +1151,8 @@ class PaymentController extends Controller
         $order->save();
 
         $order_details = '';
-       $currency= MultiCurrency::where('is_default','Yes')->first();
+        $setting = Setting::first();
+        $currency = $setting->currency;
         foreach($cartProducts as $key => $cartProduct){
 
             $variantPrice = 0;
@@ -1267,7 +1266,8 @@ class PaymentController extends Controller
 
 
     public function sendOrderSuccessMail($user, $total_price, $payment_method, $payment_status, $order, $order_details){
-        $currency= MultiCurrency::where('is_default','Yes')->first();
+        $setting = Setting::first();
+        $currency = $setting->currency;
         MailHelper::setMailConfig();
 
         $template=EmailTemplate::where('id',6)->first();

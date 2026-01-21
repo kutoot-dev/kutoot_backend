@@ -5,9 +5,7 @@ namespace App\Http\Controllers\Seller;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
-use App\Models\Country;
-use App\Models\CountryState;
-use App\Models\City;
+use Nnjeim\World\World;
 use App\Models\Vendor;
 use App\Models\VendorSocialLink;
 use App\Models\SellerWithdraw;
@@ -31,9 +29,17 @@ class SellerProfileController extends Controller
         $user = Auth::guard('api')->user();
 
         $seller = Vendor::with('user','socialLinks','products')->where('user_id', $user->id)->first();
-        $countries = Country::orderBy('name','asc')->where('status',1)->get();
-        $states = CountryState::orderBy('name','asc')->where(['status' => 1, 'country_id' => $user->country_id])->get();
-        $cities = City::orderBy('name','asc')->where(['status' => 1, 'country_state_id' => $user->state_id])->get();
+        $countries = World::countries()->data;
+        $states = World::states([
+            'filters' => [
+                'country_id' => $user->country_id,
+            ],
+        ])->data;
+        $cities = World::cities([
+            'filters' => [
+                'state_id' => $user->state_id,
+            ],
+        ])->data;
 
         $totalWithdraw = SellerWithdraw::where('seller_id',$seller->id)->where('status',1)->sum('total_amount');
         $totalPendingWithdraw = SellerWithdraw::where('seller_id',$seller->id)->where('status',0)->sum('withdraw_amount');
@@ -63,12 +69,20 @@ class SellerProfileController extends Controller
     }
 
     public function stateByCountry($id){
-        $states = CountryState::where(['status' => 1, 'country_id' => $id])->get();
+        $states = World::states([
+            'filters' => [
+                'country_id' => $id,
+            ],
+        ])->data;
         return response()->json(['states'=>$states]);
     }
 
     public function cityByState($id){
-        $cities = City::where(['status' => 1, 'country_state_id' => $id])->get();
+        $cities = World::cities([
+            'filters' => [
+                'state_id' => $id,
+            ],
+        ])->data;
         return response()->json(['cities'=>$cities]);
     }
 

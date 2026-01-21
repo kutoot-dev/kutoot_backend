@@ -5,9 +5,10 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Vendor;
-use App\Models\Country;
-use App\Models\CountryState;
-use App\Models\City;
+use Nnjeim\World\World;
+use Nnjeim\World\Models\Country;
+use Nnjeim\World\Models\State as CountryState;
+use Nnjeim\World\Models\City;
 use App\Models\User;
 use App\Models\VendorSocialLink;
 use App\Models\ProductReview;
@@ -55,9 +56,9 @@ class SellerController extends Controller
     public function show($id){
         $seller = Vendor::with('user','socialLinks','products')->find($id);
         if($seller){
-            $countries = Country::with('countryStates')->orderBy('name','asc')->where('status',1)->get();
+            $countries = Country::with('states')->orderBy('name','asc')->where('status',1)->get();
             $states = CountryState::with('cities','country')->orderBy('name','asc')->where(['status' => 1, 'country_id' => $seller->user->country_id])->get();
-            $cities = City::with('countryState')->orderBy('name','asc')->where(['status' => 1, 'country_state_id' => $seller->user->state_id])->get();
+            $cities = City::with('state')->orderBy('name','asc')->where(['status' => 1, 'state_id' => $seller->user->state_id])->get();
             $user = $seller->user;
             $totalWithdraw = SellerWithdraw::with('seller')->where('seller_id',$seller->id)->where('status',1)->sum('total_amount');
             $totalPendingWithdraw = SellerWithdraw::with('seller')->where('seller_id',$seller->id)->where('status',0)->sum('withdraw_amount');
@@ -87,12 +88,20 @@ class SellerController extends Controller
     }
 
     public function stateByCountry($id){
-        $states = CountryState::with('country', 'cities')->where(['status' => 1, 'country_id' => $id])->get();
+        $states = World::states([
+            'filters' => [
+                'country_id' => $id,
+            ],
+        ])->data;
         return response()->json(['states' => $states]);
     }
 
     public function cityByState($id){
-        $cities = City::with('countryState')->where(['status' => 1, 'country_state_id' => $id])->get();
+        $cities = World::cities([
+            'filters' => [
+                'state_id' => $id,
+            ],
+        ])->data;
         return response()->json(['cities' => $cities]);
     }
 

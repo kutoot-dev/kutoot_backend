@@ -5,7 +5,7 @@ namespace App\Http\Controllers\WEB\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Shipping;
-use App\Models\City;
+use Nnjeim\World\Models\City;
 use App\Models\Setting;
 use Exception;
 
@@ -23,7 +23,7 @@ class ShippingMethodController extends Controller
     public function index()
     {
         $shippings = Shipping::with([
-                'city.countryState.country'
+                'city.state.country'
             ])
             ->where(function ($q) {
                 $q->where('city_id', 0)
@@ -34,8 +34,7 @@ class ShippingMethodController extends Controller
 
         $setting = Setting::first();
 
-        $cities = City::with('countryState.country')
-            ->where('status', 1)
+        $cities = City::with('state.country')
             ->orderBy('name', 'asc')
             ->get();
 
@@ -43,7 +42,7 @@ class ShippingMethodController extends Controller
     }
 
     public function create(){
-        $cities = City::where('status',1)->orderBy('name','asc')->get();
+        $cities = City::orderBy('name','asc')->get();
         return response()->json(['cities' => $cities], 200);
     }
 
@@ -83,7 +82,7 @@ class ShippingMethodController extends Controller
     public function show($id){
         $shipping = Shipping::find($id);
         $setting = Setting::first();
-        $cities = City::where('status',1)->orderBy('name','asc')->get();
+        $cities = City::orderBy('name','asc')->get();
         return view('admin.edit_shipping', compact('shipping','setting','cities'));
     }
 

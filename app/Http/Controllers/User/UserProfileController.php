@@ -5,9 +5,7 @@ namespace App\Http\Controllers\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Auth;
-use App\Models\Country;
-use App\Models\CountryState;
-use App\Models\City;
+use Nnjeim\World\World;
 use App\Models\Vendor;
 use App\Models\Order;
 use App\Models\Setting;
@@ -451,12 +449,20 @@ public function newupdateProfile(Request $request)
     }
 
     public function stateByCountry($id){
-        $states = CountryState::select('id','name')->where(['status' => 1, 'country_id' => $id])->get();
+        $states = World::states([
+            'filters' => [
+                'country_id' => $id,
+            ],
+        ])->data;
         return response()->json(['states'=>$states]);
     }
 
     public function cityByState($id){
-        $cities = City::select('id','country_state_id','name')->where(['status' => 1, 'country_state_id' => $id])->get();
+        $cities = World::cities([
+            'filters' => [
+                'state_id' => $id,
+            ],
+        ])->data;
         return response()->json(['cities'=>$cities]);
     }
 
@@ -567,9 +573,9 @@ public function newupdateProfile(Request $request)
     public function removeWishlist($id){
         $wishlist = Wishlist::find($id);
         if($wishlist){
-           $wishlist->delete(); 
+           $wishlist->delete();
         }
-    
+
         $notification = trans('user_validation.Removed successfully');
         return response()->json(['notification' => $notification]);
     }

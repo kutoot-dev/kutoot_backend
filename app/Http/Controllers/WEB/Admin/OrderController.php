@@ -13,7 +13,7 @@ use App\Models\OrderProductVariant;
 use App\Http\Controllers\Controller;
 use App\Models\Brand;
 use App\Models\Category;
-use App\Models\Country;
+use Nnjeim\World\Models\Country;
 use Illuminate\Support\Facades\DB;
 
 class OrderController extends Controller
@@ -139,7 +139,7 @@ class OrderController extends Controller
             $order->save();
         }
 
-        
+
 
         $notification = trans('admin_validation.Order Status Updated successfully');
         $notification = array('messege'=>$notification,'alert-type'=>'success');
@@ -217,7 +217,7 @@ class OrderController extends Controller
     public function decrementOrderQuantity($id,$order_id)
     {
         $orderProduct = OrderProduct::find($id);
-        
+
         OrderProduct::where('id',$id)->update([
             'qty' => $orderProduct->qty - 1
         ]);
@@ -234,9 +234,9 @@ class OrderController extends Controller
 
     // public function deleteOrderProduct($id,$order_id)
     // {
-        
+
     //     $orderProduct =  OrderProduct::find($id);
-        
+
     //     $amount = $orderProduct->unit_price ?? 0 * $orderProduct->qty ?? 0;
     //     $orderProduct->delete();
     //     $order = Order::find($order_id);
@@ -247,11 +247,11 @@ class OrderController extends Controller
     //     $notification = trans('admin_validation.Delete successfully');
     //     $notification = array('messege'=>$notification,'alert-type'=>'success');
     //     return redirect()->back()->with($notification);
-    // } 
+    // }
 
     public function deleteOrderProduct($id, $order_id)
 {
-   
+
     $orderProduct = OrderProduct::find($id);
 
     if (!$orderProduct) {

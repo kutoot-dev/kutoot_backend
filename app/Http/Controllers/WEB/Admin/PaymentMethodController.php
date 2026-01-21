@@ -11,9 +11,8 @@ use App\Models\Flutterwave;
 use App\Models\BankPayment;
 use App\Models\PaystackAndMollie;
 use App\Models\InstamojoPayment;
-use App\Models\CurrencyCountry;
-use App\Models\Currency;
-use App\Models\MultiCurrency;
+use Nnjeim\World\Models\Country;
+use Nnjeim\World\Models\Currency;
 use App\Models\Setting;
 use App\Models\PaymongoPayment;
 use App\Models\SslcommerzPayment;
@@ -39,10 +38,10 @@ class PaymentMethodController extends Controller
         $sslcommerz = SslcommerzPayment::first();
         $myfatoorah = MyfatoorahPayment::first();
 
-        $countires = CurrencyCountry::orderBy('name','asc')->get();
+        $countires = Country::orderBy('name','asc')->get();
         $setting = Setting::first();
 
-        $currencies = MultiCurrency::where('status',1)->orderBy('currency_name','asc')->get();
+        $currencies = Currency::orderBy('name','asc')->get();
 
         return view('admin.payment_method', compact('paypal','stripe','razorpay','bank','paystackAndMollie','flutterwave','instamojo','countires','currencies','setting','paymongo','sslcommerz','myfatoorah'));
 
