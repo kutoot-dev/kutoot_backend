@@ -17,9 +17,9 @@ use App\Models\OrderAddress;
 use App\Models\OrderProduct;
 use App\Helpers\MailHelper;
 use App\Models\EmailTemplate;
-use App\Models\Country;
-use App\Models\City;
-use App\Models\CountryState;
+use Nnjeim\World\Models\Country;
+use Nnjeim\World\Models\City;
+use Nnjeim\World\Models\State as CountryState;
 use App\Models\ProductVariantItem;
 use App\Models\ShoppingCartVariant;
 use App\Models\Address;
@@ -49,7 +49,7 @@ class PosController extends Controller
     public function Index()
     {
         Paginator::useBootstrap();
-        
+
         $data['brands'] = Brand::all();
         $data['products'] = Product::with('activeVariants')->where(['vendor_id' => 0])->where(['status' => 1])->orderBy('id','desc')->paginate(18);
         $data['setting'] = Setting::first();
@@ -323,7 +323,7 @@ class PosController extends Controller
             $address->default_billing = 1;
             $address->save();
 
-            
+
             MailHelper::setMailConfig();
             $template=EmailTemplate::where('id',9)->first();
             $subject=$template->subject;

@@ -36,14 +36,13 @@ use App\Models\CustomPagination;
 use App\Models\SocialLoginInformation;
 use App\Models\FacebookPixel;
 use App\Models\About;
-use App\Models\Currency;
 use App\Models\AboutUs;
 use App\Models\BillingAddress;
 use App\Models\Campaign;
-use App\Models\City;
 use App\Models\ContactPage;
-use App\Models\Country;
-use App\Models\CountryState;
+use Nnjeim\World\Models\Country;
+use Nnjeim\World\Models\State as CountryState;
+use Nnjeim\World\Models\City;
 use App\Models\Coupon;
 use App\Models\Faq;
 use App\Models\FooterLink;
@@ -80,7 +79,7 @@ use App\Models\CompareProduct;
 use App\Models\FeaturedCategory;
 use App\Models\PopularCategory;
 use App\Models\Shipping;
-use App\Models\MultiCurrency;
+use Nnjeim\World\Models\Currency;
 use Image;
 use File;
 use Artisan;
@@ -183,7 +182,7 @@ class SettingController extends Controller
         $socialLogin = SocialLoginInformation::first();
         $facebookPixel = FacebookPixel::first();
         $pusher = PusherCredentail::first();
-        $currencies = MultiCurrency::where('status',1)->orderBy('currency_name','asc')->get();
+        $currencies = Currency::orderBy('name','asc')->get();
 
 
         return view('admin.setting',compact('setting','cookieConsent','googleRecaptcha','facebookComment','tawkChat','googleAnalytic','customPaginations','socialLogin','facebookPixel','currencies','pusher'));

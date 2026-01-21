@@ -5,9 +5,7 @@ namespace App\Http\Controllers\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Auth;
-use App\Models\Country;
-use App\Models\CountryState;
-use App\Models\City;
+use Nnjeim\World\World;
 use App\Models\Vendor;
 use App\Models\Order;
 use App\Models\Setting;
@@ -233,7 +231,7 @@ public function newupdateProfile(Request $request)
         'house_no'     => 'required|string|max:50',
         'street'       => 'required|string|max:255',
         'city_id'      => 'required|integer|exists:cities,id',
-        'state_id'     => 'required|integer|exists:country_states,id',
+        'state_id'     => 'required|integer|exists:states,id',
         'country_id'   => 'required|integer|exists:countries,id',
         'zip_code'     => 'required|string|max:20',
     ];
@@ -326,9 +324,19 @@ public function newupdateProfile(Request $request)
     public function myProfile(){
         $user = Auth::guard('api')->user();
         $personInfo = User::select('id','name','email','phone','gender','house_no','street','image','country_id','state_id','city_id','zip_code','address')->find($user->id);
-        $countries = Country::orderBy('name','asc')->where('status',1)->get();
-        $states = CountryState::orderBy('name','asc')->where(['status' => 1, 'country_id' => $user->country_id])->get();
-        $cities = City::orderBy('name','asc')->where(['status' => 1, 'country_state_id' => $user->state_id])->get();
+
+        $countries = World::countries()->data;
+        $states = World::states([
+            'filters' => [
+                'country_id' => $user->country_id,
+            ],
+        ])->data;
+        $cities = World::cities([
+            'filters' => [
+                'state_id' => $user->state_id,
+            ],
+        ])->data;
+
         $defaultProfile = BannerImage::select('id','image')->whereId('15')->first();
 
         // $creditCoins = UserCoins::where('user_id', $user->id)->where('type', 'credit')->sum('coins');
@@ -451,12 +459,20 @@ public function newupdateProfile(Request $request)
     }
 
     public function stateByCountry($id){
-        $states = CountryState::select('id','name')->where(['status' => 1, 'country_id' => $id])->get();
+        $states = World::states([
+            'filters' => [
+                'country_id' => $id,
+            ],
+        ])->data;
         return response()->json(['states'=>$states]);
     }
 
     public function cityByState($id){
-        $cities = City::select('id','country_state_id','name')->where(['status' => 1, 'country_state_id' => $id])->get();
+        $cities = World::cities([
+            'filters' => [
+                'state_id' => $id,
+            ],
+        ])->data;
         return response()->json(['cities'=>$cities]);
     }
 
@@ -567,9 +583,9 @@ public function newupdateProfile(Request $request)
     public function removeWishlist($id){
         $wishlist = Wishlist::find($id);
         if($wishlist){
-           $wishlist->delete(); 
+           $wishlist->delete();
         }
-    
+
         $notification = trans('user_validation.Removed successfully');
         return response()->json(['notification' => $notification]);
     }

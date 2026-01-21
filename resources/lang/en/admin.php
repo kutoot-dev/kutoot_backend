@@ -1,5 +1,6 @@
 <?php
  return array (
+    'Search' => 'Search',
   'About Us' => 'About Us',
   'Dashboard' => 'Dashboard',
   'Existing Image' => 'Existing Image',

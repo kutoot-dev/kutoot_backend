@@ -65,15 +65,15 @@ class User extends Authenticatable implements JWTSubject
     }
 
     public function city(){
-        return $this->belongsTo(City::class);
+        return $this->belongsTo(\Nnjeim\World\Models\City::class);
     }
 
     public function state(){
-        return $this->belongsTo(CountryState::class);
+        return $this->belongsTo(\Nnjeim\World\Models\State::class);
     }
 
     public function country(){
-        return $this->belongsTo(Country::class);
+        return $this->belongsTo(\Nnjeim\World\Models\Country::class);
     }
 
 

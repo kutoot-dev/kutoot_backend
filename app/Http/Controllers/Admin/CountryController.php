@@ -1,13 +1,12 @@
 <?php
 
 namespace App\Http\Controllers\Admin;
+
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Country;
-use App\Models\BillingAddress;
-use App\Models\ShippingAddress;
-use App\Models\User;
-use Str;
+use Nnjeim\World\World;
+use Nnjeim\World\Models\Country;
+
 class CountryController extends Controller
 {
     public function __construct()
@@ -17,86 +16,70 @@ class CountryController extends Controller
 
     public function index()
     {
-        $countries = Country::with('countryStates')->get();
-        $billingAddress = BillingAddress::with('country','countryState','city')->get();
-        $shippingAddress = ShippingAddress::with('country','countryState','city')->get();
-        $users = User::with('seller','city','state','country')->get();
-
-        return response()->json(['countries' => $countries, 'billingAddress' => $billingAddress, 'shippingAddress' => $shippingAddress, 'users' => $users], 200);
+        $countries = Country::orderBy('name', 'asc')->paginate(10);
+        return response()->json(['countries' => $countries]);
     }
-
-
-    public function store(Request $request)
-    {
-        $rules = [
-            'name'=>'required|unique:countries',
-            'status'=>'required'
-        ];
-        $customMessages = [
-            'name.required' => trans('Name is required'),
-            'name.unique' => trans('Name already exist'),
-        ];
-        $this->validate($request, $rules,$customMessages);
-
-        $country=new Country();
-        $country->name = $request->name;
-        $country->slug = Str::slug($request->name);
-        $country->status = $request->status;
-        $country->save();
-
-        $notification=trans('Created Successfully');
-        return response()->json(['notification' => $notification], 200);
-    }
-
 
     public function show($id)
     {
         $country = Country::find($id);
-        return response()->json(['country' => $country], 200);
+        if (!$country) {
+            return response()->json(['message' => 'Country not found'], 404);
+        }
+        return response()->json(['country' => $country]);
+    }
+
+    public function store(Request $request)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'iso2' => 'required|string|max:2|unique:countries,iso2',
+            'iso3' => 'nullable|string|max:3',
+            'phone_code' => 'nullable|string|max:10',
+        ]);
+
+        $country = Country::create([
+            'name' => $request->name,
+            'iso2' => strtoupper($request->iso2),
+            'iso3' => $request->iso3 ? strtoupper($request->iso3) : null,
+            'phone_code' => $request->phone_code,
+        ]);
+
+        return response()->json(['message' => 'Country created successfully', 'country' => $country], 201);
     }
 
     public function update(Request $request, $id)
     {
         $country = Country::find($id);
-        $rules = [
-            'name'=>'required|unique:countries,name,'.$country->id,
-            'status'=>'required'
-        ];
-        $customMessages = [
-            'name.required' => trans('Name is required'),
-            'name.unique' => trans('Name already exist'),
-        ];
-        $this->validate($request, $rules,$customMessages);
+        if (!$country) {
+            return response()->json(['message' => 'Country not found'], 404);
+        }
 
-        $country->name = $request->name;
-        $country->slug = Str::slug($request->name);
-        $country->status = $request->status;
-        $country->save();
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'iso2' => 'required|string|max:2|unique:countries,iso2,' . $id,
+            'iso3' => 'nullable|string|max:3',
+            'phone_code' => 'nullable|string|max:10',
+        ]);
 
-        $notification=trans('Updated Successfully');
-        return response()->json(['notification' => $notification], 200);
+        $country->update([
+            'name' => $request->name,
+            'iso2' => strtoupper($request->iso2),
+            'iso3' => $request->iso3 ? strtoupper($request->iso3) : null,
+            'phone_code' => $request->phone_code,
+        ]);
+
+        return response()->json(['message' => 'Country updated successfully', 'country' => $country]);
     }
-
 
     public function destroy($id)
     {
         $country = Country::find($id);
-        $country->delete();
-        $notification=trans('Delete Successfully');
-        return response()->json(['notification' => $notification], 200);
-    }
-
-    public function changeStatus($id){
-        $country = Country::find($id);
-        if($country->status==1){
-            $country->status=0;
-            $country->save();
-            $message= trans('Inactive Successfully');
-        }else{
-            $country->status=1;
-            $country->save();
-            $message= trans('Active Successfully');
+        if (!$country) {
+            return response()->json(['message' => 'Country not found'], 404);
         }
-        return response()->json($message);
+
+        $country->delete();
+        return response()->json(['message' => 'Country deleted successfully']);
     }
 }

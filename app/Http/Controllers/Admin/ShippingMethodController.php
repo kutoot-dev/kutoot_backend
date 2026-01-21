@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Shipping;
-use App\Models\City;
+use Nnjeim\World\Models\City;
 use App\Models\Setting;
 class ShippingMethodController extends Controller
 {
@@ -21,7 +21,7 @@ class ShippingMethodController extends Controller
     }
 
     public function create(){
-        $cities = City::where('status',1)->orderBy('name','asc')->get();
+        $cities = City::orderBy('name','asc')->get();
         return response()->json(['cities' => $cities], 200);
     }
 

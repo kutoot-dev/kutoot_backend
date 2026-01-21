@@ -5,14 +5,12 @@ namespace App\Http\Controllers\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Address;
-use App\Models\Country;
-use App\Models\CountryState;
-use App\Models\City;
+use Nnjeim\World\World;
 use Auth;
 
 class AddressCotroller extends Controller
 {
-   
+
     public function __construct()
     {
         // $this->middleware('auth:api');
@@ -26,7 +24,7 @@ class AddressCotroller extends Controller
     }
 
     public function create(){
-        $countries = Country::orderBy('name','asc')->where('status',1)->select('id','name')->get();
+        $countries = World::countries()->data;
 
         return response()->json(['countries' => $countries]);
     }
@@ -101,9 +99,17 @@ class AddressCotroller extends Controller
             $notification = trans('user_validation.Something went wrong');
             return response()->json(['notification' => $notification],403);
         }
-        $countries = Country::orderBy('name','asc')->where('status',1)->select('id','name')->get();
-        $states = CountryState::orderBy('name','asc')->where(['status' => 1, 'country_id' => $address->country_id])->get();
-        $cities = City::orderBy('name','asc')->where(['status' => 1, 'country_state_id' => $address->state_id])->get();
+        $countries = World::countries()->data;
+        $states = World::states([
+            'filters' => [
+                'country_id' => $address->country_id,
+            ],
+        ])->data;
+        $cities = World::cities([
+            'filters' => [
+                'state_id' => $address->state_id,
+            ],
+        ])->data;
 
         return response()->json([
             'address' => $address,

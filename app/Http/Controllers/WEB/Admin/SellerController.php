@@ -5,9 +5,6 @@ namespace App\Http\Controllers\WEB\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Vendor;
-use App\Models\Country;
-use App\Models\CountryState;
-use App\Models\City;
 use App\Models\User;
 use App\Models\VendorSocialLink;
 use App\Models\ProductReview;
@@ -22,6 +19,7 @@ use App\Models\OrderProduct;
 use App\Models\BannerImage;
 use App\Models\Setting;
 use App\Models\EmailTemplate;
+use Nnjeim\World\World;
 use Auth;
 use Image;
 use File;
@@ -60,9 +58,17 @@ class SellerController extends Controller
     public function show($id){
         $seller = Vendor::with('user','socialLinks','products')->find($id);
         if($seller){
-            $countries = Country::with('countryStates')->orderBy('name','asc')->where('status',1)->get();
-            $states = CountryState::with('cities','country')->orderBy('name','asc')->where(['status' => 1, 'country_id' => $seller->user->country_id])->get();
-            $cities = City::with('countryState')->orderBy('name','asc')->where(['status' => 1, 'country_state_id' => $seller->user->state_id])->get();
+            $countries = World::countries()->data;
+            $states = World::states([
+                'filters' => [
+                    'country_id' => $seller->user->country_id,
+                ],
+            ])->data;
+            $cities = World::cities([
+                'filters' => [
+                    'state_id' => $seller->user->state_id,
+                ],
+            ])->data;
             $user = $seller->user;
             $totalWithdraw = SellerWithdraw::with('seller')->where('seller_id',$seller->id)->where('status',1)->sum('total_amount');
             $totalPendingWithdraw = SellerWithdraw::with('seller')->where('seller_id',$seller->id)->where('status',0)->sum('withdraw_amount');
@@ -91,18 +97,26 @@ class SellerController extends Controller
     }
 
     public function stateByCountry($id){
-        $states = CountryState::where(['status' => 1, 'country_id' => $id])->get();
+        $states = World::states([
+            'filters' => [
+                'country_id' => $id,
+            ],
+        ])->data;
         $response='<option value="">'.trans('admin_validation.Select a State').'</option>';
-        if($states->count() > 0){
+        if(count($states) > 0){
             foreach($states as $state){
-                $response .= "<option value=".$state->id.">".$state->name."</option>";
+                $response .= "<option value=".$state['id'].">".$state['name']."</option>";
             }
         }
         return response()->json(['states'=>$response]);
     }
 
     public function cityByState($id){
-        $cities = City::where(['status' => 1, 'country_state_id' => $id])->get();
+        $cities = World::cities([
+            'filters' => [
+                'state_id' => $id,
+            ],
+        ])->data;
         $response='<option value="">'.trans('admin_validation.Select a City').'</option>';
         if($cities->count() > 0){
             foreach($cities as $city){

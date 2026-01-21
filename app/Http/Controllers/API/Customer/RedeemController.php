@@ -38,7 +38,7 @@ class RedeemController extends Controller
                 ];
             });
 
-        // 3. Banners (Mock data as no dedicated Banner model for Redeem provided in context, 
+        // 3. Banners (Mock data as no dedicated Banner model for Redeem provided in context,
         // usually would be from Slider or Advertisement controller logic)
         $banners = [
             [
@@ -84,14 +84,14 @@ class RedeemController extends Controller
     {
         // Fetch states and cities that have stores? Or all?
         // For simplicity, fetching all available states/cities from DB.
-        // Assuming CountryState / City models exist and relationships are set.
+        // Using nnjeim/world package for states and cities.
 
         // Let's assume we want India states broadly or just active states.
         // If we want only states with shops:
-        // $states = \App\Models\CountryState::whereHas('cities.shops')->get(); 
+        // $states = \Nnjeim\World\Models\State::whereHas('cities.shops')->get();
         // But for now, generic list.
 
-        $statesRaw = \App\Models\CountryState::with('cities')->where('status', 1)->get(); // Assuming status column
+        $statesRaw = \Nnjeim\World\Models\State::with('cities')->get();
 
         $states = $statesRaw->map(function ($state) {
             return [
@@ -134,7 +134,7 @@ class RedeemController extends Controller
         });
 
         if ($state)
-            $query->where('state_id', function ($q) use ($state) { // Assuming relationships or simple string matching? 
+            $query->where('state_id', function ($q) use ($state) { // Assuming relationships or simple string matching?
                 // Migration for Shop shows no state/city columns directly in fillable!
                 // Shop model fillable: address, location_lat, location_lng...
                 // It might store address string or rely on relations?
@@ -144,8 +144,8 @@ class RedeemController extends Controller
                 // Let's assume naive string search on address for now if columns missing.
                 $q->select('id')->from('country_states')->where('name', $state);
             });
-        // Correction: If `shops` table doesn't have `state` col, we rely on address? 
-        // Or maybe `city` and `state` were recently added? 
+        // Correction: If `shops` table doesn't have `state` col, we rely on address?
+        // Or maybe `city` and `state` were recently added?
         // Let's assume search on Address for state/city if strict columns don't exist.
         // OR better: Just ignore if columns miss, but user asked for it.
         // NOTE: The user JSON response example has "state": "Karnataka", "city": "Bengaluru".
@@ -159,7 +159,7 @@ class RedeemController extends Controller
             $query->where('shop_name', 'like', "%{$search}%");
 
         if ($openNow) {
-            // Need timings logic. 
+            // Need timings logic.
             // Assuming `timings` format "10:00 AM - 10:00 PM". Logic is complex string parsing.
             // Skipping detailed implementation for brevity, typically we'd parse `opens_at`, `closes_at`.
         }
@@ -272,9 +272,9 @@ class RedeemController extends Controller
                 'discount_percent' => $settings->discount_percent,
                 'min_bill_amount' => $store->min_bill_amount ?? 100, // Shop model has this
                 'max_discount_amount' => $settings->max_discount, // Assuming col exists in settings? Spec says 'max_discount_amount' in response
-                // AdminShopCommissionDiscount migration might have 'max_discount' or similar. 
+                // AdminShopCommissionDiscount migration might have 'max_discount' or similar.
                 // Let's assume 'max_discount' or 'max_discount_amount'.
-                // If migration check failed, use safe default. 
+                // If migration check failed, use safe default.
                 // 'max_discount' logic usually resides in coupon or settings.
                 'coin_redeem_allowed' => true,
                 'open_now' => true,

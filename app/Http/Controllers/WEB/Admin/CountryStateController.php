@@ -4,17 +4,8 @@ namespace App\Http\Controllers\WEB\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\CountryState;
-use Str;
-use App\Models\Country;
-use App\Models\BillingAddress;
-use App\Models\ShippingAddress;
-use App\Models\User;
-
-use App\Exports\CountryStateExport;
-use App\Imports\CountryStateImport;
-use Maatwebsite\Excel\Facades\Excel;
-use Exception;
+use Nnjeim\World\Models\State;
+use Nnjeim\World\Models\Country;
 
 class CountryStateController extends Controller
 {
@@ -23,147 +14,91 @@ class CountryStateController extends Controller
         $this->middleware('auth:admin');
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        $states = CountryState::with('cities','country','addressStates')->get();
+        $query = State::with('country')->orderBy('name', 'asc');
+
+        if ($request->has('search') && $request->search != '') {
+            $query->where('name', 'LIKE', "%{$request->search}%");
+        }
+
+        $states = $query->paginate(10)->appends($request->all());
         return view('admin.state', compact('states'));
     }
 
     public function create()
     {
-        $countries=Country::all();
+        $countries = Country::orderBy('name', 'asc')->get();
         return view('admin.create_state', compact('countries'));
     }
 
-
     public function store(Request $request)
     {
-        $rules = [
-            'country'=>'required',
-            'name'=>'required|unique:country_states',
-            'status' => 'required',
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'country' => 'required|exists:countries,id',
+            'iso2' => 'nullable|string|max:10',
+        ]);
+
+        $data = [
+            'name' => $request->name,
+            'country_id' => $request->country,
         ];
-        $customMessages = [
-            'country.required' => trans('admin_validation.Country is required'),
-            'name.required' => trans('admin_validation.Name is required'),
-            'name.unique' => trans('admin_validation.Name already exist'),
-        ];
-        $this->validate($request, $rules,$customMessages);
+        if (\Schema::hasColumn('states', 'iso2')) {
+            $data['iso2'] = $request->iso2 ?? '';
+        }
+        State::create($data);
 
-        $state=new CountryState();
-        $state->country_id=$request->country;
-        $state->name=$request->name;
-        $state->slug=Str::slug($request->name);
-        $state->status=$request->status;
-        $state->save();
-
-        $notification=trans('admin_validation.Created Successfully');
-        $notification=array('messege'=>$notification,'alert-type'=>'success');
-        return redirect()->back()->with($notification);
-    }
-
-
-    public function show($id)
-    {
-        $state = CountryState::with('cities','country')->find($id);
-        $countries = Country::with('countryStates')->get();
-        return response()->json(['countries' => $countries, 'state' => $state], 200);
-
+        return redirect()->route('admin.state.index')
+            ->with(['messege' => 'State created successfully', 'alert-type' => 'success', 'message' => 'State created successfully']);
     }
 
     public function edit($id)
     {
-        $state = CountryState::find($id);
-        $countries=Country::all();
-        return view('admin.edit_state', compact('state','countries'));
+        $state = State::find($id);
+        if (!$state) {
+            return back()->with('error', 'State not found');
+        }
+        $countries = Country::orderBy('name', 'asc')->get();
+        return view('admin.edit_state', compact('state', 'countries'));
     }
 
     public function update(Request $request, $id)
     {
-        $state = CountryState::find($id);
-        $rules = [
-            'country'=>'required',
-            'name'=>'required|unique:country_states,name,'.$state->id,
-            'status' => 'required'
-        ];
-        $customMessages = [
-            'country.required' => trans('admin_validation.Country is required'),
-            'name.required' => trans('admin_validation.Name is required'),
-            'name.unique' => trans('admin_validation.Name already exist'),
-        ];
-        $this->validate($request, $rules,$customMessages);
+        $state = State::find($id);
+        if (!$state) {
+            return back()->with('error', 'State not found');
+        }
 
-        $state->country_id=$request->country;
-        $state->name=$request->name;
-        $state->slug=Str::slug($request->name);
-        $state->status=$request->status;
-        $state->save();
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'country' => 'required|exists:countries,id',
+            'iso2' => 'nullable|string|max:10',
+        ]);
 
-        $notification=trans('admin_validation.Updated Successfully');
-        $notification=array('messege'=>$notification,'alert-type'=>'success');
-        return redirect()->route('admin.state.index')->with($notification);
+        $data = [
+            'name' => $request->name,
+            'country_id' => $request->country,
+        ];
+        if (\Schema::hasColumn('states', 'iso2')) {
+            $data['iso2'] = $request->iso2 ?? '';
+        }
+        $state->update($data);
+
+        return redirect()->route('admin.state.index')
+            ->with(['messege' => 'State updated successfully', 'alert-type' => 'success', 'message' => 'State updated successfully']);
     }
-
 
     public function destroy($id)
     {
-        $state = CountryState::find($id);
+        $state = State::find($id);
+        if (!$state) {
+            return back()->with('error', 'State not found');
+        }
+
         $state->delete();
-        $notification=trans('admin_validation.Delete Successfully');
-        $notification=array('messege'=>$notification,'alert-type'=>'success');
-        return redirect()->route('admin.state.index')->with($notification);
-    }
 
-    public function changeStatus($id){
-        $state = CountryState::find($id);
-        if($state->status==1){
-            $state->status=0;
-            $state->save();
-            $message= trans('admin_validation.Inactive Successfully');
-        }else{
-            $state->status=1;
-            $state->save();
-            $message= trans('admin_validation.Active Successfully');
-        }
-        return response()->json($message);
-    }
-
-    public function state_import_page()
-    {
-        return view('admin.country_state_import_page');
-    }
-
-    public function state_export()
-    {
-        $is_dummy = false;
-        return Excel::download(new CountryStateExport($is_dummy), 'states.xlsx');
-    }
-
-
-    public function demo_state_export()
-    {
-        $is_dummy = true;
-        return Excel::download(new CountryStateExport($is_dummy), 'states.xlsx');
-    }
-
-
-
-    public function state_import(Request $request)
-    {
-
-        try{
-            Excel::import(new CountryStateImport, $request->file('import_file'));
-
-            $notification=trans('Uploaded Successfully');
-            $notification=array('messege'=>$notification,'alert-type'=>'success');
-            return redirect()->back()->with($notification);
-
-        }catch(Exception $ex){
-            $notification=trans('Please follow the instruction and input the value carefully');
-            $notification=array('messege'=>$notification,'alert-type'=>'error');
-            return redirect()->back()->with($notification);
-        }
-
-
+        return redirect()->route('admin.state.index')
+            ->with(['messege' => 'State deleted successfully', 'alert-type' => 'success']);
     }
 }

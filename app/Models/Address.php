@@ -25,14 +25,14 @@ class Address extends Model
     ];
 
     public function country(){
-        return $this->belongsTo(Country::class)->select('id','name');
+        return $this->belongsTo(\Nnjeim\World\Models\Country::class)->select('id','name');
     }
 
     public function countryState(){
-        return $this->belongsTo(CountryState::class,'state_id')->select('id','name');
+        return $this->belongsTo(\Nnjeim\World\Models\State::class,'state_id')->select('id','name');
     }
 
     public function city(){
-        return $this->belongsTo(City::class)->select('id','name');
+        return $this->belongsTo(\Nnjeim\World\Models\City::class)->select('id','name');
     }
 }

@@ -4,198 +4,171 @@ namespace App\Http\Controllers\WEB\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Flutterwave;
-use App\Models\MultiCurrency;
-use App\Models\PaypalPayment;
-use App\Models\StripePayment;
-use App\Models\RazorpayPayment;
-use App\Models\InstamojoPayment;
-use App\Models\PaystackAndMollie;
-use App\Models\SslcommerzPayment;
-use Illuminate\Support\Facades\DB;
+use Nnjeim\World\World;
+use Nnjeim\World\Models\Currency;
 
 class CurrencyController extends Controller
 {
-     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+    public function __construct()
     {
-        $currencies = MultiCurrency::get();
+        $this->middleware('auth:admin');
+    }
+
+    public function index(Request $request)
+    {
+        $query = Currency::orderBy('name', 'asc');
+
+        if ($request->has('search') && $request->search != '') {
+            $query->where('name', 'LIKE', "%{$request->search}%");
+        }
+
+        $currencies = $query->paginate(10)->appends($request->all());
         return view('admin.currency', compact('currencies'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    public function show($id)
+    {
+        $currency = Currency::find($id);
+        if (!$currency) {
+            return back()->with('error', 'Currency not found');
+        }
+        return view('admin.show_currency', compact('currency'));
+    }
+
     public function create()
     {
         return view('admin.create_currency');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
-        $rules = [
-            'currency_name'=>'required|unique:multi_currencies',
-            'country_code'=>'required|unique:multi_currencies',
-            'currency_code'=>'required|unique:multi_currencies',
-            'currency_icon'=>'required',
-            'currency_rate'=>'required|numeric',
-        ];
-        $customMessages = [
-            'currency_name.required' => trans('admin_validation.Currency name is required'),
-            'currency_name.unique' => trans('admin_validation.Currency name already exist'),
-            'country_code.required' => trans('admin_validation.Country code is required'),
-            'country_code.unique' => trans('admin_validation.Country code already exist'),
-            'currency_code.required' => trans('admin_validation.Currency code is required'),
-            'currency_code.unique' => trans('admin_validation.Currency code already exist'),
-            'currency_icon.required' => trans('admin_validation.Currency icon is required'),
-            'currency_icon.unique' => trans('admin_validation.Currency icon already exist'),
-            'currency_rate.required' => trans('admin_validation.Currency rate is required'),
-            'currency_rate.numeric' => trans('admin_validation.Currency rate must be number'),
-        ];
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'code' => 'required|string|max:3|unique:currencies,code',
+            'symbol' => 'nullable|string|max:10',
+        ]);
 
-        $this->validate($request, $rules,$customMessages);
+        Currency::create([
+            'name' => $request->name,
+            'code' => strtoupper($request->code),
+            'symbol' => $request->symbol,
+        ]);
 
-        $currency = new MultiCurrency();
-
-        if($request->is_default == 'Yes'){
-            DB::table('multi_currencies')->update(['is_default' => 'No']);
-        }
-
-        $currency->currency_name = $request->currency_name;
-        $currency->country_code = $request->country_code;
-        $currency->currency_code = $request->currency_code;
-        $currency->currency_icon = $request->currency_icon;
-        $currency->currency_rate = $request->currency_rate;
-        $currency->is_default = $request->is_default;
-        $currency->currency_position = $request->currency_position;
-        $currency->status = $request->status;
-        $currency->save();
-
-        $notification=trans('admin_validation.Created Successfully');
-        $notification=array('messege'=>$notification,'alert-type'=>'success');
-        return redirect()->back()->with($notification);
+        return redirect()->route('admin.currency.index')
+            ->with('messege', 'Currency created successfully')
+            ->with('alert-type', 'success');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
-        $multiCurrency = MultiCurrency::findOrFail($id);
-        return view('admin.edit_currency', compact('multiCurrency'));
+        $currency = Currency::find($id);
+        if (!$currency) {
+            return back()->with('error', 'Currency not found');
+        }
+        return view('admin.edit_currency', compact('currency'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
-        $rules = [
-            'currency_name'=>'required|unique:multi_currencies,currency_name,'.$id,
-            'country_code'=>'required|unique:multi_currencies,country_code,'.$id,
-            'currency_code'=>'required|unique:multi_currencies,currency_code,'.$id,
-            'currency_icon'=>'required',
-            'currency_rate'=>'required|numeric',
-        ];
-        $customMessages = [
-            'currency_name.required' => trans('admin_validation.Currency name is required'),
-            'currency_name.unique' => trans('admin_validation.Currency name already exist'),
-            'country_code.required' => trans('admin_validation.Country code is required'),
-            'country_code.unique' => trans('admin_validation.Country code already exist'),
-            'currency_code.required' => trans('admin_validation.Currency code is required'),
-            'currency_code.unique' => trans('admin_validation.Currency code already exist'),
-            'currency_icon.required' => trans('admin_validation.Currency icon is required'),
-            'currency_icon.unique' => trans('admin_validation.Currency icon already exist'),
-            'currency_rate.required' => trans('admin_validation.Currency rate is required'),
-            'currency_rate.numeric' => trans('admin_validation.Currency rate must be number'),
-        ];
-
-        $this->validate($request, $rules,$customMessages);
-
-        $currency = MultiCurrency::findOrFail($id);
-
-        if($request->is_default == 'Yes'){
-            DB::table('multi_currencies')->where('id', '!=', $currency->id)->update(['is_default' => 'No']);
+        $currency = Currency::find($id);
+        if (!$currency) {
+            return back()->with('error', 'Currency not found');
         }
 
-        if($currency->is_default == 'Yes' && $request->is_default == 'No'){
-            DB::table('multi_currencies')->where('id', 1)->update(['is_default' => 'Yes']);
-        }
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'code' => 'required|string|max:3|unique:currencies,code,' . $id,
+            'symbol' => 'nullable|string|max:10',
+        ]);
 
-        $currency->currency_name = $request->currency_name;
-        $currency->country_code = $request->country_code;
-        $currency->currency_code = $request->currency_code;
-        $currency->currency_icon = $request->currency_icon;
-        $currency->currency_rate = $request->currency_rate;
-        $currency->is_default = $request->is_default;
-        $currency->currency_position = $request->currency_position;
-        $currency->status = $request->status;
+        $currency->update([
+            'name' => $request->name,
+            'code' => strtoupper($request->code),
+            'symbol' => $request->symbol,
+        ]);
 
-        $currency->save();
-
-        $notification=trans('admin_validation.Updated Successfully');
-        $notification=array('messege'=>$notification,'alert-type'=>'success');
-        return redirect()->route('admin.currency.index')->with($notification);
+        return redirect()->route('admin.currency.index')
+            ->with('messege', 'Currency updated successfully')
+            ->with('alert-type', 'success');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
-        $currency = MultiCurrency::find($id);
-        $is_flutterwave = Flutterwave::where('currency_id', $id)->first();
-        $is_instamojo = InstamojoPayment::where('currency_id', $id)->first();
-        $is_paypal = PaypalPayment::where('currency_id', $id)->first();
-        $is_paystack = PaystackAndMollie::where('paystack_currency_id', $id)->first();
-        $is_mollie = PaystackAndMollie::where('mollie_currency_id', $id)->first();
-        $is_razorpay = RazorpayPayment::where('currency_id', $id)->first();
-        $is_sslcommerz = SslcommerzPayment::where('currency_id', $id)->first();
-        $is_stripe = StripePayment::where('currency_id', $id)->first();
-
-        if($is_flutterwave || $is_instamojo || $is_paypal || $is_paystack || $is_mollie || $is_razorpay || $is_sslcommerz || $is_stripe){
-            $notification = trans('admin_validation.You can not delete this currency. Because there are one or more payment method has been created in this currency.');
-            $notification = array('messege'=>$notification,'alert-type'=>'error');
-            return redirect()->route('admin.currency.index')->with($notification);
-        }else{
-            $currency->delete();
-            $notification = trans('admin_validation.Delete Successfully');
-            $notification = array('messege'=>$notification,'alert-type'=>'success');
-            return redirect()->route('admin.currency.index')->with($notification);
+        $currency = Currency::find($id);
+        if (!$currency) {
+            return back()->with('error', 'Currency not found');
         }
 
+        $currency->delete();
+
+        return redirect()->route('admin.currency.index')
+            ->with('messege', 'Currency deleted successfully')
+            ->with('alert-type', 'success');
+    }
+
+    // API methods for JSON responses
+    public function apiIndex()
+    {
+        $currencies = Currency::orderBy('name', 'asc')->get();
+        return response()->json(['currencies' => $currencies]);
+    }
+
+    public function apiShow($id)
+    {
+        $currency = Currency::find($id);
+        if (!$currency) {
+            return response()->json(['message' => 'Currency not found'], 404);
+        }
+        return response()->json(['currency' => $currency]);
+    }
+
+    public function apiStore(Request $request)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'code' => 'required|string|max:3|unique:currencies,code',
+            'symbol' => 'nullable|string|max:10',
+        ]);
+
+        $currency = Currency::create([
+            'name' => $request->name,
+            'code' => strtoupper($request->code),
+            'symbol' => $request->symbol,
+        ]);
+
+        return response()->json(['message' => 'Currency created successfully', 'currency' => $currency], 201);
+    }
+
+    public function apiUpdate(Request $request, $id)
+    {
+        $currency = Currency::find($id);
+        if (!$currency) {
+            return response()->json(['message' => 'Currency not found'], 404);
+        }
+
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'code' => 'required|string|max:3|unique:currencies,code,' . $id,
+            'symbol' => 'nullable|string|max:10',
+        ]);
+
+        $currency->update([
+            'name' => $request->name,
+            'code' => strtoupper($request->code),
+            'symbol' => $request->symbol,
+        ]);
+
+        return response()->json(['message' => 'Currency updated successfully', 'currency' => $currency]);
+    }
+
+    public function apiDestroy($id)
+    {
+        $currency = Currency::find($id);
+        if (!$currency) {
+            return response()->json(['message' => 'Currency not found'], 404);
+        }
+
+        $currency->delete();
+        return response()->json(['message' => 'Currency deleted successfully']);
     }
 }

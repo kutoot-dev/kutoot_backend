@@ -15,17 +15,19 @@ use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\User\CheckoutController;
 use App\Http\Controllers\WEB\Admin\FaqController;
 use App\Http\Controllers\WEB\Admin\BlogController;
-use App\Http\Controllers\WEB\Admin\CityController;
 use App\Http\Controllers\WEB\Admin\AdminController;
 use App\Http\Controllers\WEB\Admin\OrderController;
 use App\Http\Controllers\User\UserProfileController;
 use App\Http\Controllers\WEB\Admin\CouponController;
+use App\Http\Controllers\WEB\Admin\CurrencyController;
+use App\Http\Controllers\WEB\Admin\CountryController;
+use App\Http\Controllers\WEB\Admin\CountryStateController;
+use App\Http\Controllers\WEB\Admin\CityController;
 use App\Http\Controllers\WEB\Admin\FooterController;
 use App\Http\Controllers\WEB\Admin\SellerController;
 use App\Http\Controllers\WEB\Admin\SliderController;
 use App\Http\Controllers\WEB\Admin\AboutUsController;
 use App\Http\Controllers\WEB\Admin\ContentController;
-use App\Http\Controllers\WEB\Admin\CountryController;
 use App\Http\Controllers\WEB\Admin\ProductController;
 use App\Http\Controllers\WEB\Admin\ServiceController;
 use App\Http\Controllers\WEB\Admin\SettingController;
@@ -50,7 +52,6 @@ use App\Http\Controllers\WEB\Admin\PopularBlogController;
 use App\Http\Controllers\WEB\Admin\TestimonialController;
 use App\Http\Controllers\WEB\Admin\AdminProfileController;
 use App\Http\Controllers\WEB\Admin\BlogCategoryController;
-use App\Http\Controllers\WEB\Admin\CountryStateController;
 use App\Http\Controllers\WEB\Admin\NotificationController;
 use App\Http\Controllers\WEB\Admin\ProductBrandController;
 use App\Http\Controllers\WEB\Seller\SellerOrderController;
@@ -67,7 +68,6 @@ use App\Http\Controllers\WEB\Admin\NewMenuVisibilityController;
 use App\Http\Controllers\WEB\Admin\ProductGalleryController;
 use App\Http\Controllers\WEB\Admin\ProductVariantController;
 use App\Http\Controllers\WEB\Admin\SellerWithdrawController;
-use App\Http\Controllers\WEB\Admin\CurrencyController;
 use App\Http\Controllers\Admin\ImageItemController;
 use App\Http\Controllers\Admin\ImageTypeController;
 
@@ -106,7 +106,6 @@ use App\Http\Controllers\WEB\Seller\SellerProductVariantController;
 use App\Http\Controllers\WEB\Admin\DeliveryManOrderAmountController;
 use App\Http\Controllers\WEB\Deliveryman\DeliveryManOrderController;
 use App\Http\Controllers\WEB\Admin\Auth\NewAdminForgotPasswordController;
-use App\Http\Controllers\WEB\Admin\Auth\WebAdminForgotPasswordController;
 use App\Http\Controllers\WEB\Deliveryman\DeliveryManProfileController;
 use App\Http\Controllers\WEB\Admin\DeliveryManWithdrawMethodController;
 use App\Http\Controllers\WEB\Seller\SellerProductVariantItemController;
@@ -760,29 +759,10 @@ Route::group(['as'=> 'admin.', 'prefix' => 'admin'],function (){
 
 
 
+// Location routes removed in favor of world package
     Route::resource('country', CountryController::class);
-    Route::put('country-status/{id}',[CountryController::class,'changeStatus'])->name('country-status');
-
-    Route::get('country-import-page',[CountryController::class,'country_import_page'])->name('country-import-page');
-    Route::get('country-export',[CountryController::class,'country_export'])->name('country-export');
-    Route::get('country-demo-export',[CountryController::class,'demo_country_export'])->name('country-demo-export');
-    Route::post('country-import',[CountryController::class,'country_import'])->name('country-import');
-
     Route::resource('state', CountryStateController::class);
-    Route::put('state-status/{id}',[CountryStateController::class,'changeStatus'])->name('state-status');
-
-    Route::get('state-import-page',[CountryStateController::class,'state_import_page'])->name('state-import-page');
-    Route::get('state-export',[CountryStateController::class,'state_export'])->name('state-export');
-    Route::get('state-demo-export',[CountryStateController::class,'demo_state_export'])->name('state-demo-export');
-    Route::post('state-import',[CountryStateController::class,'state_import'])->name('state-import');
-
     Route::resource('city', CityController::class);
-    Route::put('city-status/{id}',[CityController::class,'changeStatus'])->name('city-status');
-
-    Route::get('city-import-page',[CityController::class,'city_import_page'])->name('city-import-page');
-    Route::get('city-export',[CityController::class,'city_export'])->name('city-export');
-    Route::get('city-demo-export',[CityController::class,'demo_city_export'])->name('city-demo-export');
-    Route::post('city-import',[CityController::class,'city_import'])->name('city-import');
 
     Route::get('payment-method',[PaymentMethodController::class,'index'])->name('payment-method');
     Route::put('update-paypal',[PaymentMethodController::class,'updatePaypal'])->name('update-paypal');
@@ -874,7 +854,6 @@ Route::group(['as'=> 'admin.', 'prefix' => 'admin'],function (){
     Route::put('coupon-status/{id}',[CouponController::class,'changeStatus'])->name('coupon-status');
 
     Route::resource('currency', CurrencyController::class);
-    Route::put('currency-status/{id}', [CurrencyController::class,'changeStatus'])->name('coupon.status');
 
     Route::resource('banner-image', NewBreadcrumbController::class);
 

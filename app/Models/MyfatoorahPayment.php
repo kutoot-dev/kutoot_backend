@@ -10,6 +10,6 @@ class MyfatoorahPayment extends Model
     use HasFactory;
 
     public function currency(){
-        return $this->belongsTo(MultiCurrency::class);
+        return $this->belongsTo(\Nnjeim\World\Models\Currency::class, 'currency_id');
     }
 }

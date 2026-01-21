@@ -15,13 +15,27 @@
           </div>
 
           <div class="section-body">
-            <a href="{{ route('admin.currency.create') }}" class="btn btn-primary"><i class="fas fa-plus"></i> {{__('admin.Add New')}}</a>
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <a href="{{ route('admin.currency.create') }}" class="btn btn-primary"><i class="fas fa-plus"></i> {{__('admin.Add New')}}</a>
+                </div>
+                <div class="col-md-6">
+                    <form action="" method="GET" class="float-right">
+                        <div class="input-group">
+                            <input type="text" name="search" class="form-control" placeholder="{{__('admin.Search')}}..." value="{{ request('search') }}">
+                            <div class="input-group-append">
+                                <button class="btn btn-primary" type="submit"><i class="fas fa-search"></i></button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
             <div class="row mt-4">
                 <div class="col">
                   <div class="card">
                     <div class="card-body">
                       <div class="table-responsive table-invoice">
-                        <table class="table table-striped" id="dataTable">
+                        <table class="table table-striped">
                             <thead>
                                 <tr>
                                     <th>{{__('admin.SN')}}</th>
@@ -38,7 +52,7 @@
                             <tbody>
                                 @foreach ($currencies as $index => $currency)
                                     <tr>
-                                        <td>{{ ++$index }}</td>
+                                        <td>{{ $currencies->firstItem() + $index }}</td>
                                         <td>{{ $currency->currency_name }}</td>
                                         <td>{{ $currency->country_code }}</td>
                                         <td>{{ $currency->currency_code }}</td>
@@ -71,6 +85,9 @@
                                   @endforeach
                             </tbody>
                         </table>
+                        <div class="mt-3">
+                            {{ $currencies->links('pagination::bootstrap-4') }}
+                        </div>
                       </div>
                     </div>
                   </div>
