@@ -180,7 +180,7 @@ class RedeemController extends Controller
         // Category Detail
         $category = StoreCategory::find($categoryId);
 
-        $stores = $paginated->getCollection()->map(function ($store) {
+        $stores = collect($paginated->items())->map(function ($store) {
             $settings = AdminShopCommissionDiscount::where('shop_id', $store->id)->orderByDesc('id')->first();
             $rating = $settings ? $settings->rating : 0;
             $totalRatings = $settings ? $settings->total_ratings : 0;
@@ -192,7 +192,8 @@ class RedeemController extends Controller
             $cityVal = "Bengaluru";
 
             $images = $store->images->pluck('image_url')->map(function ($i) {
-                return asset($i); })->toArray();
+                return asset($i);
+            })->toArray();
             if (empty($images))
                 $images = [asset('/images/placeholder-shop.jpg')];
 
@@ -258,7 +259,8 @@ class RedeemController extends Controller
         }
 
         $images = $store->images->pluck('image_url')->map(function ($i) {
-            return asset($i); })->toArray();
+            return asset($i);
+        })->toArray();
         if (empty($images))
             $images = [asset('/images/placeholder-shop.jpg')];
 
@@ -318,14 +320,7 @@ class RedeemController extends Controller
         $maxDiscountByPercent = ($billAmount * $discountPercent) / 100;
 
         // 3. User Wallet
-        $coinsStats = UserCoins::selectRaw("
-                SUM(CASE WHEN type = 'credit' THEN coins ELSE 0 END) as credit,
-                SUM(CASE WHEN type = 'debit' THEN coins ELSE 0 END) as debit
-            ")
-            ->where('user_id', $user->id)
-            ->first();
-
-        $walletCoins = ($coinsStats->credit ?? 0) - ($coinsStats->debit ?? 0);
+        $walletCoins = $user->wallet_balance;
         $coinValueINR = 0.25;
         $walletValueINR = $walletCoins * $coinValueINR;
 
@@ -378,12 +373,7 @@ class RedeemController extends Controller
             $settings = AdminShopCommissionDiscount::where('shop_id', $storeId)->orderByDesc('id')->first();
             $discountPercent = $settings ? $settings->discount_percent : 0;
 
-            $coinsStats = UserCoins::selectRaw("
-                SUM(CASE WHEN type = 'credit' THEN coins ELSE 0 END) as credit,
-                SUM(CASE WHEN type = 'debit' THEN coins ELSE 0 END) as debit
-            ")->where('user_id', $user->id)->first();
-
-            $walletCoins = ($coinsStats->credit ?? 0) - ($coinsStats->debit ?? 0);
+            $walletCoins = $user->wallet_balance;
             $coinValueINR = 0.25;
             $walletValueINR = $walletCoins * $coinValueINR;
 
@@ -399,18 +389,15 @@ class RedeemController extends Controller
             // Create Transaction
             $txn = new Transaction();
             $txn->shop_id = $storeId;
-            // Link user via visitor or ideally distinct column, but sticking to earlier plan:
-            // Find/Create visitor
-            $visitorId = null;
+            // Link user via visitor or ideally distinct column
             $visitor = \App\Models\Store\ShopVisitor::where('user_id', $user->id)->where('shop_id', $storeId)->first();
             if (!$visitor) {
-                $visId = \App\Models\Store\ShopVisitor::insertGetId([
+                $visitorId = \App\Models\Store\ShopVisitor::insertGetId([
                     'shop_id' => $storeId,
                     'user_id' => $user->id,
                     'last_visit' => now(),
                     'visit_count' => 1
                 ]);
-                $visitorId = $visId;
             } else {
                 $visitorId = $visitor->id;
             }
@@ -420,17 +407,14 @@ class RedeemController extends Controller
             $txn->discount_amount = $discountAppliedINR;
             $txn->redeemed_coins = $coinsUsed;
             $txn->status = 'Verified';
-            $txn->settled_at = now();
+            $txn->settled_at = now()->startOfDay();
             $txn->save();
 
-            // DEDUCT COINS (INSERT DEBIT RECORD)
-            $debitEntry = new UserCoins();
-            $debitEntry->user_id = $user->id;
-            $debitEntry->type = 'debit';
-            $debitEntry->coins = $coinsUsed;
-            $debitEntry->order_id = $txn->id; // Link to transaction
-            $debitEntry->status = 1;
-            $debitEntry->save();
+            // DEDUCT COINS (FIFO LEDGER)
+            if ($coinsUsed > 0) {
+                $coinService = app(\App\Services\CoinLedgerService::class);
+                $coinService->redeem($user->id, $coinsUsed, $txn->txn_code);
+            }
 
             DB::commit();
 

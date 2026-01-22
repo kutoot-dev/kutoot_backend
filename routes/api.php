@@ -107,6 +107,7 @@ use App\Http\Controllers\User\PaypalController;
 use App\Http\Controllers\User\MessageController;
 use App\Http\Controllers\User\AddressCotroller;
 use App\Http\Controllers\User\UserDashboardController;
+use App\Http\Controllers\API\Customer\CoinLedgerController;
 use App\Http\Controllers\API\UserOrderController;
 
 
@@ -356,7 +357,9 @@ Route::group(['middleware' => ['demo', 'XSS']], function () {
             Route::get('/my-dashboard', [UserDashboardController::class, 'myDashboard'])->name('my-dashboard');
 
             // 8. Transactions
-            Route::get('/coin-transactions', [UserDashboardController::class, 'coinTransactions']);
+            Route::get('/coin-transactions', [CoinLedgerController::class, 'getHistory']);
+            Route::get('/wallet', [CoinLedgerController::class, 'getWallet']);
+            Route::get('/wallet/history', [CoinLedgerController::class, 'getHistory']);
 
             // Redemption & Stores
             Route::get('/redeem/home', [\App\Http\Controllers\API\Customer\RedeemController::class, 'home']);
@@ -913,6 +916,8 @@ Route::group(['middleware' => ['demo', 'XSS']], function () {
 
         Route::get('admin-validation-language', [LanguageController::class, 'adminValidationLnagugae'])->name('admin-validation-language');
         Route::post('update-admin-validation-language', [LanguageController::class, 'updateAdminValidationLnagugae'])->name('update-admin-validation-language');
+
+        Route::post('wallet/credit', [CoinLedgerController::class, 'adminCredit'])->name('wallet.credit');
 
         Route::get('website-language', [LanguageController::class, 'websiteLanguage'])->name('website-language');
         Route::post('update-language', [LanguageController::class, 'updateLanguage'])->name('update-language');
