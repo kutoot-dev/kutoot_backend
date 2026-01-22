@@ -35,12 +35,12 @@ class SellerApplicationController extends Controller
         $validator = Validator::make($request->all(), [
             'storeName' => 'required|string|max:255',
             'ownerMobile' => 'required|string|max:15',
-            'ownerEmail' => 'required|email|max:255',
+            'ownerEmail' => 'nullable|email|max:255',
             'storeType' => 'required|string|max:100',
-            'storeAddress' => 'required|string|max:500',
-            'lat' => 'required|numeric',
-            'lng' => 'required|numeric',
-            'minBillAmount' => 'required|numeric|min:0',
+            'storeAddress' => 'nullable|string|max:500',
+            'lat' => 'nullable|numeric',
+            'lng' => 'nullable|numeric',
+            'minBillAmount' => 'nullable|numeric|min:0',
         ]);
 
         if ($validator->fails()) {
@@ -74,7 +74,7 @@ class SellerApplicationController extends Controller
             'store_address' => $request->storeAddress,
             'lat' => $request->lat,
             'lng' => $request->lng,
-            'min_bill_amount' => $request->minBillAmount,
+            'min_bill_amount' => $request->minBillAmount ?? 0,
             'status' => SellerApplication::STATUS_PENDING,
         ]);
 
