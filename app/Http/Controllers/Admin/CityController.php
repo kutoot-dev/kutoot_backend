@@ -39,7 +39,7 @@ class CityController extends Controller
 
     public function create()
     {
-        $countries = Country::orderBy('name', 'asc')->get();
+        $countries = Country::where('status', 1)->orderBy('name', 'asc')->get();
         $states = State::orderBy('name', 'asc')->get();
         return response()->json(['countries' => $countries, 'states' => $states]);
     }
@@ -49,11 +49,15 @@ class CityController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'state_id' => 'required|exists:states,id',
+            'country_id' => 'nullable|exists:countries,id',
+            'country_code' => 'nullable|string|max:10',
         ]);
 
         $city = City::create([
             'name' => $request->name,
             'state_id' => $request->state_id,
+            'country_id' => $request->country_id,
+            'country_code' => $request->country_code,
         ]);
 
         return response()->json(['message' => 'City created successfully', 'city' => $city], 201);
@@ -69,11 +73,15 @@ class CityController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'state_id' => 'required|exists:states,id',
+            'country_id' => 'nullable|exists:countries,id',
+            'country_code' => 'nullable|string|max:10',
         ]);
 
         $city->update([
             'name' => $request->name,
             'state_id' => $request->state_id,
+            'country_id' => $request->country_id,
+            'country_code' => $request->country_code,
         ]);
 
         return response()->json(['message' => 'City updated successfully', 'city' => $city]);

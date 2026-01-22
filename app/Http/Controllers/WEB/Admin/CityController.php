@@ -29,7 +29,7 @@ class CityController extends Controller
             $query->where('state_id', $request->state_id);
         }
 
-        $countries = Country::orderBy('name', 'asc')->get();
+        $countries = Country::where('status', 1)->orderBy('name', 'asc')->get();
         $states = collect();
         if ($request->country_id) {
             $states = State::where('country_id', $request->country_id)->orderBy('name', 'asc')->get();
@@ -41,7 +41,7 @@ class CityController extends Controller
 
     public function create()
     {
-        $countries = Country::orderBy('name', 'asc')->get();
+        $countries = Country::where('status', 1)->orderBy('name', 'asc')->get();
         return view('admin.create_city', compact('countries'));
     }
 
@@ -51,12 +51,14 @@ class CityController extends Controller
             'name' => 'required|string|max:255',
             'state' => 'required|exists:states,id',
             'country' => 'required|exists:countries,id',
+            'country_code' => 'nullable|string|max:10',
         ]);
 
         City::create([
             'name' => $request->name,
             'state_id' => $request->state,
             'country_id' => $request->country,
+            'country_code' => $request->country_code,
         ]);
 
         return redirect()->route('admin.city.index')
@@ -69,7 +71,7 @@ class CityController extends Controller
         if (!$city) {
             return back()->with('error', 'City not found');
         }
-        $countries = Country::orderBy('name', 'asc')->get();
+        $countries = Country::where('status', 1)->orderBy('name', 'asc')->get();
         $states = State::where('country_id', $city->country_id)->orderBy('name', 'asc')->get();
         return view('admin.edit_city', compact('city', 'countries', 'states'));
     }
@@ -85,12 +87,14 @@ class CityController extends Controller
             'name' => 'required|string|max:255',
             'state' => 'required|exists:states,id',
             'country' => 'required|exists:countries,id',
+            'country_code' => 'nullable|string|max:10',
         ]);
 
         $city->update([
             'name' => $request->name,
             'state_id' => $request->state,
             'country_id' => $request->country,
+            'country_code' => $request->country_code,
         ]);
 
         return redirect()->route('admin.city.index')

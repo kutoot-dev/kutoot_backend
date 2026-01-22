@@ -38,7 +38,7 @@ class CountryStateController extends Controller
 
     public function create()
     {
-        $countries = Country::orderBy('name', 'asc')->get();
+        $countries = Country::where('status', 1)->orderBy('name', 'asc')->get();
         return response()->json(['countries' => $countries]);
     }
 

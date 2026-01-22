@@ -28,7 +28,7 @@ class CountryStateController extends Controller
 
     public function create()
     {
-        $countries = Country::orderBy('name', 'asc')->get();
+        $countries = Country::where('status', 1)->orderBy('name', 'asc')->get();
         return view('admin.create_state', compact('countries'));
     }
 
@@ -59,7 +59,7 @@ class CountryStateController extends Controller
         if (!$state) {
             return back()->with('error', 'State not found');
         }
-        $countries = Country::orderBy('name', 'asc')->get();
+        $countries = Country::where('status', 1)->orderBy('name', 'asc')->get();
         return view('admin.edit_state', compact('state', 'countries'));
     }
 
