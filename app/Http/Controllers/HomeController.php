@@ -404,11 +404,28 @@ class HomeController extends Controller
 
 
 
-        $sliderVisibilty = HomePageOneVisibility::find(1);
+        // $sliderVisibilty = HomePageOneVisibility::find(1);
 
-        $sliders = Slider::orderBy('serial','asc')->where(['status' => 1])->get()->take($sliderVisibilty->qty);
+        // $sliders = Slider::orderBy('serial','asc')->where(['status' => 1])->get()->take($sliderVisibilty->qty);
 
-        $sliderVisibilty = $sliderVisibilty->status == 1 ? true : false;
+        // $sliderVisibilty = $sliderVisibilty->status == 1 ? true : false;
+
+
+$sliderVisibilty = HomePageOneVisibility::find(1);
+
+$qty = $sliderVisibilty ? $sliderVisibilty->qty : 0;
+$status = $sliderVisibilty ? $sliderVisibilty->status : 0;
+
+$sliders = Slider::where('status', 1)
+    ->orderBy('serial', 'asc')
+    ->take($qty)
+    ->get();
+
+$sliderVisibilty = $status == 1;
+
+
+
+
 
 
 
@@ -631,6 +648,199 @@ class HomeController extends Controller
         ]);
 
     }
+
+
+
+
+//  protected function sectionConfig(int $id): array
+//     {
+//         $config = HomePageOneVisibility::find($id);
+
+//         return [
+//             'qty' => $config->qty ?? 0,
+//             'visible' => ($config->status ?? 0) === 1,
+//         ];
+//     }
+
+
+
+// public function index()
+// {
+//     $setting = Setting::first();
+//     $seoSetting = SeoSetting::find(1);
+
+
+//     $sliderConfig = $this->sectionConfig(1);
+//     $sliders = Slider::where('status', 1)
+//         ->orderBy('serial')
+//         ->limit($sliderConfig['qty'])
+//         ->get();
+
+
+//     $serviceConfig = $this->sectionConfig(2);
+//     $services = Service::where('status', 1)
+//         ->limit($serviceConfig['qty'])
+//         ->get();
+
+//     $popularCategoryConfig = $this->sectionConfig(4);
+//     $popularCategories = PopularCategory::with('category')->get();
+//     $popularCategoryIds = $popularCategories->pluck('category_id')->toArray();
+
+//     $popularCategoryProducts = Product::with('activeVariants.activeVariantItems')
+//         ->whereIn('category_id', $popularCategoryIds)
+//         ->where([
+//             'status' => 1,
+//             'approval_status' => ProductApprovalStatus::APPROVED
+//         ])
+//         ->orderByDesc('id')
+//         ->limit($popularCategoryConfig['qty'])
+//         ->get();
+
+//     $brandConfig = $this->sectionConfig(5);
+//     $brands = Brand::where('status', 1)
+//         ->limit($brandConfig['qty'])
+//         ->get();
+
+
+//     $topRatedConfig = $this->sectionConfig(6);
+//     $topRatedProducts = Product::with('activeVariants.activeVariantItems')
+//         ->where([
+//             'is_top' => 1,
+//             'status' => 1,
+//             'approval_status' => ProductApprovalStatus::APPROVED
+//         ])
+//         ->orderByDesc('id')
+//         ->limit($topRatedConfig['qty'])
+//         ->get();
+
+
+//     $sellerConfig = $this->sectionConfig(7);
+//     $sellers = Vendor::where('status', 1)
+//         ->select('id','logo','banner_image','shop_name','slug')
+//         ->limit($sellerConfig['qty'])
+//         ->get();
+
+
+//     $featuredConfig = $this->sectionConfig(8);
+//     $featuredCategories = FeaturedCategory::with('category')->get();
+//     $featuredCategoryIds = $featuredCategories->pluck('category_id')->toArray();
+
+//     $featuredCategoryProducts = Product::with('activeVariants.activeVariantItems')
+//         ->whereIn('category_id', $featuredCategoryIds)
+//         ->where([
+//             'status' => 1,
+//             'approval_status' => ProductApprovalStatus::APPROVED
+//         ])
+//         ->orderByDesc('id')
+//         ->limit($featuredConfig['qty'])
+//         ->get();
+
+
+//     $newArrivalConfig = $this->sectionConfig(9);
+//     $newArrivalProducts = Product::with('activeVariants.activeVariantItems')
+//         ->where([
+//             'new_product' => 1,
+//             'status' => 1,
+//             'approval_status' => ProductApprovalStatus::APPROVED
+//         ])
+//         ->orderByDesc('id')
+//         ->limit($newArrivalConfig['qty'])
+//         ->get();
+
+
+//     $bestConfig = $this->sectionConfig(10);
+//     $bestProducts = Product::with('activeVariants.activeVariantItems')
+//         ->where([
+//             'is_best' => 1,
+//             'status' => 1,
+//             'approval_status' => ProductApprovalStatus::APPROVED
+//         ])
+//         ->orderByDesc('id')
+//         ->limit($bestConfig['qty'])
+//         ->get();
+
+
+//     $banners = BannerImage::whereIn('id', [
+//         16,17,19,20,21,22,24,27
+//     ])->get()->keyBy('id');
+
+
+//     $homepage_categories = Category::where('status', 1)
+//         ->select('id','name','slug','icon','image')
+//         ->limit(15)
+//         ->get();
+
+//     $section_title = json_decode($setting->homepage_section_title ?? '{}');
+
+//     return response()->json([
+//         'section_title' => $section_title,
+//         'seoSetting' => $seoSetting,
+
+//         'sliderVisibilty' => $sliderConfig['visible'],
+//         'sliders' => $sliders,
+
+//         'serviceVisibilty' => $serviceConfig['visible'],
+//         'services' => $services,
+
+//         'popularCategoryVisibilty' => $popularCategoryConfig['visible'],
+//         'popularCategories' => $popularCategories,
+//         'popularCategoryProducts' => $popularCategoryProducts,
+//         'popularCategorySidebarBanner' => $setting->popular_category_banner ?? null,
+
+//         'brandVisibility' => $brandConfig['visible'],
+//         'brands' => $brands,
+
+//         'topRatedVisibility' => $topRatedConfig['visible'],
+//         'topRatedProducts' => $topRatedProducts,
+
+//         'sellerVisibility' => $sellerConfig['visible'],
+//         'sellers' => $sellers,
+
+//         'featuredProductVisibility' => $featuredConfig['visible'],
+//         'featuredCategories' => $featuredCategories,
+//         'featuredCategoryProducts' => $featuredCategoryProducts,
+//         'featuredCategorySidebarBanner' => $setting->featured_category_banner ?? null,
+
+//         'newArrivalProductVisibility' => $newArrivalConfig['visible'],
+//         'newArrivalProducts' => $newArrivalProducts,
+
+//         'bestProductVisibility' => $bestConfig['visible'],
+//         'bestProducts' => $bestProducts,
+
+//         'homepage_categories' => $homepage_categories,
+
+//         'sliderBannerOne' => $banners[16] ?? null,
+//         'sliderBannerTwo' => $banners[17] ?? null,
+//         'twoColumnBannerOne' => $banners[19] ?? null,
+//         'twoColumnBannerTwo' => $banners[20] ?? null,
+//         'singleBannerOne' => $banners[21] ?? null,
+//         'singleBannerTwo' => $banners[22] ?? null,
+//         'flashSaleSidebarBanner' => $banners[24] ?? null,
+//         'subscriptionBanner' => $banners[27] ?? null,
+//     ]);
+// }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
