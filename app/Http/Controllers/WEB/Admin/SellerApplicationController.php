@@ -31,7 +31,7 @@ class SellerApplicationController extends Controller
     public function index(Request $request)
     {
         $status = $request->query('status');
-        
+
         $applications = SellerApplication::query()
             ->when($status, fn($q) => $q->where('status', strtoupper($status)))
             ->orderBy('created_at', 'desc')
@@ -67,7 +67,7 @@ class SellerApplicationController extends Controller
     public function destroy($id)
     {
         $application = SellerApplication::findOrFail($id);
-        
+
         if ($application->isApproved() && $application->seller_id) {
             return redirect()->back()->with('error', 'Cannot delete approved application with active seller account');
         }
@@ -87,7 +87,7 @@ class SellerApplicationController extends Controller
     public function apiIndex(Request $request)
     {
         $status = $request->query('status');
-        
+
         $applications = SellerApplication::query()
             ->when($status, fn($q) => $q->where('status', strtoupper($status)))
             ->orderBy('created_at', 'desc')
@@ -190,14 +190,22 @@ class SellerApplicationController extends Controller
         }
 
         $updateData = [];
-        if ($request->has('storeName')) $updateData['store_name'] = $request->storeName;
-        if ($request->has('ownerMobile')) $updateData['owner_mobile'] = $request->ownerMobile;
-        if ($request->has('ownerEmail')) $updateData['owner_email'] = $request->ownerEmail;
-        if ($request->has('storeType')) $updateData['store_type'] = $request->storeType;
-        if ($request->has('storeAddress')) $updateData['store_address'] = $request->storeAddress;
-        if ($request->has('lat')) $updateData['lat'] = $request->lat;
-        if ($request->has('lng')) $updateData['lng'] = $request->lng;
-        if ($request->has('minBillAmount')) $updateData['min_bill_amount'] = $request->minBillAmount;
+        if ($request->has('storeName'))
+            $updateData['store_name'] = $request->storeName;
+        if ($request->has('ownerMobile'))
+            $updateData['owner_mobile'] = $request->ownerMobile;
+        if ($request->has('ownerEmail'))
+            $updateData['owner_email'] = $request->ownerEmail;
+        if ($request->has('storeType'))
+            $updateData['store_type'] = $request->storeType;
+        if ($request->has('storeAddress'))
+            $updateData['store_address'] = $request->storeAddress;
+        if ($request->has('lat'))
+            $updateData['lat'] = $request->lat;
+        if ($request->has('lng'))
+            $updateData['lng'] = $request->lng;
+        if ($request->has('minBillAmount'))
+            $updateData['min_bill_amount'] = $request->minBillAmount;
 
         if (!empty($updateData)) {
             $application->update($updateData);
@@ -395,7 +403,7 @@ class SellerApplicationController extends Controller
             // Send email with credentials (outside transaction)
             try {
                 MailHelper::setEnvMailConfig();
-                $loginUrl = "https://www.kutoot.com/store/login";
+                $loginUrl = "https://www.kutoot.com/store";
                 Mail::to($request->sellerEmail)->send(
                     new SellerApplicationApproved(
                         $application->store_name,
@@ -622,7 +630,7 @@ class SellerApplicationController extends Controller
             $emailSent = false;
             try {
                 MailHelper::setEnvMailConfig();
-                $loginUrl = "https://www.kutoot.com/store/login";
+                $loginUrl = "https://www.kutoot.com/store";
                 Mail::to($request->seller_email)->send(
                     new SellerApplicationApproved(
                         $application->store_name,
