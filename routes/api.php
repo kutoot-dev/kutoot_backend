@@ -511,6 +511,7 @@ Route::group(['middleware' => ['demo', 'XSS']], function () {
         Route::get('stores/{storeId}', [\App\Http\Controllers\API\Customer\RedeemController::class, 'storeDetails']);
         Route::post('redeem/preview', [\App\Http\Controllers\API\Customer\RedeemController::class, 'preview']);
         Route::post('redeem/pay', [\App\Http\Controllers\API\Customer\RedeemController::class, 'pay']);
+        Route::post('redeem/confirm', [\App\Http\Controllers\API\Customer\RedeemController::class, 'confirm']);
     });
 
     //delivery man routes

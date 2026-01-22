@@ -13,6 +13,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
+use App\Models\RazorpayPayment;
+use Razorpay\Api\Api;
 
 class RedeemController extends Controller
 {
@@ -314,14 +316,17 @@ class RedeemController extends Controller
 
         // 1. Get Store Settings
         $settings = AdminShopCommissionDiscount::where('shop_id', $storeId)->orderByDesc('id')->first();
+        if (!$settings) {
+            $settings = AdminShopCommissionDiscount::whereNull('shop_id')->orderByDesc('id')->first();
+        }
         $discountPercent = $settings ? $settings->discount_percent : 0;
 
         // 2. Calculate Max Discount
         $maxDiscountByPercent = ($billAmount * $discountPercent) / 100;
 
         // 3. User Wallet
-        $walletCoins = $user->wallet_balance;
-        $coinValueINR = 0.25;
+        $walletCoins = (float) $user->wallet_balance;
+        $coinValueINR = (float) config('kutoot.coin_value', 0.25);
         $walletValueINR = $walletCoins * $coinValueINR;
 
         // 4. Final Logic
@@ -336,15 +341,106 @@ class RedeemController extends Controller
                 'store_id' => $storeId,
                 'bill_amount' => (float) $billAmount,
                 'discount_percent' => $discountPercent,
-                'max_discount_by_percent' => $maxDiscountByPercent,
+                'max_discount_by_percent' => (float) $maxDiscountByPercent,
                 'wallet_coins' => (int) $walletCoins,
                 'coin_value_inr' => $coinValueINR,
-                'wallet_value_inr' => $walletValueINR,
-                'discount_applied_inr' => $discountAppliedINR,
+                'wallet_value_inr' => (float) $walletValueINR,
+                'discount_applied_inr' => (float) $discountAppliedINR,
                 'coins_used' => (int) $coinsUsed,
-                'final_payable_inr' => $finalPayableINR
+                'final_payable_inr' => (float) $finalPayableINR
             ]
         ]);
+    }
+
+    /**
+     * API: INITIALIZE PAYMENT (RAZORPAY)
+     * POST /api/v1/customer/redeem/pay
+     */
+    public function pay(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'store_id' => 'required|exists:shops,id',
+            'bill_amount' => 'required|numeric|min:1'
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['success' => false, 'message' => 'Invalid data', 'errors' => $validator->errors()], 422);
+        }
+
+        $user = Auth::guard('api')->user();
+        $storeId = $request->store_id;
+        $billAmount = $request->bill_amount;
+
+        // Re-calculate Logic
+        $settings = AdminShopCommissionDiscount::where('shop_id', $storeId)->orderByDesc('id')->first();
+        if (!$settings) {
+            $settings = AdminShopCommissionDiscount::whereNull('shop_id')->orderByDesc('id')->first();
+        }
+        $discountPercent = $settings ? $settings->discount_percent : 0;
+        $commissionPercent = $settings ? $settings->commission_percent : 0;
+
+        $walletCoins = (float) $user->wallet_balance;
+        $coinValueINR = (float) config('kutoot.coin_value', 0.25);
+        $walletValueINR = $walletCoins * $coinValueINR;
+
+        $maxDiscountByPercent = ($billAmount * $discountPercent) / 100;
+        $discountAppliedINR = min($maxDiscountByPercent, $walletValueINR);
+        $finalPayableINR = $billAmount - $discountAppliedINR;
+
+        if ($finalPayableINR <= 0) {
+            return response()->json([
+                'success' => true,
+                'message' => 'Zero amount to pay, use coins fully',
+                'data' => ['razorpay_order_id' => null, 'amount' => 0]
+            ]);
+        }
+
+        $razorpaySettings = RazorpayPayment::first();
+        if (!$razorpaySettings) {
+            return response()->json(['success' => false, 'message' => 'Razorpay not configured'], 500);
+        }
+
+        $api = new Api($razorpaySettings->key, $razorpaySettings->secret_key);
+        $shop = Shop::find($storeId);
+
+        // Calculate Splits
+        $commissionAmount = ($finalPayableINR * $commissionPercent) / 100;
+        $storeAmount = $finalPayableINR - $commissionAmount;
+
+        $orderData = [
+            'receipt' => 'RED-' . time() . '-' . $user->id,
+            'amount' => (int) round($finalPayableINR * 100),
+            'currency' => 'INR',
+        ];
+
+        // ADD RAZORPAY ROUTE SPLIT
+        if ($shop->razorpay_account_id) {
+            $orderData['transfers'] = [
+                [
+                    'account' => $shop->razorpay_account_id,
+                    'amount' => (int) round($storeAmount * 100),
+                    'currency' => 'INR',
+                    'on_hold' => 0
+                ]
+            ];
+        }
+
+        try {
+            $order = $api->order->create($orderData);
+
+            return response()->json([
+                'success' => true,
+                'data' => [
+                    'razorpay_order_id' => $order->id,
+                    'amount' => $finalPayableINR,
+                    'razorpay_key' => $razorpaySettings->key,
+                    'commission_amount' => $commissionAmount,
+                    'store_amount' => $storeAmount
+                ]
+            ]);
+        } catch (\Exception $e) {
+            return response()->json(['success' => false, 'message' => 'Razorpay error: ' . $e->getMessage()], 500);
+        }
     }
 
     /**
@@ -356,25 +452,56 @@ class RedeemController extends Controller
         $validator = Validator::make($request->all(), [
             'store_id' => 'required|exists:shops,id',
             'bill_amount' => 'required|numeric|min:1',
-            'payment_method' => 'nullable|string'
+            'payment_method' => 'nullable|string',
+            'razorpay_payment_id' => 'nullable|string',
+            'razorpay_order_id' => 'nullable|string',
+            'razorpay_signature' => 'nullable|string',
         ]);
 
         if ($validator->fails()) {
             return response()->json(['success' => false, 'message' => 'Invalid data', 'errors' => $validator->errors()], 422);
         }
 
+        // Check if order already processed
+        if ($request->razorpay_order_id) {
+            $existing = Transaction::where('razorpay_order_id', $request->razorpay_order_id)->first();
+            if ($existing) {
+                return response()->json(['success' => true, 'message' => 'Payment already verified', 'data' => $existing]);
+            }
+        }
+
         $user = Auth::guard('api')->user();
         $storeId = $request->store_id;
         $billAmount = $request->bill_amount;
+
+        // Verify Razorpay Payment if order_id provided
+        if ($request->razorpay_order_id) {
+            $razorpaySettings = RazorpayPayment::first();
+            $api = new Api($razorpaySettings->key, $razorpaySettings->secret_key);
+            try {
+                $attributes = [
+                    'razorpay_order_id' => $request->razorpay_order_id,
+                    'razorpay_payment_id' => $request->razorpay_payment_id,
+                    'razorpay_signature' => $request->razorpay_signature
+                ];
+                $api->utility->verifyPaymentSignature($attributes);
+            } catch (\Exception $e) {
+                return response()->json(['success' => false, 'message' => 'Payment verification failed: ' . $e->getMessage()], 400);
+            }
+        }
 
         DB::beginTransaction();
         try {
             // Re-calculate Logic (Security)
             $settings = AdminShopCommissionDiscount::where('shop_id', $storeId)->orderByDesc('id')->first();
+            if (!$settings) {
+                $settings = AdminShopCommissionDiscount::whereNull('shop_id')->orderByDesc('id')->first();
+            }
             $discountPercent = $settings ? $settings->discount_percent : 0;
+            $commissionPercent = $settings ? $settings->commission_percent : 0;
 
-            $walletCoins = $user->wallet_balance;
-            $coinValueINR = 0.25;
+            $walletCoins = (float) $user->wallet_balance;
+            $coinValueINR = (float) config('kutoot.coin_value', 0.25);
             $walletValueINR = $walletCoins * $coinValueINR;
 
             $maxDiscountByPercent = ($billAmount * $discountPercent) / 100;
@@ -386,10 +513,14 @@ class RedeemController extends Controller
                 throw new \Exception("Insufficient wallet balance");
             }
 
+            // Calculate Split Details for recording
+            $commissionAmount = ($finalPayableINR * $commissionPercent) / 100;
+            $storeAmount = $finalPayableINR - $commissionAmount;
+
             // Create Transaction
             $txn = new Transaction();
             $txn->shop_id = $storeId;
-            // Link user via visitor or ideally distinct column
+            // Link user via visitor
             $visitor = \App\Models\Store\ShopVisitor::where('user_id', $user->id)->where('shop_id', $storeId)->first();
             if (!$visitor) {
                 $visitorId = \App\Models\Store\ShopVisitor::insertGetId([
@@ -405,9 +536,13 @@ class RedeemController extends Controller
             $txn->txn_code = 'KUT' . date('Ymd') . '-' . rand(1000, 9999);
             $txn->total_amount = $billAmount;
             $txn->discount_amount = $discountAppliedINR;
+            $txn->commission_amount = $commissionAmount;
+            $txn->shop_amount = $storeAmount;
+            $txn->razorpay_payment_id = $request->razorpay_payment_id;
+            $txn->razorpay_order_id = $request->razorpay_order_id;
             $txn->redeemed_coins = $coinsUsed;
             $txn->status = 'Verified';
-            $txn->settled_at = now()->startOfDay();
+            $txn->settled_at = now()->toDateString();
             $txn->save();
 
             // DEDUCT COINS (FIFO LEDGER)
@@ -432,6 +567,8 @@ class RedeemController extends Controller
                     'discount_applied_inr' => $discountAppliedINR,
                     'coins_used' => $coinsUsed,
                     'final_payable_inr' => $finalPayableINR,
+                    'commission_amount' => $commissionAmount,
+                    'store_amount' => $storeAmount,
                     'balance_coins_after' => $balanceAfter,
                     'created_at' => $txn->created_at->toIso8601String()
                 ]

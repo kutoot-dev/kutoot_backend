@@ -14,6 +14,11 @@ class Transaction extends Model
         'txn_code',
         'total_amount',
         'discount_amount',
+        'commission_amount',
+        'shop_amount',
+        'razorpay_payment_id',
+        'razorpay_order_id',
+        'split_details',
         'redeemed_coins',
         'status',
         'settled_at',
@@ -22,6 +27,9 @@ class Transaction extends Model
     protected $casts = [
         'total_amount' => 'float',
         'discount_amount' => 'float',
+        'commission_amount' => 'float',
+        'shop_amount' => 'float',
+        'split_details' => 'array',
         'redeemed_coins' => 'int',
         'settled_at' => 'date',
     ];

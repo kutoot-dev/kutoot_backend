@@ -22,6 +22,7 @@ class Shop extends Model
         'location_lat',
         'location_lng',
         'min_bill_amount',
+        'razorpay_account_id',
     ];
 
     protected $casts = [
