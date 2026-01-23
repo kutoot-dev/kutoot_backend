@@ -490,7 +490,7 @@ Route::group(['middleware' => ['demo', 'XSS']], function () {
     */
 
     // Public APIs
-    Route::get('/store-categories', [\App\Http\Controllers\API\SellerApplicationController::class, 'getCategories']);
+    // Note: /store-categories route is defined above with search support (StoreCategoryController@apiIndex)
     Route::post('/seller/apply', [\App\Http\Controllers\API\SellerApplicationController::class, 'apply']);
     Route::get('/seller/application-status', [\App\Http\Controllers\API\SellerApplicationController::class, 'checkStatus']);
 
