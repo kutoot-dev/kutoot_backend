@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
 class FixPurchaselinkedcouponsUniqueIndex extends Migration
@@ -13,30 +14,35 @@ class FixPurchaselinkedcouponsUniqueIndex extends Migration
      */
     public function up()
     {
-        Schema::table('table_purchaselinkedcoupons', function (Blueprint $table) {
-            // Try to drop the unique index on coupon_code (may have different naming conventions)
-            $sm = Schema::getConnection()->getDoctrineSchemaManager();
-            $indexes = $sm->listTableIndexes('table_purchaselinkedcoupons');
+        // Get existing indexes on the table
+        $indexes = collect(DB::select("SHOW INDEX FROM table_purchaselinkedcoupons"))
+            ->pluck('Key_name')
+            ->unique()
+            ->toArray();
 
-            // Check for various possible index names
-            $possibleNames = [
-                'coupon_code',
-                'table_purchaselinkedcoupons_coupon_code_unique',
-                'table_purchaselinkedcoupons_coupon_code_index',
-            ];
+        // Check for various possible index names and drop if exists
+        $possibleNames = [
+            'coupon_code',
+            'table_purchaselinkedcoupons_coupon_code_unique',
+            'table_purchaselinkedcoupons_coupon_code_index',
+        ];
 
-            foreach ($possibleNames as $indexName) {
-                if (isset($indexes[$indexName])) {
+        foreach ($possibleNames as $indexName) {
+            if (in_array($indexName, $indexes)) {
+                Schema::table('table_purchaselinkedcoupons', function (Blueprint $table) use ($indexName) {
                     $table->dropIndex($indexName);
-                    break;
-                }
+                });
+                break;
             }
-        });
+        }
 
-        Schema::table('table_purchaselinkedcoupons', function (Blueprint $table) {
-            // Add the new unique constraint including series_label
-            $table->unique(['main_campaign_id', 'series_label', 'coupon_code'], 'unique_campaign_series_coupon');
-        });
+        // Check if new index already exists before creating
+        if (!in_array('unique_campaign_series_coupon', $indexes)) {
+            Schema::table('table_purchaselinkedcoupons', function (Blueprint $table) {
+                // Add the new unique constraint including series_label
+                $table->unique(['main_campaign_id', 'series_label', 'coupon_code'], 'unique_campaign_series_coupon');
+            });
+        }
     }
 
     /**
