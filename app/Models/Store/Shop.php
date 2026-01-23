@@ -18,9 +18,9 @@ class Shop extends Model
         'email',
         'gst_number',
         'address',
-        'state',
-        'city',
-        'country',
+        'country_id',
+        'state_id',
+        'city_id',
         'tags',
         'google_map_url',
         'location_lat',
@@ -39,6 +39,21 @@ class Shop extends Model
     public function seller()
     {
         return $this->belongsTo(Seller::class, 'seller_id');
+    }
+
+    public function country()
+    {
+        return $this->belongsTo(\Nnjeim\World\Models\Country::class, 'country_id');
+    }
+
+    public function state()
+    {
+        return $this->belongsTo(\Nnjeim\World\Models\State::class, 'state_id');
+    }
+
+    public function city()
+    {
+        return $this->belongsTo(\Nnjeim\World\Models\City::class, 'city_id');
     }
 
     public function images()

@@ -199,21 +199,21 @@ class StoreCategoryController extends Controller
         $category = StoreCategory::active()->findOrFail($categoryId);
 
         // Get shops that match the category name
-        $query = \App\Models\Store\Shop::with('images')->where('category', $category->name);
+        $query = \App\Models\Store\Shop::with(['images', 'country', 'state', 'city'])->where('category', $category->name);
 
-        // Filter by city
-        if ($request->has('city') && !empty($request->city)) {
-            $query->where('city', 'like', '%' . $request->city . '%');
+        // Filter by city_id
+        if ($request->has('city_id') && !empty($request->city_id)) {
+            $query->where('city_id', $request->city_id);
         }
 
-        // Filter by state
-        if ($request->has('state') && !empty($request->state)) {
-            $query->where('state', 'like', '%' . $request->state . '%');
+        // Filter by state_id
+        if ($request->has('state_id') && !empty($request->state_id)) {
+            $query->where('state_id', $request->state_id);
         }
 
-        // Filter by country
-        if ($request->has('country') && !empty($request->country)) {
-            $query->where('country', 'like', '%' . $request->country . '%');
+        // Filter by country_id
+        if ($request->has('country_id') && !empty($request->country_id)) {
+            $query->where('country_id', $request->country_id);
         }
 
         // Filter by tags (comma-separated or array)
@@ -259,9 +259,9 @@ class StoreCategoryController extends Controller
                 'phone' => $shop->phone,
                 'email' => $shop->email,
                 'address' => $shop->address,
-                'city' => $shop->city,
-                'state' => $shop->state,
-                'country' => $shop->country,
+                'country' => $shop->country ? ['id' => $shop->country->id, 'name' => $shop->country->name] : null,
+                'state' => $shop->state ? ['id' => $shop->state->id, 'name' => $shop->state->name] : null,
+                'city' => $shop->city ? ['id' => $shop->city->id, 'name' => $shop->city->name] : null,
                 'tags' => $shop->tags ?? [],
                 'location' => [
                     'lat' => $shop->location_lat,
