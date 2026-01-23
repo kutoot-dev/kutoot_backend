@@ -14,7 +14,7 @@ class AddTagsToShopsTable extends Migration
     public function up()
     {
         Schema::table('shops', function (Blueprint $table) {
-            $table->json('tags')->nullable()->after('country');
+            $table->json('tags')->nullable();
         });
     }
 
