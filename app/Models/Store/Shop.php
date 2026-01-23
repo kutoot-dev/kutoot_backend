@@ -21,6 +21,7 @@ class Shop extends Model
         'state',
         'city',
         'country',
+        'tags',
         'google_map_url',
         'location_lat',
         'location_lng',
@@ -32,6 +33,7 @@ class Shop extends Model
         'location_lat' => 'float',
         'location_lng' => 'float',
         'min_bill_amount' => 'decimal:2',
+        'tags' => 'array',
     ];
 
     public function seller()

@@ -175,6 +175,9 @@ Route::group(['middleware' => ['demo', 'XSS']], function () {
         // Public store categories API with search
         Route::get('/store-categories', [StoreCategoryController::class, 'apiIndex']);
 
+        // Public API: Get stores by category with filters (city, state, country, tags, search)
+        Route::get('/store-categories/{categoryId}/stores', [StoreCategoryController::class, 'apiStoresByCategory']);
+
         Route::get('/coin-campaigns', [CoinCampaignController::class, 'indexAPI'])->name('coin-campaigns');
 
         Route::get('/baseplans', [BasePlanController::class, 'indexAPI'])->name('baseplans');

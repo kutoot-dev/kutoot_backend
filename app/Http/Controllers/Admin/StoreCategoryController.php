@@ -192,6 +192,109 @@ class StoreCategoryController extends Controller
     }
 
     /**
+     * Public API: Get stores by category with filters
+     */
+    public function apiStoresByCategory(Request $request, $categoryId)
+    {
+        $category = StoreCategory::active()->findOrFail($categoryId);
+
+        // Get shops that match the category name
+        $query = \App\Models\Store\Shop::with('images')->where('category', $category->name);
+
+        // Filter by city
+        if ($request->has('city') && !empty($request->city)) {
+            $query->where('city', 'like', '%' . $request->city . '%');
+        }
+
+        // Filter by state
+        if ($request->has('state') && !empty($request->state)) {
+            $query->where('state', 'like', '%' . $request->state . '%');
+        }
+
+        // Filter by country
+        if ($request->has('country') && !empty($request->country)) {
+            $query->where('country', 'like', '%' . $request->country . '%');
+        }
+
+        // Filter by tags (comma-separated or array)
+        if ($request->has('tags') && !empty($request->tags)) {
+            $tags = is_array($request->tags) ? $request->tags : explode(',', $request->tags);
+            $tags = array_map('trim', $tags);
+
+            $query->where(function ($q) use ($tags) {
+                foreach ($tags as $tag) {
+                    $q->orWhereJsonContains('tags', $tag);
+                }
+            });
+        }
+
+        // Search by shop name, address, or owner name
+        if ($request->has('search') && !empty($request->search)) {
+            $search = $request->search;
+            $query->where(function ($q) use ($search) {
+                $q->where('shop_name', 'like', '%' . $search . '%')
+                  ->orWhere('address', 'like', '%' . $search . '%')
+                  ->orWhere('owner_name', 'like', '%' . $search . '%');
+            });
+        }
+
+        // Pagination
+        $perPage = $request->get('per_page', 15);
+        $stores = $query->paginate($perPage);
+
+        $data = $stores->getCollection()->map(function ($shop) {
+            $images = $shop->images->map(function ($img) {
+                $v = (string) $img->image_url;
+                if ($v === '') {
+                    return null;
+                }
+                return str_starts_with($v, 'http') ? $v : asset($v);
+            })->filter()->values();
+
+            return [
+                'id' => $shop->id,
+                'shop_code' => $shop->shop_code,
+                'shop_name' => $shop->shop_name,
+                'owner_name' => $shop->owner_name,
+                'phone' => $shop->phone,
+                'email' => $shop->email,
+                'address' => $shop->address,
+                'city' => $shop->city,
+                'state' => $shop->state,
+                'country' => $shop->country,
+                'tags' => $shop->tags ?? [],
+                'location' => [
+                    'lat' => $shop->location_lat,
+                    'lng' => $shop->location_lng,
+                ],
+                'google_map_url' => $shop->google_map_url,
+                'images' => $images,
+            ];
+        });
+
+        return response()->json([
+            'success' => true,
+            'data' => [
+                'category' => [
+                    'id' => $category->id,
+                    'name' => $category->name,
+                    'image' => $category->image ? asset($category->image) : null,
+                    'icon' => $category->icon ? asset($category->icon) : null,
+                ],
+                'stores' => $data,
+                'pagination' => [
+                    'total' => $stores->total(),
+                    'per_page' => $stores->perPage(),
+                    'current_page' => $stores->currentPage(),
+                    'last_page' => $stores->lastPage(),
+                    'from' => $stores->firstItem(),
+                    'to' => $stores->lastItem(),
+                ],
+            ],
+        ], 200);
+    }
+
+    /**
      * Upload and optimize image with compression
      */
     private function uploadAndOptimizeImage($file, $type, $name)
