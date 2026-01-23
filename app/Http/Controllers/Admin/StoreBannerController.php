@@ -12,7 +12,7 @@ class StoreBannerController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth:admin-api');
+        $this->middleware('auth:admin-api')->except(['apiIndex']);
     }
 
     /**
@@ -226,6 +226,39 @@ class StoreBannerController extends Controller
             ->get();
 
         return response()->json(['banners' => $banners], 200);
+    }
+
+    /**
+     * Public API: Get all active store banners with optional location filter
+     */
+    public function apiIndex(Request $request)
+    {
+        $query = StoreBanner::active()->valid()->orderBy('serial', 'asc');
+
+        // Filter by location if provided
+        if ($request->has('location') && !empty($request->location)) {
+            $query->location($request->location);
+        }
+
+        $banners = $query->get()->map(function ($banner) {
+            return [
+                'id' => $banner->id,
+                'title' => $banner->title,
+                'description' => $banner->description,
+                'image' => $banner->image ? asset($banner->image) : null,
+                'image_tablet' => $banner->image_tablet ? asset($banner->image_tablet) : null,
+                'image_mobile' => $banner->image_mobile ? asset($banner->image_mobile) : null,
+                'link' => $banner->link,
+                'button_text' => $banner->button_text,
+                'location' => $banner->location,
+                'serial' => $banner->serial,
+            ];
+        });
+
+        return response()->json([
+            'success' => true,
+            'data' => $banners
+        ], 200);
     }
 
     /**

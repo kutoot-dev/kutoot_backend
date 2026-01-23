@@ -66,6 +66,7 @@ use App\Http\Controllers\Admin\FlashSaleController;
 use App\Http\Controllers\Admin\ImageItemController;
 use App\Http\Controllers\Admin\CountryController;
 use App\Http\Controllers\Admin\SponsorController;
+use App\Http\Controllers\Admin\StoreCategoryController;
 use App\Http\Controllers\Admin\CountryStateController;
 use App\Http\Controllers\Admin\CityController;
 
@@ -167,6 +168,12 @@ Route::group(['middleware' => ['demo', 'XSS']], function () {
     Route::group([], function () {
         // Public sponsors API for store panel
         Route::get('/sponsors', [SponsorController::class, 'apiIndex']);
+
+        // Public store banners API
+        Route::get('/store-banners', [StoreBannerController::class, 'apiIndex']);
+
+        // Public store categories API with search
+        Route::get('/store-categories', [StoreCategoryController::class, 'apiIndex']);
 
         Route::get('/coin-campaigns', [CoinCampaignController::class, 'indexAPI'])->name('coin-campaigns');
 
