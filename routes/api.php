@@ -46,6 +46,7 @@ use App\Http\Controllers\Admin\SellerController;
 use App\Http\Controllers\Admin\MegaMenuController;
 use App\Http\Controllers\Admin\MegaMenuSubCategoryController;
 use App\Http\Controllers\Admin\SliderController;
+use App\Http\Controllers\Admin\StoreBannerController;
 use App\Http\Controllers\Admin\HomePageController;
 use App\Http\Controllers\Admin\ShippingMethodController;
 use App\Http\Controllers\Admin\WithdrawMethodController;
@@ -64,6 +65,7 @@ use App\Http\Controllers\Admin\AdvertisementController;
 use App\Http\Controllers\Admin\FlashSaleController;
 use App\Http\Controllers\Admin\ImageItemController;
 use App\Http\Controllers\Admin\CountryController;
+use App\Http\Controllers\Admin\SponsorController;
 use App\Http\Controllers\Admin\CountryStateController;
 use App\Http\Controllers\Admin\CityController;
 
@@ -163,6 +165,9 @@ Route::group([
 Route::group(['middleware' => ['demo', 'XSS']], function () {
 
     Route::group([], function () {
+        // Public sponsors API for store panel
+        Route::get('/sponsors', [SponsorController::class, 'apiIndex']);
+
         Route::get('/coin-campaigns', [CoinCampaignController::class, 'indexAPI'])->name('coin-campaigns');
 
         Route::get('/baseplans', [BasePlanController::class, 'indexAPI'])->name('baseplans');
@@ -858,6 +863,16 @@ Route::group(['middleware' => ['demo', 'XSS']], function () {
         Route::resource('slider', SliderController::class);
         Route::put('slider-status/{id}', [SliderController::class, 'changeStatus'])->name('slider-status');
 
+        // Store Banner CRUD routes
+        Route::resource('store-banner', StoreBannerController::class);
+        Route::put('store-banner-status/{id}', [StoreBannerController::class, 'changeStatus'])->name('store-banner-status');
+        Route::post('store-banner-order', [StoreBannerController::class, 'updateOrder'])->name('store-banner-order');
+        Route::get('store-banners-active', [StoreBannerController::class, 'getActiveBanners'])->name('store-banners-active');
+        Route::get('store-banners-location/{location}', [StoreBannerController::class, 'getByLocation'])->name('store-banners-location');
+
+        // Sponsor CRUD routes
+        Route::resource('sponsor', SponsorController::class);
+        Route::put('sponsor-status/{id}', [SponsorController::class, 'changeStatus'])->name('sponsor-status');
 
         Route::get('popular-category', [HomePageController::class, 'popularCategory'])->name('popular-category');
         Route::post('store-popular-category', [HomePageController::class, 'storePopularCategory'])->name('store-popular-category');

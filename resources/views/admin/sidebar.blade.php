@@ -20,6 +20,16 @@
       <ul class="sidebar-menu">
           <li class="{{ Route::is('admin.dashboard') ? 'active' : '' }}"><a class="nav-link" href="{{ route('admin.dashboard') }}"><i class="fas fa-home"></i> <span>{{__('admin.Dashboard')}}</span></a></li>
 
+          <li class="nav-item dropdown {{ Route::is('admin.coin-ledger.*') ? 'active' : '' }}">
+            <a href="#" class="nav-link has-dropdown"><i class="fas fa-coins"></i><span>{{__('Coin Ledger')}}</span></a>
+
+            <ul class="dropdown-menu">
+              <li class="{{ Route::is('admin.coin-ledger.summary') ? 'active' : '' }}"><a class="nav-link" href="{{ route('admin.coin-ledger.summary') }}">{{__('Dashboard')}}</a></li>
+              <li class="{{ Route::is('admin.coin-ledger.index') ? 'active' : '' }}"><a class="nav-link" href="{{ route('admin.coin-ledger.index') }}">{{__('Transactions')}}</a></li>
+              <li class="{{ Route::is('admin.coin-ledger.zoho-mapping') ? 'active' : '' }}"><a class="nav-link" href="{{ route('admin.coin-ledger.zoho-mapping') }}">{{__('Zoho Mapping')}}</a></li>
+            </ul>
+          </li>
+
           <li class="nav-item dropdown {{ Route::is('admin.all-coin-campaigns') || Route::is('admin.statementsindex') || Route::is('admin.coin-campaign-orders') || Route::is('admin.create-coin-campaign')|| Route::is('admin.all-baseplans') || Route::is('admin.create-baseplans') || Route::is('admin.edit-baseplans') || Route::is('admin.view-baseplans') ||  Route::is('admin.all-prize-campaigns') ||Route::is('admin.edit-coin-campaign') || Route::is('admin.winners.index') || Route::is('admin.view-coin-campaign')  ? 'active' : '' }}">
             <a href="#" class="nav-link has-dropdown"><i class="fas fa-bullseye"></i><span>{{__('admin.Coin Campaigns')}}</span></a>
 
@@ -34,11 +44,9 @@
 
               <li class="{{ Route::is('admin.all-baseplans') || Route::is('admin.create-baseplans') || Route::is('admin.edit-baseplans') || Route::is('admin.view-baseplans') ? 'active' : '' }}"><a class="nav-link" href="{{ route('admin.all-baseplans') }}">{{__('Base Plans')}}</a></li>
 
-              <li class="{{ request()->is('admin/coin-campaign-orders') || request()->is('admin/admin/purchase/*') ? 'active' : '' }}">
-    <a class="nav-link" href="{{ route('admin.coin-campaign-orders') }}">{{ __('admin.Coin Campaign Orders') }}</a>
-</li>
-
-              {{-- <li class="{{ Route::is('coin-campaign-orders') || Route::is('purchasedetails') ? 'active' : '' }}"><a class="nav-link" href="{{ route('admin.coin-campaign-orders') }}">{{__('admin.Coin Campaign Orders')}}</a></li> --}}
+              <li class="{{ Route::is('admin.coin-campaign-orders') || Route::is('admin.purchasedetails') ? 'active' : '' }}">
+                  <a class="nav-link" href="{{ route('admin.coin-campaign-orders') }}">{{ __('admin.Coin Campaign Orders') }}</a>
+              </li>
 
 
               <li class="{{ Route::is('admin.statementsindex') ? 'active' : '' }}"><a class="nav-link" href="{{ route('admin.statementsindex') }}">{{__('User Coins')}}</a></li>
@@ -230,7 +238,7 @@
             </ul>
           </li>
 
-          <li class="nav-item dropdown {{ Route::is('admin.service.*') || Route::is('admin.maintainance-mode') || Route::is('admin.announcement') ||  Route::is('admin.slider.*') || Route::is('admin.home-page') || Route::is('admin.banner-image.index') || Route::is('admin.homepage-one-visibility') || Route::is('admin.cart-bottom-banner') || Route::is('admin.shop-page') || Route::is('admin.seo-setup') || Route::is('admin.menu-visibility') || Route::is('admin.product-detail-page') || Route::is('admin.default-avatar') || Route::is('admin.seller-conditions') || Route::is('admin.subscription-banner') || Route::is('admin.testimonial.*') || Route::is('admin.homepage-section-title') || Route::is('admin.image-content') ? 'active' : '' }}">
+          <li class="nav-item dropdown {{ Route::is('admin.service.*') || Route::is('admin.maintainance-mode') || Route::is('admin.announcement') ||  Route::is('admin.slider.*') || Route::is('admin.home-page') || Route::is('admin.banner-image.index') || Route::is('admin.homepage-one-visibility') || Route::is('admin.cart-bottom-banner') || Route::is('admin.shop-page') || Route::is('admin.seo-setup') || Route::is('admin.menu-visibility') || Route::is('admin.product-detail-page') || Route::is('admin.default-avatar') || Route::is('admin.seller-conditions') || Route::is('admin.subscription-banner') || Route::is('admin.testimonial.*') || Route::is('admin.homepage-section-title') || Route::is('admin.image-content') || Route::is('admin.image-items.*') || Route::is('admin.sponsor.*') || Route::is('admin.store-banner.*') ? 'active' : '' }}">
             <a href="#" class="nav-link has-dropdown"><i class="fas fa-globe"></i><span>{{__('admin.Manage Website')}}</span></a>
 
             <ul class="dropdown-menu">
@@ -248,6 +256,12 @@
                 <li class="{{ Route::is('admin.seller-conditions') ? 'active' : '' }}"><a class="nav-link" href="{{ route('admin.seller-conditions') }}">{{__('admin.Seller Conditions')}}</a></li>
 
                <li class="{{ Route::is('admin.image-items.*') ? 'active' : '' }}"><a class="nav-link" href="{{ route('admin.image-items.index') }}">{{__('Image Items')}}</a></li>
+
+                <li class="{{ Route::is('admin.sponsor.*') ? 'active' : '' }}"><a class="nav-link" href="{{ route('admin.sponsor.index') }}">{{__('admin.Sponsors')}}</a></li>
+
+                <li class="{{ Route::is('admin.store-banner.*') ? 'active' : '' }}"><a class="nav-link" href="{{ route('admin.store-banner.index') }}">{{__('admin.Store Banners')}}</a></li>
+
+                <li class="{{ Route::is('admin.store-category.*') ? 'active' : '' }}"><a class="nav-link" href="{{ route('admin.store-category.index') }}">{{__('admin.Store Categories')}}</a></li>
 
                 <li class="{{ Route::is('admin.testimonial.*') ? 'active' : '' }}"><a class="nav-link" href="{{ route('admin.testimonial.index') }}">{{__('admin.Testimonial')}}</a></li>
 

@@ -25,9 +25,9 @@ use App\Models\ShoppingCart;
 use App\Models\ShoppingCartVariant;
 use App\Models\CompareProduct;
 use App\Jobs\SyncProductToZohoJob;
-use Image;
-use File;
-use Str;
+use App\Helpers\ImageHelper;
+use Illuminate\Support\Str;
+
 class ProductController extends Controller
 {
     public function __construct()
@@ -110,17 +110,16 @@ class ProductController extends Controller
         $this->validate($request, $rules,$customMessages);
 
         $product = new Product();
-        if($request->thumb_image){
-            $extention = $request->thumb_image->getClientOriginalExtension();
-            $image_name = Str::slug($request->name).date('-Y-m-d-h-i-s-').rand(999,9999).'.'.$extention;
-            $path = public_path().'/uploads/custom-images/';
-            if (!File::exists($path)) {
-                File::makeDirectory($path, 0777, true, true);
-            }
-            $image_name = 'uploads/custom-images/'.$image_name;
-            Image::make($request->thumb_image)
-                ->save(public_path().'/'.$image_name);
-            $product->thumb_image=$image_name;
+        if($request->hasFile('thumb_image')){
+            $product->thumb_image = ImageHelper::upload(
+                $request->file('thumb_image'),
+                'custom-images',
+                'product-' . Str::slug($request->name),
+                'product',
+                80,
+                null,
+                true
+            );
         }
 
         $product->short_name = $request->short_name;
@@ -217,8 +216,7 @@ class ProductController extends Controller
 
 
     public function update(Request $request, $id)
-    {
-
+    {        $product = Product::find($id);
         // print_r($request->reedem_percentage);die;
 
 
@@ -257,22 +255,16 @@ class ProductController extends Controller
         ];
         $this->validate($request, $rules,$customMessages);
 
-        if($request->thumb_image){
-            $old_thumbnail = $product->thumb_image;
-            $extention = $request->thumb_image->getClientOriginalExtension();
-            $image_name = Str::slug($request->name).date('-Y-m-d-h-i-s-').rand(999,9999).'.'.$extention;
-            $path = public_path().'/uploads/custom-images/';
-            if (!File::exists($path)) {
-                File::makeDirectory($path, 0777, true, true);
-            }
-            $image_name = 'uploads/custom-images/'.$image_name;
-            Image::make($request->thumb_image)
-                ->save(public_path().'/'.$image_name);
-            $product->thumb_image=$image_name;
-            $product->save();
-            if($old_thumbnail){
-                if(File::exists(public_path().'/'.$old_thumbnail))unlink(public_path().'/'.$old_thumbnail);
-            }
+        if($request->hasFile('thumb_image')){
+            $product->thumb_image = ImageHelper::upload(
+                $request->file('thumb_image'),
+                'custom-images',
+                'product-' . Str::slug($request->name),
+                'product',
+                80,
+                $product->thumb_image,
+                true
+            );
         }
 
 
@@ -343,15 +335,11 @@ class ProductController extends Controller
         $gallery = $product->gallery;
         $old_thumbnail = $product->thumb_image;
         $product->delete();
-        if($old_thumbnail){
-            if(File::exists(public_path().'/'.$old_thumbnail))unlink(public_path().'/'.$old_thumbnail);
-        }
+        ImageHelper::delete($old_thumbnail);
         foreach($gallery as $image){
             $old_image = $image->image;
             $image->delete();
-            if($old_image){
-                if(File::exists(public_path().'/'.$old_image))unlink(public_path().'/'.$old_image);
-            }
+            ImageHelper::delete($old_image);
         }
         ProductVariant::where('product_id',$id)->delete();
         ProductVariantItem::where('product_id',$id)->delete();

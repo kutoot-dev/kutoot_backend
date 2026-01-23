@@ -6,8 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Slider;
 use App\Models\Product;
-use Image;
-use File;
+use App\Helpers\ImageHelper;
+
 class SliderController extends Controller
 {
     public function __construct()
@@ -47,13 +47,16 @@ class SliderController extends Controller
         $this->validate($request, $rules,$customMessages);
 
         $slider = new Slider();
-        if($request->slider_image){
-            $extention = $request->slider_image->getClientOriginalExtension();
-            $slider_image = 'slider'.date('-Y-m-d-h-i-s-').rand(999,9999).'.'.$extention;
-            $slider_image = 'uploads/custom-images/'.$slider_image;
-            Image::make($request->slider_image)
-                ->save(public_path().'/'.$slider_image);
-            $slider->image = $slider_image;
+        if($request->hasFile('slider_image')){
+            $slider->image = ImageHelper::upload(
+                $request->file('slider_image'),
+                'custom-images',
+                'slider',
+                'slider',
+                80,
+                null,
+                true
+            );
         }
 
 
@@ -99,18 +102,16 @@ class SliderController extends Controller
         $this->validate($request, $rules,$customMessages);
 
         $slider = Slider::find($id);
-        if($request->slider_image){
-            $existing_slider = $slider->image;
-            $extention = $request->slider_image->getClientOriginalExtension();
-            $slider_image = 'slider'.date('-Y-m-d-h-i-s-').rand(999,9999).'.'.$extention;
-            $slider_image = 'uploads/custom-images/'.$slider_image;
-            Image::make($request->slider_image)
-                ->save(public_path().'/'.$slider_image);
-            $slider->image = $slider_image;
-            $slider->save();
-            if($existing_slider){
-                if(File::exists(public_path().'/'.$existing_slider))unlink(public_path().'/'.$existing_slider);
-            }
+        if($request->hasFile('slider_image')){
+            $slider->image = ImageHelper::upload(
+                $request->file('slider_image'),
+                'custom-images',
+                'slider',
+                'slider',
+                80,
+                $slider->image,
+                true
+            );
         }
 
         $slider->product_slug = $request->product_slug;
@@ -130,9 +131,7 @@ class SliderController extends Controller
         $slider = Slider::find($id);
         $existing_slider = $slider->image;
         $slider->delete();
-        if($existing_slider){
-            if(File::exists(public_path().'/'.$existing_slider))unlink(public_path().'/'.$existing_slider);
-        }
+        ImageHelper::delete($existing_slider);
 
         $notification= trans('admin_validation.Delete Successfully');
         $notification=array('messege'=>$notification,'alert-type'=>'success');

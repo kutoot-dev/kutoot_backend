@@ -26,6 +26,8 @@ use App\Http\Controllers\WEB\Admin\CityController;
 use App\Http\Controllers\WEB\Admin\FooterController;
 use App\Http\Controllers\WEB\Admin\SellerController;
 use App\Http\Controllers\WEB\Admin\SliderController;
+use App\Http\Controllers\WEB\Admin\SponsorController;
+use App\Http\Controllers\WEB\Admin\StoreBannerController;
 use App\Http\Controllers\WEB\Admin\AboutUsController;
 use App\Http\Controllers\WEB\Admin\ContentController;
 use App\Http\Controllers\WEB\Admin\ProductController;
@@ -118,6 +120,7 @@ use App\Http\Controllers\WEB\Seller\InventoryController as SellerInventoryContro
 use App\Http\Controllers\WEB\Admin\CoinCampaignController;
 use App\Http\Controllers\WEB\Admin\BasePlanController;
 use App\Http\Controllers\WEB\Admin\WinnerController;
+use App\Http\Controllers\WEB\Admin\CoinLedgerAdminController;
 use App\Http\Controllers\CouponCampaignController;
 use App\Http\Controllers\CouponTicketController;
 
@@ -448,6 +451,14 @@ Route::group(['middleware' => ['demo', 'XSS']], function () {
 
 
         Route::get('userstatements', [CoinCampaignController::class, 'statementsindex'])->name('statementsindex');
+
+        // Coin Ledger Admin Routes
+        Route::get('coin-ledger', [CoinLedgerAdminController::class, 'index'])->name('coin-ledger.index');
+        Route::get('coin-ledger/summary', [CoinLedgerAdminController::class, 'summary'])->name('coin-ledger.summary');
+        Route::get('coin-ledger/export', [CoinLedgerAdminController::class, 'export'])->name('coin-ledger.export');
+        Route::get('coin-ledger/zoho-mapping', [CoinLedgerAdminController::class, 'zohoMapping'])->name('coin-ledger.zoho-mapping');
+        Route::get('coin-ledger/user/{id}', [CoinLedgerAdminController::class, 'userLedger'])->name('coin-ledger.user');
+        Route::post('coin-ledger/manual-credit', [CoinLedgerAdminController::class, 'manualCredit'])->name('coin-ledger.manual-credit');
 
 
         Route::get('all-coin-campaigns', [CoinCampaignController::class, 'index'])->name('all-coin-campaigns');
@@ -794,9 +805,18 @@ Route::group(['middleware' => ['demo', 'XSS']], function () {
         Route::resource('slider', SliderController::class);
         Route::put('slider-status/{id}', [SliderController::class, 'changeStatus'])->name('slider-status');
 
+        // Sponsor CRUD routes
+        Route::resource('sponsor', SponsorController::class);
+        Route::put('sponsor-status/{id}', [SponsorController::class, 'changeStatus'])->name('sponsor-status');
 
+        // Store Banner CRUD routes
+        Route::resource('store-banner', StoreBannerController::class);
+        Route::put('store-banner-status/{id}', [StoreBannerController::class, 'changeStatus'])->name('store-banner-status');
+        Route::post('store-banner-order', [StoreBannerController::class, 'updateOrder'])->name('store-banner-order');
 
-
+        // Store Category CRUD routes
+        Route::resource('store-category', \App\Http\Controllers\WEB\Admin\StoreCategoryController::class);
+        Route::put('store-category-status/{id}', [\App\Http\Controllers\WEB\Admin\StoreCategoryController::class, 'changeStatus'])->name('store-category-status');
 
         Route::get('popular-category', [HomePageController::class, 'popularCategory'])->name('popular-category');
         Route::post('store-popular-category', [HomePageController::class, 'storePopularCategory'])->name('store-popular-category');

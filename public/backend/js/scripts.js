@@ -88,6 +88,9 @@ $(function() {
       $(".main-sidebar").niceScroll(sidebar_nicescroll_opts);
       sidebar_nicescroll = $(".main-sidebar").getNiceScroll();
 
+      // Mark server-rendered active items to preserve them
+      $('.main-sidebar .sidebar-menu li.active').addClass('current-page');
+
       $(".main-sidebar .sidebar-menu li a.has-dropdown").off('click').on('click', function() {
         var me     = $(this);
         var active = false;
@@ -95,12 +98,13 @@ $(function() {
           active = true;
         }
 
-        $('.main-sidebar .sidebar-menu li.active > .dropdown-menu').slideUp(500, function() {
+        // Close other dropdowns but preserve current page's parent
+        $('.main-sidebar .sidebar-menu li.active:not(.current-page) > .dropdown-menu').slideUp(500, function() {
           update_sidebar_nicescroll();
           return false;
         });
 
-        $('.main-sidebar .sidebar-menu li.active').removeClass('active');
+        $('.main-sidebar .sidebar-menu li.active:not(.current-page)').removeClass('active');
 
         if(active==true) {
           me.parent().removeClass('active');

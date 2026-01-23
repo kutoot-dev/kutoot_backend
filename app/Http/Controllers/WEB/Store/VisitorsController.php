@@ -8,6 +8,7 @@ use App\Models\Store\ShopVisitor;
 use App\Models\Store\Transaction;
 use App\Models\User;
 use App\Models\UserCoins;
+use App\Services\CoinLedgerService;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -356,9 +357,9 @@ class VisitorsController extends Controller
                     'discount_amount' => round($discountAmount, 2),
                     'final_amount' => round($finalAmount, 2),
                     'is_eligible' => $isEligible,
-                    'eligibility_message' => !$visitor->redeemed 
+                    'eligibility_message' => !$visitor->redeemed
                         ? 'Visitor has not redeemed yet'
-                        : ($billAmount < $minimumBillAmount 
+                        : ($billAmount < $minimumBillAmount
                             ? "Bill amount must be at least {$minimumBillAmount}"
                             : 'Eligible for discount'),
                 ],
@@ -471,9 +472,9 @@ class VisitorsController extends Controller
                     'discount_amount' => round($discountAmount, 2),
                     'final_amount' => round($finalAmount, 2),
                     'is_eligible' => $isEligible,
-                    'eligibility_message' => !$redeemed 
+                    'eligibility_message' => !$redeemed
                         ? 'Visitor has not redeemed yet'
-                        : ($billAmount < $minimumBillAmount 
+                        : ($billAmount < $minimumBillAmount
                             ? "Bill amount must be at least {$minimumBillAmount}"
                             : 'Eligible for discount'),
                 ],
@@ -598,13 +599,8 @@ class VisitorsController extends Controller
 
             // Deduct coins from user if coins were redeemed
             if ($redeemableCoins > 0 && $isEligible) {
-                UserCoins::create([
-                    'user_id' => $visitor->user_id,
-                    'coins' => $redeemableCoins,
-                    'type' => 'debit',
-                    'coin_expires' => now()->addDays(30),
-                    'status' => 1,
-                ]);
+                $coinService = app(CoinLedgerService::class);
+                $coinService->redeem($visitor->user_id, (int) $redeemableCoins, $txnCode);
             }
 
             DB::commit();
@@ -656,7 +652,7 @@ class VisitorsController extends Controller
         }
 
         $search = $request->query('search', '');
-        
+
         if (strlen($search) < 2) {
             return response()->json([
                 'success' => true,
@@ -726,8 +722,8 @@ class VisitorsController extends Controller
         $userId = $request->user_id;
         $billAmount = (float) $request->bill_amount;
         $txnCode = trim($request->txn_code);
-        $visitedOn = $request->filled('visited_on') 
-            ? Carbon::parse($request->visited_on)->toDateString() 
+        $visitedOn = $request->filled('visited_on')
+            ? Carbon::parse($request->visited_on)->toDateString()
             : now()->toDateString();
         $redeemed = $request->filled('redeemed') ? (bool) $request->redeemed : false;
 
@@ -813,13 +809,8 @@ class VisitorsController extends Controller
 
             // Deduct coins from user if coins were redeemed
             if ($redeemableCoins > 0 && $isEligible) {
-                UserCoins::create([
-                    'user_id' => $visitor->user_id,
-                    'coins' => $redeemableCoins,
-                    'type' => 'debit',
-                    'coin_expires' => now()->addDays(30),
-                    'status' => 1,
-                ]);
+                $coinService = app(CoinLedgerService::class);
+                $coinService->redeem($visitor->user_id, (int) $redeemableCoins, $txnCode);
             }
 
             DB::commit();
