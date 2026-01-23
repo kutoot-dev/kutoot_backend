@@ -18,6 +18,9 @@ class Shop extends Model
         'email',
         'gst_number',
         'address',
+        'state',
+        'city',
+        'country',
         'google_map_url',
         'location_lat',
         'location_lng',
@@ -54,6 +57,16 @@ class Shop extends Model
     public function adminSettings()
     {
         return $this->hasMany(AdminShopCommissionDiscount::class, 'shop_id');
+    }
+
+    /**
+     * Get the active admin settings for this shop
+     */
+    public function activeAdminSettings()
+    {
+        return $this->hasOne(AdminShopCommissionDiscount::class, 'shop_id')
+            ->where('is_active', true)
+            ->latest();
     }
 }
 

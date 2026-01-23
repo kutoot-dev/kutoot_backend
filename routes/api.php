@@ -496,12 +496,23 @@ Route::group(['middleware' => ['demo', 'XSS']], function () {
 
     // Admin APIs for Seller Applications
     Route::prefix('admin')->middleware('auth:admin-api')->group(function () {
+        // Seller Applications CRUD
         Route::get('/seller-applications', [\App\Http\Controllers\WEB\Admin\SellerApplicationController::class, 'apiIndex']);
+        Route::post('/seller-applications', [\App\Http\Controllers\WEB\Admin\SellerApplicationController::class, 'apiStore']);
         Route::get('/seller-applications/{applicationId}', [\App\Http\Controllers\WEB\Admin\SellerApplicationController::class, 'apiShow']);
         Route::patch('/seller-applications/{applicationId}', [\App\Http\Controllers\WEB\Admin\SellerApplicationController::class, 'apiUpdate']);
+        Route::delete('/seller-applications/{applicationId}', [\App\Http\Controllers\WEB\Admin\SellerApplicationController::class, 'apiDestroy']);
         Route::patch('/seller-applications/{applicationId}/verify', [\App\Http\Controllers\WEB\Admin\SellerApplicationController::class, 'apiVerify']);
         Route::patch('/seller-applications/{applicationId}/approve', [\App\Http\Controllers\WEB\Admin\SellerApplicationController::class, 'apiApprove']);
         Route::patch('/seller-applications/{applicationId}/reject', [\App\Http\Controllers\WEB\Admin\SellerApplicationController::class, 'apiReject']);
+
+        // Approved Stores Management
+        Route::get('/approved-stores', [\App\Http\Controllers\WEB\Admin\AdminShopController::class, 'index']);
+        Route::get('/shops/filters', [\App\Http\Controllers\WEB\Admin\AdminShopController::class, 'getFilters']);
+        Route::get('/shops/{shopId}', [\App\Http\Controllers\WEB\Admin\AdminShopController::class, 'show']);
+        Route::put('/shops/{shopId}', [\App\Http\Controllers\WEB\Admin\AdminShopController::class, 'update']);
+        Route::post('/shops/{shopId}/images', [\App\Http\Controllers\WEB\Admin\AdminShopController::class, 'uploadImages']);
+        Route::delete('/shops/{shopId}/images/{imageId}', [\App\Http\Controllers\WEB\Admin\AdminShopController::class, 'deleteImage']);
     });
 
     /*

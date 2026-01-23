@@ -3,6 +3,7 @@
 use App\Models\Sponsor;
 
 return array(
+    'Select a Country' => 'Select a Country',
     'Current Images' => 'Current Images',
     'No icon' => 'No icon',
     'New Icon' => 'New Icon',

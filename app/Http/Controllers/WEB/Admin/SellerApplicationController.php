@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Store\SellerApplication;
 use App\Models\Store\Seller;
 use App\Models\Store\Shop;
+use App\Models\Store\AdminShopCommissionDiscount;
 use App\Mail\SellerApplicationApproved;
 use App\Mail\SellerApplicationRejected;
 use App\Helpers\MailHelper;
@@ -16,6 +17,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
+use Nnjeim\World\World;
 
 class SellerApplicationController extends Controller
 {
@@ -49,6 +51,96 @@ class SellerApplicationController extends Controller
     }
 
     /**
+     * Show create form for a new application
+     * GET /admin/seller-applications/create
+     */
+    public function create()
+    {
+        $countries = World::countries()->data;
+        return view('admin.create_seller_application', compact('countries'));
+    }
+
+    /**
+     * Store a new application (web form)
+     * POST /admin/seller-applications
+     */
+    public function store(Request $request)
+    {
+        $request->validate([
+            'store_name' => 'required|string|max:255',
+            'owner_mobile' => 'required|string|max:15',
+            'owner_email' => 'nullable|email|max:255',
+            'store_type' => 'required|string|max:100',
+            'store_address' => 'required|string|max:500',
+            'country_id' => 'nullable|integer',
+            'state_id' => 'nullable|integer',
+            'city_id' => 'nullable|integer',
+            'lat' => 'nullable|numeric',
+            'lng' => 'nullable|numeric',
+            'min_bill_amount' => 'nullable|numeric|min:0',
+            'commission_percent' => 'nullable|numeric|min:0|max:100',
+            'discount_percent' => 'nullable|numeric|min:0|max:100',
+            'rating' => 'nullable|numeric|min:0|max:5',
+            'store_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
+
+        // Handle store image upload
+        $storeImagePath = null;
+        if ($request->hasFile('store_image')) {
+            $image = $request->file('store_image');
+            $imageName = time() . '_' . Str::random(10) . '.' . $image->getClientOriginalExtension();
+            $image->move(public_path('uploads/stores'), $imageName);
+            $storeImagePath = 'uploads/stores/' . $imageName;
+        }
+
+        // Fetch country, state, city names from the World package
+        $countryName = null;
+        $stateName = null;
+        $cityName = null;
+
+        if ($request->country_id) {
+            $country = World::countries(['filters' => ['id' => $request->country_id]])->data->first();
+            $countryName = $country ? $country->name : null;
+        }
+
+        if ($request->state_id) {
+            $state = World::states(['filters' => ['id' => $request->state_id]])->data->first();
+            $stateName = $state ? $state->name : null;
+        }
+
+        if ($request->city_id) {
+            $city = World::cities(['filters' => ['id' => $request->city_id]])->data->first();
+            $cityName = $city ? $city->name : null;
+        }
+
+        $application = SellerApplication::create([
+            'application_id' => SellerApplication::generateApplicationId(),
+            'store_name' => $request->store_name,
+            'owner_mobile' => $request->owner_mobile,
+            'owner_email' => $request->owner_email,
+            'store_type' => $request->store_type,
+            'store_address' => $request->store_address,
+            'country' => $countryName,
+            'country_id' => $request->country_id,
+            'state' => $stateName,
+            'state_id' => $request->state_id,
+            'city' => $cityName,
+            'city_id' => $request->city_id,
+            'lat' => $request->lat,
+            'lng' => $request->lng,
+            'min_bill_amount' => $request->min_bill_amount ?? 0,
+            'commission_percent' => $request->commission_percent,
+            'discount_percent' => $request->discount_percent,
+            'rating' => $request->rating,
+            'store_image' => $storeImagePath,
+            'status' => SellerApplication::STATUS_PENDING,
+        ]);
+
+        return redirect()->route('admin.seller-applications.show', $application->id)
+            ->with('success', 'Application created successfully with ID: ' . $application->application_id);
+    }
+
+    /**
      * Show single application details (Blade view)
      * GET /admin/seller-applications/{id}
      */
@@ -58,6 +150,123 @@ class SellerApplicationController extends Controller
             ->findOrFail($id);
 
         return view('admin.show_seller_application', compact('application'));
+    }
+
+    /**
+     * Show edit form for an application
+     * GET /admin/seller-applications/{id}/edit
+     */
+    public function edit($id)
+    {
+        $application = SellerApplication::findOrFail($id);
+        $countries = World::countries()->data;
+
+        $states = [];
+        $cities = [];
+
+        // Get states if country is set
+        if ($application->country_id) {
+            $states = World::states([
+                'filters' => [
+                    'country_id' => $application->country_id,
+                ],
+            ])->data ?? [];
+        }
+
+        // Get cities if state is set
+        if ($application->state_id) {
+            $cities = World::cities([
+                'filters' => [
+                    'state_id' => $application->state_id,
+                ],
+            ])->data ?? [];
+        }
+
+        return view('admin.edit_seller_application', compact('application', 'countries', 'states', 'cities'));
+    }
+
+    /**
+     * Update an application
+     * PUT /admin/seller-applications/{id}
+     */
+    public function update(Request $request, $id)
+    {
+        $application = SellerApplication::findOrFail($id);
+
+        $request->validate([
+            'store_name' => 'required|string|max:255',
+            'owner_mobile' => 'required|string|max:15',
+            'owner_email' => 'nullable|email|max:255',
+            'store_type' => 'required|string|max:100',
+            'store_address' => 'required|string|max:500',
+            'country_id' => 'nullable|integer',
+            'state_id' => 'nullable|integer',
+            'city_id' => 'nullable|integer',
+            'lat' => 'nullable|numeric',
+            'lng' => 'nullable|numeric',
+            'min_bill_amount' => 'nullable|numeric|min:0',
+            'commission_percent' => 'nullable|numeric|min:0|max:100',
+            'discount_percent' => 'nullable|numeric|min:0|max:100',
+            'rating' => 'nullable|numeric|min:0|max:5',
+            'store_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
+
+        // Handle store image upload
+        $storeImagePath = $application->store_image;
+        if ($request->hasFile('store_image')) {
+            // Delete old image if exists
+            if ($application->store_image && file_exists(public_path($application->store_image))) {
+                unlink(public_path($application->store_image));
+            }
+            $image = $request->file('store_image');
+            $imageName = time() . '_' . Str::random(10) . '.' . $image->getClientOriginalExtension();
+            $image->move(public_path('uploads/stores'), $imageName);
+            $storeImagePath = 'uploads/stores/' . $imageName;
+        }
+
+        // Fetch country, state, city names from the World package
+        $countryName = null;
+        $stateName = null;
+        $cityName = null;
+
+        if ($request->country_id) {
+            $country = World::countries(['filters' => ['id' => $request->country_id]])->data->first();
+            $countryName = $country ? $country->name : null;
+        }
+
+        if ($request->state_id) {
+            $state = World::states(['filters' => ['id' => $request->state_id]])->data->first();
+            $stateName = $state ? $state->name : null;
+        }
+
+        if ($request->city_id) {
+            $city = World::cities(['filters' => ['id' => $request->city_id]])->data->first();
+            $cityName = $city ? $city->name : null;
+        }
+
+        $application->update([
+            'store_name' => $request->store_name,
+            'owner_mobile' => $request->owner_mobile,
+            'owner_email' => $request->owner_email,
+            'store_type' => $request->store_type,
+            'store_address' => $request->store_address,
+            'country' => $countryName,
+            'country_id' => $request->country_id,
+            'state' => $stateName,
+            'state_id' => $request->state_id,
+            'city' => $cityName,
+            'city_id' => $request->city_id,
+            'lat' => $request->lat,
+            'lng' => $request->lng,
+            'min_bill_amount' => $request->min_bill_amount ?? 0,
+            'commission_percent' => $request->commission_percent,
+            'discount_percent' => $request->discount_percent,
+            'rating' => $request->rating,
+            'store_image' => $storeImagePath,
+        ]);
+
+        return redirect()->route('admin.seller-applications.show', $id)
+            ->with('success', 'Application updated successfully');
     }
 
     /**
@@ -81,6 +290,102 @@ class SellerApplicationController extends Controller
     // ==================== API ENDPOINTS ====================
 
     /**
+     * API: Create a new seller application (admin-created)
+     * POST /api/admin/seller-applications
+     */
+    public function apiStore(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'storeName' => 'required|string|max:255',
+            'ownerMobile' => 'required|string|max:15',
+            'ownerEmail' => 'nullable|email|max:255',
+            'storeType' => 'required|string|max:100',
+            'storeAddress' => 'required|string|max:500',
+            'state' => 'nullable|string|max:100',
+            'city' => 'nullable|string|max:100',
+            'country' => 'nullable|string|max:100',
+            'lat' => 'nullable|numeric',
+            'lng' => 'nullable|numeric',
+            'minBillAmount' => 'nullable|numeric|min:0',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Validation failed',
+                'errors' => $validator->errors()
+            ], 422);
+        }
+
+        $application = SellerApplication::create([
+            'application_id' => SellerApplication::generateApplicationId(),
+            'store_name' => $request->storeName,
+            'owner_mobile' => $request->ownerMobile,
+            'owner_email' => $request->ownerEmail,
+            'store_type' => $request->storeType,
+            'store_address' => $request->storeAddress,
+            'state' => $request->state,
+            'city' => $request->city,
+            'country' => $request->country,
+            'lat' => $request->lat,
+            'lng' => $request->lng,
+            'min_bill_amount' => $request->minBillAmount ?? 0,
+            'status' => SellerApplication::STATUS_PENDING,
+        ]);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Application created successfully',
+            'data' => [
+                'applicationId' => $application->application_id,
+                'storeName' => $application->store_name,
+                'ownerMobile' => $application->owner_mobile,
+                'ownerEmail' => $application->owner_email,
+                'storeType' => $application->store_type,
+                'storeAddress' => $application->store_address,
+                'state' => $application->state,
+                'city' => $application->city,
+                'country' => $application->country,
+                'lat' => $application->lat,
+                'lng' => $application->lng,
+                'minBillAmount' => $application->min_bill_amount,
+                'status' => $application->status,
+                'createdAt' => $application->created_at->toIso8601String(),
+            ]
+        ], 201);
+    }
+
+    /**
+     * API: Delete a seller application
+     * DELETE /api/admin/seller-applications/{applicationId}
+     */
+    public function apiDestroy($applicationId)
+    {
+        $application = SellerApplication::where('application_id', $applicationId)->first();
+
+        if (!$application) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Application not found'
+            ], 404);
+        }
+
+        if ($application->isApproved() && $application->seller_id) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Cannot delete approved application with active seller account'
+            ], 400);
+        }
+
+        $application->delete();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Application deleted successfully'
+        ]);
+    }
+
+    /**
      * API: Get list of seller applications
      * GET /api/admin/seller-applications
      */
@@ -102,6 +407,9 @@ class SellerApplicationController extends Controller
                 'ownerEmail' => $app->owner_email,
                 'storeType' => $app->store_type,
                 'storeAddress' => $app->store_address,
+                'state' => $app->state,
+                'city' => $app->city,
+                'country' => $app->country,
                 'lat' => $app->lat,
                 'lng' => $app->lng,
                 'minBillAmount' => $app->min_bill_amount,
@@ -135,6 +443,9 @@ class SellerApplicationController extends Controller
                 'ownerEmail' => $application->owner_email,
                 'storeType' => $application->store_type,
                 'storeAddress' => $application->store_address,
+                'state' => $application->state,
+                'city' => $application->city,
+                'country' => $application->country,
                 'lat' => $application->lat,
                 'lng' => $application->lng,
                 'minBillAmount' => $application->min_bill_amount,
@@ -176,6 +487,9 @@ class SellerApplicationController extends Controller
             'ownerEmail' => 'sometimes|email|max:255',
             'storeType' => 'sometimes|string|max:100',
             'storeAddress' => 'sometimes|string|max:500',
+            'state' => 'sometimes|string|max:100',
+            'city' => 'sometimes|string|max:100',
+            'country' => 'sometimes|string|max:100',
             'lat' => 'sometimes|numeric',
             'lng' => 'sometimes|numeric',
             'minBillAmount' => 'sometimes|numeric|min:0',
@@ -200,6 +514,12 @@ class SellerApplicationController extends Controller
             $updateData['store_type'] = $request->storeType;
         if ($request->has('storeAddress'))
             $updateData['store_address'] = $request->storeAddress;
+        if ($request->has('state'))
+            $updateData['state'] = $request->state;
+        if ($request->has('city'))
+            $updateData['city'] = $request->city;
+        if ($request->has('country'))
+            $updateData['country'] = $request->country;
         if ($request->has('lat'))
             $updateData['lat'] = $request->lat;
         if ($request->has('lng'))
@@ -221,6 +541,9 @@ class SellerApplicationController extends Controller
                 'ownerEmail' => $application->owner_email,
                 'storeType' => $application->store_type,
                 'storeAddress' => $application->store_address,
+                'state' => $application->state,
+                'city' => $application->city,
+                'country' => $application->country,
                 'lat' => $application->lat,
                 'lng' => $application->lng,
                 'minBillAmount' => $application->min_bill_amount,
@@ -314,6 +637,9 @@ class SellerApplicationController extends Controller
         $validator = Validator::make($request->all(), [
             'approvedBy' => 'required|string',
             'sellerEmail' => 'required|email',
+            'commissionPercent' => 'nullable|numeric|min:0|max:100',
+            'discountPercent' => 'nullable|numeric|min:0|max:100',
+            'rating' => 'nullable|numeric|min:0|max:5',
         ]);
 
         if ($validator->fails()) {
@@ -379,6 +705,9 @@ class SellerApplicationController extends Controller
                 'phone' => $application->owner_mobile,
                 'email' => $request->sellerEmail,
                 'address' => $application->store_address,
+                'state' => $application->state,
+                'city' => $application->city,
+                'country' => $application->country,
                 'location_lat' => $application->lat,
                 'location_lng' => $application->lng,
                 'category' => $application->store_type,
@@ -388,6 +717,34 @@ class SellerApplicationController extends Controller
             if (!$shop || !$shop->id) {
                 throw new \Exception('Failed to create shop');
             }
+
+            // Create admin commission/discount settings for this shop
+            // Use provided values or fallback to global defaults
+            $globalSettings = AdminShopCommissionDiscount::whereNull('shop_id')->orderByDesc('id')->first();
+
+            $commissionPercent = $request->has('commissionPercent') && $request->commissionPercent !== null
+                ? $request->commissionPercent
+                : ($globalSettings->commission_percent ?? 10);
+
+            $discountPercent = $request->has('discountPercent') && $request->discountPercent !== null
+                ? $request->discountPercent
+                : ($globalSettings->discount_percent ?? 0);
+
+            $rating = $request->has('rating') && $request->rating !== null
+                ? $request->rating
+                : ($globalSettings->rating ?? 0);
+
+            AdminShopCommissionDiscount::create([
+                'shop_id' => $shop->id,
+                'commission_percent' => $commissionPercent,
+                'discount_percent' => $discountPercent,
+                'minimum_bill_amount' => $application->min_bill_amount ?? 0,
+                'rating' => $rating,
+                'total_ratings' => 0,
+                'is_active' => true,
+                'is_featured' => false,
+                'last_updated_on' => now(),
+            ]);
 
             // Update application
             $application->update([
@@ -551,6 +908,9 @@ class SellerApplicationController extends Controller
 
         $request->validate([
             'seller_email' => 'required|email',
+            'commission_percent' => 'nullable|numeric|min:0|max:100',
+            'discount_percent' => 'nullable|numeric|min:0|max:100',
+            'rating' => 'nullable|numeric|min:0|max:5',
         ]);
 
         // Check for duplicate seller
@@ -605,6 +965,9 @@ class SellerApplicationController extends Controller
                 'phone' => $application->owner_mobile,
                 'email' => $request->seller_email,
                 'address' => $application->store_address,
+                'state' => $application->state,
+                'city' => $application->city,
+                'country' => $application->country,
                 'location_lat' => $application->lat,
                 'location_lng' => $application->lng,
                 'category' => $application->store_type,
@@ -614,6 +977,34 @@ class SellerApplicationController extends Controller
             if (!$shop || !$shop->id) {
                 throw new \Exception('Failed to create shop');
             }
+
+            // Create admin commission/discount settings for this shop
+            // Use provided values or fallback to global defaults
+            $globalSettings = AdminShopCommissionDiscount::whereNull('shop_id')->orderByDesc('id')->first();
+
+            $commissionPercent = $request->has('commission_percent') && $request->commission_percent !== null
+                ? $request->commission_percent
+                : ($globalSettings->commission_percent ?? 10);
+
+            $discountPercent = $request->has('discount_percent') && $request->discount_percent !== null
+                ? $request->discount_percent
+                : ($globalSettings->discount_percent ?? 0);
+
+            $rating = $request->has('rating') && $request->rating !== null
+                ? $request->rating
+                : ($globalSettings->rating ?? 0);
+
+            AdminShopCommissionDiscount::create([
+                'shop_id' => $shop->id,
+                'commission_percent' => $commissionPercent,
+                'discount_percent' => $discountPercent,
+                'minimum_bill_amount' => $application->min_bill_amount ?? 0,
+                'rating' => $rating,
+                'total_ratings' => 0,
+                'is_active' => true,
+                'is_featured' => false,
+                'last_updated_on' => now(),
+            ]);
 
             // Update application
             $application->update([

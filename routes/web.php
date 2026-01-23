@@ -685,7 +685,11 @@ Route::group(['middleware' => ['demo', 'XSS']], function () {
 
         // Seller Applications (Onboarding)
         Route::get('seller-applications', [\App\Http\Controllers\WEB\Admin\SellerApplicationController::class, 'index'])->name('seller-applications.index');
+        Route::get('seller-applications/create', [\App\Http\Controllers\WEB\Admin\SellerApplicationController::class, 'create'])->name('seller-applications.create');
+        Route::post('seller-applications', [\App\Http\Controllers\WEB\Admin\SellerApplicationController::class, 'store'])->name('seller-applications.store');
         Route::get('seller-applications/{id}', [\App\Http\Controllers\WEB\Admin\SellerApplicationController::class, 'show'])->name('seller-applications.show');
+        Route::get('seller-applications/{id}/edit', [\App\Http\Controllers\WEB\Admin\SellerApplicationController::class, 'edit'])->name('seller-applications.edit');
+        Route::put('seller-applications/{id}', [\App\Http\Controllers\WEB\Admin\SellerApplicationController::class, 'update'])->name('seller-applications.update');
         Route::delete('seller-applications/{id}', [\App\Http\Controllers\WEB\Admin\SellerApplicationController::class, 'destroy'])->name('seller-applications.destroy');
         Route::post('seller-applications/{id}/verify', [\App\Http\Controllers\WEB\Admin\SellerApplicationController::class, 'webVerify'])->name('seller-applications.verify');
         Route::post('seller-applications/{id}/approve', [\App\Http\Controllers\WEB\Admin\SellerApplicationController::class, 'webApprove'])->name('seller-applications.approve');

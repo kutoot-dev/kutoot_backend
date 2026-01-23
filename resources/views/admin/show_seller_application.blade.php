@@ -23,7 +23,7 @@
                     </div>
                 </div>
             @endif
-            
+
             @if(session('error'))
                 <div class="alert alert-danger alert-dismissible show fade">
                     <div class="alert-body">
@@ -95,6 +95,18 @@
                                             <td>{{ $application->created_at->format('d M Y, h:i A') }}</td>
                                         </tr>
                                         <tr>
+                                            <td class="text-muted">State</td>
+                                            <td>{{ $application->state ?? '-' }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-muted">City</td>
+                                            <td>{{ $application->city ?? '-' }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-muted">Country</td>
+                                            <td>{{ $application->country ?? '-' }}</td>
+                                        </tr>
+                                        <tr>
                                             <td class="text-muted">Latitude</td>
                                             <td>{{ $application->lat }}</td>
                                         </tr>
@@ -111,25 +123,25 @@
                                     </table>
                                 </div>
                             </div>
-                            
+
                             <hr>
-                            
+
                             <h6 class="text-muted mb-2">Store Address</h6>
                             <p class="mb-3">{{ $application->store_address }}</p>
-                            
+
                             @if($application->lat && $application->lng)
                             <a href="https://www.google.com/maps?q={{ $application->lat }},{{ $application->lng }}" target="_blank" class="btn btn-outline-primary btn-sm">
                                 <i class="fas fa-map-marker-alt"></i> View on Google Maps
                             </a>
                             @endif
-                            
+
                             @if($application->verification_notes)
                             <hr>
                             <h6 class="text-muted mb-2">Verification Notes</h6>
                             <p class="mb-0">{{ $application->verification_notes }}</p>
                             <small class="text-muted">Verified on {{ $application->verified_at?->format('d M Y, h:i A') }}</small>
                             @endif
-                            
+
                             @if($application->rejection_reason)
                             <hr>
                             <div class="alert alert-danger">
@@ -141,7 +153,7 @@
                         </div>
                     </div>
                 </div>
-                
+
                 {{-- Actions Panel --}}
                 <div class="col-lg-4">
                     {{-- Verify Action --}}
@@ -165,7 +177,7 @@
                         </div>
                     </div>
                     @endif
-                    
+
                     {{-- Approve/Reject Actions --}}
                     @if($application->isVerified())
                     <div class="card">
@@ -181,13 +193,35 @@
                                     <input type="email" name="seller_email" class="form-control" required placeholder="seller@example.com" value="{{ $application->owner_email }}">
                                     <small class="text-muted">Credentials will be sent to this email</small>
                                 </div>
+
+                                <hr>
+                                <h6 class="text-muted mb-3">Commission & Discount Settings</h6>
+
+                                <div class="form-group">
+                                    <label>Commission Fee (%)</label>
+                                    <input type="number" name="commission_percent" class="form-control" min="0" max="100" step="0.1" placeholder="e.g., 10" value="10">
+                                    <small class="text-muted">Percentage deducted from each transaction</small>
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Discount for Users (%)</label>
+                                    <input type="number" name="discount_percent" class="form-control" min="0" max="100" step="0.1" placeholder="e.g., 5" value="0">
+                                    <small class="text-muted">Discount offered to users at this store</small>
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Initial Rating</label>
+                                    <input type="number" name="rating" class="form-control" min="0" max="5" step="0.1" placeholder="e.g., 4.0" value="0">
+                                    <small class="text-muted">Admin-set initial rating (0-5)</small>
+                                </div>
+
                                 <button type="submit" class="btn btn-success btn-block">
                                     <i class="fas fa-check"></i> Approve & Send Credentials
                                 </button>
                             </form>
                         </div>
                     </div>
-                    
+
                     <div class="card">
                         <div class="card-header bg-danger">
                             <h4 class="text-white">Or Reject Application</h4>
@@ -211,7 +245,7 @@
                         </div>
                     </div>
                     @endif
-                    
+
                     {{-- Approved Status --}}
                     @if($application->isApproved())
                     <div class="card">
@@ -239,7 +273,7 @@
                         </div>
                     </div>
                     @endif
-                    
+
                     {{-- Rejected Status --}}
                     @if($application->isRejected())
                     <div class="card">
@@ -252,7 +286,14 @@
                         </div>
                     </div>
                     @endif
-                    
+
+                    {{-- Edit Application Button --}}
+                    @if(!$application->isApproved())
+                    <a href="{{ route('admin.seller-applications.edit', $application->id) }}" class="btn btn-info btn-block mb-3">
+                        <i class="fas fa-edit"></i> Edit Application
+                    </a>
+                    @endif
+
                     {{-- Back Button --}}
                     <a href="{{ route('admin.seller-applications.index') }}" class="btn btn-secondary btn-block">
                         <i class="fas fa-arrow-left"></i> Back to List
