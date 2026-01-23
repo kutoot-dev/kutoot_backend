@@ -42,7 +42,11 @@ class CoinLedgerService
     }
 
     /**
-     * Get unexpired, unconsumed credit entries for a user, ordered by expiry (soonest first).
+     * Get unexpired, unconsumed credit entries for a user.
+     *
+     * FIFO Priority Order:
+     * 1. REWARD coins first (preserves PAID liability / monetary value)
+     * 2. Within same category, soonest expiry first
      */
     public function getAvailableCreditEntries(int $userId)
     {
@@ -55,6 +59,8 @@ class CoinLedgerService
                 $q->whereNull('expiry_date')
                     ->orWhere('expiry_date', '>=', now());
             })
+            // FIFO Priority: REWARD first, then by expiry date (soonest first)
+            ->orderByRaw("CASE WHEN coin_category = ? THEN 0 ELSE 1 END", [CoinLedger::CAT_REWARD])
             ->orderBy('expiry_date', 'asc')
             ->get();
 
@@ -117,20 +123,57 @@ class CoinLedgerService
     }
 
     /**
-     * Get wallet balance breakdown.
+     * Get wallet balance breakdown (expiry-aware).
      */
-    public function getBalanceBreakdown(int $userId)
+    public function getBalanceBreakdown(int $userId): array
     {
-        $paidIn = CoinLedger::where('user_id', $userId)->where('coin_category', CoinLedger::CAT_PAID)->where('coins_in', '>', 0)->sum('coins_in');
-        $paidOut = CoinLedger::where('user_id', $userId)->where('coin_category', CoinLedger::CAT_PAID)->where('coins_out', '>', 0)->sum('coins_out');
+        $baseQuery = CoinLedger::where('user_id', $userId)
+            ->where(function ($q) {
+                $q->whereNull('expiry_date')
+                    ->orWhere('expiry_date', '>=', now());
+            });
 
-        $rewardIn = CoinLedger::where('user_id', $userId)->where('coin_category', CoinLedger::CAT_REWARD)->where('coins_in', '>', 0)->sum('coins_in');
-        $rewardOut = CoinLedger::where('user_id', $userId)->where('coin_category', CoinLedger::CAT_REWARD)->where('coins_out', '>', 0)->sum('coins_out');
+        $paidBalance = (clone $baseQuery)
+            ->where('coin_category', CoinLedger::CAT_PAID)
+            ->selectRaw('COALESCE(SUM(coins_in), 0) - COALESCE(SUM(coins_out), 0) as balance')
+            ->value('balance') ?? 0;
+
+        $rewardBalance = (clone $baseQuery)
+            ->where('coin_category', CoinLedger::CAT_REWARD)
+            ->selectRaw('COALESCE(SUM(coins_in), 0) - COALESCE(SUM(coins_out), 0) as balance')
+            ->value('balance') ?? 0;
+
+        // Get next expiry info
+        $nextExpiry = CoinLedger::where('user_id', $userId)
+            ->where('coins_in', '>', 0)
+            ->whereNotNull('expiry_date')
+            ->where('expiry_date', '>=', now())
+            ->orderBy('expiry_date', 'asc')
+            ->first();
+
+        $expiringCoins = 0;
+        $expiryDate = null;
+
+        if ($nextExpiry) {
+            // Calculate remaining on this entry
+            $consumed = CoinLedger::where('user_id', $userId)
+                ->where('coins_out', '>', 0)
+                ->where('metadata->source_id', $nextExpiry->id)
+                ->sum('coins_out');
+
+            $expiringCoins = max(0, $nextExpiry->coins_in - $consumed);
+            $expiryDate = $nextExpiry->expiry_date;
+        }
 
         return [
-            'total' => ($paidIn + $rewardIn) - ($paidOut + $rewardOut),
-            'paid' => $paidIn - $paidOut,
-            'reward' => $rewardIn - $rewardOut,
+            'total' => $paidBalance + $rewardBalance,
+            'paid' => $paidBalance,
+            'reward' => $rewardBalance,
+            'next_expiry' => [
+                'coins' => $expiringCoins,
+                'date' => $expiryDate?->toDateString(),
+                'days_left' => $expiryDate ? now()->diffInDays($expiryDate, false) : null,
+            ],
         ];
     }
 

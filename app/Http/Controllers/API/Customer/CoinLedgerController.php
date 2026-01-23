@@ -35,6 +35,7 @@ class CoinLedgerController extends Controller
                 'balance' => $breakdown['total'],
                 'paid_coins' => $breakdown['paid'],
                 'reward_coins' => $breakdown['reward'],
+                'next_expiry' => $breakdown['next_expiry'],
             ]
         ]);
     }
