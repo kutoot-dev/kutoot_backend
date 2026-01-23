@@ -299,11 +299,6 @@ class CheckoutController extends Controller
             $purchase->camp_ticket_price = $payable_amount;
             $purchase->save();
 
-            if ($baseplan->coupons_per_campaign * $request->quantity > 5000) {
-                DB::rollBack();
-                return response()->json(['message' => 'Coupons count is more!'], 400);
-            }
-
             DB::commit();
 
             $purchase = PurchasedCoins::with('coupons')->where('id', $purchase->id)->where('user_id', $user->id)->first();
@@ -406,10 +401,6 @@ class CheckoutController extends Controller
         $purchase->save();
 
         $baseplan = Baseplans::find($purchase->base_plan_id);
-
-        if ($baseplan->coupons_per_campaign * $purchase->quantity > 50) {
-            return response()->json(['message' => 'Coupons count is more!'], 400);
-        }
 
         $couponslist = [];
         // for ($j = 0; $j < $baseplan->coupons_per_campaign * $purchase->quantity; $j++) {
@@ -589,10 +580,6 @@ class CheckoutController extends Controller
         $baseplan = Baseplans::findOrFail($request->base_plan_id);
         $campaign = CoinCampaigns::findOrFail($request->camp_id);
         $user = Auth::guard('api')->user();
-
-        if ($baseplan->coupons_per_campaign * $request->quantity > 50) {
-            return response()->json(['message' => 'Coupons count is more!'], 400);
-        }
 
         // Generate coupons only (no saving purchase)
         $couponsList = [];
