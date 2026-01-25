@@ -51,7 +51,7 @@ class SettingsSeeder extends Seeder
                 'sidebar_lg_header' => 'Kutoot',
                 'sidebar_sm_header' => 'K',
                 'featured_category_banner' => $featuredBannerPath,
-                'current_version' => '3.8',
+                'current_version' => '7.7',
                 'tax' => 18.0,
                 'currency_id' => 1,
                 'home_section_title' => [

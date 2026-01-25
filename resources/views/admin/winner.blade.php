@@ -15,13 +15,13 @@
           </div>
 
           <div class="section-body">
-        
+
             <div class="row mt-4">
                 <div class="col">
                   <div class="card">
                     <div class="card-body">
                       <div class="row">
-                    
+
                       </div>
                       <div class="table-responsive table-invoice">
                         <table class="table table-striped" id="dataTable">
@@ -38,17 +38,17 @@
                                   </tr>
                             </thead>
                             <tbody>
-                              
-                              
+
+
                                   @foreach ($winners as $key => $campaign)
                                       <tr>
                                          <td>{{ $campaign->id }}</td>
-                                        <td>  @if ($campaign->campaign)
-                                                  <img src="{{$campaign->campaign?->campaign?->img }}" width="100px" alt="{{ $campaign->title }}">
+                                        <td>  @if ($campaign->coinCampaign)
+                                                  <img src="{{$campaign->coinCampaign->img }}" width="100px" alt="{{ $campaign->coinCampaign->title }}">
                                               @endif</td>
-                                       
 
-                                        <td>{{ $campaign->campaign?->campaign?->title }}</td>
+
+                                        <td>{{ $campaign->coinCampaign?->title }}</td>
                                          <td>{{ $campaign->coupon_number }}</td>
                                          <td>{{ $campaign->announcing_date }}</td>
                                         <td>{{ $campaign->user->name ?? '' }}<br>
@@ -56,9 +56,9 @@
                                             {{ $campaign->user->phone  ?? ''}}</td>
 
                                         <td>{{ $campaign->is_claimed }}</td>
-                                       <td> 
+                                       <td>
 
-                                     <form action="{{ route('admin.winner.delete', [$campaign->id]) }}" method="POST" style="display:inline-block;" 
+                                     <form action="{{ route('admin.winner.delete', [$campaign->id]) }}" method="POST" style="display:inline-block;"
       onsubmit="return confirm('Are you sure you want to cancel the draw?');">
     @csrf
     @method('DELETE')
@@ -67,11 +67,11 @@
 
 
                                        </td>
-                                          
-                                         
+
+
                                       </tr>
                                   @endforeach
-                        
+
                             </tbody>
                         </table>
                       </div>

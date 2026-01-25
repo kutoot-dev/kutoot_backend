@@ -7,21 +7,21 @@
       <div class="main-content">
         <section class="section">
           <div class="section-header">
-            <h1>{{__('All Purchase Orders')}}</h1>
+            <h1>{{__('admin.Coin Campaign Orders')}}</h1>
             <div class="section-header-breadcrumb">
               <div class="breadcrumb-item active"><a href="{{ route('admin.dashboard') }}">{{__('admin.Dashboard')}}</a></div>
-              <div class="breadcrumb-item">{{__('All Purchase Orders')}}</div>
+              <div class="breadcrumb-item">{{__('admin.Coin Campaign Orders')}}</div>
             </div>
           </div>
 
           <div class="section-body">
-           
+
             <div class="row mt-4">
                 <div class="col">
                   <div class="card">
                     <div class="card-body">
                       <div class="row">
-                    
+
                       </div>
                       <div class="table-responsive table-invoice">
                         <table class="table table-striped" id="dataTable">
@@ -39,8 +39,8 @@
                                   </tr>
                             </thead>
                             <tbody>
-                              
-                              
+
+
                              @if($data->count())
     @foreach ($data as $key => $campaign)
         <tr>
@@ -68,7 +68,7 @@
     </tr>
 @endif
 
-                        
+
                             </tbody>
                         </table>
                       </div>
