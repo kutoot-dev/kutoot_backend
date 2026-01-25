@@ -57,6 +57,7 @@ class DatabaseSeeder extends Seeder
             SellerSeeder::class,
             ShopSeeder::class,
             MasterSettingsSeeder::class,
+            ImageTypeSeeder::class,          // Image types (Banner, partners)
 
                 // Product catalog seeders with HD images
             CategorySeeder::class,           // Product categories with logos, icons, images

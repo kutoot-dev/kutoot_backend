@@ -66,7 +66,7 @@ public function store(Request $request)
         return back()->withErrors(['new_type' => 'Failed to create new type.']);
     }
     $typeId = $type->id;
-  
+
 } elseif ($request->filled('image_type_id')) {
     $typeId = $request->image_type_id;
 
@@ -78,7 +78,7 @@ public function store(Request $request)
     // Save each image
     foreach ($request->file('images') as $image) {
         $path = $image->store('uploads/images', 'public');
- 
+
         ImageItem::create([
             'title' => $request->title,
             'description' => $request->description ?? '',
@@ -203,10 +203,8 @@ public function update(Request $request, $id)
         if ($typeId) {
             $items = ImageItem::where('image_type_id', $typeId)->get();
         } elseif ($typeName) {
-            $type = ImageType::where('name', $typeName)->first();
-            if (!$type) {
-                return response()->json(['success' => false, 'message' => 'Type not found'], 404);
-            }
+            // Use firstOrCreate to auto-create the type if it doesn't exist
+            $type = ImageType::firstOrCreate(['name' => $typeName]);
             $items = ImageItem::where('image_type_id', $type->id)->get();
         } else {
             return response()->json(['success' => false, 'message' => 'Type ID or Name is required'], 400);
