@@ -19,7 +19,7 @@ class CreateSellerApplicationsTable extends Migration
             $table->string('owner_mobile', 15);
             $table->string('owner_email')->nullable();
             $table->string('store_type')->nullable(); // Store category
-            $table->string('store_address');
+            $table->string('store_address')->nullable();
             $table->string('state')->nullable();
             $table->string('city')->nullable();
             $table->string('country')->nullable();
