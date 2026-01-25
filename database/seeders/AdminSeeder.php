@@ -40,7 +40,7 @@ class AdminSeeder extends Seeder
         }
 
         $this->command->info('AdminSeeder completed. 2 admin accounts created.');
-        $this->command->info('  - admin@kutoot.com / password (Super Admin)');
+        $this->command->info('  - it@kutoot.com / kutoot@123 (Super Admin)');
         $this->command->info('  - admin2@kutoot.com / password (Admin)');
     }
 }
