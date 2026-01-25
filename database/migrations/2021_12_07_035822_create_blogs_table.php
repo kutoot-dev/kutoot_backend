@@ -25,6 +25,7 @@ class CreateBlogsTable extends Migration
             $table->string('seo_title');
             $table->string('seo_description');
             $table->integer('status')->default(0);
+            $table->integer('is_popular')->default(0);
             $table->integer('show_homepage')->default(0);
             $table->timestamps();
         });

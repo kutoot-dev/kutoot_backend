@@ -15,10 +15,15 @@ class CreateChildCategoriesTable extends Migration
     {
         Schema::create('child_categories', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('category_id')->nullable();
+            $table->unsignedBigInteger('sub_category_id')->nullable();
             $table->string('name');
             $table->string('slug');
             $table->integer('status')->default(0);
             $table->timestamps();
+
+            $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
+            $table->foreign('sub_category_id')->references('id')->on('sub_categories')->onDelete('cascade');
         });
     }
 

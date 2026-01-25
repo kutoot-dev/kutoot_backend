@@ -29,7 +29,7 @@
                             <div class="form-group col-12">
                                 <label>{{__('admin.Current Logo')}}</label>
                                 <div>
-                                    <img src="{{ asset($seller->logo) }}" width="100px" alt="">
+                                    <img src="{{ asset($seller->logo) }}" width="100px" alt="Shop Logo" class="logo-img">
                                 </div>
                             </div>
 
@@ -41,7 +41,7 @@
                             <div class="form-group col-12">
                                 <label>{{__('admin.Current Banner Image')}}</label>
                                 <div>
-                                    <img src="{{ asset($seller->banner_image) }}" width="300px" alt="">
+                                    <img src="{{ asset($seller->banner_image) }}" width="300px" alt="Shop Banner" class="banner-img">
                                 </div>
                             </div>
 

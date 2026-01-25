@@ -82,6 +82,93 @@
 
 
 
+<!-- Global Image Fallback Handler -->
+<script>
+(function() {
+    'use strict';
+
+    // Icon mapping for different image types
+    var iconMap = {
+        'avatar-img': 'fas fa-user-circle',
+        'product-img': 'fas fa-box',
+        'logo-img': 'fas fa-building',
+        'banner-img': 'fas fa-image',
+        'category-img': 'fas fa-folder',
+        'brand-img': 'fas fa-tag',
+        'blog-img': 'fas fa-newspaper',
+        'default': 'fas fa-image'
+    };
+
+    // Size mapping
+    var sizeMap = {
+        'avatar-img': { width: 80, height: 80, iconSize: 40 },
+        'product-img': { width: 80, height: 80, iconSize: 40 },
+        'logo-img': { width: 150, height: 50, iconSize: 30 },
+        'banner-img': { width: 200, height: 120, iconSize: 50 },
+        'category-img': { width: 80, height: 80, iconSize: 40 },
+        'brand-img': { width: 80, height: 80, iconSize: 40 },
+        'blog-img': { width: 80, height: 80, iconSize: 40 },
+        'default': { width: 80, height: 80, iconSize: 40 }
+    };
+
+    function getImageType(img) {
+        var classes = img.className.split(' ');
+        for (var i = 0; i < classes.length; i++) {
+            if (iconMap[classes[i]]) return classes[i];
+        }
+        return 'default';
+    }
+
+    function replaceWithIcon(img) {
+        var type = getImageType(img);
+        var icon = iconMap[type];
+        var size = sizeMap[type];
+
+        // Get dimensions from img or use defaults
+        var width = img.width || img.getAttribute('width') || size.width;
+        var height = img.height || img.getAttribute('height') || size.height;
+
+        // Create fallback container
+        var wrapper = document.createElement('span');
+        wrapper.className = 'img-fallback-icon ' + type + '-fallback';
+        wrapper.style.cssText = 'display:inline-flex;align-items:center;justify-content:center;' +
+            'width:' + width + 'px;height:' + height + 'px;' +
+            'background:linear-gradient(135deg,#f0f0f0,#e0e0e0);' +
+            'border-radius:' + (type === 'avatar-img' ? '50%' : '8px') + ';' +
+            'color:#999;font-size:' + size.iconSize + 'px;';
+
+        // Add icon
+        var iconEl = document.createElement('i');
+        iconEl.className = icon;
+        wrapper.appendChild(iconEl);
+
+        // Replace image
+        if (img.parentNode) {
+            img.parentNode.replaceChild(wrapper, img);
+        }
+    }
+
+    // Handle image errors globally
+    document.addEventListener('error', function(e) {
+        if (e.target.tagName === 'IMG') {
+            replaceWithIcon(e.target);
+        }
+    }, true);
+
+    // Check existing images on load
+    document.addEventListener('DOMContentLoaded', function() {
+        var images = document.querySelectorAll('img');
+        images.forEach(function(img) {
+            if (!img.src || img.src === '' || img.src === window.location.href) {
+                replaceWithIcon(img);
+            } else if (img.complete && img.naturalHeight === 0) {
+                replaceWithIcon(img);
+            }
+        });
+    });
+})();
+</script>
+
 <script>
     (function($) {
     "use strict";

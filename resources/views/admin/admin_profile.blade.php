@@ -19,9 +19,9 @@
                 <div class="card profile-widget">
                   <div class="profile-widget-header">
                       @if ($admin->image)
-                      <img alt="image" src="{{ asset($admin->image) }}" class="rounded-circle profile-widget-picture">
+                      <img alt="{{ $admin->name }}" src="{{ asset($admin->image) }}" class="rounded-circle profile-widget-picture avatar-img">
                       @else
-                      <img alt="image" src="" class="rounded-circle profile-widget-picture">
+                      <span class="avatar-img-fallback" style="display:inline-flex;align-items:center;justify-content:center;width:100px;height:100px;border-radius:50%;background:linear-gradient(135deg,#B22234,#FF8C00);color:#fff;font-size:36px;"><i class="fas fa-user"></i></span>
                       @endif
                   </div>
                   <div class="profile-widget-description">

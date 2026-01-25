@@ -38,7 +38,7 @@
                                         <td>{{ ++$index }}</td>
                                         <td>{{ $testimonial->name }}</td>
                                         <td>{{ $testimonial->designation }}</td>
-                                        <td><img src="{{ asset($testimonial->image) }}" alt="" class="rounded-circle"></td>
+                                        <td><img src="{{ asset($testimonial->image) }}" alt="{{ $testimonial->name }}" class="rounded-circle avatar-img"></td>
                                         <td>
                                             @if($testimonial->status == 1)
                                             <a href="javascript:;" onclick="changeFeatureStatus({{ $testimonial->id }})">

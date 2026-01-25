@@ -38,7 +38,7 @@
                                         <td>{{ ++$index }}</td>
                                         <td>{{ $category->name }}</td>
                                         <td>
-                                            <img src="{{ asset($category->image) }}" alt="" width="150px">
+                                            <img src="{{ asset($category->image) }}" alt="{{ $category->name }}" width="150px" class="category-img">
                                         </td>
                                         <td> <i class="{{ $category->icon }}"></i></td>
                                         <td>
@@ -58,7 +58,10 @@
                                         <a href="{{ route('admin.product-category.edit',$category->id) }}" class="btn btn-primary btn-sm"><i class="fa fa-edit" aria-hidden="true"></i></a>
 
                                         @php
-                                            $isPopular = App\Models\PopularCategory::where('category_id', $category->id)->count();
+                                            $isPopular = App\Models\PopularCategory::where('first_category_id', $category->id)
+                                                ->orWhere('second_category_id', $category->id)
+                                                ->orWhere('third_category_id', $category->id)
+                                                ->count();
                                             $isFeatured = App\Models\FeaturedCategory::where('category_id', $category->id)->count();
                                         @endphp
                                         @if ($category->subCategories->count() == 0 && $category->products->count() == 0 && $isPopular == 0 && $isFeatured == 0)

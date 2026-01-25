@@ -1,0 +1,21 @@
+
+   Psy\Exception\ParseErrorException 
+
+  PHP Parse error: Syntax error, unexpected ',' on line 1
+
+  at C:\Users\lenov\Herd\test\vendor\psy\psysh\src\Exception\ParseErrorException.php:44
+     40▕      * @param \PhpParser\Error $e
+     41▕      */
+     42▕     public static function fromParseError(\PhpParser\Error $e): self
+     43▕     {
+  ➜  44▕         return new self($e->getRawMessage(), $e->getAttributes());
+     45▕     }
+     46▕ }
+     47▕
+
+  1   C:\Users\lenov\Herd\test\vendor\psy\psysh\src\CodeCleaner.php:560
+      Psy\Exception\ParseErrorException::fromParseError(Object(PhpParser\Error))
+
+  2   C:\Users\lenov\Herd\test\vendor\psy\psysh\src\CodeCleaner.php:283
+      Psy\CodeCleaner::parse("<?php App\Models\Category::select('id','name','slug','icon','image')-,1)-
+")

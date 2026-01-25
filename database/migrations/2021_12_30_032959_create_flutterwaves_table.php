@@ -20,6 +20,7 @@ class CreateFlutterwavesTable extends Migration
             $table->string('title');
             $table->string('logo');
             $table->integer('status')->default(1);
+            $table->integer('currency_id')->nullable();
             $table->timestamps();
         });
     }

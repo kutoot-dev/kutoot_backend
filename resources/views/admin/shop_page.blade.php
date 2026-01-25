@@ -22,7 +22,7 @@
                                 @method('PUT')
                                 <div class="form-group">
                                     <label for="">{{__('admin.Filter Maximum price range')}}</label>
-                                    <input type="text" name="filter_price_range" value="{{ $shop_page->filter_price_range }}" class="form-control">
+                                    <input type="text" name="filter_price_range" value="{{ $shop_page?->filter_price_range ?? 1000 }}" class="form-control">
                                 </div>
                                 <button type="submit" class="btn btn-primary">{{__('admin.Save')}}</button>
                             </form>

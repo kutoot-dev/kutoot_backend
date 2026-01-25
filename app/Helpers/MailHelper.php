@@ -11,10 +11,17 @@ class MailHelper
 
     /**
      * Set mail config from database (EmailConfiguration model)
+     * Falls back to .env config if no database record exists
      */
     public static function setMailConfig(){
 
-        $email_setting=EmailConfiguration::first();
+        $email_setting = EmailConfiguration::first();
+
+        // Fall back to .env config if no database record exists
+        if (!$email_setting) {
+            self::setEnvMailConfig();
+            return;
+        }
 
         $mailConfig = [
             'transport' => 'smtp',
@@ -22,7 +29,7 @@ class MailHelper
             'port' => $email_setting->mail_port,
             'encryption' => $email_setting->mail_encryption,
             'username' => $email_setting->smtp_username,
-            'password' =>$email_setting->smtp_password,
+            'password' => $email_setting->smtp_password,
             'timeout' => null
         ];
 

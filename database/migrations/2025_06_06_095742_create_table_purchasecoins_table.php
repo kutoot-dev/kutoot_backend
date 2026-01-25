@@ -14,9 +14,10 @@ class CreateTablePurchasecoinsTable extends Migration
     public function up()
     {
         Schema::create('table_purchasecoins', function (Blueprint $table) {
-             $table->id();
+            $table->id();
             $table->integer('camp_id');
             $table->integer('user_id');
+            $table->unsignedBigInteger('base_plan_id')->nullable();
             $table->string('camp_title')->index();
             $table->text('camp_description')->nullable();
             $table->float('camp_ticket_price', 8, 2)->default(0.00);
@@ -24,6 +25,13 @@ class CreateTablePurchasecoinsTable extends Migration
             $table->integer('camp_coupons_per_campaign')->default(0);
             $table->float('camp_max_coins_per_transaction', 10, 2)->default(00.00);
             $table->tinyInteger('status')->default(1);
+            $table->tinyInteger('is_cart')->default(0);
+            $table->string('razor_order_id')->nullable();
+            $table->string('payment_id')->nullable();
+            $table->string('razorpay_signature')->nullable();
+            $table->string('razor_key')->nullable();
+            $table->string('payment_status')->nullable();
+            $table->integer('quantity')->default(1);
             $table->timestamps();
         });
     }

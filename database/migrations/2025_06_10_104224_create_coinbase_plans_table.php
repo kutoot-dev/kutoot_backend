@@ -19,6 +19,7 @@ class CreateCoinbasePlansTable extends Migration
             $table->integer('camp_id')->nullable();
             $table->string('title')->index();
             $table->text('description')->nullable();
+            $table->string('duration')->nullable();
             $table->float('ticket_price', 8, 2)->default(0.00);
             $table->string('img')->nullable();
             $table->integer('total_tickets')->default(0);

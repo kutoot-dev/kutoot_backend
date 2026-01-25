@@ -20,6 +20,7 @@ class CreateInstamojoPaymentsTable extends Migration
             $table->string('currency_rate')->default(1);
             $table->string('account_mode')->default('Sandbox');
             $table->integer('status')->default(1);
+            $table->integer('currency_id')->nullable();
             $table->timestamps();
         });
     }

@@ -8,9 +8,10 @@
       <div class="sidebar-brand">
         <a href="{{ route('admin.dashboard') }}">
           @if ($setting->logo)
-            <img style="max-width:150px;" src="{{ asset($setting->logo) }}" alt="logo" class="header-logo" />
+            <img style="max-width:150px;" src="{{ asset($setting->logo) }}" alt="logo" class="header-logo logo-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline';" />
+            <span style="display:none;font-size:20px;font-weight:700;color:#B22234;">KUTOOT</span>
           @else
-            <label>{{ config('app.name') }}</label>
+            <label style="font-size:20px;font-weight:700;color:#B22234;">KUTOOT</label>
           @endif
         </a>
       </div>

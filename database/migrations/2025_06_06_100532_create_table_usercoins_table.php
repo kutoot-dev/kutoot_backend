@@ -20,7 +20,7 @@ class CreateTableUsercoinsTable extends Migration
             $table->integer('user_id');
             $table->string('type')->index();
             $table->integer('coins')->default(0);
-            $table->dateTime('coupon_expires')->nullable();
+            $table->dateTime('coin_expires')->nullable();
             $table->integer('status')->default(1);
             $table->timestamps();
         });

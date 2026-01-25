@@ -25,9 +25,9 @@
           @endphp
           <li class="dropdown"><a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle nav-link-lg nav-link-user">
               @if ($header_admin && $header_admin->image)
-              <img alt="image" src="{{ asset($header_admin->image) }}" class="rounded-circle mr-1">
+              <img alt="{{ $header_admin->name }}" src="{{ asset($header_admin->image) }}" class="rounded-circle mr-1 avatar-img">
               @else
-              <img alt="image" src="" class="rounded-circle mr-1">
+              <span class="topbar-avatar-fallback mr-1"><i class="fas fa-user-circle"></i></span>
               @endif
             <div class="d-sm-none d-lg-inline-block">{{ $header_admin?->name }}</div></a>
             <div class="dropdown-menu dropdown-menu-right">

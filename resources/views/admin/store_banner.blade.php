@@ -36,7 +36,7 @@
                                 @foreach ($banners as $index => $banner)
                                     <tr>
                                         <td>
-                                            <img src="{{ asset($banner->image) }}" width="150px" alt="{{ $banner->title }}">
+                                            <img src="{{ asset($banner->image) }}" width="150px" alt="{{ $banner->title }}" class="banner-img">
                                         </td>
                                         <td>{{ $banner->title }}</td>
                                         <td>{{ $banner->location ?? '-' }}</td>

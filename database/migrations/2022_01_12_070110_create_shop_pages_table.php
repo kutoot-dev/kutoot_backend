@@ -22,6 +22,7 @@ class CreateShopPagesTable extends Migration
             $table->string('banner')->nullable();
             $table->string('link')->nullable();
             $table->string('button_text')->nullable();
+            $table->decimal('filter_price_range', 10, 2)->default(1000);
             $table->timestamps();
         });
     }

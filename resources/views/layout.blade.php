@@ -24,7 +24,7 @@
     @yield('title')
     @yield('meta')
 
-    <link rel="icon" type="image/png" href="{{ asset($setting->favicon) }}">
+    <link rel="icon" type="image/png" href="{{ asset($setting?->favicon ?? 'favicon.png') }}">
     <link rel="stylesheet" href="{{ asset('user/css/all.min.css') }}">
     <link rel="stylesheet" href="{{ asset('user/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('user/css/select2.min.css') }}">
@@ -1011,9 +1011,9 @@
         $isAuth = false;
         if(Auth::check()) $isAuth = true;
         $shop_page = App\Models\ShopPage::first();
-        $max_val = $shop_page->filter_price_range;
+        $max_val = $shop_page?->filter_price_range ?? 1000;
         $currencySetting = App\Models\Setting::first();
-        $currency_icon = $currencySetting->currency_icon;
+        $currency_icon = $currencySetting?->currency_icon ?? '$';
         $tawk_setting = App\Models\TawkChat::first();
         $cookie_consent = App\Models\CookieConsent::first();
         $setting = App\Models\Setting::first();
@@ -1022,10 +1022,10 @@
     <script>
         let filter_max_val = "{{ $max_val }}";
         let currency_icon = "{{ $currency_icon }}";
-        let themeColor = "{{ $setting->theme_one }}";
+        let themeColor = "{{ $setting?->theme_one ?? '#ff6b35' }}";
     </script>
 
-    @if ($tawk_setting->status == 1)
+    @if ($tawk_setting?->status == 1)
     <script type="text/javascript">
         var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
         (function(){

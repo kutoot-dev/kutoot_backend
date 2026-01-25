@@ -428,15 +428,16 @@ class HomeController extends Controller
 
         $popularCategoryVisibilty = HomePageOneVisibility::find(4);
 
-        $popularCategories = PopularCategory::with('category')->get();
+        $popularCategories = PopularCategory::all();
 
         $category_arr = [];
 
         foreach($popularCategories as $popularCategory){
-
-            $category_arr[] = $popularCategory->category_id;
-
+            if ($popularCategory->first_category_id) $category_arr[] = $popularCategory->first_category_id;
+            if ($popularCategory->second_category_id) $category_arr[] = $popularCategory->second_category_id;
+            if ($popularCategory->third_category_id) $category_arr[] = $popularCategory->third_category_id;
         }
+        $category_arr = array_unique(array_filter($category_arr));
 
         $setting = Setting::first();
 
@@ -446,7 +447,7 @@ class HomeController extends Controller
 
         $popularCategoryVisibilty = $popularCategoryVisibilty->status == 1 ? true : false;
 
-        $popularCategorySidebarBanner = $setting->popular_category_banner;
+        $popularCategorySidebarBanner = $setting?->popular_category_banner;
 
 
 
@@ -1114,7 +1115,7 @@ class HomeController extends Controller
 
 
 
-        $shopPageCenterBanner = BannerImage::select('product_slug','image','banner_location','status','after_product_qty','title_one')->find(25);
+        $shopPageCenterBanner = BannerImage::select('product_slug','image','banner_location','status','title_one','title_two','badge')->find(25);
 
         $shopPageSidebarBanner = BannerImage::select('product_slug','image','banner_location','status','title_one','title_two')->find(26);
 
@@ -1310,7 +1311,7 @@ class HomeController extends Controller
 
 
 
-        $shopPageCenterBanner = BannerImage::select('product_slug','image','banner_location','status','after_product_qty','title_one')->find(25);
+        $shopPageCenterBanner = BannerImage::select('product_slug','image','banner_location','status','title_one','title_two','badge')->find(25);
 
         $shopPageSidebarBanner = BannerImage::select('product_slug','image','banner_location','status','title_one','title_two')->find(26);
 
@@ -1475,10 +1476,11 @@ class HomeController extends Controller
                 $pop_categories = PopularCategory::all();
 
                 foreach($pop_categories as $pop_category){
-
-                    $popularCategoryArr[] = $pop_category->category_id;
-
+                    if ($pop_category->first_category_id) $popularCategoryArr[] = $pop_category->first_category_id;
+                    if ($pop_category->second_category_id) $popularCategoryArr[] = $pop_category->second_category_id;
+                    if ($pop_category->third_category_id) $popularCategoryArr[] = $pop_category->third_category_id;
                 }
+                $popularCategoryArr = array_unique(array_filter($popularCategoryArr));
 
                 $products = $products->whereIn('category_id', $popularCategoryArr);
 
@@ -1676,7 +1678,7 @@ class HomeController extends Controller
 
 
 
-        $tagArray = json_decode($product->tags);
+        $tagArray = json_decode($product->tags ?? '[]') ?? [];
 
         $tags = '';
 

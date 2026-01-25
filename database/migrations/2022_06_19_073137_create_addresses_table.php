@@ -22,6 +22,7 @@ class CreateAddressesTable extends Migration
             $table->integer('country_id')->default(0);
             $table->integer('state_id')->default(0);
             $table->integer('city_id')->default(0);
+            $table->integer('pincode');
             $table->string('address');
             $table->string('type');
             $table->integer('default_shipping')->default(0);

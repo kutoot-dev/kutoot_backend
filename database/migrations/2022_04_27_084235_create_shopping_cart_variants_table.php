@@ -19,6 +19,8 @@ class CreateShoppingCartVariantsTable extends Migration
             $table->string('name');
             $table->string('value');
             $table->string('price');
+            $table->integer('user_id')->default(0);
+            $table->integer('product_id')->default(0);
             $table->timestamps();
         });
     }

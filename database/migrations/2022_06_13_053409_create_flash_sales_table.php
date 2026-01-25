@@ -16,8 +16,13 @@ class CreateFlashSalesTable extends Migration
         Schema::create('flash_sales', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('image');
-            $table->date('date');
+            $table->string('title')->nullable();
+            $table->string('slug')->unique();
+            $table->string('image')->nullable();
+            $table->date('date')->nullable();
+            $table->timestamp('start_date')->nullable();
+            $table->timestamp('end_date')->nullable();
+            $table->dateTime('end_time')->nullable();
             $table->double('offer');
             $table->integer('status')->default(0);
             $table->timestamps();

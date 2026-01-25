@@ -202,7 +202,7 @@ class ProductController extends Controller
         $brands = Brand::all();
         $specificationKeys = ProductSpecificationKey::all();
         $productSpecifications = ProductSpecification::where('product_id',$product->id)->get();
-        $tagArray = json_decode($product->tags);
+        $tagArray = json_decode($product->tags ?? '[]') ?? [];
         $tags = '';
         if($product->tags){
             foreach($tagArray as $index => $tag){

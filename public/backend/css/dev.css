@@ -248,6 +248,95 @@ img.mr-3.ml-3.rounded-circle {
     color: #34395e;
 }
 
+/* ========================================
+   Global Image Fallback Icon Styles
+   ======================================== */
+
+/* Topbar avatar fallback */
+.topbar-avatar-fallback {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    background: linear-gradient(135deg, #B22234, #FF8C00);
+    border-radius: 50%;
+    color: #fff;
+    font-size: 18px;
+}
+
+/* Generic fallback icon wrapper */
+.img-fallback-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #f5f5f5, #e8e8e8);
+    color: #999;
+    border: 1px solid #e0e0e0;
+}
+
+/* Avatar fallback */
+.avatar-img-fallback {
+    border-radius: 50% !important;
+    background: linear-gradient(135deg, #B22234, #FF8C00) !important;
+    color: #fff !important;
+}
+
+/* Product fallback */
+.product-img-fallback {
+    border-radius: 8px;
+    background: linear-gradient(135deg, #f0f4ff, #e8ecf8) !important;
+    color: #6777ef !important;
+}
+
+/* Logo/Brand fallback */
+.logo-img-fallback,
+.brand-img-fallback {
+    border-radius: 8px;
+    background: linear-gradient(135deg, #fff5f5, #ffe8e8) !important;
+    color: #B22234 !important;
+}
+
+/* Banner fallback */
+.banner-img-fallback {
+    border-radius: 8px;
+    background: linear-gradient(135deg, #f5fff5, #e8f8e8) !important;
+    color: #47c363 !important;
+}
+
+/* Category fallback */
+.category-img-fallback {
+    border-radius: 8px;
+    background: linear-gradient(135deg, #fff8f0, #f8eee0) !important;
+    color: #FF8C00 !important;
+}
+
+/* Blog fallback */
+.blog-img-fallback {
+    border-radius: 8px;
+    background: linear-gradient(135deg, #f0f8ff, #e8f0f8) !important;
+    color: #3abaf4 !important;
+}
+
+/* Table image fallbacks - ensure consistent sizing */
+table .img-fallback-icon {
+    width: 80px !important;
+    height: 80px !important;
+    font-size: 32px;
+}
+
+table .avatar-img-fallback {
+    width: 80px !important;
+    height: 80px !important;
+}
+
+/* Profile widget fallback */
+.profile-widget .img-fallback-icon {
+    width: 100px !important;
+    height: 100px !important;
+    font-size: 48px;
+}
+
 
 /* custom css start  */
 

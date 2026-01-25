@@ -50,7 +50,7 @@
                                     </a>
                                 @endif
                                 <ul class='exzoom_img_ul'>
-                                    @foreach ($product->gallery as $image)
+                                    @foreach ($product->gallery ?? [] as $image)
                                     <li><img class="zoom ing-fluid w-100" src="{{ asset($image->image) }}" alt="product"></li>
                                     @endforeach
 
@@ -451,7 +451,7 @@
                                     <div class="col-xl-6 col-lg-6 mb-4 mb-lg-0">
                                         <div class="wsus__pro_det_info">
                                             <h4>{{__('Additional Information')}}</h4>
-                                            @foreach ($product->specifications as $specification)
+                                            @foreach ($product->specifications ?? [] as $specification)
                                             <p><span>{{ $specification->key->key }}</span> <span>{{ $specification->specification }}</span></p>
                                             @endforeach
                                         </div>
@@ -553,7 +553,7 @@
                                             <div class="col-xl-8 col-lg-7">
                                                 <div class="wsus__comment_area">
                                                     <h4>{{__('Reviews')}} <span>{{ $totalProductReviewQty }}</span></h4>
-                                                    @foreach ($productReviews as $review)
+                                                    @foreach ($productReviews ?? [] as $review)
                                                     <div class="wsus__main_comment">
                                                         <div class="wsus__comment_img">
                                                             <img src="{{ $review->user->image ? asset($review->user->image) : asset($defaultProfile->image) }}" alt="user"
@@ -648,7 +648,7 @@
                 </div>
             </div>
             <div class="row flash_sell_slider ">
-                @foreach ($relatedProducts as $relatedProduct)
+                @foreach ($relatedProducts ?? [] as $relatedProduct)
                     @php
                         $reviewQty = $relatedProduct->reviews->where('status',1)->count();
                         $totalReview = $relatedProduct->reviews->where('status',1)->sum('rating');

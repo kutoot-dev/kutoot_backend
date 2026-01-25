@@ -204,9 +204,9 @@
                                                 <p>{{ $cartContent->name }}</p>
                                                 <span>
                                                     @php
-                                                        $totalVariant = count($cartContent->options->variants);
+                                                        $totalVariant = count($cartContent->options->variants ?? []);
                                                     @endphp
-                                                    @foreach ($cartContent->options->variants as $indx => $variant)
+                                                    @foreach ($cartContent->options->variants ?? [] as $indx => $variant)
                                                         @php
                                                             $variantPrice += $cartContent->options->prices[$indx];
                                                         @endphp

@@ -17,8 +17,28 @@ class NotificationController extends Controller
 
 
     public function twilio_sms(){
-        $twilio = TwilioSms::first();
-        $biztech = BiztechSms::first();
+        $twilio = TwilioSms::firstOrCreate(
+            ['id' => 1],
+            [
+                'account_sid' => '',
+                'auth_token' => '',
+                'twilio_phone_number' => '',
+                'enable_register_sms' => 0,
+                'enable_reset_pass_sms' => 0,
+                'enable_order_confirmation_sms' => 0,
+            ]
+        );
+        $biztech = BiztechSms::firstOrCreate(
+            ['id' => 1],
+            [
+                'api_key' => '',
+                'client_id' => '',
+                'sender_id' => '',
+                'enable_register_sms' => 0,
+                'enable_reset_pass_sms' => 0,
+                'enable_order_confirmation_sms' => 0,
+            ]
+        );
 
         return view('admin.sms_configuration', compact('twilio','biztech'));
     }

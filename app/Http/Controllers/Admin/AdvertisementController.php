@@ -34,10 +34,10 @@ class AdvertisementController extends Controller
         $megaMenuBanner = BannerImage::whereId('23')->select('link','image','id','banner_location')->first();
 
         $homepageFlashSaleSidebarBanner = BannerImage::whereId('24')->select('product_slug','image','id','banner_location','status','title','link')->first();
-        
+
         $homepageFlashSaleSidebarBanner = BannerImage::whereId('24')->select('link','image','id','banner_location')->first();
 
-        $shopPageCenterBanner = BannerImage::whereId('25')->select('link','image','id','banner_location','after_product_qty')->first();
+        $shopPageCenterBanner = BannerImage::whereId('25')->select('link','image','id','banner_location','status','title_one','title_two','badge')->first();
 
         $shopPageSidebarBanner = BannerImage::whereId('26')->select('link','image','id','banner_location')->first();
 
@@ -369,17 +369,18 @@ class AdvertisementController extends Controller
     public function shopPageCenterBanner(Request $request){
         $rules = [
             'link' => 'required',
-            'after_product_qty' => 'required',
-            'status' => 'required'
+            'status' => 'required',
+            'title_one' => 'required',
+            'title_two' => 'required',
+            'badge' => 'required',
         ];
         $customMessages = [
             'link.required' => trans('Link is required'),
-            'after_product_qty.required' => trans('After product quantity is required'),
             'status.required' => trans('Status is required'),
         ];
         $this->validate($request, $rules,$customMessages);
 
-         $shopPageCenterBanner = BannerImage::whereId('25')->select('link','image','id','banner_location','after_product_qty')->first();
+         $shopPageCenterBanner = BannerImage::whereId('25')->select('link','image','id','banner_location','title_one','title_two','badge')->first();
 
         if($request->banner_image){
             $existing_banner = $shopPageCenterBanner->image;
@@ -394,9 +395,11 @@ class AdvertisementController extends Controller
                 if(File::exists(public_path().'/'.$existing_banner))unlink(public_path().'/'.$existing_banner);
             }
         }
-        $shopPageCenterBanner->after_product_qty = $request->after_product_qty;
         $shopPageCenterBanner->link = $request->link;
         $shopPageCenterBanner->status = $request->status;
+        $shopPageCenterBanner->title_one = $request->title_one;
+        $shopPageCenterBanner->title_two = $request->title_two;
+        $shopPageCenterBanner->badge = $request->badge;
         $shopPageCenterBanner->save();
 
         $notification= trans('Update Successfully');

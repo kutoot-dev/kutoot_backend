@@ -2,10 +2,17 @@
 
 namespace Database\Seeders;
 
+use App\Helpers\ImageSeederHelper;
 use App\Models\CoinCampaigns;
 use Carbon\Carbon;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Str;
 
+/**
+ * CoinCampaignSeeder - Seeds sample coin campaigns with HD ecommerce images.
+ *
+ * DEV ONLY: Creates sample campaigns with optimized WebP images.
+ */
 class CoinCampaignSeeder extends Seeder
 {
     /**
@@ -13,6 +20,8 @@ class CoinCampaignSeeder extends Seeder
      */
     public function run(): void
     {
+        $this->command->info('Downloading and optimizing campaign images...');
+
         $campaigns = [
             [
                 'title' => 'Lucky Draw Campaign - January',
@@ -32,6 +41,13 @@ class CoinCampaignSeeder extends Seeder
                 'status' => 1,
                 'category' => 'Lucky Draw',
                 'tags' => json_encode(['lucky', 'draw', 'coins', 'rewards']),
+                'series_prefix' => 'A',
+                'number_min' => 1,
+                'number_max' => 99,
+                'numbers_per_ticket' => 6,
+                'picsum_id' => 1011,  // Ecommerce/shopping themed
+                'picsum_id_1' => 1012,
+                'picsum_id_2' => 1013,
             ],
             [
                 'title' => 'Mega Coins Bonanza',
@@ -51,6 +67,13 @@ class CoinCampaignSeeder extends Seeder
                 'status' => 1,
                 'category' => 'Promotion',
                 'tags' => json_encode(['double', 'coins', 'mega', 'promotion']),
+                'series_prefix' => 'B',
+                'number_min' => 1,
+                'number_max' => 99,
+                'numbers_per_ticket' => 5,
+                'picsum_id' => 1015,  // Gift/reward themed
+                'picsum_id_1' => 1016,
+                'picsum_id_2' => 1018,
             ],
             [
                 'title' => 'Flash Sale Coins',
@@ -70,6 +93,13 @@ class CoinCampaignSeeder extends Seeder
                 'status' => 1,
                 'category' => 'Flash Sale',
                 'tags' => json_encode(['flash', 'sale', 'coins', 'limited']),
+                'series_prefix' => 'C',
+                'number_min' => 1,
+                'number_max' => 50,
+                'numbers_per_ticket' => 4,
+                'picsum_id' => 1019,  // Shopping cart themed
+                'picsum_id_1' => 1021,
+                'picsum_id_2' => 1022,
             ],
             [
                 'title' => 'Weekend Special Coins',
@@ -89,6 +119,13 @@ class CoinCampaignSeeder extends Seeder
                 'status' => 1,
                 'category' => 'Special Offer',
                 'tags' => json_encode(['weekend', 'special', 'coins', 'rewards']),
+                'series_prefix' => 'D',
+                'number_min' => 1,
+                'number_max' => 75,
+                'numbers_per_ticket' => 5,
+                'picsum_id' => 1024,  // Discount/sale themed
+                'picsum_id_1' => 1025,
+                'picsum_id_2' => 1029,
             ],
             [
                 'title' => 'Premium Coin Package',
@@ -108,16 +145,84 @@ class CoinCampaignSeeder extends Seeder
                 'status' => 1,
                 'category' => 'Premium',
                 'tags' => json_encode(['premium', 'exclusive', 'coins', 'vip']),
+                'series_prefix' => 'E',
+                'number_min' => 1,
+                'number_max' => 99,
+                'numbers_per_ticket' => 6,
+                'picsum_id' => 1031,  // Premium/luxury themed
+                'picsum_id_1' => 1033,
+                'picsum_id_2' => 1035,
+            ],
+            [
+                'title' => 'Festive Season Bonanza',
+                'title1' => 'Festive Sale',
+                'title2' => 'Celebrate & Win',
+                'campaign_id' => 6,
+                'description' => 'Celebrate the festive season with mega coin rewards! Earn extra coins on every purchase and win exclusive festival prizes.',
+                'short_description' => 'Festive season mega coin rewards',
+                'ticket_price' => 150.00,
+                'total_tickets' => 800,
+                'sold_tickets' => 520,
+                'coins_per_campaign' => 1200,
+                'coupons_per_campaign' => 18,
+                'max_coins_per_transaction' => 1200,
+                'start_date' => Carbon::now()->subDays(10)->toDateString(),
+                'end_date' => Carbon::now()->addDays(25)->toDateString(),
+                'status' => 1,
+                'category' => 'Festival',
+                'tags' => json_encode(['festive', 'celebration', 'coins', 'prizes']),
+                'series_prefix' => 'F',
+                'number_min' => 1,
+                'number_max' => 99,
+                'numbers_per_ticket' => 5,
+                'picsum_id' => 1037,
+                'picsum_id_1' => 1038,
+                'picsum_id_2' => 1040,
             ],
         ];
 
         foreach ($campaigns as $campaign) {
-            CoinCampaigns::firstOrCreate(
+            $slug = Str::slug($campaign['title']);
+
+            // Download main campaign image
+            $imgPath = ImageSeederHelper::ensureImage(
+                'campaigns',
+                'campaign-' . $slug,
+                'banner',
+                $campaign['picsum_id']
+            );
+
+            // Download additional campaign images
+            $image1Path = ImageSeederHelper::ensureImage(
+                'campaigns',
+                'campaign-' . $slug . '-1',
+                'product',
+                $campaign['picsum_id_1']
+            );
+
+            $image2Path = ImageSeederHelper::ensureImage(
+                'campaigns',
+                'campaign-' . $slug . '-2',
+                'product',
+                $campaign['picsum_id_2']
+            );
+
+            // Remove picsum_ids from campaign data
+            unset($campaign['picsum_id'], $campaign['picsum_id_1'], $campaign['picsum_id_2']);
+
+            // Add image paths to campaign data
+            $campaign['img'] = $imgPath;
+            $campaign['image1'] = $image1Path;
+            $campaign['image2'] = $image2Path;
+
+            CoinCampaigns::updateOrCreate(
                 ['title' => $campaign['title']],
                 $campaign
             );
+
+            $this->command->line("  ✓ Campaign: {$campaign['title']}");
         }
 
-        $this->command->info('CoinCampaignSeeder completed. ' . count($campaigns) . ' campaigns seeded.');
+        $this->command->info('CoinCampaignSeeder completed. ' . count($campaigns) . ' campaigns seeded with HD images.');
     }
 }

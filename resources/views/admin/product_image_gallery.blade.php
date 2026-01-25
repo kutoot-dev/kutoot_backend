@@ -49,7 +49,7 @@
                             <tbody>
                                 @foreach ($gallery as $index => $image)
                                     <tr>
-                                        <td> <img class="p-2" src="{{ asset($image->image) }}" alt="" width="200px"></td>
+                                        <td> <img class="p-2 product-img" src="{{ asset($image->image) }}" alt="Product image" width="200px"></td>
                                         {{-- <td>
                                             @if($image->status == 1)
                                             <a href="javascript:;" onclick="changeProductStatus({{ $image->id }})">
@@ -63,15 +63,15 @@
                                         </td> --}}
 
 <td>
-    <input 
-        type="checkbox" 
-        class="status-toggle" 
+    <input
+        type="checkbox"
+        class="status-toggle"
         data-id="{{ $image->id }}"
         {{ $image->status == 1 ? 'checked' : '' }}
-        data-toggle="toggle" 
-        data-on="{{__('admin.Active')}}" 
-        data-off="{{__('admin.InActive')}}" 
-        data-onstyle="success" 
+        data-toggle="toggle"
+        data-on="{{__('admin.Active')}}"
+        data-off="{{__('admin.InActive')}}"
+        data-onstyle="success"
         data-offstyle="danger">
 </td>
 
@@ -98,7 +98,7 @@
         $("#deleteForm").attr("action",'{{ url("admin/delete-product-image/") }}'+"/"+id)
     }
     // function changeProductStatus(id){
- 
+
     //     $.ajax({
     //         type:"put",
     //         data: { _token : '{{ csrf_token() }}' },

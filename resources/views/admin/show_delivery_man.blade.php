@@ -103,9 +103,12 @@
                 <div class="col-12 col-md-12 col-lg-12">
                   <div class="card profile-widget">
                     <div class="profile-widget-header">
-                       
-                        <img alt="image" src="{{ asset($deliveryman->man_image) }}" class="rounded-circle profile-widget-picture">
-                      
+                        @if($deliveryman->man_image)
+                        <img alt="{{ $deliveryman->fname }}" src="{{ asset($deliveryman->man_image) }}" class="rounded-circle profile-widget-picture avatar-img">
+                        @else
+                        <span class="avatar-img-fallback" style="display:inline-flex;align-items:center;justify-content:center;width:100px;height:100px;border-radius:50%;background:linear-gradient(135deg,#B22234,#FF8C00);color:#fff;font-size:36px;"><i class="fas fa-user"></i></span>
+                        @endif
+
                       {{-- <div class="profile-widget-items">
                         <div class="profile-widget-item">
                           <div class="profile-widget-item-label">{{__('admin.Joined at')}}</div>

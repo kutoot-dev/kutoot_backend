@@ -3,6 +3,12 @@
 use App\Models\Sponsor;
 
 return array(
+    'Welcome Back' => 'Welcome Back',
+    'Sign in to your admin account' => 'Sign in to your admin account',    'Symbol' => 'Symbol',
+    'Native Symbol' => 'Native Symbol',
+    'Precision' => 'Precision',
+    'In-active' => 'In-Active',
+    'active' => 'Active',
     'Create New Application' => 'Create New Application',
     'Select a Country' => 'Select a Country',
     'Current Images' => 'Current Images',

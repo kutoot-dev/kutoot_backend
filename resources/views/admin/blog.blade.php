@@ -39,7 +39,7 @@
                                         <td>{{ ++$index }}</td>
                                         <td><a target="_blank" href="{{ $frontend_url.$blog->slug }}">{{ $blog->title }}</a></td>
                                         <td>{{ $blog->category->name }}</td>
-                                        <td><img src="{{ asset($blog->image) }}" width="80px" height="80px" class="rounded-circle" alt=""></td>
+                                        <td><img src="{{ asset($blog->image) }}" width="80px" height="80px" class="rounded-circle blog-img" alt="{{ $blog->title }}"></td>
                                         <td>
                                             @if ($blog->show_homepage)
                                                 <span class="badge badge-success">{{__('admin.Yes')}}</span>

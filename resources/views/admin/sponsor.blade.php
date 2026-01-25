@@ -40,16 +40,16 @@
                                         <td>{{ $index + 1 }}</td>
                                         <td>
                                             @if($sponsor->logo)
-                                                <img src="{{ asset($sponsor->logo) }}" width="80px" alt="{{ $sponsor->name }}">
+                                                <img src="{{ asset($sponsor->logo) }}" width="80px" alt="{{ $sponsor->name }}" class="brand-img">
                                             @else
-                                                <span class="badge badge-secondary">{{__('admin.No Image')}}</span>
+                                                <span class="brand-img-fallback" style="display:inline-flex;align-items:center;justify-content:center;width:80px;height:50px;background:#f5f5f5;border-radius:4px;color:#999;"><i class="fas fa-building"></i></span>
                                             @endif
                                         </td>
                                         <td>
                                             @if($sponsor->banner)
-                                                <img src="{{ asset($sponsor->banner) }}" width="120px" alt="{{ $sponsor->name }}">
+                                                <img src="{{ asset($sponsor->banner) }}" width="120px" alt="{{ $sponsor->name }}" class="banner-img">
                                             @else
-                                                <span class="badge badge-secondary">{{__('admin.No Image')}}</span>
+                                                <span class="banner-img-fallback" style="display:inline-flex;align-items:center;justify-content:center;width:120px;height:60px;background:#f5f5f5;border-radius:4px;color:#999;"><i class="fas fa-image"></i></span>
                                             @endif
                                         </td>
                                         <td>{{ $sponsor->name }}</td>

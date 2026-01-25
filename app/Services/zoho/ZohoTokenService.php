@@ -57,14 +57,24 @@ class ZohoTokenService
 
         // 🔴 IMPORTANT: Handle OAuth failure properly
         if (!$response->successful() || !isset($data['access_token'])) {
+            $error = $data['error'] ?? 'Unknown error';
+
             Log::error('Zoho OAuth failed', [
                 'status'   => $response->status(),
                 'response' => $data,
             ]);
 
-            throw new \Exception(
-                'Zoho OAuth failed: ' . ($data['error'] ?? 'Unknown error')
-            );
+            // Clear invalid tokens and provide actionable guidance
+            if (in_array($error, ['invalid_code', 'invalid_client', 'access_denied'])) {
+                DB::table('zoho_tokens')->truncate();
+
+                throw new \Exception(
+                    "Zoho OAuth failed: {$error}. Refresh token is invalid or revoked. " .
+                    "Please re-authenticate by visiting: " . url('/zoho/connect')
+                );
+            }
+
+            throw new \Exception('Zoho OAuth failed: ' . $error);
         }
 
         // ✅ Save new token

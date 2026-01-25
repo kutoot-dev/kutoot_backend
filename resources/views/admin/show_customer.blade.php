@@ -27,7 +27,9 @@
                                 <td>{{__('admin.Image')}}</td>
                                 <td>
                                     @if ($customer->image)
-                                    <img src="{{ asset($customer->image) }}" class="rounded-circle" alt="" width="80px">
+                                    <img src="{{ asset($customer->image) }}" class="rounded-circle avatar-img" alt="{{ $customer->name }}" width="80px">
+                                    @else
+                                    <span class="avatar-img-fallback" style="display:inline-flex;align-items:center;justify-content:center;width:80px;height:80px;border-radius:50%;background:linear-gradient(135deg,#B22234,#FF8C00);color:#fff;font-size:28px;"><i class="fas fa-user"></i></span>
                                     @endif
                                 </td>
                             </tr>

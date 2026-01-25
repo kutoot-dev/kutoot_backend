@@ -21,7 +21,7 @@ class ContentController extends Controller
 
     public function maintainanceMode()
     {
-        $maintainance = MaintainanceText::first();
+        $maintainance = MaintainanceText::firstOrCreate([], ['description' => '', 'status' => 0, 'image' => '']);
 
         return view('admin.maintainance_mode', compact('maintainance'));
 
@@ -39,7 +39,7 @@ class ContentController extends Controller
         ];
         $this->validate($request, $rules,$customMessages);
 
-        $maintainance = MaintainanceText::first();
+        $maintainance = MaintainanceText::firstOrCreate([], ['description' => '', 'status' => 0, 'image' => '']);
         if($request->image){
             $old_image=$maintainance->image;
             $image=$request->image;
@@ -64,7 +64,7 @@ class ContentController extends Controller
     }
 
     public function announcementModal(){
-        $announcement = AnnouncementModal::first();
+        $announcement = AnnouncementModal::firstOrCreate([], ['title' => '', 'description' => '', 'status' => 0, 'expired_date' => now()->addDays(30), 'image' => '']);
 
         return view('admin.announcement', compact('announcement'));
     }
@@ -84,7 +84,7 @@ class ContentController extends Controller
         ];
         $this->validate($request, $rules,$customMessages);
 
-        $announcement = AnnouncementModal::first();
+        $announcement = AnnouncementModal::firstOrCreate([], ['title' => '', 'description' => '', 'status' => 0, 'expired_date' => now()->addDays(30), 'image' => '']);
         if($request->image){
             $old_image=$announcement->image;
             $image=$request->image;
@@ -165,7 +165,7 @@ class ContentController extends Controller
     }
 
     public function shopPage(){
-        $shop_page = ShopPage::first();
+        $shop_page = ShopPage::firstOrCreate([], ['filter_price_range' => 1000]);
 
         return view('admin.shop_page', compact('shop_page'));
     }
@@ -180,7 +180,7 @@ class ContentController extends Controller
         ];
         $this->validate($request, $rules,$customMessages);
 
-        $shop_page = ShopPage::first();
+        $shop_page = ShopPage::firstOrCreate([], ['filter_price_range' => 1000]);
         $shop_page->filter_price_range = $request->filter_price_range;
         $shop_page->save();
         $notification = trans('admin_validation.Update Successfully');

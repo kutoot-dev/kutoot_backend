@@ -343,4 +343,108 @@ class ImageHelper
     {
         return $path && File::exists(public_path($path));
     }
+
+    /**
+     * Generate optimized img tag with lazy loading
+     *
+     * @param string|null $path Image path
+     * @param string $alt Alt text
+     * @param string|null $class CSS classes
+     * @param string $type Image type for getting dimensions
+     * @param bool $lazy Enable lazy loading
+     * @return string HTML img tag
+     */
+    public static function imgTag(
+        ?string $path,
+        string $alt = '',
+        ?string $class = null,
+        string $type = 'default',
+        bool $lazy = true
+    ): string {
+        $url = self::url($path) ?? asset('images/placeholder.webp');
+        $dimensions = self::$maxDimensions[$type] ?? self::$maxDimensions['default'];
+
+        $attributes = [
+            'src' => $url,
+            'alt' => htmlspecialchars($alt, ENT_QUOTES, 'UTF-8'),
+            'width' => $dimensions['width'],
+            'height' => $dimensions['height'],
+            'decoding' => 'async',
+        ];
+
+        if ($lazy) {
+            $attributes['loading'] = 'lazy';
+        }
+
+        if ($class) {
+            $attributes['class'] = $class;
+        }
+
+        $attrString = implode(' ', array_map(
+            fn($key, $value) => "{$key}=\"{$value}\"",
+            array_keys($attributes),
+            $attributes
+        ));
+
+        return "<img {$attrString}>";
+    }
+
+    /**
+     * Generate responsive picture element for banners/sliders
+     *
+     * @param array $paths Responsive image paths ['desktop' => path, 'tablet' => path, 'mobile' => path]
+     * @param string $alt Alt text
+     * @param string|null $class CSS classes
+     * @param bool $lazy Enable lazy loading
+     * @return string HTML picture element
+     */
+    public static function pictureTag(
+        array $paths,
+        string $alt = '',
+        ?string $class = null,
+        bool $lazy = true
+    ): string {
+        $desktop = self::url($paths['desktop'] ?? null) ?? asset('images/placeholder.webp');
+        $tablet = self::url($paths['tablet'] ?? null);
+        $mobile = self::url($paths['mobile'] ?? null);
+
+        $loading = $lazy ? 'loading="lazy"' : '';
+        $classAttr = $class ? "class=\"{$class}\"" : '';
+        $altAttr = htmlspecialchars($alt, ENT_QUOTES, 'UTF-8');
+
+        $html = '<picture>';
+
+        if ($mobile) {
+            $html .= "<source media=\"(max-width: 640px)\" srcset=\"{$mobile}\" type=\"image/webp\">";
+        }
+
+        if ($tablet) {
+            $html .= "<source media=\"(max-width: 1024px)\" srcset=\"{$tablet}\" type=\"image/webp\">";
+        }
+
+        $html .= "<img src=\"{$desktop}\" alt=\"{$altAttr}\" {$loading} decoding=\"async\" {$classAttr}>";
+        $html .= '</picture>';
+
+        return $html;
+    }
+
+    /**
+     * Generate srcset attribute for responsive images
+     *
+     * @param array $paths Responsive image paths ['640w' => path, '1024w' => path, '1920w' => path]
+     * @return string srcset attribute value
+     */
+    public static function srcset(array $paths): string
+    {
+        $srcset = [];
+
+        foreach ($paths as $width => $path) {
+            $url = self::url($path);
+            if ($url) {
+                $srcset[] = "{$url} {$width}";
+            }
+        }
+
+        return implode(', ', $srcset);
+    }
 }

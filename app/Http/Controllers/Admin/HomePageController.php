@@ -30,23 +30,24 @@ class HomePageController extends Controller
 
     public function storePopularCategory(Request $request){
 
-        $isExist = 0;
-        if($request->category_id){
-            $isExist = PopularCategory::where('category_id', $request->category_id)->count();
-        }
-
         $rules = [
-            'category_id' => $isExist == 0 ? 'required' : 'required|unique:popular_categories',
+            'title' => 'required',
+            'first_category_id' => 'required',
+            'second_category_id' => 'nullable',
+            'third_category_id' => 'nullable',
         ];
         $customMessages = [
-            'category_id.required' => trans('Category is required'),
-            'category_id.unique' => trans('Category already exist'),
+            'title.required' => trans('Title is required'),
+            'first_category_id.required' => trans('First category is required'),
         ];
         $this->validate($request, $rules,$customMessages);
 
-        $category = new PopularCategory();
-        $category->category_id = $request->category_id;
-        $category->save();
+        $popularCategory = new PopularCategory();
+        $popularCategory->title = $request->title;
+        $popularCategory->first_category_id = $request->first_category_id;
+        $popularCategory->second_category_id = $request->second_category_id;
+        $popularCategory->third_category_id = $request->third_category_id;
+        $popularCategory->save();
 
         $notification= trans('Create Successfully');
         return response()->json(['notification' => $notification], 200);

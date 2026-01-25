@@ -20,6 +20,7 @@ class CreateMyfatoorahPaymentsTable extends Migration
             $table->string('currency_code');
             $table->string('currency_rate');
             $table->text('api_key');
+            $table->integer('currency_id')->nullable();
             $table->timestamps();
         });
     }
