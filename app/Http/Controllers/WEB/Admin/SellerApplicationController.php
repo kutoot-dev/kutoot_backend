@@ -100,17 +100,17 @@ class SellerApplicationController extends Controller
 
         if ($request->country_id) {
             $country = World::countries(['filters' => ['id' => $request->country_id]])->data->first();
-            $countryName = $country ? $country->name : null;
+            $countryName = $country ? (is_array($country) ? $country['name'] : $country->name) : null;
         }
 
         if ($request->state_id) {
             $state = World::states(['filters' => ['id' => $request->state_id]])->data->first();
-            $stateName = $state ? $state->name : null;
+            $stateName = $state ? (is_array($state) ? $state['name'] : $state->name) : null;
         }
 
         if ($request->city_id) {
             $city = World::cities(['filters' => ['id' => $request->city_id]])->data->first();
-            $cityName = $city ? $city->name : null;
+            $cityName = $city ? (is_array($city) ? $city['name'] : $city->name) : null;
         }
 
         $application = SellerApplication::create([
@@ -231,17 +231,17 @@ class SellerApplicationController extends Controller
 
         if ($request->country_id) {
             $country = World::countries(['filters' => ['id' => $request->country_id]])->data->first();
-            $countryName = $country ? $country->name : null;
+            $countryName = $country ? (is_array($country) ? $country['name'] : $country->name) : null;
         }
 
         if ($request->state_id) {
             $state = World::states(['filters' => ['id' => $request->state_id]])->data->first();
-            $stateName = $state ? $state->name : null;
+            $stateName = $state ? (is_array($state) ? $state['name'] : $state->name) : null;
         }
 
         if ($request->city_id) {
             $city = World::cities(['filters' => ['id' => $request->city_id]])->data->first();
-            $cityName = $city ? $city->name : null;
+            $cityName = $city ? (is_array($city) ? $city['name'] : $city->name) : null;
         }
 
         $application->update([
