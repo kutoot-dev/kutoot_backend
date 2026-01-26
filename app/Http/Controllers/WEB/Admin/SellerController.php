@@ -102,13 +102,13 @@ class SellerController extends Controller
                 'country_id' => $id,
             ],
         ])->data;
-        $response='<option value="">'.trans('admin_validation.Select a State').'</option>';
+        $statesArray = [];
         if(count($states) > 0){
             foreach($states as $state){
-                $response .= "<option value=".$state['id'].">".$state['name']."</option>";
+                $statesArray[] = ['id' => $state['id'], 'name' => $state['name']];
             }
         }
-        return response()->json(['states'=>$response]);
+        return response()->json(['states' => $statesArray]);
     }
 
     public function cityByState($id){
@@ -117,13 +117,13 @@ class SellerController extends Controller
                 'state_id' => $id,
             ],
         ])->data;
-        $response='<option value="">'.trans('admin_validation.Select a City').'</option>';
+        $citiesArray = [];
         if($cities->count() > 0){
             foreach($cities as $city){
-                $response .= "<option value=".$city->id.">".$city->name."</option>";
+                $citiesArray[] = ['id' => $city->id, 'name' => $city->name];
             }
         }
-        return response()->json(['cities'=>$response]);
+        return response()->json(['cities' => $citiesArray]);
     }
 
     public function updateSeller(Request $request , $id){

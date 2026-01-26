@@ -93,7 +93,13 @@ class SellerController extends Controller
                 'country_id' => $id,
             ],
         ])->data;
-        return response()->json(['states' => $states]);
+        $statesArray = [];
+        if(count($states) > 0){
+            foreach($states as $state){
+                $statesArray[] = ['id' => $state['id'], 'name' => $state['name']];
+            }
+        }
+        return response()->json(['states' => $statesArray]);
     }
 
     public function cityByState($id){
@@ -102,7 +108,13 @@ class SellerController extends Controller
                 'state_id' => $id,
             ],
         ])->data;
-        return response()->json(['cities' => $cities]);
+        $citiesArray = [];
+        if($cities->count() > 0){
+            foreach($cities as $city){
+                $citiesArray[] = ['id' => $city->id, 'name' => $city->name];
+            }
+        }
+        return response()->json(['cities' => $citiesArray]);
     }
 
     public function updateSeller(Request $request , $id){
