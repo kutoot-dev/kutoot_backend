@@ -16,7 +16,7 @@
 
                         <div class="form-group">
                             <label>Shop Name</label>
-                            <input class="form-control" name="shop_name" value="{{ old('shop_name', $shop?->shop_name) }}" required>
+                            <input class="form-control" name="shop_name" value="{{ old('shop_name', $shop?->store_name) }}" required>
                         </div>
 
                         <div class="form-group">
@@ -24,7 +24,7 @@
                             <select class="form-control" name="category">
                                 <option value="">-- Select --</option>
                                 @foreach(($categories ?? []) as $cat)
-                                    <option value="{{ $cat->name }}" {{ old('category', $shop?->category) === $cat->name ? 'selected' : '' }}>
+                                    <option value="{{ $cat->name }}" {{ old('category', $shop?->store_type) === $cat->name ? 'selected' : '' }}>
                                         {{ $cat->name }}
                                     </option>
                                 @endforeach
@@ -39,11 +39,11 @@
                         <div class="form-row">
                             <div class="form-group col-md-6">
                                 <label>Phone</label>
-                                <input class="form-control" name="phone" value="{{ old('phone', $shop?->phone) }}">
+                                <input class="form-control" name="phone" value="{{ old('phone', $shop?->owner_mobile) }}">
                             </div>
                             <div class="form-group col-md-6">
                                 <label>Email</label>
-                                <input class="form-control" name="email" value="{{ old('email', $shop?->email) }}">
+                                <input class="form-control" name="email" value="{{ old('email', $shop?->owner_email) }}">
                             </div>
                         </div>
 
@@ -54,7 +54,7 @@
 
                         <div class="form-group">
                             <label>Address</label>
-                            <input class="form-control" name="address" value="{{ old('address', $shop?->address) }}">
+                            <input class="form-control" name="address" value="{{ old('address', $shop?->store_address) }}">
                         </div>
 
                         <div class="form-group">
@@ -66,11 +66,11 @@
                         <div class="form-row">
                             <div class="form-group col-md-6">
                                 <label>Latitude</label>
-                                <input class="form-control" name="location_lat" value="{{ old('location_lat', $shop?->location_lat) }}">
+                                <input class="form-control" name="location_lat" value="{{ old('location_lat', $shop?->lat) }}">
                             </div>
                             <div class="form-group col-md-6">
                                 <label>Longitude</label>
-                                <input class="form-control" name="location_lng" value="{{ old('location_lng', $shop?->location_lng) }}">
+                                <input class="form-control" name="location_lng" value="{{ old('location_lng', $shop?->lng) }}">
                             </div>
                         </div>
 
@@ -90,8 +90,9 @@
             <div class="card">
                 <div class="card-header"><h4>Read-only KPIs</h4></div>
                 <div class="card-body">
-                    <div>Discount: <strong>{{ $master?->discount_percent ?? 0 }}%</strong></div>
-                    <div>Commission: <strong>{{ $master?->commission_percent ?? 0 }}%</strong></div>
+                    <div>Discount: <strong>{{ $shop?->discount_percent ?? 0 }}%</strong></div>
+                    <div>Commission: <strong>{{ $shop?->commission_percent ?? 0 }}%</strong></div>
+                    <div>Min Bill Amount: <strong>{{ $shop?->min_bill_amount ?? 0 }}</strong></div>
                 </div>
             </div>
 

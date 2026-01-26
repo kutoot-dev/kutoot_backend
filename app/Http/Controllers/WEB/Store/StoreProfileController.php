@@ -28,15 +28,11 @@ class StoreProfileController extends Controller
         $application = $seller->application;
         $categories = StoreCategory::query()->where('is_active', true)->orderBy('name')->get();
 
+        // All details are fetched directly from the store application
         return view('store.store_profile', [
             'seller' => $seller,
             'shop' => $application,
             'images' => $application?->shopImages ?? collect(),
-            'master' => [
-                'commission_percent' => $application?->commission_percent ?? 0,
-                'discount_percent' => $application?->discount_percent ?? 0,
-                'minimum_bill_amount' => $application?->min_bill_amount ?? 0,
-            ],
             'categories' => $categories,
         ]);
     }
