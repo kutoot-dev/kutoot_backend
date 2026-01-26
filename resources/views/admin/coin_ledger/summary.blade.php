@@ -216,6 +216,9 @@
                             <h4><i class="fas fa-cogs"></i> Quick Actions</h4>
                         </div>
                         <div class="card-body">
+                            <a href="{{ route('admin.coin-ledger.system-wallet') }}" class="btn btn-dark mr-2 mb-2">
+                                <i class="fas fa-building"></i> Kutoot System Wallet
+                            </a>
                             <a href="{{ route('admin.coin-ledger.index') }}" class="btn btn-primary mr-2 mb-2">
                                 <i class="fas fa-list"></i> View All Transactions
                             </a>

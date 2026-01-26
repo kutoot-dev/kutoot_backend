@@ -10,6 +10,10 @@ use Illuminate\Support\Facades\DB;
 class CoinLedgerService
 {
     /**
+     * System user ID for Kutoot wallet (liability pool).
+     */
+    public const SYSTEM_USER_ID = 0;
+    /**
      * Credit coins to a user.
      */
     public function credit(int $userId, int $amount, string $category, string $type, ?string $refId = null, ?int $expiryDays = 100)
@@ -459,5 +463,125 @@ class CoinLedgerService
         }
 
         return 'Unknown';
+    }
+
+    // =========================================================================
+    // KUTOOT SYSTEM WALLET (LIABILITY POOL) METHODS
+    // =========================================================================
+
+    /**
+     * Get current Kutoot system wallet balance (total liability).
+     */
+    public function getSystemWalletBalance(): array
+    {
+        $paidBalance = CoinLedger::where('user_id', self::SYSTEM_USER_ID)
+            ->where('coin_category', CoinLedger::CAT_PAID)
+            ->selectRaw('COALESCE(SUM(coins_in), 0) - COALESCE(SUM(coins_out), 0) as balance')
+            ->value('balance') ?? 0;
+
+        $rewardBalance = CoinLedger::where('user_id', self::SYSTEM_USER_ID)
+            ->where('coin_category', CoinLedger::CAT_REWARD)
+            ->selectRaw('COALESCE(SUM(coins_in), 0) - COALESCE(SUM(coins_out), 0) as balance')
+            ->value('balance') ?? 0;
+
+        return [
+            'total' => $paidBalance + $rewardBalance,
+            'paid' => $paidBalance,
+            'reward' => $rewardBalance,
+        ];
+    }
+
+    /**
+     * Update total liability in Kutoot system wallet.
+     *
+     * @param string $category PAID or REWARD
+     * @param int $targetAmount Target total coins (not delta)
+     * @param string $reason Admin reason for adjustment
+     * @param int|null $adminId Admin performing the action
+     */
+    public function updateSystemLiability(string $category, int $targetAmount, string $reason, ?int $adminId = null): CoinLedger
+    {
+        $currentBalance = CoinLedger::where('user_id', self::SYSTEM_USER_ID)
+            ->where('coin_category', $category)
+            ->selectRaw('COALESCE(SUM(coins_in), 0) - COALESCE(SUM(coins_out), 0) as balance')
+            ->value('balance') ?? 0;
+
+        $difference = $targetAmount - $currentBalance;
+
+        if ($difference == 0) {
+            throw new \Exception("System wallet already at target balance: " . number_format($targetAmount));
+        }
+
+        $refId = 'ADMIN_ADJUST_' . ($adminId ?? 'SYSTEM') . '_' . now()->format('Ymd_His');
+
+        if ($difference > 0) {
+            // Add coins to system wallet
+            return CoinLedger::create([
+                'user_id' => self::SYSTEM_USER_ID,
+                'entry_type' => $category === CoinLedger::CAT_PAID
+                    ? CoinLedger::TYPE_PAID_CREDIT
+                    : CoinLedger::TYPE_REWARD_CREDIT,
+                'coins_in' => $difference,
+                'coins_out' => 0,
+                'coin_category' => $category,
+                'expiry_date' => null, // System coins never expire
+                'reference_id' => $refId,
+                'metadata' => [
+                    'reason' => $reason,
+                    'admin_id' => $adminId,
+                    'target_balance' => $targetAmount,
+                    'previous_balance' => $currentBalance,
+                    'adjustment' => '+' . $difference,
+                ],
+            ]);
+        } else {
+            // Remove coins from system wallet
+            return CoinLedger::create([
+                'user_id' => self::SYSTEM_USER_ID,
+                'entry_type' => CoinLedger::TYPE_REVERSAL,
+                'coins_in' => 0,
+                'coins_out' => abs($difference),
+                'coin_category' => $category,
+                'expiry_date' => null,
+                'reference_id' => $refId,
+                'metadata' => [
+                    'reason' => $reason,
+                    'admin_id' => $adminId,
+                    'target_balance' => $targetAmount,
+                    'previous_balance' => $currentBalance,
+                    'adjustment' => $difference,
+                ],
+            ]);
+        }
+    }
+
+    /**
+     * Adjust system liability by delta amount (positive = add, negative = subtract).
+     */
+    public function adjustSystemLiability(string $category, int $deltaAmount, string $reason, ?int $adminId = null): CoinLedger
+    {
+        $currentBalance = CoinLedger::where('user_id', self::SYSTEM_USER_ID)
+            ->where('coin_category', $category)
+            ->selectRaw('COALESCE(SUM(coins_in), 0) - COALESCE(SUM(coins_out), 0) as balance')
+            ->value('balance') ?? 0;
+
+        $targetAmount = $currentBalance + $deltaAmount;
+
+        if ($targetAmount < 0) {
+            throw new \Exception("Cannot reduce system wallet below zero. Current: " . number_format($currentBalance) . ", Requested: " . number_format($deltaAmount));
+        }
+
+        return $this->updateSystemLiability($category, $targetAmount, $reason, $adminId);
+    }
+
+    /**
+     * Get system wallet ledger entries.
+     */
+    public function getSystemWalletLedger(int $limit = 50)
+    {
+        return CoinLedger::where('user_id', self::SYSTEM_USER_ID)
+            ->orderBy('created_at', 'desc')
+            ->limit($limit)
+            ->get();
     }
 }

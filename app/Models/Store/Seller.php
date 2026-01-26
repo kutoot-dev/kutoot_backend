@@ -42,6 +42,21 @@ class Seller extends Authenticatable implements JWTSubject
         return $this->hasOne(SellerNotificationSetting::class, 'seller_id');
     }
 
+    public function application()
+    {
+        return $this->hasOne(SellerApplication::class, 'seller_id');
+    }
+
+    /**
+     * Check if seller has an approved store application
+     */
+    public function hasApprovedApplication(): bool
+    {
+        return $this->application()
+            ->where('status', SellerApplication::STATUS_APPROVED)
+            ->exists();
+    }
+
     public function getJWTIdentifier()
     {
         return $this->getKey();

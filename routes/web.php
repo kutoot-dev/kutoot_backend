@@ -460,6 +460,11 @@ Route::group(['middleware' => ['demo', 'XSS']], function () {
         Route::get('coin-ledger/user/{id}', [CoinLedgerAdminController::class, 'userLedger'])->name('coin-ledger.user');
         Route::post('coin-ledger/manual-credit', [CoinLedgerAdminController::class, 'manualCredit'])->name('coin-ledger.manual-credit');
 
+        // Kutoot System Wallet (Liability Management)
+        Route::get('coin-ledger/system-wallet', [CoinLedgerAdminController::class, 'systemWallet'])->name('coin-ledger.system-wallet');
+        Route::post('coin-ledger/update-liability', [CoinLedgerAdminController::class, 'updateLiability'])->name('coin-ledger.update-liability');
+        Route::post('coin-ledger/adjust-liability', [CoinLedgerAdminController::class, 'adjustLiability'])->name('coin-ledger.adjust-liability');
+
 
         Route::get('all-coin-campaigns', [CoinCampaignController::class, 'index'])->name('all-coin-campaigns');
         Route::get('view-coin-campaign/{id}', [CoinCampaignController::class, 'show'])->name('view-coin-campaign');

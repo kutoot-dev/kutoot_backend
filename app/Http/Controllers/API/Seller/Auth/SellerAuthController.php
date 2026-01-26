@@ -36,6 +36,16 @@ class SellerAuthController extends Controller
 
         /** @var Seller $seller */
         $seller = Auth::guard('store-api')->user();
+
+        // Check if seller has approved store application
+        if (!$seller->hasApprovedApplication()) {
+            Auth::guard('store-api')->logout();
+            return response()->json([
+                'success' => false,
+                'message' => 'Your store application is not approved yet. Please wait for approval.',
+            ], 403);
+        }
+
         $seller->loadMissing('shop');
 
         $categories = StoreCategory::query()

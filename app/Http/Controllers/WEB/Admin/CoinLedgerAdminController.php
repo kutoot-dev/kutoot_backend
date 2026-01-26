@@ -195,4 +195,98 @@ class CoinLedgerAdminController extends Controller
 
         return view('admin.coin_ledger.zoho_mapping', compact('mappings'));
     }
+
+    // =========================================================================
+    // KUTOOT SYSTEM WALLET (LIABILITY MANAGEMENT)
+    // =========================================================================
+
+    /**
+     * Display Kutoot system wallet dashboard.
+     */
+    public function systemWallet()
+    {
+        $systemBalance = $this->coinService->getSystemWalletBalance();
+        $systemLedger = $this->coinService->getSystemWalletLedger(100);
+        $coinValue = config('kutoot.coin_value', 0.25);
+        $currencySymbol = config('kutoot.currency_symbol', '₹');
+
+        $categories = [
+            CoinLedger::CAT_PAID => 'Paid (Purchased)',
+            CoinLedger::CAT_REWARD => 'Reward (Marketing)',
+        ];
+
+        return view('admin.coin_ledger.system_wallet', compact(
+            'systemBalance',
+            'systemLedger',
+            'coinValue',
+            'currencySymbol',
+            'categories'
+        ));
+    }
+
+    /**
+     * Update total liability in Kutoot system wallet.
+     */
+    public function updateLiability(Request $request)
+    {
+        $request->validate([
+            'category' => 'required|in:PAID,REWARD',
+            'target_amount' => 'required|integer|min:0',
+            'reason' => 'required|string|max:500',
+        ]);
+
+        try {
+            $entry = $this->coinService->updateSystemLiability(
+                $request->category,
+                $request->target_amount,
+                $request->reason,
+                auth('admin')->id()
+            );
+
+            $newBalance = $this->coinService->getSystemWalletBalance();
+            $notification = 'Kutoot wallet updated. New ' . $request->category . ' balance: ' . number_format($newBalance[$request->category === 'PAID' ? 'paid' : 'reward']);
+
+            return redirect()->back()
+                ->with('messege', $notification)
+                ->with('alert-type', 'success');
+
+        } catch (\Exception $e) {
+            return redirect()->back()
+                ->with('messege', $e->getMessage())
+                ->with('alert-type', 'error');
+        }
+    }
+
+    /**
+     * Adjust liability by delta amount.
+     */
+    public function adjustLiability(Request $request)
+    {
+        $request->validate([
+            'category' => 'required|in:PAID,REWARD',
+            'adjustment' => 'required|integer|not_in:0',
+            'reason' => 'required|string|max:500',
+        ]);
+
+        try {
+            $entry = $this->coinService->adjustSystemLiability(
+                $request->category,
+                $request->adjustment,
+                $request->reason,
+                auth('admin')->id()
+            );
+
+            $direction = $request->adjustment > 0 ? 'increased' : 'decreased';
+            $notification = 'Kutoot wallet ' . $direction . ' by ' . number_format(abs($request->adjustment)) . ' ' . $request->category . ' coins.';
+
+            return redirect()->back()
+                ->with('messege', $notification)
+                ->with('alert-type', 'success');
+
+        } catch (\Exception $e) {
+            return redirect()->back()
+                ->with('messege', $e->getMessage())
+                ->with('alert-type', 'error');
+        }
+    }
 }
