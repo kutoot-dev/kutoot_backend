@@ -156,7 +156,7 @@ class StoreDetailsRepository
     public function getBySellerId(int $sellerId): ?StoreDetailsDTO
     {
         $application = SellerApplication::where('seller_id', $sellerId)->latest()->first();
-        
+
         if (!$application) {
             return null;
         }

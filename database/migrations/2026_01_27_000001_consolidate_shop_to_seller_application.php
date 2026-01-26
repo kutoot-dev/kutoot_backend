@@ -35,7 +35,7 @@ return new class extends Migration
             UPDATE seller_applications sa
             JOIN store_sellers s ON sa.seller_id = s.id
             JOIN shops sh ON sh.seller_id = s.id
-            SET 
+            SET
                 sa.shop_code = sh.shop_code,
                 sa.owner_name = sh.owner_name,
                 sa.google_map_url = sh.google_map_url,
@@ -50,7 +50,7 @@ return new class extends Migration
             JOIN store_sellers s ON sa.seller_id = s.id
             JOIN shops sh ON sh.seller_id = s.id
             JOIN admin_shop_commission_discounts ascd ON ascd.shop_id = sh.id
-            SET 
+            SET
                 sa.commission_percent = ascd.commission_percent,
                 sa.discount_percent = ascd.discount_percent,
                 sa.min_bill_amount = ascd.minimum_bill_amount,

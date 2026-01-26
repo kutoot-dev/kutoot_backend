@@ -203,7 +203,7 @@ class RedeemController extends Controller
         $store = SellerApplication::where('status', SellerApplication::STATUS_APPROVED)
             ->where('id', $storeId)
             ->first();
-            
+
         if (!$store) {
             return response()->json(['success' => false, 'message' => 'Store not found'], 404);
         }
@@ -268,7 +268,7 @@ class RedeemController extends Controller
         $store = SellerApplication::where('status', SellerApplication::STATUS_APPROVED)
             ->where('id', $storeId)
             ->first();
-            
+
         if (!$store) {
             return response()->json(['success' => false, 'message' => 'Store not found'], 404);
         }
@@ -329,7 +329,7 @@ class RedeemController extends Controller
         $store = SellerApplication::where('status', SellerApplication::STATUS_APPROVED)
             ->where('id', $storeId)
             ->first();
-            
+
         if (!$store) {
             return response()->json(['success' => false, 'message' => 'Store not found'], 404);
         }
@@ -453,7 +453,7 @@ class RedeemController extends Controller
             $store = SellerApplication::where('status', SellerApplication::STATUS_APPROVED)
                 ->where('id', $storeId)
                 ->first();
-                
+
             if (!$store) {
                 throw new \Exception("Store not found");
             }
@@ -481,7 +481,7 @@ class RedeemController extends Controller
             // Create Transaction with seller_application_id
             $txn = new Transaction();
             $txn->seller_application_id = $storeId;
-            
+
             // Link user via visitor
             $visitor = \App\Models\Store\ShopVisitor::where('user_id', $user->id)
                 ->where('seller_application_id', $storeId)

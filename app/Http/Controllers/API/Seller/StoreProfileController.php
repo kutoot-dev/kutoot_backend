@@ -26,10 +26,10 @@ class StoreProfileController extends Controller
     {
         /** @var Seller $seller */
         $seller = Auth::guard('store-api')->user();
-        
+
         // Get store details from single source of truth
         $storeDetails = $this->storeRepository->getForSeller($seller);
-        
+
         if (!$storeDetails || !$storeDetails->isApproved()) {
             return response()->json([
                 'success' => false,
@@ -124,7 +124,7 @@ class StoreProfileController extends Controller
             'shopName', 'category', 'ownerName', 'phone', 'email',
             'gstNumber', 'address', 'googleMapUrl'
         ]);
-        
+
         if ($request->has('location.lat')) {
             $updateData['lat'] = $request->input('location.lat');
         }
