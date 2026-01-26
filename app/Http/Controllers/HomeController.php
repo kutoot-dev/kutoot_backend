@@ -767,7 +767,7 @@ class HomeController extends Controller
 
     public function blog(Request $request){
 
-        $paginateQty = CustomPagination::whereId('1')->first()->qty;
+        $paginateQty = CustomPagination::whereId('1')->first()?->qty ?? 10;
 
         $blogs = Blog::with('activeComments')->orderBy('id','desc')->where(['status' => 1]);
 
@@ -825,7 +825,7 @@ class HomeController extends Controller
 
 
 
-        $paginateQty = CustomPagination::whereId('4')->first()->qty;
+        $paginateQty = CustomPagination::whereId('4')->first()?->qty ?? 10;
 
         $activeComments = BlogComment::where('blog_id', $blog->id)->orderBy('id','desc')->paginate($paginateQty);
 
@@ -1027,7 +1027,7 @@ class HomeController extends Controller
 
 
 
-        $paginateQty = CustomPagination::whereId('2')->first()->qty;
+        $paginateQty = CustomPagination::whereId('2')->first()?->qty ?? 10;
 
         $products = Product::with('activeVariants.activeVariantItems')->orderBy('id','desc')->where(['status' => 1, 'vendor_id' => $seller->id, 'approval_status' => ProductApprovalStatus::APPROVED]);
 
@@ -1089,7 +1089,7 @@ class HomeController extends Controller
 
 
 
-        $paginateQty = CustomPagination::whereId('2')->first()->qty;
+        $paginateQty = CustomPagination::whereId('2')->first()?->qty ?? 10;
 
 
 
@@ -1177,7 +1177,7 @@ class HomeController extends Controller
 
 
 
-        $paginateQty = CustomPagination::whereId('2')->first()->qty;
+        $paginateQty = CustomPagination::whereId('2')->first()?->qty ?? 10;
 
         $products = Product::with('activeVariants.activeVariantItems')->orderBy('id','desc')->where(['status' => 1, 'approval_status' => ProductApprovalStatus::APPROVED]);
 
@@ -1349,7 +1349,7 @@ class HomeController extends Controller
 
     public function searchProduct(Request $request){
 
-        $paginateQty = CustomPagination::whereId('2')->first()->qty;
+        $paginateQty = CustomPagination::whereId('2')->first()?->qty ?? 10;
 
         if($request->variantItems){
 
@@ -1614,7 +1614,7 @@ class HomeController extends Controller
 
 
 
-        $paginateQty = CustomPagination::whereId('5')->first()->qty;
+        $paginateQty = CustomPagination::whereId('5')->first()?->qty ?? 10;
 
         $productReviews = ProductReview::with('user')->where(['status' => 1, 'product_id' =>$product->id])->get()->take(10);
 
@@ -1856,7 +1856,7 @@ class HomeController extends Controller
 
 
 
-        $paginateQty = CustomPagination::whereId('2')->first()->qty;
+        $paginateQty = CustomPagination::whereId('2')->first()?->qty ?? 10;
 
         $products = Product::with('activeVariants.activeVariantItems')->whereIn('id', $product_arr)->orderBy('id','desc')->where(['status' => 1, 'approval_status' => ProductApprovalStatus::APPROVED])->select('id','name', 'short_name', 'slug', 'thumb_image','qty','sold_qty', 'price', 'offer_price','is_undefine','is_featured','new_product', 'is_top', 'is_best')->paginate($paginateQty);
 
