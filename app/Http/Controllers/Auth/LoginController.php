@@ -119,6 +119,7 @@ class LoginController extends Controller
 
                     $user = User::create([
                         'phone' => $identifier,
+                        'email' => null, // Explicitly set to null to avoid duplicate empty string constraint violation
                         'email_verified' => 0,
                         'status' => 1,
                         'login_otp' => null,

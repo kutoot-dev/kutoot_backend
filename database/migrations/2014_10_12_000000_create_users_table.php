@@ -17,7 +17,7 @@ class CreateUsersTable extends Migration
             $table->id();
             $table->string('zoho_customer_id')->nullable();
             $table->string('name');
-            $table->string('email')->unique();
+            $table->string('email')->nullable()->unique();
             $table->enum('gender', ['male', 'female', 'other'])->nullable();
             $table->string('street')->nullable();
             $table->string('house_no')->nullable();
