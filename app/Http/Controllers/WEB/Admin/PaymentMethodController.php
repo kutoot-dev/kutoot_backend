@@ -145,7 +145,7 @@ class PaymentMethodController extends Controller
                 ->save(public_path() . '/' . $image_name);
             $razorpay->image = $image_name;
             $razorpay->save();
-            if (File::exists(public_path() . '/' . $old_image))
+            if ($old_image && File::exists(public_path() . '/' . $old_image))
                 unlink(public_path() . '/' . $old_image);
         }
 
@@ -259,7 +259,7 @@ class PaymentMethodController extends Controller
                 ->save(public_path() . '/' . $image_name);
             $flutterwave->logo = $image_name;
             $flutterwave->save();
-            if (File::exists(public_path() . '/' . $old_image))
+            if ($old_image && File::exists(public_path() . '/' . $old_image))
                 unlink(public_path() . '/' . $old_image);
         }
 
