@@ -3,9 +3,8 @@
 namespace App\Http\Controllers\WEB\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Store\Shop;
+use App\Models\Store\SellerApplication;
 use App\Models\Store\ShopImage;
-use App\Models\Store\AdminShopCommissionDiscount;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
@@ -31,16 +30,17 @@ class AdminShopController extends Controller
         $city = $request->query('city');
         $country = $request->query('country');
 
-        $shops = Shop::query()
-            ->with(['images', 'activeAdminSettings', 'seller'])
+        $applications = SellerApplication::query()
+            ->where('status', 'APPROVED')
+            ->with(['shopImages', 'seller'])
             ->when($search, function ($q) use ($search) {
                 $q->where(function ($query) use ($search) {
-                    $query->where('shop_name', 'like', "%{$search}%")
+                    $query->where('store_name', 'like', "%{$search}%")
                         ->orWhere('shop_code', 'like', "%{$search}%")
-                        ->orWhere('address', 'like', "%{$search}%");
+                        ->orWhere('store_address', 'like', "%{$search}%");
                 });
             })
-            ->when($category, fn($q) => $q->where('category', $category))
+            ->when($category, fn($q) => $q->where('store_type', $category))
             ->when($state, fn($q) => $q->where('state', $state))
             ->when($city, fn($q) => $q->where('city', $city))
             ->when($country, fn($q) => $q->where('country', $country))
@@ -49,127 +49,125 @@ class AdminShopController extends Controller
 
         return response()->json([
             'success' => true,
-            'data' => $shops->map(function ($shop) {
-                $settings = $shop->activeAdminSettings;
+            'data' => $applications->map(function ($app) {
                 return [
-                    'id' => $shop->id,
-                    'shopCode' => $shop->shop_code,
-                    'shopName' => $shop->shop_name,
-                    'ownerName' => $shop->owner_name,
-                    'phone' => $shop->phone,
-                    'email' => $shop->email,
-                    'category' => $shop->category,
-                    'address' => $shop->address,
-                    'state' => $shop->state,
-                    'city' => $shop->city,
-                    'country' => $shop->country,
-                    'googleMapUrl' => $shop->google_map_url,
-                    'locationLat' => $shop->location_lat,
-                    'locationLng' => $shop->location_lng,
-                    'minBillAmount' => $shop->min_bill_amount,
-                    'images' => $shop->images->map(fn($img) => [
+                    'id' => $app->id,
+                    'shopCode' => $app->shop_code,
+                    'shopName' => $app->store_name,
+                    'ownerName' => $app->owner_name,
+                    'phone' => $app->owner_mobile,
+                    'email' => $app->owner_email,
+                    'category' => $app->store_type,
+                    'address' => $app->store_address,
+                    'state' => $app->state,
+                    'city' => $app->city,
+                    'country' => $app->country,
+                    'googleMapUrl' => $app->google_map_url,
+                    'locationLat' => $app->lat,
+                    'locationLng' => $app->lng,
+                    'minBillAmount' => $app->min_bill_amount,
+                    'images' => $app->shopImages->map(fn($img) => [
                         'id' => $img->id,
                         'url' => $img->image_url,
                     ]),
-                    'commissionPercent' => $settings?->commission_percent,
-                    'discountPercent' => $settings?->discount_percent,
-                    'rating' => $settings?->rating,
-                    'totalRatings' => $settings?->total_ratings,
-                    'isActive' => $settings?->is_active ?? true,
-                    'isFeatured' => $settings?->is_featured ?? false,
-                    'offerTag' => $settings?->offer_tag,
-                    'createdAt' => $shop->created_at->toIso8601String(),
+                    'commissionPercent' => $app->commission_percent,
+                    'discountPercent' => $app->discount_percent,
+                    'rating' => $app->rating,
+                    'totalRatings' => $app->total_ratings,
+                    'isActive' => $app->is_active ?? true,
+                    'isFeatured' => $app->is_featured ?? false,
+                    'offerTag' => $app->offer_tag,
+                    'createdAt' => $app->created_at->toIso8601String(),
                 ];
             }),
             'pagination' => [
-                'currentPage' => $shops->currentPage(),
-                'lastPage' => $shops->lastPage(),
-                'perPage' => $shops->perPage(),
-                'total' => $shops->total(),
+                'currentPage' => $applications->currentPage(),
+                'lastPage' => $applications->lastPage(),
+                'perPage' => $applications->perPage(),
+                'total' => $applications->total(),
             ]
         ]);
     }
 
     /**
-     * API: Get single shop details
-     * GET /api/admin/shops/{shopId}
+     * API: Get single store details
+     * GET /api/admin/shops/{applicationId}
      */
-    public function show($shopId)
+    public function show($applicationId)
     {
-        $shop = Shop::with(['images', 'activeAdminSettings', 'seller'])->find($shopId);
+        $app = SellerApplication::with(['shopImages', 'seller'])
+            ->where('status', 'APPROVED')
+            ->find($applicationId);
 
-        if (!$shop) {
+        if (!$app) {
             return response()->json([
                 'success' => false,
-                'message' => 'Shop not found'
+                'message' => 'Store not found'
             ], 404);
         }
-
-        $settings = $shop->activeAdminSettings;
 
         return response()->json([
             'success' => true,
             'data' => [
-                'id' => $shop->id,
-                'shopCode' => $shop->shop_code,
-                'shopName' => $shop->shop_name,
-                'ownerName' => $shop->owner_name,
-                'phone' => $shop->phone,
-                'email' => $shop->email,
-                'category' => $shop->category,
-                'gstNumber' => $shop->gst_number,
-                'address' => $shop->address,
-                'state' => $shop->state,
-                'city' => $shop->city,
-                'country' => $shop->country,
-                'googleMapUrl' => $shop->google_map_url,
-                'locationLat' => $shop->location_lat,
-                'locationLng' => $shop->location_lng,
-                'minBillAmount' => $shop->min_bill_amount,
-                'razorpayAccountId' => $shop->razorpay_account_id,
-                'images' => $shop->images->map(fn($img) => [
+                'id' => $app->id,
+                'shopCode' => $app->shop_code,
+                'shopName' => $app->store_name,
+                'ownerName' => $app->owner_name,
+                'phone' => $app->owner_mobile,
+                'email' => $app->owner_email,
+                'category' => $app->store_type,
+                'gstNumber' => $app->gst_number,
+                'address' => $app->store_address,
+                'state' => $app->state,
+                'city' => $app->city,
+                'country' => $app->country,
+                'googleMapUrl' => $app->google_map_url,
+                'locationLat' => $app->lat,
+                'locationLng' => $app->lng,
+                'minBillAmount' => $app->min_bill_amount,
+                'razorpayAccountId' => $app->razorpay_account_id,
+                'images' => $app->shopImages->map(fn($img) => [
                     'id' => $img->id,
                     'url' => $img->image_url,
                 ]),
-                'seller' => $shop->seller ? [
-                    'id' => $shop->seller->id,
-                    'sellerCode' => $shop->seller->seller_code,
-                    'username' => $shop->seller->username,
-                    'ownerName' => $shop->seller->owner_name,
-                    'email' => $shop->seller->email,
-                    'phone' => $shop->seller->phone,
-                    'status' => $shop->seller->status,
+                'seller' => $app->seller ? [
+                    'id' => $app->seller->id,
+                    'sellerCode' => $app->seller->seller_code,
+                    'username' => $app->seller->username,
+                    'ownerName' => $app->seller->owner_name,
+                    'email' => $app->seller->email,
+                    'phone' => $app->seller->phone,
+                    'status' => $app->seller->status,
                 ] : null,
-                'settings' => $settings ? [
-                    'id' => $settings->id,
-                    'commissionPercent' => $settings->commission_percent,
-                    'discountPercent' => $settings->discount_percent,
-                    'minimumBillAmount' => $settings->minimum_bill_amount,
-                    'rating' => $settings->rating,
-                    'totalRatings' => $settings->total_ratings,
-                    'isActive' => $settings->is_active,
-                    'isFeatured' => $settings->is_featured,
-                    'offerTag' => $settings->offer_tag,
-                    'lastUpdatedOn' => $settings->last_updated_on,
-                ] : null,
-                'createdAt' => $shop->created_at->toIso8601String(),
-                'updatedAt' => $shop->updated_at->toIso8601String(),
+                'settings' => [
+                    'commissionPercent' => $app->commission_percent,
+                    'discountPercent' => $app->discount_percent,
+                    'minimumBillAmount' => $app->min_bill_amount,
+                    'rating' => $app->rating,
+                    'totalRatings' => $app->total_ratings,
+                    'isActive' => $app->is_active,
+                    'isFeatured' => $app->is_featured,
+                    'offerTag' => $app->offer_tag,
+                    'lastUpdatedOn' => $app->last_updated_on,
+                ],
+                'createdAt' => $app->created_at->toIso8601String(),
+                'updatedAt' => $app->updated_at->toIso8601String(),
             ]
         ]);
     }
 
     /**
-     * API: Update shop settings (commission, discount, rating, etc.)
-     * PUT /api/admin/shops/{shopId}
+     * API: Update store settings (commission, discount, rating, etc.)
+     * PUT /api/admin/shops/{applicationId}
      */
-    public function update(Request $request, $shopId)
+    public function update(Request $request, $applicationId)
     {
-        $shop = Shop::find($shopId);
+        $app = SellerApplication::where('status', 'APPROVED')->find($applicationId);
 
-        if (!$shop) {
+        if (!$app) {
             return response()->json([
                 'success' => false,
-                'message' => 'Shop not found'
+                'message' => 'Store not found'
             ], 404);
         }
 
@@ -181,7 +179,7 @@ class AdminShopController extends Controller
             'isFeatured' => 'nullable|boolean',
             'offerTag' => 'nullable|string|max:100',
             'minimumBillAmount' => 'nullable|numeric|min:0',
-            // Shop basic info
+            // Store basic info
             'shopName' => 'nullable|string|max:255',
             'address' => 'nullable|string|max:500',
             'state' => 'nullable|string|max:100',
@@ -198,69 +196,45 @@ class AdminShopController extends Controller
             ], 422);
         }
 
-        // Update shop basic info
-        $shopUpdateData = [];
-        if ($request->has('shopName')) $shopUpdateData['shop_name'] = $request->shopName;
-        if ($request->has('address')) $shopUpdateData['address'] = $request->address;
-        if ($request->has('state')) $shopUpdateData['state'] = $request->state;
-        if ($request->has('city')) $shopUpdateData['city'] = $request->city;
-        if ($request->has('country')) $shopUpdateData['country'] = $request->country;
-        if ($request->has('googleMapUrl')) $shopUpdateData['google_map_url'] = $request->googleMapUrl;
+        // Build update data
+        $updateData = [];
+        if ($request->has('shopName')) $updateData['store_name'] = $request->shopName;
+        if ($request->has('address')) $updateData['store_address'] = $request->address;
+        if ($request->has('state')) $updateData['state'] = $request->state;
+        if ($request->has('city')) $updateData['city'] = $request->city;
+        if ($request->has('country')) $updateData['country'] = $request->country;
+        if ($request->has('googleMapUrl')) $updateData['google_map_url'] = $request->googleMapUrl;
+        if ($request->has('commissionPercent')) $updateData['commission_percent'] = $request->commissionPercent;
+        if ($request->has('discountPercent')) $updateData['discount_percent'] = $request->discountPercent;
+        if ($request->has('rating')) $updateData['rating'] = $request->rating;
+        if ($request->has('isActive')) $updateData['is_active'] = $request->isActive;
+        if ($request->has('isFeatured')) $updateData['is_featured'] = $request->isFeatured;
+        if ($request->has('offerTag')) $updateData['offer_tag'] = $request->offerTag;
+        if ($request->has('minimumBillAmount')) $updateData['min_bill_amount'] = $request->minimumBillAmount;
 
-        if (!empty($shopUpdateData)) {
-            $shop->update($shopUpdateData);
-        }
-
-        // Update or create admin settings
-        $settings = AdminShopCommissionDiscount::where('shop_id', $shop->id)
-            ->orderByDesc('id')
-            ->first();
-
-        $settingsData = [];
-        if ($request->has('commissionPercent')) $settingsData['commission_percent'] = $request->commissionPercent;
-        if ($request->has('discountPercent')) $settingsData['discount_percent'] = $request->discountPercent;
-        if ($request->has('rating')) $settingsData['rating'] = $request->rating;
-        if ($request->has('isActive')) $settingsData['is_active'] = $request->isActive;
-        if ($request->has('isFeatured')) $settingsData['is_featured'] = $request->isFeatured;
-        if ($request->has('offerTag')) $settingsData['offer_tag'] = $request->offerTag;
-        if ($request->has('minimumBillAmount')) $settingsData['minimum_bill_amount'] = $request->minimumBillAmount;
-
-        if (!empty($settingsData)) {
-            $settingsData['last_updated_on'] = now();
-
-            if ($settings) {
-                $settings->update($settingsData);
-            } else {
-                // Create new settings record
-                $settingsData['shop_id'] = $shop->id;
-                $settingsData['commission_percent'] = $settingsData['commission_percent'] ?? 10;
-                $settingsData['discount_percent'] = $settingsData['discount_percent'] ?? 0;
-                $settingsData['rating'] = $settingsData['rating'] ?? 0;
-                $settingsData['total_ratings'] = 0;
-                $settingsData['is_active'] = $settingsData['is_active'] ?? true;
-                $settingsData['is_featured'] = $settingsData['is_featured'] ?? false;
-                AdminShopCommissionDiscount::create($settingsData);
-            }
+        if (!empty($updateData)) {
+            $updateData['last_updated_on'] = now();
+            $app->update($updateData);
         }
 
         return response()->json([
             'success' => true,
-            'message' => 'Shop updated successfully'
+            'message' => 'Store updated successfully'
         ]);
     }
 
     /**
      * API: Upload store images
-     * POST /api/admin/shops/{shopId}/images
+     * POST /api/admin/shops/{applicationId}/images
      */
-    public function uploadImages(Request $request, $shopId)
+    public function uploadImages(Request $request, $applicationId)
     {
-        $shop = Shop::find($shopId);
+        $app = SellerApplication::where('status', 'APPROVED')->find($applicationId);
 
-        if (!$shop) {
+        if (!$app) {
             return response()->json([
                 'success' => false,
-                'message' => 'Shop not found'
+                'message' => 'Store not found'
             ], 404);
         }
 
@@ -280,12 +254,12 @@ class AdminShopController extends Controller
         $uploadedImages = [];
 
         foreach ($request->file('images') as $image) {
-            $filename = 'shop_' . $shop->id . '_' . Str::random(10) . '.' . $image->getClientOriginalExtension();
+            $filename = 'store_' . $app->id . '_' . Str::random(10) . '.' . $image->getClientOriginalExtension();
             $path = $image->move(public_path('uploads/shops'), $filename);
             $imageUrl = '/uploads/shops/' . $filename;
 
             $shopImage = ShopImage::create([
-                'shop_id' => $shop->id,
+                'seller_application_id' => $app->id,
                 'image_url' => $imageUrl,
             ]);
 
@@ -304,20 +278,20 @@ class AdminShopController extends Controller
 
     /**
      * API: Delete a store image
-     * DELETE /api/admin/shops/{shopId}/images/{imageId}
+     * DELETE /api/admin/shops/{applicationId}/images/{imageId}
      */
-    public function deleteImage($shopId, $imageId)
+    public function deleteImage($applicationId, $imageId)
     {
-        $shop = Shop::find($shopId);
+        $app = SellerApplication::where('status', 'APPROVED')->find($applicationId);
 
-        if (!$shop) {
+        if (!$app) {
             return response()->json([
                 'success' => false,
-                'message' => 'Shop not found'
+                'message' => 'Store not found'
             ], 404);
         }
 
-        $image = ShopImage::where('shop_id', $shopId)->where('id', $imageId)->first();
+        $image = ShopImage::where('seller_application_id', $applicationId)->where('id', $imageId)->first();
 
         if (!$image) {
             return response()->json([
@@ -346,25 +320,31 @@ class AdminShopController extends Controller
      */
     public function getFilters()
     {
-        $categories = Shop::whereNotNull('category')
+        $baseQuery = SellerApplication::where('status', 'APPROVED');
+
+        $categories = (clone $baseQuery)
+            ->whereNotNull('store_type')
             ->distinct()
-            ->pluck('category')
+            ->pluck('store_type')
             ->filter()
             ->values();
 
-        $states = Shop::whereNotNull('state')
+        $states = (clone $baseQuery)
+            ->whereNotNull('state')
             ->distinct()
             ->pluck('state')
             ->filter()
             ->values();
 
-        $cities = Shop::whereNotNull('city')
+        $cities = (clone $baseQuery)
+            ->whereNotNull('city')
             ->distinct()
             ->pluck('city')
             ->filter()
             ->values();
 
-        $countries = Shop::whereNotNull('country')
+        $countries = (clone $baseQuery)
+            ->whereNotNull('country')
             ->distinct()
             ->pluck('country')
             ->filter()

@@ -9,7 +9,7 @@ class Transaction extends Model
     protected $table = 'transactions';
 
     protected $fillable = [
-        'shop_id',
+        'seller_application_id',
         'visitor_id',
         'txn_code',
         'total_amount',
@@ -34,9 +34,9 @@ class Transaction extends Model
         'settled_at' => 'date',
     ];
 
-    public function shop()
+    public function sellerApplication()
     {
-        return $this->belongsTo(Shop::class, 'shop_id');
+        return $this->belongsTo(SellerApplication::class, 'seller_application_id');
     }
 
     public function visitor()

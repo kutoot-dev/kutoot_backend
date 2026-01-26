@@ -3,11 +3,9 @@
 namespace App\Http\Controllers\API\Customer;
 
 use App\Http\Controllers\Controller;
-use App\Models\Store\AdminShopCommissionDiscount;
-use App\Models\Store\Shop;
+use App\Models\Store\SellerApplication;
 use App\Models\Store\StoreCategory;
 use App\Models\Store\Transaction;
-use App\Models\UserCoins; // Assuming this model exists based on migration list
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -25,9 +23,6 @@ class RedeemController extends Controller
      */
     public function home(Request $request)
     {
-        // Validation not strictly needed for just fetching home data unless location required to customize banners?
-        // Spec: "Redeem home data fetched"
-
         // 2. Categories
         $categories = StoreCategory::where('is_active', true)
             ->get()
@@ -40,15 +35,14 @@ class RedeemController extends Controller
                 ];
             });
 
-        // 3. Banners (Mock data as no dedicated Banner model for Redeem provided in context,
-        // usually would be from Slider or Advertisement controller logic)
+        // 3. Banners (Mock data)
         $banners = [
             [
                 'id' => 11,
                 'title' => 'Flat Deals at Partner Stores',
                 'sub_title' => 'Redeem coins instantly at premium outlets',
                 'tag' => 'Kutoot Rewards',
-                'image' => asset('/media/banners/banner1.jpg'), // Ensure asset path
+                'image' => asset('/media/banners/banner1.jpg'),
                 'redirect_type' => 'category',
                 'redirect_id' => 1,
                 'is_active' => true
@@ -84,15 +78,6 @@ class RedeemController extends Controller
      */
     public function getFilters()
     {
-        // Fetch states and cities that have stores? Or all?
-        // For simplicity, fetching all available states/cities from DB.
-        // Using nnjeim/world package for states and cities.
-
-        // Let's assume we want India states broadly or just active states.
-        // If we want only states with shops:
-        // $states = \Nnjeim\World\Models\State::whereHas('cities.shops')->get();
-        // But for now, generic list.
-
         $statesRaw = \Nnjeim\World\Models\State::with('cities')->get();
 
         $states = $statesRaw->map(function ($state) {
@@ -130,92 +115,64 @@ class RedeemController extends Controller
             return response()->json(['success' => false, 'message' => 'Category ID is required'], 422);
         }
 
-        $query = Shop::query()->where('category', $categoryId);
-        $query->whereHas('adminSettings', function ($q) {
-            $q->where('is_active', true);
-        });
+        // Query approved seller applications instead of shops
+        $query = SellerApplication::query()
+            ->where('status', SellerApplication::STATUS_APPROVED)
+            ->where('store_type', $categoryId)
+            ->where('is_active', true);
 
         if ($state)
-            $query->where('state_id', function ($q) use ($state) { // Assuming relationships or simple string matching?
-                // Migration for Shop shows no state/city columns directly in fillable!
-                // Shop model fillable: address, location_lat, location_lng...
-                // It might store address string or rely on relations?
-                // "address" => "Indiranagar, Bengaluru, Karnataka - 560038"
-                // If we don't have structured state/city columns in `shops`, filtering is hard.
-                // Let's assume we might need to filter by string or if columns exist but not in fillable.
-                // Let's assume naive string search on address for now if columns missing.
-                $q->select('id')->from('country_states')->where('name', $state);
-            });
-        // Correction: If `shops` table doesn't have `state` col, we rely on address?
-        // Or maybe `city` and `state` were recently added?
-        // Let's assume search on Address for state/city if strict columns don't exist.
-        // OR better: Just ignore if columns miss, but user asked for it.
-        // NOTE: The user JSON response example has "state": "Karnataka", "city": "Bengaluru".
-        // Use `where` if columns exist. If not, maybe use LIKE on address.
-        if ($state)
-            $query->where('address', 'like', "%{$state}%");
+            $query->where('store_address', 'like', "%{$state}%");
         if ($city)
-            $query->where('address', 'like', "%{$city}%");
+            $query->where('store_address', 'like', "%{$city}%");
 
         if ($search)
-            $query->where('shop_name', 'like', "%{$search}%");
-
-        if ($openNow) {
-            // Need timings logic.
-            // Assuming `timings` format "10:00 AM - 10:00 PM". Logic is complex string parsing.
-            // Skipping detailed implementation for brevity, typically we'd parse `opens_at`, `closes_at`.
-        }
+            $query->where('store_name', 'like', "%{$search}%");
 
         // Sort
         if ($sortBy === 'rating') {
-            // Join admin settings
-            $query->leftJoin('admin_shop_commission_discounts', 'shops.id', '=', 'admin_shop_commission_discounts.shop_id')
-                ->orderBy('admin_shop_commission_discounts.rating', 'desc');
+            $query->orderBy('rating', 'desc');
         } elseif ($sortBy === 'name') {
-            $query->orderBy('shop_name', 'asc');
+            $query->orderBy('store_name', 'asc');
         } else {
-            $query->orderBy('shops.id', 'desc');
+            $query->orderBy('id', 'desc');
         }
 
-        $paginated = $query->select('shops.*')->paginate($limit);
+        $paginated = $query->paginate($limit);
 
         // Category Detail
         $category = StoreCategory::find($categoryId);
 
         $stores = collect($paginated->items())->map(function ($store) {
-            $settings = AdminShopCommissionDiscount::where('shop_id', $store->id)->orderByDesc('id')->first();
-            $rating = $settings ? $settings->rating : 0;
-            $totalRatings = $settings ? $settings->total_ratings : 0;
-            $discount = $settings ? $settings->discount_percent : 0;
-
-            // Derive State/City from address if needed or generic
-            // For now specific columns in response:
-            $stateVal = "Karnataka"; // Mock inference or column
-            $cityVal = "Bengaluru";
-
-            $images = $store->images->pluck('image_url')->map(function ($i) {
-                return asset($i);
-            })->toArray();
+            $images = [];
+            if ($store->images) {
+                $imageArray = is_array($store->images) ? $store->images : json_decode($store->images, true);
+                if ($imageArray) {
+                    foreach ($imageArray as $img) {
+                        $images[] = str_starts_with($img, 'http') ? $img : asset($img);
+                    }
+                }
+            }
             if (empty($images))
                 $images = [asset('/images/placeholder-shop.jpg')];
 
             return [
                 'id' => $store->id,
-                'name' => $store->shop_name,
-                'category_id' => $store->category,
-                'state' => $stateVal,
-                'city' => $cityVal,
-                'address' => $store->address,
-                'lat' => $store->location_lat,
-                'lng' => $store->location_lng,
-                'cuisines' => 'Supermarket', // Mock
+                'name' => $store->store_name,
+                'category_id' => $store->store_type,
+                'state' => $store->state ?? "Karnataka",
+                'city' => $store->city ?? "Bengaluru",
+                'address' => $store->store_address,
+                'lat' => $store->lat,
+                'lng' => $store->lng,
+                'cuisines' => 'Supermarket',
                 'cost_for_two' => 0,
-                'discount_percent' => $discount,
-                'rating' => (float) $rating,
-                'total_ratings' => $totalRatings,
+                'discount_percent' => $store->discount_percent ?? 0,
+                'rating' => (float) ($store->rating ?? 0),
+                'total_ratings' => $store->total_ratings ?? 0,
                 'open_now' => true,
                 'images' => $images,
-                'is_active' => true
+                'is_active' => (bool) $store->is_active
             ];
         });
 
@@ -243,26 +200,23 @@ class RedeemController extends Controller
      */
     public function storeDetails($storeId)
     {
-        $store = Shop::find($storeId);
+        $store = SellerApplication::where('status', SellerApplication::STATUS_APPROVED)
+            ->where('id', $storeId)
+            ->first();
+            
         if (!$store) {
             return response()->json(['success' => false, 'message' => 'Store not found'], 404);
         }
 
-        $settings = AdminShopCommissionDiscount::where('shop_id', $store->id)->orderByDesc('id')->first();
-        if (!$settings) {
-            // Fallback default
-            $settings = (object) [
-                'discount_percent' => 0,
-                'rating' => 0,
-                'is_active' => false,
-                'max_discount_amount' => 0,
-                'min_bill_amount' => 0
-            ];
+        $images = [];
+        if ($store->images) {
+            $imageArray = is_array($store->images) ? $store->images : json_decode($store->images, true);
+            if ($imageArray) {
+                foreach ($imageArray as $img) {
+                    $images[] = str_starts_with($img, 'http') ? $img : asset($img);
+                }
+            }
         }
-
-        $images = $store->images->pluck('image_url')->map(function ($i) {
-            return asset($i);
-        })->toArray();
         if (empty($images))
             $images = [asset('/images/placeholder-shop.jpg')];
 
@@ -271,15 +225,11 @@ class RedeemController extends Controller
             'message' => "Store details fetched",
             'data' => [
                 'id' => $store->id,
-                'name' => $store->shop_name,
-                'category_id' => $store->category,
-                'discount_percent' => $settings->discount_percent,
-                'min_bill_amount' => $store->min_bill_amount ?? 100, // Shop model has this
-                'max_discount_amount' => $settings->max_discount, // Assuming col exists in settings? Spec says 'max_discount_amount' in response
-                // AdminShopCommissionDiscount migration might have 'max_discount' or similar.
-                // Let's assume 'max_discount' or 'max_discount_amount'.
-                // If migration check failed, use safe default.
-                // 'max_discount' logic usually resides in coupon or settings.
+                'name' => $store->store_name,
+                'category_id' => $store->store_type,
+                'discount_percent' => $store->discount_percent ?? 0,
+                'min_bill_amount' => $store->min_bill_amount ?? 100,
+                'max_discount_amount' => null,
                 'coin_redeem_allowed' => true,
                 'open_now' => true,
                 'timings' => "10:00 AM - 10:00 PM",
@@ -288,9 +238,9 @@ class RedeemController extends Controller
                     "Cannot be combined with other offers."
                 ],
                 'images' => $images,
-                'address' => $store->address,
-                'lat' => $store->location_lat,
-                'lng' => $store->location_lng
+                'address' => $store->store_address,
+                'lat' => $store->lat,
+                'lng' => $store->lng
             ]
         ]);
     }
@@ -302,7 +252,7 @@ class RedeemController extends Controller
     public function preview(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'store_id' => 'required|exists:shops,id',
+            'store_id' => 'required|exists:seller_applications,id',
             'bill_amount' => 'required|numeric|min:1'
         ]);
 
@@ -314,12 +264,16 @@ class RedeemController extends Controller
         $billAmount = $request->bill_amount;
         $user = Auth::guard('api')->user();
 
-        // 1. Get Store Settings
-        $settings = AdminShopCommissionDiscount::where('shop_id', $storeId)->orderByDesc('id')->first();
-        if (!$settings) {
-            $settings = AdminShopCommissionDiscount::whereNull('shop_id')->orderByDesc('id')->first();
+        // Get Store (SellerApplication)
+        $store = SellerApplication::where('status', SellerApplication::STATUS_APPROVED)
+            ->where('id', $storeId)
+            ->first();
+            
+        if (!$store) {
+            return response()->json(['success' => false, 'message' => 'Store not found'], 404);
         }
-        $discountPercent = $settings ? $settings->discount_percent : 0;
+
+        $discountPercent = $store->discount_percent ?? 0;
 
         // 2. Calculate Max Discount
         $maxDiscountByPercent = ($billAmount * $discountPercent) / 100;
@@ -359,7 +313,7 @@ class RedeemController extends Controller
     public function pay(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'store_id' => 'required|exists:shops,id',
+            'store_id' => 'required|exists:seller_applications,id',
             'bill_amount' => 'required|numeric|min:1'
         ]);
 
@@ -371,13 +325,17 @@ class RedeemController extends Controller
         $storeId = $request->store_id;
         $billAmount = $request->bill_amount;
 
-        // Re-calculate Logic
-        $settings = AdminShopCommissionDiscount::where('shop_id', $storeId)->orderByDesc('id')->first();
-        if (!$settings) {
-            $settings = AdminShopCommissionDiscount::whereNull('shop_id')->orderByDesc('id')->first();
+        // Get Store (SellerApplication)
+        $store = SellerApplication::where('status', SellerApplication::STATUS_APPROVED)
+            ->where('id', $storeId)
+            ->first();
+            
+        if (!$store) {
+            return response()->json(['success' => false, 'message' => 'Store not found'], 404);
         }
-        $discountPercent = $settings ? $settings->discount_percent : 0;
-        $commissionPercent = $settings ? $settings->commission_percent : 0;
+
+        $discountPercent = $store->discount_percent ?? 0;
+        $commissionPercent = $store->commission_percent ?? 0;
 
         $walletCoins = (float) $user->wallet_balance;
         $coinValueINR = (float) config('kutoot.coin_value', 0.25);
@@ -401,7 +359,6 @@ class RedeemController extends Controller
         }
 
         $api = new Api($razorpaySettings->key, $razorpaySettings->secret_key);
-        $shop = Shop::find($storeId);
 
         // Calculate Splits
         $commissionAmount = ($finalPayableINR * $commissionPercent) / 100;
@@ -414,10 +371,10 @@ class RedeemController extends Controller
         ];
 
         // ADD RAZORPAY ROUTE SPLIT
-        if ($shop->razorpay_account_id) {
+        if ($store->razorpay_account_id) {
             $orderData['transfers'] = [
                 [
-                    'account' => $shop->razorpay_account_id,
+                    'account' => $store->razorpay_account_id,
                     'amount' => (int) round($storeAmount * 100),
                     'currency' => 'INR',
                     'on_hold' => 0
@@ -450,7 +407,7 @@ class RedeemController extends Controller
     public function confirm(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'store_id' => 'required|exists:shops,id',
+            'store_id' => 'required|exists:seller_applications,id',
             'bill_amount' => 'required|numeric|min:1',
             'payment_method' => 'nullable|string',
             'razorpay_payment_id' => 'nullable|string',
@@ -492,13 +449,17 @@ class RedeemController extends Controller
 
         DB::beginTransaction();
         try {
-            // Re-calculate Logic (Security)
-            $settings = AdminShopCommissionDiscount::where('shop_id', $storeId)->orderByDesc('id')->first();
-            if (!$settings) {
-                $settings = AdminShopCommissionDiscount::whereNull('shop_id')->orderByDesc('id')->first();
+            // Get Store (SellerApplication)
+            $store = SellerApplication::where('status', SellerApplication::STATUS_APPROVED)
+                ->where('id', $storeId)
+                ->first();
+                
+            if (!$store) {
+                throw new \Exception("Store not found");
             }
-            $discountPercent = $settings ? $settings->discount_percent : 0;
-            $commissionPercent = $settings ? $settings->commission_percent : 0;
+
+            $discountPercent = $store->discount_percent ?? 0;
+            $commissionPercent = $store->commission_percent ?? 0;
 
             $walletCoins = (float) $user->wallet_balance;
             $coinValueINR = (float) config('kutoot.coin_value', 0.25);
@@ -517,14 +478,17 @@ class RedeemController extends Controller
             $commissionAmount = ($finalPayableINR * $commissionPercent) / 100;
             $storeAmount = $finalPayableINR - $commissionAmount;
 
-            // Create Transaction
+            // Create Transaction with seller_application_id
             $txn = new Transaction();
-            $txn->shop_id = $storeId;
+            $txn->seller_application_id = $storeId;
+            
             // Link user via visitor
-            $visitor = \App\Models\Store\ShopVisitor::where('user_id', $user->id)->where('shop_id', $storeId)->first();
+            $visitor = \App\Models\Store\ShopVisitor::where('user_id', $user->id)
+                ->where('seller_application_id', $storeId)
+                ->first();
             if (!$visitor) {
                 $visitorId = \App\Models\Store\ShopVisitor::insertGetId([
-                    'shop_id' => $storeId,
+                    'seller_application_id' => $storeId,
                     'user_id' => $user->id,
                     'last_visit' => now(),
                     'visit_count' => 1
@@ -554,7 +518,6 @@ class RedeemController extends Controller
             DB::commit();
 
             $balanceAfter = $walletCoins - $coinsUsed;
-            $store = Shop::find($storeId);
 
             return response()->json([
                 'success' => true,
@@ -562,7 +525,7 @@ class RedeemController extends Controller
                 'data' => [
                     'transaction_id' => $txn->txn_code,
                     'store_id' => $store->id,
-                    'store_name' => $store->shop_name,
+                    'store_name' => $store->store_name,
                     'bill_amount' => $billAmount,
                     'discount_applied_inr' => $discountAppliedINR,
                     'coins_used' => $coinsUsed,

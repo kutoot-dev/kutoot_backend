@@ -5,9 +5,6 @@ namespace App\Http\Controllers\WEB\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Store\SellerApplication;
 use App\Models\Store\Seller;
-use App\Models\Store\Shop;
-use App\Models\Store\AdminShopCommissionDiscount;
-use App\Services\Store\ApplicationShopSyncService;
 use App\Mail\SellerApplicationApproved;
 use App\Mail\SellerApplicationRejected;
 use App\Helpers\MailHelper;
@@ -747,48 +744,31 @@ class SellerApplicationController extends Controller
                 throw new \Exception('Failed to create seller account');
             }
 
-            // Create shop using single source of truth for field mapping
-            $shop = $application->createShop($seller->id, $request->sellerEmail);
-
-            if (!$shop || !$shop->id) {
-                throw new \Exception('Failed to create shop');
-            }
-
-            // Create admin commission/discount settings for this shop
-            // Use provided values or fallback to global defaults
-            $globalSettings = AdminShopCommissionDiscount::whereNull('shop_id')->orderByDesc('id')->first();
-
+            // Get commission/discount values from request or use defaults
             $commissionPercent = $request->has('commissionPercent') && $request->commissionPercent !== null
                 ? $request->commissionPercent
-                : ($globalSettings->commission_percent ?? 10);
+                : ($application->commission_percent ?? 10);
 
             $discountPercent = $request->has('discountPercent') && $request->discountPercent !== null
                 ? $request->discountPercent
-                : ($globalSettings->discount_percent ?? 0);
+                : ($application->discount_percent ?? 0);
 
             $rating = $request->has('rating') && $request->rating !== null
                 ? $request->rating
-                : ($globalSettings->rating ?? 0);
+                : ($application->rating ?? 0);
 
-            AdminShopCommissionDiscount::create([
-                'shop_id' => $shop->id,
-                'commission_percent' => $commissionPercent,
-                'discount_percent' => $discountPercent,
-                'minimum_bill_amount' => $application->min_bill_amount ?? 0,
-                'rating' => $rating,
-                'total_ratings' => 0,
-                'is_active' => true,
-                'is_featured' => false,
-                'last_updated_on' => now(),
-            ]);
-
-            // Update application
+            // Update application with all settings (single source of truth)
             $application->update([
                 'status' => SellerApplication::STATUS_APPROVED,
                 'approved_by' => Auth::guard('admin')->id() ?? $request->approvedBy,
                 'seller_email' => $request->sellerEmail,
                 'approved_at' => now(),
                 'seller_id' => $seller->id,
+                'shop_code' => SellerApplication::generateShopCode(),
+                'commission_percent' => $commissionPercent,
+                'discount_percent' => $discountPercent,
+                'rating' => $rating,
+                'is_active' => true,
             ]);
 
             \DB::commit();
@@ -991,48 +971,31 @@ class SellerApplicationController extends Controller
                 throw new \Exception('Failed to create seller account');
             }
 
-            // Create shop using single source of truth for field mapping
-            $shop = $application->createShop($seller->id, $request->seller_email);
-
-            if (!$shop || !$shop->id) {
-                throw new \Exception('Failed to create shop');
-            }
-
-            // Create admin commission/discount settings for this shop
-            // Use provided values or fallback to global defaults
-            $globalSettings = AdminShopCommissionDiscount::whereNull('shop_id')->orderByDesc('id')->first();
-
+            // Get commission/discount values from request or use defaults
             $commissionPercent = $request->has('commission_percent') && $request->commission_percent !== null
                 ? $request->commission_percent
-                : ($globalSettings->commission_percent ?? 10);
+                : ($application->commission_percent ?? 10);
 
             $discountPercent = $request->has('discount_percent') && $request->discount_percent !== null
                 ? $request->discount_percent
-                : ($globalSettings->discount_percent ?? 0);
+                : ($application->discount_percent ?? 0);
 
             $rating = $request->has('rating') && $request->rating !== null
                 ? $request->rating
-                : ($globalSettings->rating ?? 0);
+                : ($application->rating ?? 0);
 
-            AdminShopCommissionDiscount::create([
-                'shop_id' => $shop->id,
-                'commission_percent' => $commissionPercent,
-                'discount_percent' => $discountPercent,
-                'minimum_bill_amount' => $application->min_bill_amount ?? 0,
-                'rating' => $rating,
-                'total_ratings' => 0,
-                'is_active' => true,
-                'is_featured' => false,
-                'last_updated_on' => now(),
-            ]);
-
-            // Update application
+            // Update application with all settings (single source of truth)
             $application->update([
                 'status' => SellerApplication::STATUS_APPROVED,
                 'approved_by' => Auth::guard('admin')->id(),
                 'seller_email' => $request->seller_email,
                 'approved_at' => now(),
                 'seller_id' => $seller->id,
+                'shop_code' => SellerApplication::generateShopCode(),
+                'commission_percent' => $commissionPercent,
+                'discount_percent' => $discountPercent,
+                'rating' => $rating,
+                'is_active' => true,
             ]);
 
             \DB::commit();

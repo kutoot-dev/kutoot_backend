@@ -3,7 +3,6 @@
 namespace App\DTO\Store;
 
 use App\Models\Store\SellerApplication;
-use App\Models\Store\Shop;
 use Illuminate\Contracts\Support\Arrayable;
 use JsonSerializable;
 
@@ -11,13 +10,14 @@ use JsonSerializable;
  * Data Transfer Object for unified store details.
  *
  * This is the single representation of store data used across the application.
- * Data is read from Shop (if exists) or SellerApplication (for pending applications).
+ * All data is read from SellerApplication (single source of truth).
  */
 class StoreDetailsDTO implements Arrayable, JsonSerializable
 {
     public function __construct(
         public readonly ?int $id,
         public readonly ?int $sellerId,
+        public readonly ?string $shopCode,
         public readonly ?string $code,
         public readonly ?string $name,
         public readonly ?string $category,
@@ -37,52 +37,31 @@ class StoreDetailsDTO implements Arrayable, JsonSerializable
         public readonly ?string $googleMapUrl,
         public readonly ?float $minBillAmount,
         public readonly ?array $tags,
-        public readonly string $source, // 'shop' or 'application'
+        public readonly ?float $commissionPercent,
+        public readonly ?float $discountPercent,
+        public readonly ?float $rating,
+        public readonly ?int $noOfRatings,
+        public readonly ?int $totalRatings,
+        public readonly bool $isActive,
+        public readonly bool $isFeatured,
+        public readonly ?string $offerTag,
+        public readonly ?string $razorpayAccountId,
+        public readonly string $status,
     ) {}
 
     /**
-     * Create DTO from Shop model (authoritative source for approved sellers)
-     */
-    public static function fromShop(Shop $shop): self
-    {
-        return new self(
-            id: $shop->id,
-            sellerId: $shop->seller_id,
-            code: $shop->shop_code,
-            name: $shop->shop_name,
-            category: $shop->category,
-            ownerName: $shop->owner_name,
-            phone: $shop->phone,
-            email: $shop->email,
-            gstNumber: $shop->gst_number,
-            address: $shop->address,
-            countryId: $shop->country_id,
-            stateId: $shop->state_id,
-            cityId: $shop->city_id,
-            country: $shop->country?->name,
-            state: $shop->state?->name,
-            city: $shop->city?->name,
-            lat: $shop->location_lat,
-            lng: $shop->location_lng,
-            googleMapUrl: $shop->google_map_url,
-            minBillAmount: $shop->min_bill_amount,
-            tags: $shop->tags,
-            source: 'shop',
-        );
-    }
-
-    /**
-     * Create DTO from SellerApplication (for pending/rejected applications without shop)
+     * Create DTO from SellerApplication (single source of truth)
      */
     public static function fromApplication(SellerApplication $application): self
     {
         return new self(
-            id: null,
+            id: $application->id,
             sellerId: $application->seller_id,
-            code: null,
+            shopCode: $application->shop_code,
+            code: $application->shop_code ?? $application->application_id,
             name: $application->store_name,
             category: $application->store_type,
-            ownerName: $application->store_name,
+            ownerName: $application->owner_name ?? $application->store_name,
             phone: $application->owner_mobile,
             email: $application->owner_email,
             gstNumber: $application->gst_number,
@@ -95,27 +74,20 @@ class StoreDetailsDTO implements Arrayable, JsonSerializable
             city: $application->city,
             lat: (float) $application->lat,
             lng: (float) $application->lng,
-            googleMapUrl: null,
+            googleMapUrl: $application->google_map_url,
             minBillAmount: (float) $application->min_bill_amount,
-            tags: null,
-            source: 'application',
+            tags: $application->tags,
+            commissionPercent: (float) $application->commission_percent,
+            discountPercent: (float) $application->discount_percent,
+            rating: (float) $application->rating,
+            noOfRatings: (int) $application->no_of_ratings,
+            totalRatings: (int) $application->total_ratings,
+            isActive: (bool) $application->is_active,
+            isFeatured: (bool) $application->is_featured,
+            offerTag: $application->offer_tag,
+            razorpayAccountId: $application->razorpay_account_id,
+            status: $application->status,
         );
-    }
-
-    /**
-     * Get the authoritative source - Shop if exists, else Application
-     */
-    public static function fromSellerOrApplication(
-        ?Shop $shop,
-        ?SellerApplication $application
-    ): ?self {
-        if ($shop) {
-            return self::fromShop($shop);
-        }
-        if ($application) {
-            return self::fromApplication($application);
-        }
-        return null;
     }
 
     public function toArray(): array
@@ -123,6 +95,7 @@ class StoreDetailsDTO implements Arrayable, JsonSerializable
         return [
             'id' => $this->id,
             'seller_id' => $this->sellerId,
+            'shop_code' => $this->shopCode,
             'code' => $this->code,
             'name' => $this->name,
             'category' => $this->category,
@@ -142,7 +115,16 @@ class StoreDetailsDTO implements Arrayable, JsonSerializable
             'google_map_url' => $this->googleMapUrl,
             'min_bill_amount' => $this->minBillAmount,
             'tags' => $this->tags,
-            'source' => $this->source,
+            'commission_percent' => $this->commissionPercent,
+            'discount_percent' => $this->discountPercent,
+            'rating' => $this->rating,
+            'no_of_ratings' => $this->noOfRatings,
+            'total_ratings' => $this->totalRatings,
+            'is_active' => $this->isActive,
+            'is_featured' => $this->isFeatured,
+            'offer_tag' => $this->offerTag,
+            'razorpay_account_id' => $this->razorpayAccountId,
+            'status' => $this->status,
         ];
     }
 
@@ -152,18 +134,34 @@ class StoreDetailsDTO implements Arrayable, JsonSerializable
     }
 
     /**
-     * Check if data comes from the authoritative Shop source
+     * Check if application is approved
      */
-    public function isFromShop(): bool
+    public function isApproved(): bool
     {
-        return $this->source === 'shop';
+        return $this->status === SellerApplication::STATUS_APPROVED;
     }
 
     /**
      * Check if this is pending application data (not yet approved)
      */
-    public function isPendingApplication(): bool
+    public function isPending(): bool
     {
-        return $this->source === 'application';
+        return $this->status === SellerApplication::STATUS_PENDING;
+    }
+
+    /**
+     * Check if application is verified
+     */
+    public function isVerified(): bool
+    {
+        return $this->status === SellerApplication::STATUS_VERIFIED;
+    }
+
+    /**
+     * Check if application is rejected
+     */
+    public function isRejected(): bool
+    {
+        return $this->status === SellerApplication::STATUS_REJECTED;
     }
 }

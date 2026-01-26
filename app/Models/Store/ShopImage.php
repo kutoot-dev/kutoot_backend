@@ -9,13 +9,13 @@ class ShopImage extends Model
     protected $table = 'shop_images';
 
     protected $fillable = [
-        'shop_id',
+        'seller_application_id',
         'image_url',
     ];
 
-    public function shop()
+    public function sellerApplication()
     {
-        return $this->belongsTo(Shop::class, 'shop_id');
+        return $this->belongsTo(SellerApplication::class, 'seller_application_id');
     }
 }
 

@@ -2,9 +2,6 @@
 
 namespace App\Providers;
 
-use App\Models\Store\SellerApplication;
-use App\Models\Store\Shop;
-use App\Observers\Store\StoreDetailsSyncObserver;
 use Illuminate\Support\ServiceProvider;
 
 class StoreServiceProvider extends ServiceProvider
@@ -19,20 +16,12 @@ class StoreServiceProvider extends ServiceProvider
 
     /**
      * Bootstrap services.
-     * Registers observers for bidirectional sync between SellerApplication and Shop.
+     * Shop and AdminShopCommissionDiscount tables have been deprecated.
+     * All store data is now stored in seller_applications table.
      */
     public function boot(): void
     {
-        $observer = new StoreDetailsSyncObserver();
-
-        // Register observer for SellerApplication updates
-        SellerApplication::updated(function (SellerApplication $application) use ($observer) {
-            $observer->applicationUpdated($application);
-        });
-
-        // Register observer for Shop updates
-        Shop::updated(function (Shop $shop) use ($observer) {
-            $observer->shopUpdated($shop);
-        });
+        // No longer needed - bidirectional sync removed
+        // All store data now lives in SellerApplication only
     }
 }

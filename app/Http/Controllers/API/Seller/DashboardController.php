@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\API\Seller;
 
 use App\Http\Controllers\Controller;
-use App\Models\Store\AdminShopCommissionDiscount;
 use App\Models\Store\Seller;
 use App\Models\Store\ShopVisitor;
 use App\Models\Store\Transaction;
@@ -30,26 +29,26 @@ class DashboardController extends Controller
 
         /** @var Seller $seller */
         $seller = Auth::guard('store-api')->user();
-        $seller->loadMissing('shop');
-        $shop = $seller->shop;
+        $seller->loadMissing('application');
+        $application = $seller->application;
 
-        if (!$shop) {
+        if (!$application || $application->status !== 'APPROVED') {
             return response()->json([
                 'success' => false,
-                'message' => 'Shop not found for this seller',
+                'message' => 'Store not found for this seller',
             ], 404);
         }
 
         $from = Carbon::createFromFormat('Y-m-d', $request->query('from'))->startOfDay();
         $to = Carbon::createFromFormat('Y-m-d', $request->query('to'))->endOfDay();
 
-        $master = AdminShopCommissionDiscount::resolveForShop($shop->id);
-        $commissionPercent = $master?->commission_percent ?? 0;
-        $discountPercent = $master?->discount_percent ?? 0;
-        $minimumBillAmount = (float) ($master?->minimum_bill_amount ?? 0);
+        // Get commission/discount directly from application (single source of truth)
+        $commissionPercent = $application->commission_percent ?? 0;
+        $discountPercent = $application->discount_percent ?? 0;
+        $minimumBillAmount = (float) ($application->min_bill_amount ?? 0);
 
         $txQuery = Transaction::query()
-            ->where('shop_id', $shop->id)
+            ->where('seller_application_id', $application->id)
             ->whereDate('settled_at', '>=', $from->toDateString())
             ->whereDate('settled_at', '<=', $to->toDateString());
 
@@ -59,7 +58,7 @@ class DashboardController extends Controller
         // Discount applies only if the linked visitor is redeemed AND txn amount meets min bill.
         $discountQuery = Transaction::query()
             ->join('shop_visitors as sv', 'sv.id', '=', 'transactions.visitor_id')
-            ->where('transactions.shop_id', $shop->id)
+            ->where('transactions.seller_application_id', $application->id)
             ->where('transactions.status', 'SUCCESS')
             ->where('sv.redeemed', true)
             ->whereDate('transactions.settled_at', '>=', $from->toDateString())
@@ -72,7 +71,7 @@ class DashboardController extends Controller
         $totalDiscountGiven = (float) $discountQuery->sum('transactions.discount_amount');
 
         $visitorsQuery = ShopVisitor::query()
-            ->where('shop_id', $shop->id)
+            ->where('seller_application_id', $application->id)
             ->whereDate('visited_on', '>=', $from->toDateString())
             ->whereDate('visited_on', '<=', $to->toDateString());
 
@@ -126,13 +125,13 @@ class DashboardController extends Controller
 
         /** @var Seller $seller */
         $seller = Auth::guard('store-api')->user();
-        $seller->loadMissing('shop');
-        $shop = $seller->shop;
+        $seller->loadMissing('application');
+        $application = $seller->application;
 
-        if (!$shop) {
+        if (!$application || $application->status !== 'APPROVED') {
             return response()->json([
                 'success' => false,
-                'message' => 'Shop not found for this seller',
+                'message' => 'Store not found for this seller',
             ], 404);
         }
 
@@ -141,7 +140,7 @@ class DashboardController extends Controller
 
         $sums = Transaction::query()
             ->selectRaw('DATE(settled_at) as d, SUM(total_amount) as amount')
-            ->where('shop_id', $shop->id)
+            ->where('seller_application_id', $application->id)
             ->where('status', 'SUCCESS')
             ->whereDate('settled_at', '>=', $start->toDateString())
             ->whereDate('settled_at', '<=', $end->toDateString())
@@ -176,13 +175,13 @@ class DashboardController extends Controller
 
         /** @var Seller $seller */
         $seller = Auth::guard('store-api')->user();
-        $seller->loadMissing('shop');
-        $shop = $seller->shop;
+        $seller->loadMissing('application');
+        $application = $seller->application;
 
-        if (!$shop) {
+        if (!$application || $application->status !== 'APPROVED') {
             return response()->json([
                 'success' => false,
-                'message' => 'Shop not found for this seller',
+                'message' => 'Store not found for this seller',
             ], 404);
         }
 
@@ -191,7 +190,7 @@ class DashboardController extends Controller
 
         $counts = ShopVisitor::query()
             ->selectRaw('DATE(visited_on) as d, COUNT(*) as c')
-            ->where('shop_id', $shop->id)
+            ->where('seller_application_id', $application->id)
             ->whereDate('visited_on', '>=', $start->toDateString())
             ->whereDate('visited_on', '<=', $end->toDateString())
             ->groupBy('d')

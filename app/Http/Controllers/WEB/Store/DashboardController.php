@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\WEB\Store;
 
 use App\Http\Controllers\Controller;
-use App\Models\Store\AdminShopCommissionDiscount;
 use App\Models\Store\ShopVisitor;
 use App\Models\Store\Transaction;
 use Carbon\Carbon;
@@ -41,8 +40,8 @@ class DashboardController extends Controller
     public function index(Request $request)
     {
         $seller = Auth::guard('store')->user();
-        $seller->loadMissing('shop');
-        $shop = $seller->shop;
+        $seller->loadMissing('application');
+        $application = $seller->application;
 
         $defaultFromC = now()->subDays(6)->startOfDay();
         $defaultToC = now()->startOfDay();
@@ -59,11 +58,10 @@ class DashboardController extends Controller
         $fromUi = $fromC->format('d-m-Y');
         $toUi = $toC->format('d-m-Y');
 
-        $master = AdminShopCommissionDiscount::resolveForShop($shop?->id);
-        $commissionPercent = (float) ($master?->commission_percent ?? 0);
-        $discountPercent = (float) ($master?->discount_percent ?? 0);
-        // Use shop's min_bill_amount if set, otherwise fallback to master setting
-        $minimumBillAmount = (float) ($shop?->min_bill_amount ?? $master?->minimum_bill_amount ?? 0);
+        // Get settings directly from seller application
+        $commissionPercent = (float) ($application?->commission_percent ?? 0);
+        $discountPercent = (float) ($application?->discount_percent ?? 0);
+        $minimumBillAmount = (float) ($application?->min_bill_amount ?? 0);
 
         $totalSales = 0;
         $totalDiscountGiven = 0;
@@ -80,9 +78,9 @@ class DashboardController extends Controller
             'failed' => 0,
         ];
 
-        if ($shop) {
+        if ($application && $application->status === 'APPROVED') {
             $txQ = Transaction::query()
-                ->where('shop_id', $shop->id)
+                ->where('seller_application_id', $application->id)
                 ->whereDate('settled_at', '>=', $fromDb)
                 ->whereDate('settled_at', '<=', $toDb);
             $successCount = (clone $txQ)->where('status', 'SUCCESS')->count();
@@ -92,7 +90,7 @@ class DashboardController extends Controller
             // Discount applies only if visitor is redeemed AND txn amount meets min bill.
             $discountQ = Transaction::query()
                 ->join('shop_visitors as sv', 'sv.id', '=', 'transactions.visitor_id')
-                ->where('transactions.shop_id', $shop->id)
+                ->where('transactions.seller_application_id', $application->id)
                 ->where('transactions.status', 'SUCCESS')
                 ->where('sv.redeemed', true)
                 ->whereDate('transactions.settled_at', '>=', $fromDb)
@@ -104,7 +102,7 @@ class DashboardController extends Controller
             $totalCoinsRedeemed = (int) $discountQ->sum('transactions.redeemed_coins');
 
             $vQ = ShopVisitor::query()
-                ->where('shop_id', $shop->id)
+                ->where('seller_application_id', $application->id)
                 ->whereDate('visited_on', '>=', $fromDb)
                 ->whereDate('visited_on', '<=', $toDb);
             $totalVisitors = $vQ->count();
@@ -115,7 +113,7 @@ class DashboardController extends Controller
 
             $revMap = Transaction::query()
                 ->selectRaw('DATE(settled_at) as d, SUM(total_amount) as amount')
-                ->where('shop_id', $shop->id)
+                ->where('seller_application_id', $application->id)
                 ->where('status', 'SUCCESS')
                 ->whereDate('settled_at', '>=', $fromDb)
                 ->whereDate('settled_at', '<=', $toDb)
@@ -125,7 +123,7 @@ class DashboardController extends Controller
 
             $visMap = ShopVisitor::query()
                 ->selectRaw('DATE(visited_on) as d, COUNT(*) as c')
-                ->where('shop_id', $shop->id)
+                ->where('seller_application_id', $application->id)
                 ->whereDate('visited_on', '>=', $fromDb)
                 ->whereDate('visited_on', '<=', $toDb)
                 ->groupBy('d')
@@ -167,7 +165,7 @@ class DashboardController extends Controller
         ];
 
         return view('store.dashboard', [
-            'shop' => $shop,
+            'shop' => $application,
             'range' => ['from' => $fromUi, 'to' => $toUi],
             'master' => [
                 'commissionPercent' => $commissionPercent,

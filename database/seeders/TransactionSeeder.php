@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\CoinLedger;
-use App\Models\Store\AdminShopCommissionDiscount;
 use App\Models\Store\Seller;
 use App\Models\Store\ShopVisitor;
 use App\Models\Store\Transaction;
@@ -43,16 +42,15 @@ class TransactionSeeder extends Seeder
     public function run(): void
     {
         $seller = Seller::query()->where('seller_code', 'SELLER001')->first();
-        if (!$seller || !$seller->shop) {
-            $this->command->warn('Seller SELLER001 or their shop not found. Skipping TransactionSeeder.');
+        if (!$seller || !$seller->application || $seller->application->status !== 'APPROVED') {
+            $this->command->warn('Seller SELLER001 or their approved application not found. Skipping TransactionSeeder.');
             return;
         }
 
-        $shop = $seller->shop;
+        $application = $seller->application;
 
-        $master = AdminShopCommissionDiscount::resolveForShop($shop->id);
-        $discountPercent = (float) ($master?->discount_percent ?? 0);
-        $minimumBillAmount = (float) ($master?->minimum_bill_amount ?? 0);
+        $discountPercent = (float) ($application->discount_percent ?? 0);
+        $minimumBillAmount = (float) ($application->min_bill_amount ?? 0);
 
         $start = strtotime('2026-01-01');
         $end = strtotime('2026-12-31');
@@ -147,7 +145,7 @@ class TransactionSeeder extends Seeder
                 if (!$visitor) {
                     $visitor = new ShopVisitor();
                 }
-                $visitor->shop_id = $shop->id;
+                $visitor->seller_application_id = $application->id;
                 $visitor->user_id = $user->id;
                 $visitor->visited_on = $visitedOn;
                 $visitor->redeemed = $redeemed;
@@ -158,7 +156,7 @@ class TransactionSeeder extends Seeder
                 $tx = Transaction::query()->updateOrCreate(
                     ['txn_code' => $txnCode],
                     [
-                        'shop_id' => $shop->id,
+                        'seller_application_id' => $application->id,
                         'visitor_id' => $visitor->id,
                         'total_amount' => $totalAmount,
                         'discount_amount' => $discountAmount,
@@ -185,7 +183,7 @@ class TransactionSeeder extends Seeder
                             'expiry_date' => null,
                             'metadata' => json_encode([
                                 'source' => 'store_redemption',
-                                'shop_id' => $shop->id,
+                                'seller_application_id' => $application->id,
                                 'transaction_id' => $tx->id,
                                 'txn_code' => $txnCode,
                             ]),

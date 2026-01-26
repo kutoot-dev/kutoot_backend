@@ -7,7 +7,6 @@ use App\Models\CoinLedger;
 use App\Models\Store\Seller;
 use App\Models\Store\ShopVisitor;
 use App\Models\Store\Transaction;
-use App\Models\Store\AdminShopCommissionDiscount;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 
@@ -42,16 +41,15 @@ class VisitorSeeder extends Seeder
     public function run(): void
     {
         $seller = Seller::query()->where('seller_code', 'SELLER001')->first();
-        if (!$seller || !$seller->shop) {
-            $this->command->warn('Seller SELLER001 or their shop not found. Skipping VisitorSeeder.');
+        if (!$seller || !$seller->application || $seller->application->status !== 'APPROVED') {
+            $this->command->warn('Seller SELLER001 or their approved application not found. Skipping VisitorSeeder.');
             return;
         }
 
-        $shop = $seller->shop;
+        $application = $seller->application;
 
-        $master = AdminShopCommissionDiscount::resolveForShop($shop->id);
-        $minimumBillAmount = (float) ($master?->minimum_bill_amount ?? 0);
-        $discountPercent = (float) ($master?->discount_percent ?? 0);
+        $minimumBillAmount = (float) ($application->min_bill_amount ?? 0);
+        $discountPercent = (float) ($application->discount_percent ?? 0);
 
         $rows = [
             [
@@ -121,9 +119,9 @@ class VisitorSeeder extends Seeder
             $redeemed = $redeemedCoins > 0;
 
             $visitor = ShopVisitor::query()->updateOrCreate(
-                ['shop_id' => $shop->id, 'user_id' => $user->id, 'visited_on' => $row['visited_on']],
+                ['seller_application_id' => $application->id, 'user_id' => $user->id, 'visited_on' => $row['visited_on']],
                 [
-                    'shop_id' => $shop->id,
+                    'seller_application_id' => $application->id,
                     'user_id' => $user->id,
                     'visited_on' => $row['visited_on'],
                     'redeemed' => $redeemed,
@@ -133,7 +131,7 @@ class VisitorSeeder extends Seeder
             $tx = Transaction::query()->updateOrCreate(
                 ['txn_code' => $row['txn_code']],
                 [
-                    'shop_id' => $shop->id,
+                    'seller_application_id' => $application->id,
                     'visitor_id' => $visitor->id,
                     'total_amount' => $row['total_amount'],
                     'discount_amount' => $discountAmount,
@@ -158,7 +156,7 @@ class VisitorSeeder extends Seeder
                         'expiry_date' => null,
                         'metadata' => json_encode([
                             'source' => 'store_redemption',
-                            'shop_id' => $shop->id,
+                            'seller_application_id' => $application->id,
                             'transaction_id' => $tx->id,
                             'txn_code' => $row['txn_code'],
                         ]),

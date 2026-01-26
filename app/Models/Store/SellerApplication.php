@@ -19,7 +19,9 @@ class SellerApplication extends Model
 
     protected $fillable = [
         'application_id',
+        'shop_code',
         'store_name',
+        'owner_name',
         'owner_mobile',
         'owner_email',
         'store_type',
@@ -32,10 +34,18 @@ class SellerApplication extends Model
         'city_id',
         'lat',
         'lng',
+        'google_map_url',
+        'tags',
         'min_bill_amount',
         'commission_percent',
         'discount_percent',
         'rating',
+        'no_of_ratings',
+        'total_ratings',
+        'is_active',
+        'is_featured',
+        'offer_tag',
+        'last_updated_on',
         'store_image',
         'images',
         'gst_number',
@@ -44,6 +54,7 @@ class SellerApplication extends Model
         'ifsc_code',
         'beneficiary_name',
         'upi_id',
+        'razorpay_account_id',
         'status',
         'verified_by',
         'verification_notes',
@@ -64,7 +75,13 @@ class SellerApplication extends Model
         'commission_percent' => 'decimal:2',
         'discount_percent' => 'decimal:2',
         'rating' => 'decimal:2',
+        'no_of_ratings' => 'integer',
+        'total_ratings' => 'integer',
+        'is_active' => 'boolean',
+        'is_featured' => 'boolean',
+        'last_updated_on' => 'date',
         'images' => 'array',
+        'tags' => 'array',
         'verified_at' => 'datetime',
         'approved_at' => 'datetime',
         'rejected_at' => 'datetime',
@@ -158,25 +175,39 @@ class SellerApplication extends Model
     }
 
     /**
-     * Get the shop created from this application
+     * Get images for this application
      */
-    public function shop()
+    public function shopImages()
     {
-        return $this->hasOne(Shop::class, 'seller_id', 'seller_id');
+        return $this->hasMany(ShopImage::class, 'seller_application_id');
     }
 
     /**
-     * Create a Shop from this application.
-     * Uses StoreDetailsRepository as single source of truth.
-     *
-     * @param int $sellerId
-     * @param string|null $email Override email
-     * @return Shop
+     * Get visitors for this application
      */
-    public function createShop(int $sellerId, ?string $email = null): Shop
+    public function visitors()
     {
-        $repository = new StoreDetailsRepository();
-        return $repository->createFromApplication($this, $sellerId, $email);
+        return $this->hasMany(ShopVisitor::class, 'seller_application_id');
+    }
+
+    /**
+     * Get transactions for this application
+     */
+    public function transactions()
+    {
+        return $this->hasMany(Transaction::class, 'seller_application_id');
+    }
+
+    /**
+     * Generate a unique shop code
+     */
+    public static function generateShopCode(): string
+    {
+        do {
+            $code = 'SHOP-' . date('Y') . str_pad(random_int(1000, 9999), 4, '0', STR_PAD_LEFT);
+        } while (self::where('shop_code', $code)->exists());
+
+        return $code;
     }
 
     /**

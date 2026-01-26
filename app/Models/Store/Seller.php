@@ -7,6 +7,7 @@ use Illuminate\Notifications\Notifiable;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 use App\DTO\Store\StoreDetailsDTO;
 use App\Repositories\Store\StoreDetailsRepository;
+use App\Models\Store\SellerApplication;
 
 class Seller extends Authenticatable implements JWTSubject
 {
@@ -28,11 +29,6 @@ class Seller extends Authenticatable implements JWTSubject
         'password',
         'remember_token',
     ];
-
-    public function shop()
-    {
-        return $this->hasOne(Shop::class, 'seller_id');
-    }
 
     public function bankAccount()
     {
@@ -74,14 +70,14 @@ class Seller extends Authenticatable implements JWTSubject
 
     /**
      * Update store details.
-     * Always updates Shop table (single source of truth for live data).
+     * Always updates SellerApplication (single source of truth).
      * Accepts any key format (camelCase, snake_case).
      *
      * @param array $data
-     * @return Shop
-     * @throws \RuntimeException if shop doesn't exist
+     * @return SellerApplication
+     * @throws \RuntimeException if application doesn't exist
      */
-    public function updateStoreDetails(array $data): Shop
+    public function updateStoreDetails(array $data): SellerApplication
     {
         $repository = new StoreDetailsRepository();
         return $repository->updateForSeller($this, $data);

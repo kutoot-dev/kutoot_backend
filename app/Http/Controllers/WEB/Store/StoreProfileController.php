@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\WEB\Store;
 
 use App\Http\Controllers\Controller;
-use App\Models\Store\AdminShopCommissionDiscount;
 use App\Models\Store\StoreCategory;
 use App\Models\Store\ShopImage;
 use App\Repositories\Store\StoreDetailsRepository;
@@ -24,16 +23,20 @@ class StoreProfileController extends Controller
     public function edit()
     {
         $seller = Auth::guard('store')->user();
-        $seller->loadMissing('shop.images');
+        $seller->loadMissing('application.shopImages');
 
-        $master = AdminShopCommissionDiscount::resolveForShop($seller->shop?->id);
+        $application = $seller->application;
         $categories = StoreCategory::query()->where('is_active', true)->orderBy('name')->get();
 
         return view('store.store_profile', [
             'seller' => $seller,
-            'shop' => $seller->shop,
-            'images' => $seller->shop?->images ?? collect(),
-            'master' => $master,
+            'shop' => $application,
+            'images' => $application?->shopImages ?? collect(),
+            'master' => [
+                'commission_percent' => $application?->commission_percent ?? 0,
+                'discount_percent' => $application?->discount_percent ?? 0,
+                'minimum_bill_amount' => $application?->min_bill_amount ?? 0,
+            ],
             'categories' => $categories,
         ]);
     }
@@ -65,15 +68,15 @@ class StoreProfileController extends Controller
         }
 
         $seller = Auth::guard('store')->user();
-        $seller->loadMissing('shop');
-        $shop = $seller->shop;
+        $seller->loadMissing('application');
+        $application = $seller->application;
 
-        if (!$shop) {
-            return redirect()->back()->withErrors(['shop' => 'Shop not found for this seller']);
+        if (!$application) {
+            return redirect()->back()->withErrors(['shop' => 'Store application not found for this seller']);
         }
 
         // Update using repository (single source of truth)
-        $this->storeRepository->update($shop, $request->only([
+        $this->storeRepository->update($application, $request->only([
             'shop_name', 'category', 'owner_name', 'phone', 'email',
             'gst_number', 'address', 'google_map_url', 'location_lat',
             'location_lng', 'min_bill_amount'
@@ -85,7 +88,7 @@ class StoreProfileController extends Controller
                 if (!$file) {
                     continue;
                 }
-                $dir = public_path("uploads/store/shops/{$shop->shop_code}");
+                $dir = public_path("uploads/store/shops/{$application->shop_code}");
                 if (!File::exists($dir)) {
                     File::makeDirectory($dir, 0755, true);
                 }
@@ -93,9 +96,9 @@ class StoreProfileController extends Controller
                 $fileName = uniqid('shop_', true).'.'.$file->getClientOriginalExtension();
                 $file->move($dir, $fileName);
 
-                $relativePath = "uploads/store/shops/{$shop->shop_code}/{$fileName}";
+                $relativePath = "uploads/store/shops/{$application->shop_code}/{$fileName}";
                 ShopImage::query()->create([
-                    'shop_id' => $shop->id,
+                    'seller_application_id' => $application->id,
                     'image_url' => $relativePath,
                 ]);
             }
@@ -107,14 +110,14 @@ class StoreProfileController extends Controller
     public function deleteImage($id)
     {
         $seller = Auth::guard('store')->user();
-        $seller->loadMissing('shop');
-        $shop = $seller->shop;
+        $seller->loadMissing('application');
+        $application = $seller->application;
 
-        if (!$shop) {
-            return redirect()->back()->withErrors(['shop' => 'Shop not found for this seller']);
+        if (!$application) {
+            return redirect()->back()->withErrors(['shop' => 'Store application not found for this seller']);
         }
 
-        $img = ShopImage::query()->where('shop_id', $shop->id)->where('id', $id)->first();
+        $img = ShopImage::query()->where('seller_application_id', $application->id)->where('id', $id)->first();
         if ($img) {
             if ($img->image_url && !str_starts_with($img->image_url, 'http')) {
                 $fullPath = public_path($img->image_url);
