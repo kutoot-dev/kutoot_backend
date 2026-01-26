@@ -111,7 +111,7 @@
                                                                     <option value="">{{__('admin.Select Currency')}}
                                                                   </option>
                                                                   @foreach ($currencies as $currency)
-                                                                  <option {{ $paypal->currency_id == $currency->id ? 'selected' : '' }} value="{{ $currency->id }}">{{ $currency->currency_name }}
+                                                                  <option {{ $paypal->currency_id == $currency->id ? 'selected' : '' }} value="{{ $currency->id }}">{{ $currency->name }} ({{ $currency->code }})
                                                                   </option>
                                                                   @endforeach
                                                                 </select>
@@ -155,7 +155,7 @@
                                                                     <option value="">{{__('admin.Select Currency')}}
                                                                   </option>
                                                                   @foreach ($currencies as $currency)
-                                                                  <option {{ $stripe->currency_id == $currency->id ? 'selected' : '' }} value="{{ $currency->id }}">{{ $currency->currency_name }}
+                                                                  <option {{ $stripe->currency_id == $currency->id ? 'selected' : '' }} value="{{ $currency->id }}">{{ $currency->name }} ({{ $currency->code }})
                                                                   </option>
                                                                   @endforeach
                                                                 </select>
@@ -208,7 +208,7 @@
                                                                     <option value="">{{__('admin.Select Currency')}}
                                                                   </option>
                                                                   @foreach ($currencies as $currency)
-                                                                  <option {{ $myfatoorah->currency_id == $currency->id ? 'selected' : '' }} value="{{ $currency->id }}">{{ $currency->currency_name }}
+                                                                  <option {{ $myfatoorah->currency_id == $currency->id ? 'selected' : '' }} value="{{ $currency->id }}">{{ $currency->name }} ({{ $currency->code }})
                                                                   </option>
                                                                   @endforeach
                                                                 </select>
@@ -272,7 +272,7 @@
                                                                     <option value="">{{__('admin.Select Currency')}}
                                                                   </option>
                                                                   @foreach ($currencies as $currency)
-                                                                  <option {{ $razorpay->currency_id == $currency->id ? 'selected' : '' }} value="{{ $currency->id }}">{{ $currency->currency_name }}
+                                                                  <option {{ $razorpay->currency_id == $currency->id ? 'selected' : '' }} value="{{ $currency->id }}">{{ $currency->name }} ({{ $currency->code }})
                                                                   </option>
                                                                   @endforeach
                                                                 </select>
@@ -339,7 +339,7 @@
                                                                     <option value="">{{__('admin.Select Currency')}}
                                                                   </option>
                                                                   @foreach ($currencies as $currency)
-                                                                  <option {{ $flutterwave->currency_id == $currency->id ? 'selected' : '' }} value="{{ $currency->id }}">{{ $currency->currency_name }}
+                                                                  <option {{ $flutterwave->currency_id == $currency->id ? 'selected' : '' }} value="{{ $currency->id }}">{{ $currency->name }} ({{ $currency->code }})
                                                                   </option>
                                                                   @endforeach
                                                                 </select>
@@ -391,7 +391,7 @@
                                                                     <option value="">{{__('admin.Select Currency')}}
                                                                   </option>
                                                                   @foreach ($currencies as $currency)
-                                                                  <option {{ $paystackAndMollie->currency_id == $currency->id ? 'selected' : '' }} value="{{ $currency->id }}">{{ $currency->currency_name }}
+                                                                  <option {{ $paystackAndMollie->currency_id == $currency->id ? 'selected' : '' }} value="{{ $currency->id }}">{{ $currency->name }} ({{ $currency->code }})
                                                                   </option>
                                                                   @endforeach
                                                                 </select>
@@ -436,7 +436,7 @@
                                                                     <option value="">{{__('admin.Select Currency')}}
                                                                   </option>
                                                                   @foreach ($currencies as $currency)
-                                                                  <option {{ $paystackAndMollie->currency_id == $currency->id ? 'selected' : '' }} value="{{ $currency->id }}">{{ $currency->currency_name }}
+                                                                  <option {{ $paystackAndMollie->currency_id == $currency->id ? 'selected' : '' }} value="{{ $currency->id }}">{{ $currency->name }} ({{ $currency->code }})
                                                                   </option>
                                                                   @endforeach
                                                                 </select>
@@ -491,7 +491,7 @@
                                                                     <option value="">{{__('admin.Select Currency')}}
                                                                   </option>
                                                                   @foreach ($currencies as $currency)
-                                                                  <option {{ $instamojo->currency_id == $currency->id ? 'selected' : '' }} value="{{ $currency->id }}">{{ $currency->currency_name }}
+                                                                  <option {{ $instamojo->currency_id == $currency->id ? 'selected' : '' }} value="{{ $currency->id }}">{{ $currency->name }} ({{ $currency->code }})
                                                                   </option>
                                                                   @endforeach
                                                                 </select>
@@ -545,7 +545,7 @@
                                                                     <option value="">{{__('admin.Select Currency')}}
                                                                   </option>
                                                                   @foreach ($currencies as $currency)
-                                                                  <option {{ $sslcommerz->currency_id == $currency->id ? 'selected' : '' }} value="{{ $currency->id }}">{{ $currency->currency_name }}
+                                                                  <option {{ $sslcommerz->currency_id == $currency->id ? 'selected' : '' }} value="{{ $currency->id }}">{{ $currency->name }} ({{ $currency->code }})
                                                                   </option>
                                                                   @endforeach
                                                                 </select>
