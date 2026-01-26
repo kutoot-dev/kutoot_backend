@@ -30,12 +30,14 @@ class StoreProfileController extends Controller
             ], 404);
         }
 
-        $images = $application->shopImages->map(function ($img) {
-            $v = (string) $img->image_url;
-            if ($v === '') {
+
+
+        // Additional images stored in JSON column
+        $additionalImages = collect($application->images ?? [])->map(function ($img) {
+            if (empty($img)) {
                 return null;
             }
-            return str_starts_with($v, 'http') ? $v : asset($v);
+            return str_starts_with($img, 'http') ? $img : asset($img);
         })->filter()->values();
 
         return response()->json([
@@ -89,7 +91,7 @@ class StoreProfileController extends Controller
 
                 // Images
                 'storeImage' => $application->store_image ? (str_starts_with($application->store_image, 'http') ? $application->store_image : asset($application->store_image)) : null,
-                'images' => $images,
+                'additionalImages' => $additionalImages,
             ],
         ]);
     }
