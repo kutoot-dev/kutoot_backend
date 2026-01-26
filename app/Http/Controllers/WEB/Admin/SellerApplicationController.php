@@ -7,6 +7,7 @@ use App\Models\Store\SellerApplication;
 use App\Models\Store\Seller;
 use App\Models\Store\Shop;
 use App\Models\Store\AdminShopCommissionDiscount;
+use App\Services\Store\ApplicationShopSyncService;
 use App\Mail\SellerApplicationApproved;
 use App\Mail\SellerApplicationRejected;
 use App\Helpers\MailHelper;
@@ -747,24 +748,8 @@ class SellerApplicationController extends Controller
                 throw new \Exception('Failed to create seller account');
             }
 
-            // Create shop
-            $shopCode = 'SHOP-' . date('Y') . str_pad($seller->id, 4, '0', STR_PAD_LEFT);
-            $shop = Shop::create([
-                'seller_id' => $seller->id,
-                'shop_code' => $shopCode,
-                'shop_name' => $application->store_name,
-                'owner_name' => $application->store_name,
-                'phone' => $application->owner_mobile,
-                'email' => $request->sellerEmail,
-                'address' => $application->store_address,
-                'state' => $application->state,
-                'city' => $application->city,
-                'country' => $application->country,
-                'location_lat' => $application->lat,
-                'location_lng' => $application->lng,
-                'category' => $application->store_type,
-                'min_bill_amount' => $application->min_bill_amount ?? 0,
-            ]);
+            // Create shop using single source of truth for field mapping
+            $shop = $application->createShop($seller->id, $request->sellerEmail);
 
             if (!$shop || !$shop->id) {
                 throw new \Exception('Failed to create shop');
@@ -1007,24 +992,8 @@ class SellerApplicationController extends Controller
                 throw new \Exception('Failed to create seller account');
             }
 
-            // Create shop
-            $shopCode = 'SHOP-' . date('Y') . str_pad($seller->id, 4, '0', STR_PAD_LEFT);
-            $shop = Shop::create([
-                'seller_id' => $seller->id,
-                'shop_code' => $shopCode,
-                'shop_name' => $application->store_name,
-                'owner_name' => $application->store_name,
-                'phone' => $application->owner_mobile,
-                'email' => $request->seller_email,
-                'address' => $application->store_address,
-                'state' => $application->state,
-                'city' => $application->city,
-                'country' => $application->country,
-                'location_lat' => $application->lat,
-                'location_lng' => $application->lng,
-                'category' => $application->store_type,
-                'min_bill_amount' => $application->min_bill_amount ?? 0,
-            ]);
+            // Create shop using single source of truth for field mapping
+            $shop = $application->createShop($seller->id, $request->seller_email);
 
             if (!$shop || !$shop->id) {
                 throw new \Exception('Failed to create shop');

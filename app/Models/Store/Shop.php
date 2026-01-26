@@ -3,6 +3,7 @@
 namespace App\Models\Store;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Services\Store\ApplicationShopSyncService;
 
 class Shop extends Model
 {
@@ -84,6 +85,52 @@ class Shop extends Model
         return $this->hasOne(AdminShopCommissionDiscount::class, 'shop_id')
             ->where('is_active', true)
             ->latest();
+    }
+
+    /**
+     * Get the linked seller application
+     */
+    public function application()
+    {
+        return $this->hasOne(SellerApplication::class, 'seller_id', 'seller_id');
+    }
+
+    /**
+     * Create a Shop from a SellerApplication
+     * Uses ApplicationShopSyncService as single source of truth for field mapping.
+     *
+     * @param SellerApplication $application
+     * @param int $sellerId
+     * @param string|null $email Override email
+     * @return static
+     */
+    public static function createFromApplication(
+        SellerApplication $application,
+        int $sellerId,
+        ?string $email = null
+    ): static {
+        return ApplicationShopSyncService::createShopFromApplication($application, $sellerId, $email);
+    }
+
+    /**
+     * Sync this shop's data from its linked SellerApplication
+     *
+     * @param array|null $onlyFields Only sync these fields (null = all)
+     * @return bool
+     */
+    public function syncFromApplication(?array $onlyFields = null): bool
+    {
+        return ApplicationShopSyncService::syncShopFromApplication($this, $onlyFields);
+    }
+
+    /**
+     * Get the field mapping from SellerApplication to Shop
+     *
+     * @return array
+     */
+    public static function getApplicationFieldMapping(): array
+    {
+        return ApplicationShopSyncService::FIELD_MAPPING;
     }
 }
 

@@ -4,6 +4,7 @@ namespace App\Models\Store;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Admin;
+use App\Services\Store\ApplicationShopSyncService;
 
 class SellerApplication extends Model
 {
@@ -153,6 +154,63 @@ class SellerApplication extends Model
             return $query->where('status', strtoupper($status));
         }
         return $query;
+    }
+
+    /**
+     * Get the shop created from this application
+     */
+    public function shop()
+    {
+        return $this->hasOne(Shop::class, 'seller_id', 'seller_id');
+    }
+
+    /**
+     * Create a Shop from this application
+     * Uses ApplicationShopSyncService as single source of truth for field mapping.
+     *
+     * @param int $sellerId
+     * @param string|null $email Override email
+     * @return Shop
+     */
+    public function createShop(int $sellerId, ?string $email = null): Shop
+    {
+        return ApplicationShopSyncService::createShopFromApplication($this, $sellerId, $email);
+    }
+
+    /**
+     * Get data array for creating a Shop from this application
+     *
+     * @param array $additionalData Additional data to merge
+     * @return array
+     */
+    public function toShopData(array $additionalData = []): array
+    {
+        return ApplicationShopSyncService::applicationToShopData($this, $additionalData);
+    }
+
+    /**
+     * Sync this application's data from the linked Shop
+     *
+     * @param array|null $onlyFields Only sync these fields (null = all)
+     * @return bool
+     */
+    public function syncFromShop(?array $onlyFields = null): bool
+    {
+        $shop = $this->shop;
+        if (!$shop) {
+            return false;
+        }
+        return ApplicationShopSyncService::syncApplicationFromShop($this, $shop, $onlyFields);
+    }
+
+    /**
+     * Get the field mapping from SellerApplication to Shop
+     *
+     * @return array
+     */
+    public static function getShopFieldMapping(): array
+    {
+        return ApplicationShopSyncService::FIELD_MAPPING;
     }
 }
 
