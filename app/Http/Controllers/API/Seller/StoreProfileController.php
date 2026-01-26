@@ -41,6 +41,7 @@ class StoreProfileController extends Controller
         return response()->json([
             'success' => true,
             'data' => [
+                // Basic Info
                 'shopId' => $application->shop_code,
                 'shopName' => $application->store_name,
                 'category' => $application->store_type,
@@ -48,17 +49,46 @@ class StoreProfileController extends Controller
                 'phone' => $application->owner_mobile,
                 'email' => $application->owner_email,
                 'gstNumber' => $application->gst_number,
+
+                // Address & Location
                 'address' => $application->store_address,
+                'city' => $application->city,
+                'state' => $application->state,
+                'country' => $application->country,
                 'googleMapUrl' => $application->google_map_url,
                 'location' => [
                     'lat' => $application->lat,
                     'lng' => $application->lng,
                 ],
-                'masterAdmin' => [
-                    'discountPercent' => $application->discount_percent ?? 0,
-                    'commissionPercent' => $application->commission_percent ?? 0,
-                    'minimumBillAmount' => (float) ($application->min_bill_amount ?? 0),
+
+                // Commission, Discount & Billing
+                'commissionPercent' => (float) ($application->commission_percent ?? 0),
+                'discountPercent' => (float) ($application->discount_percent ?? 0),
+                'minimumBillAmount' => (float) ($application->min_bill_amount ?? 0),
+
+                // Rating
+                'rating' => (float) ($application->rating ?? 0),
+                'noOfRatings' => $application->no_of_ratings ?? 0,
+                'totalRatings' => $application->total_ratings ?? 0,
+
+                // Bank Details
+                'bankDetails' => [
+                    'bankName' => $application->bank_name,
+                    'accountNumber' => $application->account_number,
+                    'ifscCode' => $application->ifsc_code,
+                    'beneficiaryName' => $application->beneficiary_name,
+                    'upiId' => $application->upi_id,
+                    'razorpayAccountId' => $application->razorpay_account_id,
                 ],
+
+                // Tags & Features
+                'tags' => $application->tags ?? [],
+                'offerTag' => $application->offer_tag,
+                'isFeatured' => $application->is_featured ?? false,
+                'isActive' => $application->is_active ?? false,
+
+                // Images
+                'storeImage' => $application->store_image ? (str_starts_with($application->store_image, 'http') ? $application->store_image : asset($application->store_image)) : null,
                 'images' => $images,
             ],
         ]);
