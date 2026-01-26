@@ -694,6 +694,8 @@ Route::group(['middleware' => ['demo', 'XSS']], function () {
         Route::post('seller-applications/{id}/verify', [\App\Http\Controllers\WEB\Admin\SellerApplicationController::class, 'webVerify'])->name('seller-applications.verify');
         Route::post('seller-applications/{id}/approve', [\App\Http\Controllers\WEB\Admin\SellerApplicationController::class, 'webApprove'])->name('seller-applications.approve');
         Route::post('seller-applications/{id}/reject', [\App\Http\Controllers\WEB\Admin\SellerApplicationController::class, 'webReject'])->name('seller-applications.reject');
+        Route::post('seller-applications/{id}/resend-credentials', [\App\Http\Controllers\WEB\Admin\SellerApplicationController::class, 'resendCredentials'])->name('seller-applications.resend-credentials');
+        Route::post('seller-applications/{id}/reset-password', [\App\Http\Controllers\WEB\Admin\SellerApplicationController::class, 'resetAndResendPassword'])->name('seller-applications.reset-password');
 
         Route::resource('error-page', ErrorPageController::class);
 

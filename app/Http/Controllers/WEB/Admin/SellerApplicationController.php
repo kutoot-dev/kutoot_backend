@@ -1207,5 +1207,103 @@ class SellerApplicationController extends Controller
             'createdAt' => $application->created_at->toIso8601String(),
         ];
     }
-}
 
+    /**
+     * Resend credentials email to seller (uses existing password - just sends reminder)
+     * POST /admin/seller-applications/{id}/resend-credentials
+     */
+    public function resendCredentials(Request $request, $id)
+    {
+        $application = SellerApplication::with('seller')->findOrFail($id);
+
+        if (!$application->isApproved() || !$application->seller) {
+            return redirect()->back()->with('error', 'Application must be approved with a seller account to resend credentials');
+        }
+
+        $request->validate([
+            'email' => 'required|email',
+        ]);
+
+        $seller = $application->seller;
+
+        try {
+            MailHelper::setEnvMailConfig();
+            $loginUrl = "https://www.kutoot.com/store";
+
+            // Send email with username only (password not stored in plain text)
+            Mail::to($request->email)->send(
+                new \App\Mail\SellerCredentialsReminder(
+                    $application->store_name,
+                    $seller->username,
+                    $loginUrl
+                )
+            );
+
+            // Update seller email if different
+            if ($request->email !== $application->seller_email) {
+                $application->update(['seller_email' => $request->email]);
+                $seller->update(['email' => $request->email]);
+            }
+
+            return redirect()->back()->with('success', 'Credentials reminder sent to ' . $request->email . '. Username: ' . $seller->username);
+
+        } catch (\Exception $e) {
+            \Log::error('Failed to resend credentials: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'Failed to send email: ' . $e->getMessage());
+        }
+    }
+
+    /**
+     * Reset seller password and send new credentials
+     * POST /admin/seller-applications/{id}/reset-password
+     */
+    public function resetAndResendPassword(Request $request, $id)
+    {
+        $application = SellerApplication::with('seller')->findOrFail($id);
+
+        if (!$application->isApproved() || !$application->seller) {
+            return redirect()->back()->with('error', 'Application must be approved with a seller account to reset password');
+        }
+
+        $request->validate([
+            'email' => 'required|email',
+        ]);
+
+        $seller = $application->seller;
+
+        try {
+            // Generate new password
+            $newPassword = 'Kutoot@' . rand(100, 999);
+
+            // Update seller password
+            $seller->update([
+                'password' => Hash::make($newPassword),
+            ]);
+
+            // Update email if changed
+            if ($request->email !== $application->seller_email) {
+                $application->update(['seller_email' => $request->email]);
+                $seller->update(['email' => $request->email]);
+            }
+
+            // Send email with new credentials
+            MailHelper::setEnvMailConfig();
+            $loginUrl = "https://www.kutoot.com/store";
+
+            Mail::to($request->email)->send(
+                new SellerApplicationApproved(
+                    $application->store_name,
+                    $seller->username,
+                    $newPassword,
+                    $loginUrl
+                )
+            );
+
+            return redirect()->back()->with('success', 'Password reset successfully! New credentials sent to ' . $request->email . '. Username: ' . $seller->username . ', New Password: ' . $newPassword);
+
+        } catch (\Exception $e) {
+            \Log::error('Failed to reset password: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'Failed to reset password: ' . $e->getMessage());
+        }
+    }
+}

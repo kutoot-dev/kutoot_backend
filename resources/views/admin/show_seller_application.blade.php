@@ -286,47 +286,59 @@
                             <h6 class="text-primary mb-3"><i class="fas fa-history"></i> Application Timeline</h6>
 
                             @if($application->verification_notes || $application->verified_at)
-                            <div class="alert alert-info mb-2">
-                                <strong><i class="fas fa-check-circle"></i> Verified</strong>
-                                @if($application->verified_at)
-                                <small class="float-right">{{ $application->verified_at->format('d M Y, h:i A') }}</small>
-                                @endif
-                                @if($application->verifier)
-                                <br><small class="text-muted">By: {{ $application->verifier->name ?? 'Admin' }}</small>
-                                @endif
-                                @if($application->verification_notes)
-                                <p class="mb-0 mt-2">{{ $application->verification_notes }}</p>
-                                @endif
+                            <div class="card border-left-info mb-3" style="border-left: 4px solid #17a2b8 !important;">
+                                <div class="card-body py-3">
+                                    <div class="d-flex justify-content-between align-items-start">
+                                        <h6 class="text-info mb-1"><i class="fas fa-check-circle"></i> Verified</h6>
+                                        @if($application->verified_at)
+                                        <small class="text-muted">{{ $application->verified_at->format('d M Y, h:i A') }}</small>
+                                        @endif
+                                    </div>
+                                    @if($application->verifier)
+                                    <small class="text-muted d-block">By: {{ $application->verifier->name ?? 'Admin' }}</small>
+                                    @endif
+                                    @if($application->verification_notes)
+                                    <p class="mb-0 mt-2 text-dark">{{ $application->verification_notes }}</p>
+                                    @endif
+                                </div>
                             </div>
                             @endif
 
                             @if($application->isApproved())
-                            <div class="alert alert-success mb-2">
-                                <strong><i class="fas fa-check"></i> Approved</strong>
-                                @if($application->approved_at)
-                                <small class="float-right">{{ $application->approved_at->format('d M Y, h:i A') }}</small>
-                                @endif
-                                @if($application->approver)
-                                <br><small class="text-muted">By: {{ $application->approver->name ?? 'Admin' }}</small>
-                                @endif
-                                @if($application->seller_email)
-                                <p class="mb-0 mt-2">Credentials sent to: <strong>{{ $application->seller_email }}</strong></p>
-                                @endif
+                            <div class="card border-left-success mb-3" style="border-left: 4px solid #28a745 !important;">
+                                <div class="card-body py-3">
+                                    <div class="d-flex justify-content-between align-items-start">
+                                        <h6 class="text-success mb-1"><i class="fas fa-check"></i> Approved</h6>
+                                        @if($application->approved_at)
+                                        <small class="text-muted">{{ $application->approved_at->format('d M Y, h:i A') }}</small>
+                                        @endif
+                                    </div>
+                                    @if($application->approver)
+                                    <small class="text-muted d-block">By: {{ $application->approver->name ?? 'Admin' }}</small>
+                                    @endif
+                                    @if($application->seller_email)
+                                    <p class="mb-0 mt-2 text-dark">Credentials sent to: <strong>{{ $application->seller_email }}</strong></p>
+                                    @endif
+                                </div>
                             </div>
                             @endif
 
                             @if($application->rejection_reason || $application->isRejected())
-                            <div class="alert alert-danger mb-2">
-                                <strong><i class="fas fa-times"></i> Rejected</strong>
-                                @if($application->rejected_at)
-                                <small class="float-right">{{ $application->rejected_at->format('d M Y, h:i A') }}</small>
-                                @endif
-                                @if($application->rejecter)
-                                <br><small class="text-muted">By: {{ $application->rejecter->name ?? 'Admin' }}</small>
-                                @endif
-                                @if($application->rejection_reason)
-                                <p class="mb-0 mt-2"><strong>Reason:</strong> {{ $application->rejection_reason }}</p>
-                                @endif
+                            <div class="card border-left-danger mb-3" style="border-left: 4px solid #dc3545 !important;">
+                                <div class="card-body py-3">
+                                    <div class="d-flex justify-content-between align-items-start">
+                                        <h6 class="text-danger mb-1"><i class="fas fa-times"></i> Rejected</h6>
+                                        @if($application->rejected_at)
+                                        <small class="text-muted">{{ $application->rejected_at->format('d M Y, h:i A') }}</small>
+                                        @endif
+                                    </div>
+                                    @if($application->rejecter)
+                                    <small class="text-muted d-block">By: {{ $application->rejecter->name ?? 'Admin' }}</small>
+                                    @endif
+                                    @if($application->rejection_reason)
+                                    <p class="mb-0 mt-2 text-dark"><strong>Reason:</strong> {{ $application->rejection_reason }}</p>
+                                    @endif
+                                </div>
                             </div>
                             @endif
                             @endif
@@ -448,8 +460,45 @@
                                     <td class="text-muted">Seller Code</td>
                                     <td>{{ $application->seller->seller_code }}</td>
                                 </tr>
+                                <tr>
+                                    <td class="text-muted">Username</td>
+                                    <td>{{ $application->seller->username }}</td>
+                                </tr>
                                 @endif
                             </table>
+
+                            @if($application->seller)
+                            <hr>
+                            <h6 class="text-muted mb-3">Credential Actions</h6>
+
+                            {{-- Resend Credentials (same password) --}}
+                            <form action="{{ route('admin.seller-applications.resend-credentials', $application->id) }}" method="POST" class="mb-2">
+                                @csrf
+                                <div class="form-group mb-2">
+                                    <label class="small">Email to send credentials</label>
+                                    <input type="email" name="email" class="form-control form-control-sm" value="{{ $application->seller_email }}" required>
+                                </div>
+                                <button type="submit" class="btn btn-outline-info btn-block btn-sm" onclick="return confirm('Resend login credentials to this email?')">
+                                    <i class="fas fa-paper-plane"></i> Resend Credentials
+                                </button>
+                                <small class="text-muted">Sends username and current password reminder</small>
+                            </form>
+
+                            <hr class="my-3">
+
+                            {{-- Reset Password and Resend --}}
+                            <form action="{{ route('admin.seller-applications.reset-password', $application->id) }}" method="POST">
+                                @csrf
+                                <div class="form-group mb-2">
+                                    <label class="small">Email to send new credentials</label>
+                                    <input type="email" name="email" class="form-control form-control-sm" value="{{ $application->seller_email }}" required>
+                                </div>
+                                <button type="submit" class="btn btn-warning btn-block btn-sm" onclick="return confirm('This will reset the seller password and send new credentials. Continue?')">
+                                    <i class="fas fa-key"></i> Reset Password & Resend
+                                </button>
+                                <small class="text-muted">Generates new password and sends to email</small>
+                            </form>
+                            @endif
                         </div>
                     </div>
                     @endif
