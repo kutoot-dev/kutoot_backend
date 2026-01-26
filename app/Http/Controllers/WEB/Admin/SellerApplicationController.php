@@ -214,6 +214,9 @@ class SellerApplicationController extends Controller
     /**
      * Update an application
      * PUT /admin/seller-applications/{id}
+     *
+     * Note: For approved applications, changes will automatically sync to the Shop table
+     * via the StoreDetailsSyncObserver.
      */
     public function update(Request $request, $id)
     {
@@ -502,6 +505,8 @@ class SellerApplicationController extends Controller
     /**
      * API: Update application info (admin edits)
      * PATCH /api/admin/seller-applications/{applicationId}
+     *
+     * Note: For approved applications, changes will automatically sync to the Shop table.
      */
     public function apiUpdate(Request $request, $applicationId)
     {
@@ -514,13 +519,7 @@ class SellerApplicationController extends Controller
             ], 404);
         }
 
-        if ($application->isApproved()) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Cannot update an already approved application'
-            ], 400);
-        }
-
+        // Approved applications can be updated - changes sync to Shop automatically
         $validator = Validator::make($request->all(), [
             'storeName' => 'sometimes|string|max:255',
             'ownerMobile' => 'sometimes|string|max:15',
