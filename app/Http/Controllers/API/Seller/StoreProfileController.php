@@ -8,6 +8,7 @@ use App\Models\Store\Seller;
 use App\Models\Store\Shop;
 use App\Models\Store\ShopImage;
 use App\Models\Store\StoreCategory;
+use App\Repositories\Store\StoreDetailsRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
@@ -15,19 +16,29 @@ use Illuminate\Support\Facades\Validator;
 
 class StoreProfileController extends Controller
 {
+    protected StoreDetailsRepository $storeRepository;
+
+    public function __construct(StoreDetailsRepository $storeRepository)
+    {
+        $this->storeRepository = $storeRepository;
+    }
+
     public function show()
     {
         /** @var Seller $seller */
         $seller = Auth::guard('store-api')->user();
-        $seller->loadMissing('shop.images');
-
-        if (!$seller->shop) {
+        
+        // Get store details from single source of truth
+        $storeDetails = $this->storeRepository->getForSeller($seller);
+        
+        if (!$storeDetails || !$storeDetails->isFromShop()) {
             return response()->json([
                 'success' => false,
                 'message' => 'Shop not found for this seller',
             ], 404);
         }
 
+        $seller->loadMissing('shop.images');
         $master = AdminShopCommissionDiscount::resolveForShop($seller->shop?->id);
 
         $images = $seller->shop->images->map(function ($img) {
@@ -41,18 +52,18 @@ class StoreProfileController extends Controller
         return response()->json([
             'success' => true,
             'data' => [
-                'shopId' => $seller->shop->shop_code,
-                'shopName' => $seller->shop->shop_name,
-                'category' => $seller->shop->category,
-                'ownerName' => $seller->shop->owner_name,
-                'phone' => $seller->shop->phone,
-                'email' => $seller->shop->email,
-                'gstNumber' => $seller->shop->gst_number,
-                'address' => $seller->shop->address,
-                'googleMapUrl' => $seller->shop->google_map_url,
+                'shopId' => $storeDetails->code,
+                'shopName' => $storeDetails->name,
+                'category' => $storeDetails->category,
+                'ownerName' => $storeDetails->ownerName,
+                'phone' => $storeDetails->phone,
+                'email' => $storeDetails->email,
+                'gstNumber' => $storeDetails->gstNumber,
+                'address' => $storeDetails->address,
+                'googleMapUrl' => $storeDetails->googleMapUrl,
                 'location' => [
-                    'lat' => $seller->shop->location_lat,
-                    'lng' => $seller->shop->location_lng,
+                    'lat' => $storeDetails->lat,
+                    'lng' => $storeDetails->lng,
                 ],
                 'masterAdmin' => [
                     'discountPercent' => $master?->discount_percent ?? 0,
@@ -110,19 +121,21 @@ class StoreProfileController extends Controller
             ], 404);
         }
 
-        $shop->fill([
-            'shop_name' => $request->input('shopName', $shop->shop_name),
-            'category' => $request->input('category', $shop->category),
-            'owner_name' => $request->input('ownerName', $shop->owner_name),
-            'phone' => $request->input('phone', $shop->phone),
-            'email' => $request->input('email', $shop->email),
-            'gst_number' => $request->input('gstNumber', $shop->gst_number),
-            'address' => $request->input('address', $shop->address),
-            'google_map_url' => $request->input('googleMapUrl', $shop->google_map_url),
-            'location_lat' => data_get($request->input('location'), 'lat', $shop->location_lat),
-            'location_lng' => data_get($request->input('location'), 'lng', $shop->location_lng),
+        // Prepare update data - handle nested location object
+        $updateData = $request->only([
+            'shopName', 'category', 'ownerName', 'phone', 'email',
+            'gstNumber', 'address', 'googleMapUrl'
         ]);
-        $shop->save();
+        
+        if ($request->has('location.lat')) {
+            $updateData['locationLat'] = $request->input('location.lat');
+        }
+        if ($request->has('location.lng')) {
+            $updateData['locationLng'] = $request->input('location.lng');
+        }
+
+        // Update using repository (single source of truth)
+        $this->storeRepository->update($shop, $updateData);
 
         return response()->json([
             'success' => true,

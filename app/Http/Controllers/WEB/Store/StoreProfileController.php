@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Store\AdminShopCommissionDiscount;
 use App\Models\Store\StoreCategory;
 use App\Models\Store\ShopImage;
+use App\Repositories\Store\StoreDetailsRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
@@ -13,6 +14,13 @@ use Illuminate\Support\Facades\Validator;
 
 class StoreProfileController extends Controller
 {
+    protected StoreDetailsRepository $storeRepository;
+
+    public function __construct(StoreDetailsRepository $storeRepository)
+    {
+        $this->storeRepository = $storeRepository;
+    }
+
     public function edit()
     {
         $seller = Auth::guard('store')->user();
@@ -64,19 +72,12 @@ class StoreProfileController extends Controller
             return redirect()->back()->withErrors(['shop' => 'Shop not found for this seller']);
         }
 
-        $shop->update([
-            'shop_name' => $request->input('shop_name'),
-            'category' => $request->input('category'),
-            'owner_name' => $request->input('owner_name'),
-            'phone' => $request->input('phone'),
-            'email' => $request->input('email'),
-            'gst_number' => $request->input('gst_number'),
-            'address' => $request->input('address'),
-            'google_map_url' => $request->input('google_map_url'),
-            'location_lat' => $request->input('location_lat'),
-            'location_lng' => $request->input('location_lng'),
-            'min_bill_amount' => $request->input('min_bill_amount', $shop->min_bill_amount ?? 0),
-        ]);
+        // Update using repository (single source of truth)
+        $this->storeRepository->update($shop, $request->only([
+            'shop_name', 'category', 'owner_name', 'phone', 'email',
+            'gst_number', 'address', 'google_map_url', 'location_lat',
+            'location_lng', 'min_bill_amount'
+        ]));
 
         // Optional image upload from same form
         if ($request->hasFile('images')) {

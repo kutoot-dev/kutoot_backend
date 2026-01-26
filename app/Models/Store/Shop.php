@@ -3,7 +3,8 @@
 namespace App\Models\Store;
 
 use Illuminate\Database\Eloquent\Model;
-use App\Services\Store\ApplicationShopSyncService;
+use App\DTO\Store\StoreDetailsDTO;
+use App\Repositories\Store\StoreDetailsRepository;
 
 class Shop extends Model
 {
@@ -96,8 +97,8 @@ class Shop extends Model
     }
 
     /**
-     * Create a Shop from a SellerApplication
-     * Uses ApplicationShopSyncService as single source of truth for field mapping.
+     * Create a Shop from a SellerApplication.
+     * Uses StoreDetailsRepository as single source of truth.
      *
      * @param SellerApplication $application
      * @param int $sellerId
@@ -109,28 +110,43 @@ class Shop extends Model
         int $sellerId,
         ?string $email = null
     ): static {
-        return ApplicationShopSyncService::createShopFromApplication($application, $sellerId, $email);
+        $repository = new StoreDetailsRepository();
+        return $repository->createFromApplication($application, $sellerId, $email);
     }
 
     /**
-     * Sync this shop's data from its linked SellerApplication
+     * Get unified store details DTO.
+     * This is the single source of truth for reading store data.
      *
-     * @param array|null $onlyFields Only sync these fields (null = all)
+     * @return StoreDetailsDTO
+     */
+    public function toStoreDetails(): StoreDetailsDTO
+    {
+        return StoreDetailsDTO::fromShop($this);
+    }
+
+    /**
+     * Update store details using normalized data.
+     * Accepts any key format (camelCase, snake_case).
+     *
+     * @param array $data
      * @return bool
      */
-    public function syncFromApplication(?array $onlyFields = null): bool
+    public function updateDetails(array $data): bool
     {
-        return ApplicationShopSyncService::syncShopFromApplication($this, $onlyFields);
+        $repository = new StoreDetailsRepository();
+        $normalizedData = $repository->normalizeToShopColumns($data);
+        return $this->update($normalizedData);
     }
 
     /**
-     * Get the field mapping from SellerApplication to Shop
+     * Get field definitions from the single source of truth.
      *
      * @return array
      */
-    public static function getApplicationFieldMapping(): array
+    public static function getFieldDefinitions(): array
     {
-        return ApplicationShopSyncService::FIELD_MAPPING;
+        return StoreDetailsRepository::FIELDS;
     }
 }
 

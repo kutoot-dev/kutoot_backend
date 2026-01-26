@@ -5,6 +5,8 @@ namespace App\Models\Store;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Tymon\JWTAuth\Contracts\JWTSubject;
+use App\DTO\Store\StoreDetailsDTO;
+use App\Repositories\Store\StoreDetailsRepository;
 
 class Seller extends Authenticatable implements JWTSubject
 {
@@ -55,6 +57,34 @@ class Seller extends Authenticatable implements JWTSubject
         return $this->application()
             ->where('status', SellerApplication::STATUS_APPROVED)
             ->exists();
+    }
+
+    /**
+     * Get unified store details.
+     * Returns data from Shop (authoritative) or Application (pending).
+     * This is the SINGLE SOURCE OF TRUTH for reading store data.
+     *
+     * @return StoreDetailsDTO|null
+     */
+    public function getStoreDetails(): ?StoreDetailsDTO
+    {
+        $repository = new StoreDetailsRepository();
+        return $repository->getForSeller($this);
+    }
+
+    /**
+     * Update store details.
+     * Always updates Shop table (single source of truth for live data).
+     * Accepts any key format (camelCase, snake_case).
+     *
+     * @param array $data
+     * @return Shop
+     * @throws \RuntimeException if shop doesn't exist
+     */
+    public function updateStoreDetails(array $data): Shop
+    {
+        $repository = new StoreDetailsRepository();
+        return $repository->updateForSeller($this, $data);
     }
 
     public function getJWTIdentifier()

@@ -4,7 +4,8 @@ namespace App\Models\Store;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Admin;
-use App\Services\Store\ApplicationShopSyncService;
+use App\DTO\Store\StoreDetailsDTO;
+use App\Repositories\Store\StoreDetailsRepository;
 
 class SellerApplication extends Model
 {
@@ -165,8 +166,8 @@ class SellerApplication extends Model
     }
 
     /**
-     * Create a Shop from this application
-     * Uses ApplicationShopSyncService as single source of truth for field mapping.
+     * Create a Shop from this application.
+     * Uses StoreDetailsRepository as single source of truth.
      *
      * @param int $sellerId
      * @param string|null $email Override email
@@ -174,43 +175,46 @@ class SellerApplication extends Model
      */
     public function createShop(int $sellerId, ?string $email = null): Shop
     {
-        return ApplicationShopSyncService::createShopFromApplication($this, $sellerId, $email);
+        $repository = new StoreDetailsRepository();
+        return $repository->createFromApplication($this, $sellerId, $email);
     }
 
     /**
-     * Get data array for creating a Shop from this application
+     * Get unified store details DTO.
+     * Returns Shop data if approved, else Application data.
+     * This is the single source of truth for reading store data.
      *
-     * @param array $additionalData Additional data to merge
-     * @return array
+     * @return StoreDetailsDTO
      */
-    public function toShopData(array $additionalData = []): array
+    public function toStoreDetails(): StoreDetailsDTO
     {
-        return ApplicationShopSyncService::applicationToShopData($this, $additionalData);
+        $repository = new StoreDetailsRepository();
+        return $repository->getFromApplication($this);
     }
 
     /**
-     * Sync this application's data from the linked Shop
+     * Update this application using normalized data.
+     * Accepts any key format (camelCase, snake_case).
+     * Use for pending applications only.
      *
-     * @param array|null $onlyFields Only sync these fields (null = all)
+     * @param array $data
      * @return bool
      */
-    public function syncFromShop(?array $onlyFields = null): bool
+    public function updateDetails(array $data): bool
     {
-        $shop = $this->shop;
-        if (!$shop) {
-            return false;
-        }
-        return ApplicationShopSyncService::syncApplicationFromShop($this, $shop, $onlyFields);
+        $repository = new StoreDetailsRepository();
+        $normalizedData = $repository->normalizeToApplicationColumns($data);
+        return $this->update($normalizedData);
     }
 
     /**
-     * Get the field mapping from SellerApplication to Shop
+     * Get field definitions from the single source of truth.
      *
      * @return array
      */
-    public static function getShopFieldMapping(): array
+    public static function getFieldDefinitions(): array
     {
-        return ApplicationShopSyncService::FIELD_MAPPING;
+        return StoreDetailsRepository::FIELDS;
     }
 }
 
