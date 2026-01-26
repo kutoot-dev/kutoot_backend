@@ -4,11 +4,64 @@ namespace App\Models\Store;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Admin;
-use App\DTO\Store\StoreDetailsDTO;
-use App\Repositories\Store\StoreDetailsRepository;
 
 class SellerApplication extends Model
 {
+    /**
+     * Field mapping from API/form keys to database columns.
+     * Single source of truth for field normalization.
+     */
+    public const FIELD_MAP = [
+        // API camelCase => database column
+        'shopName' => 'store_name',
+        'storeName' => 'store_name',
+        'shop_name' => 'store_name',
+        'name' => 'store_name',
+        'category' => 'store_type',
+        'storeType' => 'store_type',
+        'store_type' => 'store_type',
+        'ownerName' => 'owner_name',
+        'owner_name' => 'owner_name',
+        'phone' => 'owner_mobile',
+        'ownerMobile' => 'owner_mobile',
+        'owner_mobile' => 'owner_mobile',
+        'email' => 'owner_email',
+        'ownerEmail' => 'owner_email',
+        'owner_email' => 'owner_email',
+        'gstNumber' => 'gst_number',
+        'gst_number' => 'gst_number',
+        'address' => 'store_address',
+        'storeAddress' => 'store_address',
+        'store_address' => 'store_address',
+        'googleMapUrl' => 'google_map_url',
+        'google_map_url' => 'google_map_url',
+        'lat' => 'lat',
+        'locationLat' => 'lat',
+        'location_lat' => 'lat',
+        'lng' => 'lng',
+        'locationLng' => 'lng',
+        'location_lng' => 'lng',
+        'minBillAmount' => 'min_bill_amount',
+        'min_bill_amount' => 'min_bill_amount',
+        'commissionPercent' => 'commission_percent',
+        'commission_percent' => 'commission_percent',
+        'discountPercent' => 'discount_percent',
+        'discount_percent' => 'discount_percent',
+        'tags' => 'tags',
+        'countryId' => 'country_id',
+        'country_id' => 'country_id',
+        'stateId' => 'state_id',
+        'state_id' => 'state_id',
+        'cityId' => 'city_id',
+        'city_id' => 'city_id',
+        'isActive' => 'is_active',
+        'is_active' => 'is_active',
+        'isFeatured' => 'is_featured',
+        'is_featured' => 'is_featured',
+        'offerTag' => 'offer_tag',
+        'offer_tag' => 'offer_tag',
+    ];
+
     // Status constants
     const STATUS_PENDING = 'PENDING';
     const STATUS_VERIFIED = 'VERIFIED';
@@ -211,41 +264,37 @@ class SellerApplication extends Model
     }
 
     /**
-     * Get unified store details DTO.
-     * Returns Shop data if approved, else Application data.
-     * This is the single source of truth for reading store data.
+     * Normalize request data to database column names.
+     * Accepts any key format (camelCase, snake_case, etc.)
      *
-     * @return StoreDetailsDTO
+     * @param array $data
+     * @return array
      */
-    public function toStoreDetails(): StoreDetailsDTO
+    public static function normalizeToColumns(array $data): array
     {
-        $repository = new StoreDetailsRepository();
-        return $repository->getFromApplication($this);
+        $normalized = [];
+        foreach ($data as $key => $value) {
+            if (isset(self::FIELD_MAP[$key])) {
+                $normalized[self::FIELD_MAP[$key]] = $value;
+            } elseif (in_array($key, self::FIELD_MAP, true)) {
+                // Already a valid column name
+                $normalized[$key] = $value;
+            }
+        }
+        return $normalized;
     }
 
     /**
      * Update this application using normalized data.
      * Accepts any key format (camelCase, snake_case).
-     * Use for pending applications only.
      *
      * @param array $data
      * @return bool
      */
-    public function updateDetails(array $data): bool
+    public function updateNormalized(array $data): bool
     {
-        $repository = new StoreDetailsRepository();
-        $normalizedData = $repository->normalizeToApplicationColumns($data);
+        $normalizedData = self::normalizeToColumns($data);
         return $this->update($normalizedData);
-    }
-
-    /**
-     * Get field definitions from the single source of truth.
-     *
-     * @return array
-     */
-    public static function getFieldDefinitions(): array
-    {
-        return StoreDetailsRepository::FIELDS;
     }
 }
 

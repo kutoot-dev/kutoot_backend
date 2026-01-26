@@ -5,9 +5,6 @@ namespace App\Models\Store;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Tymon\JWTAuth\Contracts\JWTSubject;
-use App\DTO\Store\StoreDetailsDTO;
-use App\Repositories\Store\StoreDetailsRepository;
-use App\Models\Store\SellerApplication;
 
 class Seller extends Authenticatable implements JWTSubject
 {
@@ -56,31 +53,31 @@ class Seller extends Authenticatable implements JWTSubject
     }
 
     /**
-     * Get unified store details.
-     * Returns data from Shop (authoritative) or Application (pending).
-     * This is the SINGLE SOURCE OF TRUTH for reading store data.
+     * Get the seller's store application.
+     * This is the single source of truth for store data.
      *
-     * @return StoreDetailsDTO|null
+     * @return SellerApplication|null
      */
-    public function getStoreDetails(): ?StoreDetailsDTO
+    public function getStoreApplication(): ?SellerApplication
     {
-        $repository = new StoreDetailsRepository();
-        return $repository->getForSeller($this);
+        return $this->application;
     }
 
     /**
      * Update store details.
-     * Always updates SellerApplication (single source of truth).
      * Accepts any key format (camelCase, snake_case).
      *
      * @param array $data
-     * @return SellerApplication
+     * @return bool
      * @throws \RuntimeException if application doesn't exist
      */
-    public function updateStoreDetails(array $data): SellerApplication
+    public function updateStoreDetails(array $data): bool
     {
-        $repository = new StoreDetailsRepository();
-        return $repository->updateForSeller($this, $data);
+        $application = $this->application;
+        if (!$application) {
+            throw new \RuntimeException('Cannot update store details: Application not found for seller');
+        }
+        return $application->updateNormalized($data);
     }
 
     public function getJWTIdentifier()

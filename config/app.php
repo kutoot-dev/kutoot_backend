@@ -177,7 +177,6 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         App\Providers\PusherConfig::class,
-        App\Providers\StoreServiceProvider::class,
 
     ],
 

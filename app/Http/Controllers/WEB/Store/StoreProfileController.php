@@ -5,7 +5,7 @@ namespace App\Http\Controllers\WEB\Store;
 use App\Http\Controllers\Controller;
 use App\Models\Store\StoreCategory;
 use App\Models\Store\ShopImage;
-use App\Repositories\Store\StoreDetailsRepository;
+use App\Models\Store\SellerApplication;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
@@ -13,13 +13,6 @@ use Illuminate\Support\Facades\Validator;
 
 class StoreProfileController extends Controller
 {
-    protected StoreDetailsRepository $storeRepository;
-
-    public function __construct(StoreDetailsRepository $storeRepository)
-    {
-        $this->storeRepository = $storeRepository;
-    }
-
     public function edit()
     {
         $seller = Auth::guard('store')->user();
@@ -71,12 +64,23 @@ class StoreProfileController extends Controller
             return redirect()->back()->withErrors(['shop' => 'Store application not found for this seller']);
         }
 
-        // Update using repository (single source of truth)
-        $this->storeRepository->update($application, $request->only([
-            'shop_name', 'category', 'owner_name', 'phone', 'email',
-            'gst_number', 'address', 'google_map_url', 'location_lat',
-            'location_lng', 'min_bill_amount'
-        ]));
+        // Map form fields directly to application columns
+        $updateData = [
+            'store_name' => $request->input('shop_name'),
+            'store_type' => $request->input('category'),
+            'owner_name' => $request->input('owner_name'),
+            'owner_mobile' => $request->input('phone'),
+            'owner_email' => $request->input('email'),
+            'gst_number' => $request->input('gst_number'),
+            'store_address' => $request->input('address'),
+            'google_map_url' => $request->input('google_map_url'),
+            'lat' => $request->input('location_lat'),
+            'lng' => $request->input('location_lng'),
+            'min_bill_amount' => $request->input('min_bill_amount'),
+        ];
+
+        // Update application directly
+        $application->update(array_filter($updateData, fn($v) => $v !== null));
 
         // Optional image upload from same form
         if ($request->hasFile('images')) {

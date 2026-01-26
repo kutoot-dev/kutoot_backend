@@ -3,8 +3,6 @@
 namespace App\Models\Store;
 
 use Illuminate\Database\Eloquent\Model;
-use App\DTO\Store\StoreDetailsDTO;
-use App\Repositories\Store\StoreDetailsRepository;
 
 class Shop extends Model
 {
@@ -97,8 +95,28 @@ class Shop extends Model
     }
 
     /**
+     * Field mapping from Shop columns to Application columns.
+     */
+    public const SHOP_TO_APP_MAP = [
+        'shop_name' => 'store_name',
+        'category' => 'store_type',
+        'owner_name' => 'owner_name',
+        'phone' => 'owner_mobile',
+        'email' => 'owner_email',
+        'gst_number' => 'gst_number',
+        'address' => 'store_address',
+        'google_map_url' => 'google_map_url',
+        'location_lat' => 'lat',
+        'location_lng' => 'lng',
+        'min_bill_amount' => 'min_bill_amount',
+        'country_id' => 'country_id',
+        'state_id' => 'state_id',
+        'city_id' => 'city_id',
+        'tags' => 'tags',
+    ];
+
+    /**
      * Create a Shop from a SellerApplication.
-     * Uses StoreDetailsRepository as single source of truth.
      *
      * @param SellerApplication $application
      * @param int $sellerId
@@ -110,43 +128,26 @@ class Shop extends Model
         int $sellerId,
         ?string $email = null
     ): static {
-        $repository = new StoreDetailsRepository();
-        return $repository->createFromApplication($application, $sellerId, $email);
-    }
-
-    /**
-     * Get unified store details DTO.
-     * This is the single source of truth for reading store data.
-     *
-     * @return StoreDetailsDTO
-     */
-    public function toStoreDetails(): StoreDetailsDTO
-    {
-        return StoreDetailsDTO::fromShop($this);
-    }
-
-    /**
-     * Update store details using normalized data.
-     * Accepts any key format (camelCase, snake_case).
-     *
-     * @param array $data
-     * @return bool
-     */
-    public function updateDetails(array $data): bool
-    {
-        $repository = new StoreDetailsRepository();
-        $normalizedData = $repository->normalizeToShopColumns($data);
-        return $this->update($normalizedData);
-    }
-
-    /**
-     * Get field definitions from the single source of truth.
-     *
-     * @return array
-     */
-    public static function getFieldDefinitions(): array
-    {
-        return StoreDetailsRepository::FIELDS;
+        return static::create([
+            'seller_id' => $sellerId,
+            'shop_code' => $application->shop_code,
+            'shop_name' => $application->store_name,
+            'category' => $application->store_type,
+            'owner_name' => $application->owner_name ?? $application->store_name,
+            'phone' => $application->owner_mobile,
+            'email' => $email ?? $application->owner_email,
+            'gst_number' => $application->gst_number,
+            'address' => $application->store_address,
+            'country_id' => $application->country_id,
+            'state_id' => $application->state_id,
+            'city_id' => $application->city_id,
+            'tags' => $application->tags,
+            'google_map_url' => $application->google_map_url,
+            'location_lat' => $application->lat,
+            'location_lng' => $application->lng,
+            'min_bill_amount' => $application->min_bill_amount,
+            'razorpay_account_id' => $application->razorpay_account_id,
+        ]);
     }
 }
 

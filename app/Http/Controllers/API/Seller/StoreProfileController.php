@@ -7,7 +7,6 @@ use App\Models\Store\Seller;
 use App\Models\Store\SellerApplication;
 use App\Models\Store\ShopImage;
 use App\Models\Store\StoreCategory;
-use App\Repositories\Store\StoreDetailsRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
@@ -15,31 +14,23 @@ use Illuminate\Support\Facades\Validator;
 
 class StoreProfileController extends Controller
 {
-    protected StoreDetailsRepository $storeRepository;
-
-    public function __construct(StoreDetailsRepository $storeRepository)
-    {
-        $this->storeRepository = $storeRepository;
-    }
-
     public function show()
     {
         /** @var Seller $seller */
         $seller = Auth::guard('store-api')->user();
+        $seller->loadMissing('application.shopImages');
 
-        // Get store details from single source of truth
-        $storeDetails = $this->storeRepository->getForSeller($seller);
+        /** @var SellerApplication|null $application */
+        $application = $seller->application;
 
-        if (!$storeDetails || !$storeDetails->isApproved()) {
+        if (!$application || $application->status !== SellerApplication::STATUS_APPROVED) {
             return response()->json([
                 'success' => false,
                 'message' => 'Store not found for this seller',
             ], 404);
         }
 
-        $seller->loadMissing('application.shopImages');
-
-        $images = $seller->application->shopImages->map(function ($img) {
+        $images = $application->shopImages->map(function ($img) {
             $v = (string) $img->image_url;
             if ($v === '') {
                 return null;
@@ -50,23 +41,23 @@ class StoreProfileController extends Controller
         return response()->json([
             'success' => true,
             'data' => [
-                'shopId' => $storeDetails->code,
-                'shopName' => $storeDetails->name,
-                'category' => $storeDetails->category,
-                'ownerName' => $storeDetails->ownerName,
-                'phone' => $storeDetails->phone,
-                'email' => $storeDetails->email,
-                'gstNumber' => $storeDetails->gstNumber,
-                'address' => $storeDetails->address,
-                'googleMapUrl' => $storeDetails->googleMapUrl,
+                'shopId' => $application->shop_code,
+                'shopName' => $application->store_name,
+                'category' => $application->store_type,
+                'ownerName' => $application->owner_name,
+                'phone' => $application->owner_mobile,
+                'email' => $application->owner_email,
+                'gstNumber' => $application->gst_number,
+                'address' => $application->store_address,
+                'googleMapUrl' => $application->google_map_url,
                 'location' => [
-                    'lat' => $storeDetails->lat,
-                    'lng' => $storeDetails->lng,
+                    'lat' => $application->lat,
+                    'lng' => $application->lng,
                 ],
                 'masterAdmin' => [
-                    'discountPercent' => $storeDetails->discountPercent ?? 0,
-                    'commissionPercent' => $storeDetails->commissionPercent ?? 0,
-                    'minimumBillAmount' => (float) ($storeDetails->minBillAmount ?? 0),
+                    'discountPercent' => $application->discount_percent ?? 0,
+                    'commissionPercent' => $application->commission_percent ?? 0,
+                    'minimumBillAmount' => (float) ($application->min_bill_amount ?? 0),
                 ],
                 'images' => $images,
             ],
@@ -119,12 +110,33 @@ class StoreProfileController extends Controller
             ], 404);
         }
 
-        // Prepare update data - handle nested location object
-        $updateData = $request->only([
-            'shopName', 'category', 'ownerName', 'phone', 'email',
-            'gstNumber', 'address', 'googleMapUrl'
-        ]);
+        // Map request fields directly to application columns
+        $updateData = [];
 
+        if ($request->has('shopName')) {
+            $updateData['store_name'] = $request->input('shopName');
+        }
+        if ($request->has('category')) {
+            $updateData['store_type'] = $request->input('category');
+        }
+        if ($request->has('ownerName')) {
+            $updateData['owner_name'] = $request->input('ownerName');
+        }
+        if ($request->has('phone')) {
+            $updateData['owner_mobile'] = $request->input('phone');
+        }
+        if ($request->has('email')) {
+            $updateData['owner_email'] = $request->input('email');
+        }
+        if ($request->has('gstNumber')) {
+            $updateData['gst_number'] = $request->input('gstNumber');
+        }
+        if ($request->has('address')) {
+            $updateData['store_address'] = $request->input('address');
+        }
+        if ($request->has('googleMapUrl')) {
+            $updateData['google_map_url'] = $request->input('googleMapUrl');
+        }
         if ($request->has('location.lat')) {
             $updateData['lat'] = $request->input('location.lat');
         }
@@ -132,8 +144,8 @@ class StoreProfileController extends Controller
             $updateData['lng'] = $request->input('location.lng');
         }
 
-        // Update using repository (single source of truth)
-        $this->storeRepository->update($application, $updateData);
+        // Update application directly
+        $application->update($updateData);
 
         return response()->json([
             'success' => true,
