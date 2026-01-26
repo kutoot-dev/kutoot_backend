@@ -82,6 +82,14 @@ class SellerApplicationController extends Controller
             'discount_percent' => 'nullable|numeric|min:0|max:100',
             'rating' => 'nullable|numeric|min:0|max:5',
             'store_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'images' => 'nullable|array',
+            'images.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
+            'gst_number' => 'nullable|string|max:20',
+            'bank_name' => 'nullable|string|max:255',
+            'account_number' => 'nullable|string|max:50',
+            'ifsc_code' => 'nullable|string|max:20',
+            'beneficiary_name' => 'nullable|string|max:255',
+            'upi_id' => 'nullable|string|max:255',
         ]);
 
         // Handle store image upload
@@ -91,6 +99,16 @@ class SellerApplicationController extends Controller
             $imageName = time() . '_' . Str::random(10) . '.' . $image->getClientOriginalExtension();
             $image->move(public_path('uploads/stores'), $imageName);
             $storeImagePath = 'uploads/stores/' . $imageName;
+        }
+
+        // Handle multiple images upload
+        $imagesArray = [];
+        if ($request->hasFile('images')) {
+            foreach ($request->file('images') as $image) {
+                $imageName = time() . '_' . Str::random(10) . '.' . $image->getClientOriginalExtension();
+                $image->move(public_path('uploads/stores'), $imageName);
+                $imagesArray[] = 'uploads/stores/' . $imageName;
+            }
         }
 
         // Fetch country, state, city names from the World package
@@ -133,6 +151,13 @@ class SellerApplicationController extends Controller
             'discount_percent' => $request->discount_percent,
             'rating' => $request->rating,
             'store_image' => $storeImagePath,
+            'images' => !empty($imagesArray) ? $imagesArray : null,
+            'gst_number' => $request->gst_number,
+            'bank_name' => $request->bank_name,
+            'account_number' => $request->account_number,
+            'ifsc_code' => $request->ifsc_code ? strtoupper($request->ifsc_code) : null,
+            'beneficiary_name' => $request->beneficiary_name,
+            'upi_id' => $request->upi_id,
             'status' => SellerApplication::STATUS_PENDING,
         ]);
 
@@ -209,6 +234,15 @@ class SellerApplicationController extends Controller
             'discount_percent' => 'nullable|numeric|min:0|max:100',
             'rating' => 'nullable|numeric|min:0|max:5',
             'store_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'images' => 'nullable|array',
+            'images.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
+            'gst_number' => 'nullable|string|max:20',
+            'bank_name' => 'nullable|string|max:255',
+            'account_number' => 'nullable|string|max:50',
+            'ifsc_code' => 'nullable|string|max:20',
+            'beneficiary_name' => 'nullable|string|max:255',
+            'upi_id' => 'nullable|string|max:255',
+            'remove_images' => 'nullable|array',
         ]);
 
         // Handle store image upload
@@ -222,6 +256,29 @@ class SellerApplicationController extends Controller
             $imageName = time() . '_' . Str::random(10) . '.' . $image->getClientOriginalExtension();
             $image->move(public_path('uploads/stores'), $imageName);
             $storeImagePath = 'uploads/stores/' . $imageName;
+        }
+
+        // Handle multiple images - keep existing ones and add new ones
+        $existingImages = $application->images ?? [];
+
+        // Remove images if requested
+        if ($request->has('remove_images') && is_array($request->remove_images)) {
+            foreach ($request->remove_images as $removeImage) {
+                if (file_exists(public_path($removeImage))) {
+                    unlink(public_path($removeImage));
+                }
+                $existingImages = array_filter($existingImages, fn($img) => $img !== $removeImage);
+            }
+            $existingImages = array_values($existingImages); // Re-index array
+        }
+
+        // Add new images
+        if ($request->hasFile('images')) {
+            foreach ($request->file('images') as $image) {
+                $imageName = time() . '_' . Str::random(10) . '.' . $image->getClientOriginalExtension();
+                $image->move(public_path('uploads/stores'), $imageName);
+                $existingImages[] = 'uploads/stores/' . $imageName;
+            }
         }
 
         // Fetch country, state, city names from the World package
@@ -263,6 +320,13 @@ class SellerApplicationController extends Controller
             'discount_percent' => $request->discount_percent,
             'rating' => $request->rating,
             'store_image' => $storeImagePath,
+            'images' => !empty($existingImages) ? $existingImages : null,
+            'gst_number' => $request->gst_number,
+            'bank_name' => $request->bank_name,
+            'account_number' => $request->account_number,
+            'ifsc_code' => $request->ifsc_code ? strtoupper($request->ifsc_code) : null,
+            'beneficiary_name' => $request->beneficiary_name,
+            'upi_id' => $request->upi_id,
         ]);
 
         return redirect()->route('admin.seller-applications.show', $id)
@@ -302,11 +366,20 @@ class SellerApplicationController extends Controller
             'storeType' => 'required|string|max:100',
             'storeAddress' => 'required|string|max:500',
             'state' => 'nullable|string|max:100',
+            'stateId' => 'nullable|integer',
             'city' => 'nullable|string|max:100',
+            'cityId' => 'nullable|integer',
             'country' => 'nullable|string|max:100',
+            'countryId' => 'nullable|integer',
             'lat' => 'nullable|numeric',
             'lng' => 'nullable|numeric',
             'minBillAmount' => 'nullable|numeric|min:0',
+            'gstNumber' => 'nullable|string|max:20',
+            'bankName' => 'nullable|string|max:255',
+            'accountNumber' => 'nullable|string|max:50',
+            'ifscCode' => 'nullable|string|max:20',
+            'beneficiaryName' => 'nullable|string|max:255',
+            'upiId' => 'nullable|string|max:255',
         ]);
 
         if ($validator->fails()) {
@@ -325,33 +398,27 @@ class SellerApplicationController extends Controller
             'store_type' => $request->storeType,
             'store_address' => $request->storeAddress,
             'state' => $request->state,
+            'state_id' => $request->stateId,
             'city' => $request->city,
+            'city_id' => $request->cityId,
             'country' => $request->country,
+            'country_id' => $request->countryId,
             'lat' => $request->lat,
             'lng' => $request->lng,
             'min_bill_amount' => $request->minBillAmount ?? 0,
+            'gst_number' => $request->gstNumber,
+            'bank_name' => $request->bankName,
+            'account_number' => $request->accountNumber,
+            'ifsc_code' => $request->ifscCode ? strtoupper($request->ifscCode) : null,
+            'beneficiary_name' => $request->beneficiaryName,
+            'upi_id' => $request->upiId,
             'status' => SellerApplication::STATUS_PENDING,
         ]);
 
         return response()->json([
             'success' => true,
             'message' => 'Application created successfully',
-            'data' => [
-                'applicationId' => $application->application_id,
-                'storeName' => $application->store_name,
-                'ownerMobile' => $application->owner_mobile,
-                'ownerEmail' => $application->owner_email,
-                'storeType' => $application->store_type,
-                'storeAddress' => $application->store_address,
-                'state' => $application->state,
-                'city' => $application->city,
-                'country' => $application->country,
-                'lat' => $application->lat,
-                'lng' => $application->lng,
-                'minBillAmount' => $application->min_bill_amount,
-                'status' => $application->status,
-                'createdAt' => $application->created_at->toIso8601String(),
-            ]
+            'data' => $this->formatApplicationResponse($application)
         ], 201);
     }
 
@@ -400,22 +467,7 @@ class SellerApplicationController extends Controller
 
         return response()->json([
             'success' => true,
-            'data' => $applications->map(fn($app) => [
-                'applicationId' => $app->application_id,
-                'storeName' => $app->store_name,
-                'ownerMobile' => $app->owner_mobile,
-                'ownerEmail' => $app->owner_email,
-                'storeType' => $app->store_type,
-                'storeAddress' => $app->store_address,
-                'state' => $app->state,
-                'city' => $app->city,
-                'country' => $app->country,
-                'lat' => $app->lat,
-                'lng' => $app->lng,
-                'minBillAmount' => $app->min_bill_amount,
-                'status' => $app->status,
-                'createdAt' => $app->created_at->toIso8601String(),
-            ])
+            'data' => $applications->map(fn($app) => $this->formatApplicationResponse($app))
         ]);
     }
 
@@ -434,28 +486,15 @@ class SellerApplicationController extends Controller
             ], 404);
         }
 
+        $data = $this->formatApplicationResponse($application);
+        $data['verificationNotes'] = $application->verification_notes;
+        $data['rejectionReason'] = $application->rejection_reason;
+        $data['sellerEmail'] = $application->seller_email;
+        $data['updatedAt'] = $application->updated_at->toIso8601String();
+
         return response()->json([
             'success' => true,
-            'data' => [
-                'applicationId' => $application->application_id,
-                'storeName' => $application->store_name,
-                'ownerMobile' => $application->owner_mobile,
-                'ownerEmail' => $application->owner_email,
-                'storeType' => $application->store_type,
-                'storeAddress' => $application->store_address,
-                'state' => $application->state,
-                'city' => $application->city,
-                'country' => $application->country,
-                'lat' => $application->lat,
-                'lng' => $application->lng,
-                'minBillAmount' => $application->min_bill_amount,
-                'status' => $application->status,
-                'verificationNotes' => $application->verification_notes,
-                'rejectionReason' => $application->rejection_reason,
-                'sellerEmail' => $application->seller_email,
-                'createdAt' => $application->created_at->toIso8601String(),
-                'updatedAt' => $application->updated_at->toIso8601String(),
-            ]
+            'data' => $data
         ]);
     }
 
@@ -488,11 +527,20 @@ class SellerApplicationController extends Controller
             'storeType' => 'sometimes|string|max:100',
             'storeAddress' => 'sometimes|string|max:500',
             'state' => 'sometimes|string|max:100',
+            'stateId' => 'sometimes|integer',
             'city' => 'sometimes|string|max:100',
+            'cityId' => 'sometimes|integer',
             'country' => 'sometimes|string|max:100',
+            'countryId' => 'sometimes|integer',
             'lat' => 'sometimes|numeric',
             'lng' => 'sometimes|numeric',
             'minBillAmount' => 'sometimes|numeric|min:0',
+            'gstNumber' => 'sometimes|string|max:20',
+            'bankName' => 'sometimes|string|max:255',
+            'accountNumber' => 'sometimes|string|max:50',
+            'ifscCode' => 'sometimes|string|max:20',
+            'beneficiaryName' => 'sometimes|string|max:255',
+            'upiId' => 'sometimes|string|max:255',
         ]);
 
         if ($validator->fails()) {
@@ -516,16 +564,34 @@ class SellerApplicationController extends Controller
             $updateData['store_address'] = $request->storeAddress;
         if ($request->has('state'))
             $updateData['state'] = $request->state;
+        if ($request->has('stateId'))
+            $updateData['state_id'] = $request->stateId;
         if ($request->has('city'))
             $updateData['city'] = $request->city;
+        if ($request->has('cityId'))
+            $updateData['city_id'] = $request->cityId;
         if ($request->has('country'))
             $updateData['country'] = $request->country;
+        if ($request->has('countryId'))
+            $updateData['country_id'] = $request->countryId;
         if ($request->has('lat'))
             $updateData['lat'] = $request->lat;
         if ($request->has('lng'))
             $updateData['lng'] = $request->lng;
         if ($request->has('minBillAmount'))
             $updateData['min_bill_amount'] = $request->minBillAmount;
+        if ($request->has('gstNumber'))
+            $updateData['gst_number'] = $request->gstNumber;
+        if ($request->has('bankName'))
+            $updateData['bank_name'] = $request->bankName;
+        if ($request->has('accountNumber'))
+            $updateData['account_number'] = $request->accountNumber;
+        if ($request->has('ifscCode'))
+            $updateData['ifsc_code'] = $request->ifscCode ? strtoupper($request->ifscCode) : null;
+        if ($request->has('beneficiaryName'))
+            $updateData['beneficiary_name'] = $request->beneficiaryName;
+        if ($request->has('upiId'))
+            $updateData['upi_id'] = $request->upiId;
 
         if (!empty($updateData)) {
             $application->update($updateData);
@@ -534,21 +600,7 @@ class SellerApplicationController extends Controller
         return response()->json([
             'success' => true,
             'message' => 'Application updated successfully',
-            'data' => [
-                'applicationId' => $application->application_id,
-                'storeName' => $application->store_name,
-                'ownerMobile' => $application->owner_mobile,
-                'ownerEmail' => $application->owner_email,
-                'storeType' => $application->store_type,
-                'storeAddress' => $application->store_address,
-                'state' => $application->state,
-                'city' => $application->city,
-                'country' => $application->country,
-                'lat' => $application->lat,
-                'lng' => $application->lng,
-                'minBillAmount' => $application->min_bill_amount,
-                'status' => $application->status,
-            ]
+            'data' => $this->formatApplicationResponse($application)
         ]);
     }
 
@@ -1091,6 +1143,69 @@ class SellerApplicationController extends Controller
         }
 
         return redirect()->back()->with('success', 'Application rejected successfully');
+    }
+
+    /**
+     * Format application response for API with structured address and images
+     */
+    private function formatApplicationResponse($application)
+    {
+        $baseUrl = config('app.url', url('/'));
+
+        // Format images as full URLs
+        $images = [];
+        if ($application->images) {
+            $imageArray = is_array($application->images) ? $application->images : json_decode($application->images, true);
+            if ($imageArray) {
+                foreach ($imageArray as $image) {
+                    if ($image) {
+                        $images[] = str_starts_with($image, 'http') ? $image : $baseUrl . '/' . ltrim($image, '/');
+                    }
+                }
+            }
+        }
+
+        // Add store_image to images array if exists
+        if ($application->store_image) {
+            $storeImageUrl = str_starts_with($application->store_image, 'http')
+                ? $application->store_image
+                : $baseUrl . '/' . ltrim($application->store_image, '/');
+            if (!in_array($storeImageUrl, $images)) {
+                array_unshift($images, $storeImageUrl);
+            }
+        }
+
+        return [
+            'applicationId' => $application->application_id,
+            'storeName' => $application->store_name,
+            'ownerMobile' => $application->owner_mobile,
+            'ownerEmail' => $application->owner_email,
+            'storeType' => $application->store_type,
+            'storeImage' => $application->store_image ? $baseUrl . '/' . ltrim($application->store_image, '/') : null,
+            'images' => $images,
+            'address' => [
+                'storeAddress' => $application->store_address,
+                'city' => $application->city,
+                'cityId' => $application->city_id,
+                'state' => $application->state,
+                'stateId' => $application->state_id,
+                'country' => $application->country,
+                'countryId' => $application->country_id,
+                'lat' => $application->lat,
+                'lng' => $application->lng,
+            ],
+            'minBillAmount' => $application->min_bill_amount,
+            'gstNumber' => $application->gst_number,
+            'bankDetails' => [
+                'bankName' => $application->bank_name,
+                'accountNumber' => $application->account_number,
+                'ifscCode' => $application->ifsc_code,
+                'beneficiaryName' => $application->beneficiary_name,
+                'upiId' => $application->upi_id,
+            ],
+            'status' => $application->status,
+            'createdAt' => $application->created_at->toIso8601String(),
+        ];
     }
 }
 

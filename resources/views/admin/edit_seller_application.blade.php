@@ -95,6 +95,12 @@
                                                 <input type="number" name="min_bill_amount" class="form-control" min="0" step="0.01" value="{{ old('min_bill_amount', $application->min_bill_amount) }}">
                                             </div>
                                         </div>
+
+                                        <div class="form-group">
+                                            <label>GST Number</label>
+                                            <input type="text" name="gst_number" class="form-control" value="{{ old('gst_number', $application->gst_number) }}" placeholder="e.g., 22AAAAA0000A1Z5" maxlength="20">
+                                            <small class="text-muted">15-character alphanumeric GST identification number</small>
+                                        </div>
                                     </div>
 
                                     <div class="col-md-6">
@@ -229,6 +235,74 @@
                                             <img src="{{ asset($application->store_image) }}" alt="Store Image" class="img-thumbnail" style="max-width: 200px;">
                                         </div>
                                         @endif
+
+                                        <div class="form-group">
+                                            <label>Additional Images</label>
+                                            <input type="file" name="images[]" class="form-control-file" accept="image/*" multiple>
+                                            <small class="text-muted">You can select multiple images. Accepted formats: JPG, PNG, GIF</small>
+                                        </div>
+
+                                        @php
+                                            $existingImages = $application->images ?? [];
+                                            if (is_string($existingImages)) {
+                                                $existingImages = json_decode($existingImages, true) ?? [];
+                                            }
+                                        @endphp
+                                        @if(count($existingImages) > 0)
+                                        <div class="form-group">
+                                            <label>Existing Additional Images</label>
+                                            <div class="row">
+                                                @foreach($existingImages as $index => $image)
+                                                <div class="col-4 mb-2">
+                                                    <div class="position-relative">
+                                                        <img src="{{ asset($image) }}" alt="Image {{ $index + 1 }}" class="img-thumbnail" style="max-width: 100%; height: 100px; object-fit: cover;">
+                                                        <div class="custom-control custom-checkbox mt-1">
+                                                            <input type="checkbox" class="custom-control-input" id="remove_image_{{ $index }}" name="remove_images[]" value="{{ $image }}">
+                                                            <label class="custom-control-label text-danger small" for="remove_image_{{ $index }}">Remove</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                @endforeach
+                                            </div>
+                                        </div>
+                                        @endif
+                                    </div>
+                                </div>
+
+                                <hr>
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <h5 class="mb-3">Bank Account Details</h5>
+
+                                        <div class="form-group">
+                                            <label>Bank Name</label>
+                                            <input type="text" name="bank_name" class="form-control" value="{{ old('bank_name', $application->bank_name) }}" placeholder="e.g., State Bank of India">
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label>Account Number</label>
+                                            <input type="text" name="account_number" class="form-control" value="{{ old('account_number', $application->account_number) }}" placeholder="e.g., 1234567890123456" maxlength="50">
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label>IFSC Code</label>
+                                            <input type="text" name="ifsc_code" class="form-control" value="{{ old('ifsc_code', $application->ifsc_code) }}" placeholder="e.g., SBIN0001234" maxlength="20" style="text-transform: uppercase;">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <h5 class="mb-3">&nbsp;</h5>
+
+                                        <div class="form-group">
+                                            <label>Beneficiary Name</label>
+                                            <input type="text" name="beneficiary_name" class="form-control" value="{{ old('beneficiary_name', $application->beneficiary_name) }}" placeholder="Account holder's name">
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label>UPI ID</label>
+                                            <input type="text" name="upi_id" class="form-control" value="{{ old('upi_id', $application->upi_id) }}" placeholder="e.g., example@upi">
+                                        </div>
                                     </div>
                                 </div>
 

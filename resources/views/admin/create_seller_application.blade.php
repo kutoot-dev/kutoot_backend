@@ -81,6 +81,12 @@
                                                 <input type="number" name="min_bill_amount" class="form-control" min="0" step="0.01" value="{{ old('min_bill_amount', 0) }}" placeholder="0.00">
                                             </div>
                                         </div>
+
+                                        <div class="form-group">
+                                            <label>GST Number</label>
+                                            <input type="text" name="gst_number" class="form-control" value="{{ old('gst_number') }}" placeholder="e.g., 22AAAAA0000A1Z5" maxlength="20">
+                                            <small class="text-muted">15-character alphanumeric GST identification number</small>
+                                        </div>
                                     </div>
 
                                     <div class="col-md-6">
@@ -187,6 +193,49 @@
                                             <label>Store Image</label>
                                             <input type="file" name="store_image" class="form-control-file" accept="image/*">
                                             <small class="text-muted">Recommended size: 400x400 pixels. Accepted formats: JPG, PNG, GIF</small>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label>Additional Images</label>
+                                            <input type="file" name="images[]" class="form-control-file" accept="image/*" multiple>
+                                            <small class="text-muted">You can select multiple images. Accepted formats: JPG, PNG, GIF</small>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <hr>
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <h5 class="mb-3">Bank Account Details</h5>
+
+                                        <div class="form-group">
+                                            <label>Bank Name</label>
+                                            <input type="text" name="bank_name" class="form-control" value="{{ old('bank_name') }}" placeholder="e.g., State Bank of India">
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label>Account Number</label>
+                                            <input type="text" name="account_number" class="form-control" value="{{ old('account_number') }}" placeholder="e.g., 1234567890123456" maxlength="50">
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label>IFSC Code</label>
+                                            <input type="text" name="ifsc_code" class="form-control" value="{{ old('ifsc_code') }}" placeholder="e.g., SBIN0001234" maxlength="20" style="text-transform: uppercase;">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <h5 class="mb-3">&nbsp;</h5>
+
+                                        <div class="form-group">
+                                            <label>Beneficiary Name</label>
+                                            <input type="text" name="beneficiary_name" class="form-control" value="{{ old('beneficiary_name') }}" placeholder="Account holder's name">
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label>UPI ID</label>
+                                            <input type="text" name="upi_id" class="form-control" value="{{ old('upi_id') }}" placeholder="e.g., example@upi">
                                         </div>
                                     </div>
                                 </div>

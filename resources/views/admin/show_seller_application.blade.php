@@ -35,7 +35,7 @@
 
             <div class="row">
                 {{-- Application Details --}}
-                <div class="col-lg-8">
+                <div class="col-12 col-lg-8">
                     <div class="card">
                         <div class="card-header">
                             <h4>Application Information</h4>
@@ -86,6 +86,12 @@
                                             <td class="text-muted">Min Bill Amount</td>
                                             <td>₹{{ number_format($application->min_bill_amount, 2) }}</td>
                                         </tr>
+                                        @if($application->gst_number)
+                                        <tr>
+                                            <td class="text-muted">GST Number</td>
+                                            <td><strong>{{ $application->gst_number }}</strong></td>
+                                        </tr>
+                                        @endif
                                     </table>
                                 </div>
                                 <div class="col-md-6">
@@ -135,6 +141,78 @@
                             </a>
                             @endif
 
+                            {{-- Bank Account Details --}}
+                            @if($application->bank_name || $application->account_number || $application->ifsc_code || $application->beneficiary_name || $application->upi_id)
+                            <hr>
+                            <h6 class="text-muted mb-3">Bank Account Details</h6>
+                            <div class="row">
+                                <div class="col-12 col-md-6">
+                                    <table class="table table-sm table-borderless">
+                                        @if($application->bank_name)
+                                        <tr>
+                                            <td class="text-muted" width="45%">Bank Name</td>
+                                            <td><strong>{{ $application->bank_name }}</strong></td>
+                                        </tr>
+                                        @endif
+                                        @if($application->account_number)
+                                        <tr>
+                                            <td class="text-muted">Account Number</td>
+                                            <td><strong>{{ $application->account_number }}</strong></td>
+                                        </tr>
+                                        @endif
+                                        @if($application->ifsc_code)
+                                        <tr>
+                                            <td class="text-muted">IFSC Code</td>
+                                            <td><strong>{{ $application->ifsc_code }}</strong></td>
+                                        </tr>
+                                        @endif
+                                    </table>
+                                </div>
+                                <div class="col-12 col-md-6">
+                                    <table class="table table-sm table-borderless">
+                                        @if($application->beneficiary_name)
+                                        <tr>
+                                            <td class="text-muted" width="45%">Beneficiary Name</td>
+                                            <td><strong>{{ $application->beneficiary_name }}</strong></td>
+                                        </tr>
+                                        @endif
+                                        @if($application->upi_id)
+                                        <tr>
+                                            <td class="text-muted">UPI ID</td>
+                                            <td><strong>{{ $application->upi_id }}</strong></td>
+                                        </tr>
+                                        @endif
+                                    </table>
+                                </div>
+                            </div>
+                            @endif
+
+                            {{-- Store Images --}}
+                            @php
+                                $allImages = [];
+                                if ($application->store_image) {
+                                    $allImages[] = $application->store_image;
+                                }
+                                $additionalImages = $application->images ?? [];
+                                if (is_string($additionalImages)) {
+                                    $additionalImages = json_decode($additionalImages, true) ?? [];
+                                }
+                                $allImages = array_merge($allImages, $additionalImages);
+                            @endphp
+                            @if(count($allImages) > 0)
+                            <hr>
+                            <h6 class="text-muted mb-3">Store Images</h6>
+                            <div class="row">
+                                @foreach($allImages as $index => $image)
+                                <div class="col-6 col-md-4 col-lg-3 mb-3">
+                                    <a href="{{ asset($image) }}" target="_blank">
+                                        <img src="{{ asset($image) }}" alt="Store Image {{ $index + 1 }}" class="img-thumbnail" style="width: 100%; height: 120px; object-fit: cover;">
+                                    </a>
+                                </div>
+                                @endforeach
+                            </div>
+                            @endif
+
                             @if($application->verification_notes)
                             <hr>
                             <h6 class="text-muted mb-2">Verification Notes</h6>
@@ -155,7 +233,7 @@
                 </div>
 
                 {{-- Actions Panel --}}
-                <div class="col-lg-4">
+                <div class="col-12 col-lg-4">
                     {{-- Verify Action --}}
                     @if($application->isPending())
                     <div class="card">

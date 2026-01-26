@@ -35,6 +35,15 @@ class CreateSellerApplicationsTable extends Migration
             $table->integer('no_of_ratings')->default(0);
             $table->string('store_image')->nullable();
             $table->json('images')->nullable();
+
+            // GST and Bank Details
+            $table->string('gst_number', 20)->nullable();
+            $table->string('bank_name')->nullable();
+            $table->string('account_number', 50)->nullable();
+            $table->string('ifsc_code', 20)->nullable();
+            $table->string('beneficiary_name')->nullable();
+            $table->string('upi_id')->nullable();
+
             $table->enum('status', ['PENDING', 'VERIFIED', 'APPROVED', 'REJECTED'])->default('PENDING');
 
             // Verification details
