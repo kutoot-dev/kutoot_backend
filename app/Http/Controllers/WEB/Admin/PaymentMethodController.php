@@ -28,16 +28,16 @@ class PaymentMethodController extends Controller
 
     public function index()
     {
-        $paypal = PaypalPayment::first();
-        $stripe = StripePayment::first();
-        $razorpay = RazorpayPayment::first();
-        $flutterwave = Flutterwave::first();
-        $bank = BankPayment::first();
-        $paystackAndMollie = PaystackAndMollie::first();
-        $instamojo = InstamojoPayment::first();
-        $paymongo = PaymongoPayment::first();
-        $sslcommerz = SslcommerzPayment::first();
-        $myfatoorah = MyfatoorahPayment::first();
+        $paypal = PaypalPayment::firstOrCreate([], ['status' => 0]);
+        $stripe = StripePayment::firstOrCreate([], ['status' => 0]);
+        $razorpay = RazorpayPayment::firstOrCreate([], ['status' => 0]);
+        $flutterwave = Flutterwave::firstOrCreate([], ['status' => 0]);
+        $bank = BankPayment::firstOrCreate([], ['status' => 0]);
+        $paystackAndMollie = PaystackAndMollie::firstOrCreate([], ['paystack_status' => 0, 'mollie_status' => 0]);
+        $instamojo = InstamojoPayment::firstOrCreate([], ['status' => 0]);
+        $paymongo = PaymongoPayment::firstOrCreate([], ['status' => 0]);
+        $sslcommerz = SslcommerzPayment::firstOrCreate([], ['status' => 0]);
+        $myfatoorah = MyfatoorahPayment::firstOrCreate([], ['status' => 0]);
 
         $countires = Country::where('status', 1)->orderBy('name', 'asc')->get();
         $setting = Setting::first();
@@ -65,7 +65,7 @@ class PaymentMethodController extends Controller
         ];
         $this->validate($request, $rules, $customMessages);
 
-        $paypal = PaypalPayment::first();
+        $paypal = PaypalPayment::firstOrCreate([], ['status' => 0]);
         $paypal->client_id = $request->paypal_client_id;
         $paypal->secret_id = $request->paypal_secret_key;
         $paypal->account_mode = $request->account_mode;
@@ -93,7 +93,7 @@ class PaymentMethodController extends Controller
         ];
         $this->validate($request, $rules, $customMessages);
 
-        $stripe = StripePayment::first();
+        $stripe = StripePayment::firstOrCreate([], ['status' => 0]);
         $stripe->stripe_key = $request->stripe_key;
         $stripe->stripe_secret = $request->stripe_secret;
         $stripe->currency_id = $request->currency_name;
@@ -125,7 +125,7 @@ class PaymentMethodController extends Controller
         ];
         $this->validate($request, $rules, $customMessages);
 
-        $razorpay = RazorpayPayment::first();
+        $razorpay = RazorpayPayment::firstOrCreate([], ['status' => 0]);
         $razorpay->key = $request->razorpay_key;
         $razorpay->secret_key = $request->razorpay_secret;
         $razorpay->name = $request->name;
@@ -163,7 +163,7 @@ class PaymentMethodController extends Controller
             'account_info.required' => trans('admin_validation.Account information is required'),
         ];
         $this->validate($request, $rules, $customMessages);
-        $bank = BankPayment::first();
+        $bank = BankPayment::firstOrCreate([], ['status' => 0]);
         $bank->account_info = $request->account_info;
         $bank->status = $request->status ? 1 : 0;
         $bank->save();
@@ -187,7 +187,7 @@ class PaymentMethodController extends Controller
         ];
         $this->validate($request, $rules, $customMessages);
 
-        $mollie = PaystackAndMollie::first();
+        $mollie = PaystackAndMollie::firstOrCreate([], ['paystack_status' => 0, 'mollie_status' => 0]);
         $mollie->mollie_key = $request->mollie_key;
         $mollie->currency_id = $request->mollie_currency_name;
         $mollie->mollie_status = $request->status ? 1 : 0;
@@ -213,7 +213,7 @@ class PaymentMethodController extends Controller
         ];
         $this->validate($request, $rules, $customMessages);
 
-        $paystact = PaystackAndMollie::first();
+        $paystact = PaystackAndMollie::firstOrCreate([], ['paystack_status' => 0, 'mollie_status' => 0]);
         $paystact->paystack_public_key = $request->paystack_public_key;
         $paystact->paystack_secret_key = $request->paystack_secret_key;
         $paystact->currency_id = $request->paystack_currency_name;
@@ -241,7 +241,7 @@ class PaymentMethodController extends Controller
         ];
         $this->validate($request, $rules, $customMessages);
 
-        $flutterwave = Flutterwave::first();
+        $flutterwave = Flutterwave::firstOrCreate([], ['status' => 0]);
         $flutterwave->public_key = $request->public_key;
         $flutterwave->secret_key = $request->secret_key;
         $flutterwave->title = $request->title;
@@ -285,7 +285,7 @@ class PaymentMethodController extends Controller
         ];
         $this->validate($request, $rules, $customMessages);
 
-        $instamojo = InstamojoPayment::first();
+        $instamojo = InstamojoPayment::firstOrCreate([], ['status' => 0]);
         $instamojo->account_mode = $request->account_mode;
         $instamojo->api_key = $request->api_key;
         $instamojo->auth_token = $request->auth_token;
@@ -300,7 +300,7 @@ class PaymentMethodController extends Controller
 
     public function updateCashOnDelivery(Request $request)
     {
-        $bank = BankPayment::first();
+        $bank = BankPayment::firstOrCreate([], ['status' => 0, 'cash_on_delivery_status' => 0]);
         if ($bank->cash_on_delivery_status == 1) {
             $bank->cash_on_delivery_status = 0;
             $bank->save();
@@ -327,7 +327,7 @@ class PaymentMethodController extends Controller
         ];
         $this->validate($request, $rules, $customMessages);
 
-        $sslcommerz = SslcommerzPayment::first();
+        $sslcommerz = SslcommerzPayment::firstOrCreate([], ['status' => 0]);
         $sslcommerz->mode = $request->account_mode;
         $sslcommerz->store_id = $request->store_id;
         $sslcommerz->store_password = $request->store_password;
@@ -342,7 +342,7 @@ class PaymentMethodController extends Controller
 
     public function update_myfatoorah(Request $request)
     {
-        $myfatoorah = MyfatoorahPayment::first();
+        $myfatoorah = MyfatoorahPayment::firstOrCreate([], ['status' => 0]);
         $myfatoorah->status = $request->status ? 1 : 0;
         $myfatoorah->account_mode = $request->account_mode;
         $myfatoorah->currency_id = $request->currency_name;
