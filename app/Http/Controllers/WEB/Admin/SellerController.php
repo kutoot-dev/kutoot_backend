@@ -105,7 +105,9 @@ class SellerController extends Controller
         $statesArray = [];
         if(count($states) > 0){
             foreach($states as $state){
-                $statesArray[] = ['id' => $state['id'], 'name' => $state['name']];
+                $stateId = is_array($state) ? $state['id'] : $state->id;
+                $stateName = is_array($state) ? $state['name'] : $state->name;
+                $statesArray[] = ['id' => $stateId, 'name' => $stateName];
             }
         }
         return response()->json(['states' => $statesArray]);
@@ -118,9 +120,11 @@ class SellerController extends Controller
             ],
         ])->data;
         $citiesArray = [];
-        if($cities->count() > 0){
+        if(count($cities) > 0){
             foreach($cities as $city){
-                $citiesArray[] = ['id' => $city->id, 'name' => $city->name];
+                $cityId = is_array($city) ? $city['id'] : $city->id;
+                $cityName = is_array($city) ? $city['name'] : $city->name;
+                $citiesArray[] = ['id' => $cityId, 'name' => $cityName];
             }
         }
         return response()->json(['cities' => $citiesArray]);
