@@ -46,7 +46,7 @@ class ImageTypeSeeder extends Seeder
             ['title' => 'Sale Banner', 'description' => 'Flash sale announcement banner', 'picsumId' => 1031],
         ];
 
-        // Partners items with Lorem Picsum images (using logo type for partner logos)
+        // Partners items with Lorem Picsum images
         $partnersItems = [
             ['title' => 'Partner 1', 'description' => 'Strategic partner logo', 'picsumId' => 866],
             ['title' => 'Partner 2', 'description' => 'Business partner logo', 'picsumId' => 883],
@@ -57,15 +57,15 @@ class ImageTypeSeeder extends Seeder
         // Seed banners with downloaded images
         if ($bannerType) {
             $count = 0;
-            foreach ($bannerItems as $item) {
+            foreach ($bannerItems as $index => $item) {
                 $existing = ImageItem::where('title', $item['title'])
                     ->where('image_type_id', $bannerType->id)
                     ->first();
 
                 if (!$existing) {
                     $imagePath = ImageSeederHelper::ensureImage(
-                        'images',
-                        'banner-' . strtolower(str_replace(' ', '-', $item['title'])),
+                        'image-items',
+                        'banner-' . ($index + 1),
                         'banner',
                         $item['picsumId']
                     );
@@ -77,6 +77,7 @@ class ImageTypeSeeder extends Seeder
                         'image_path' => $imagePath,
                     ]);
                     $count++;
+                    $this->command->line("  ✓ Banner: {$item['title']}");
                 }
             }
             $this->command->info("Banner image items seeded: {$count} (with HD images from Lorem Picsum)");
@@ -85,15 +86,15 @@ class ImageTypeSeeder extends Seeder
         // Seed partners with downloaded images
         if ($partnersType) {
             $count = 0;
-            foreach ($partnersItems as $item) {
+            foreach ($partnersItems as $index => $item) {
                 $existing = ImageItem::where('title', $item['title'])
                     ->where('image_type_id', $partnersType->id)
                     ->first();
 
                 if (!$existing) {
                     $imagePath = ImageSeederHelper::ensureImage(
-                        'images',
-                        'partner-' . strtolower(str_replace(' ', '-', $item['title'])),
+                        'image-items',
+                        'partner-' . ($index + 1),
                         'logo',
                         $item['picsumId']
                     );
@@ -105,6 +106,7 @@ class ImageTypeSeeder extends Seeder
                         'image_path' => $imagePath,
                     ]);
                     $count++;
+                    $this->command->line("  ✓ Partner: {$item['title']}");
                 }
             }
             $this->command->info("Partners image items seeded: {$count} (with HD images from Lorem Picsum)");
