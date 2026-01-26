@@ -56,12 +56,15 @@
                                 @endswitch
                             </div>
                         </div>
-                        <div class="card-body">
+                        <div class="card-body" style="overflow-x: auto;">
+                            {{-- Basic Store Information --}}
+                            <h6 class="text-primary mb-3"><i class="fas fa-store"></i> Store Information</h6>
                             <div class="row">
-                                <div class="col-md-6">
-                                    <table class="table table-sm table-borderless">
+                                <div class="col-12 col-md-6">
+                                    <div class="table-responsive">
+                                    <table class="table table-sm table-borderless" style="word-break: break-word;">
                                         <tr>
-                                            <td class="text-muted" width="40%">Application ID</td>
+                                            <td class="text-muted" style="width: 40%; min-width: 100px;">Application ID</td>
                                             <td><strong>{{ $application->application_id }}</strong></td>
                                         </tr>
                                         <tr>
@@ -69,36 +72,82 @@
                                             <td><strong>{{ $application->store_name }}</strong></td>
                                         </tr>
                                         <tr>
-                                            <td class="text-muted">Owner Mobile</td>
-                                            <td><a href="tel:{{ $application->owner_mobile }}">{{ $application->owner_mobile }}</a></td>
-                                        </tr>
-                                        @if($application->owner_email)
-                                        <tr>
-                                            <td class="text-muted">Owner Email</td>
-                                            <td><a href="mailto:{{ $application->owner_email }}">{{ $application->owner_email }}</a></td>
-                                        </tr>
-                                        @endif
-                                        <tr>
                                             <td class="text-muted">Store Type</td>
-                                            <td>{{ $application->store_type }}</td>
+                                            <td>{{ $application->store_type ?? '-' }}</td>
                                         </tr>
                                         <tr>
                                             <td class="text-muted">Min Bill Amount</td>
                                             <td>₹{{ number_format($application->min_bill_amount, 2) }}</td>
                                         </tr>
-                                        @if($application->gst_number)
                                         <tr>
-                                            <td class="text-muted">GST Number</td>
-                                            <td><strong>{{ $application->gst_number }}</strong></td>
+                                            <td class="text-muted">Applied On</td>
+                                            <td>{{ $application->created_at->format('d M Y, h:i A') }}</td>
+                                        </tr>
+                                    </table>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6">
+                                    <div class="table-responsive">
+                                    <table class="table table-sm table-borderless" style="word-break: break-word;">
+                                        <tr>
+                                            <td class="text-muted" style="width: 40%; min-width: 100px;">Owner Mobile</td>
+                                            <td><a href="tel:{{ $application->owner_mobile }}">{{ $application->owner_mobile }}</a></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-muted">Owner Email</td>
+                                            <td>
+                                                @if($application->owner_email)
+                                                    <a href="mailto:{{ $application->owner_email }}">{{ $application->owner_email }}</a>
+                                                @else
+                                                    -
+                                                @endif
+                                            </td>
+                                        </tr>
+                                        @if($application->seller_email)
+                                        <tr>
+                                            <td class="text-muted">Seller Email</td>
+                                            <td><a href="mailto:{{ $application->seller_email }}">{{ $application->seller_email }}</a></td>
+                                        </tr>
+                                        @endif
+                                        @if($application->isApproved() && $application->seller)
+                                        <tr>
+                                            <td class="text-muted">Seller Code</td>
+                                            <td><strong>{{ $application->seller->seller_code ?? '-' }}</strong></td>
                                         </tr>
                                         @endif
                                     </table>
+                                    </div>
                                 </div>
-                                <div class="col-md-6">
-                                    <table class="table table-sm table-borderless">
+                            </div>
+
+                            <hr>
+
+                            {{-- GST Details --}}
+                            <h6 class="text-primary mb-3"><i class="fas fa-file-invoice"></i> GST Details</h6>
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="table-responsive">
+                                    <table class="table table-sm table-borderless" style="word-break: break-word;">
                                         <tr>
-                                            <td class="text-muted" width="40%">Applied On</td>
-                                            <td>{{ $application->created_at->format('d M Y, h:i A') }}</td>
+                                            <td class="text-muted" style="width: 20%; min-width: 120px;">GST Number</td>
+                                            <td><strong>{{ $application->gst_number ?? 'Not Provided' }}</strong></td>
+                                        </tr>
+                                    </table>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <hr>
+
+                            {{-- Location Details --}}
+                            <h6 class="text-primary mb-3"><i class="fas fa-map-marker-alt"></i> Location Details</h6>
+                            <div class="row">
+                                <div class="col-12 col-md-6">
+                                    <div class="table-responsive">
+                                    <table class="table table-sm table-borderless" style="word-break: break-word;">
+                                        <tr>
+                                            <td class="text-muted" style="width: 40%; min-width: 100px;">Country</td>
+                                            <td>{{ $application->country ?? '-' }}</td>
                                         </tr>
                                         <tr>
                                             <td class="text-muted">State</td>
@@ -108,81 +157,96 @@
                                             <td class="text-muted">City</td>
                                             <td>{{ $application->city ?? '-' }}</td>
                                         </tr>
+                                    </table>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6">
+                                    <div class="table-responsive">
+                                    <table class="table table-sm table-borderless" style="word-break: break-word;">
                                         <tr>
-                                            <td class="text-muted">Country</td>
-                                            <td>{{ $application->country ?? '-' }}</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="text-muted">Latitude</td>
-                                            <td>{{ $application->lat }}</td>
+                                            <td class="text-muted" style="width: 40%; min-width: 100px;">Latitude</td>
+                                            <td>{{ $application->lat ?? '-' }}</td>
                                         </tr>
                                         <tr>
                                             <td class="text-muted">Longitude</td>
-                                            <td>{{ $application->lng }}</td>
+                                            <td>{{ $application->lng ?? '-' }}</td>
                                         </tr>
-                                        @if($application->seller_email)
-                                        <tr>
-                                            <td class="text-muted">Seller Email</td>
-                                            <td>{{ $application->seller_email }}</td>
-                                        </tr>
-                                        @endif
                                     </table>
+                                    </div>
                                 </div>
+                            </div>
+
+                            <div class="mt-2 mb-3">
+                                <h6 class="text-muted mb-2">Full Address</h6>
+                                <p class="mb-2 p-2 bg-light rounded">{{ $application->store_address ?? 'Not Provided' }}</p>
+                                @if($application->lat && $application->lng)
+                                <a href="https://www.google.com/maps?q={{ $application->lat }},{{ $application->lng }}" target="_blank" class="btn btn-outline-primary btn-sm">
+                                    <i class="fas fa-map-marker-alt"></i> View on Google Maps
+                                </a>
+                                @endif
                             </div>
 
                             <hr>
 
-                            <h6 class="text-muted mb-2">Store Address</h6>
-                            <p class="mb-3">{{ $application->store_address }}</p>
-
-                            @if($application->lat && $application->lng)
-                            <a href="https://www.google.com/maps?q={{ $application->lat }},{{ $application->lng }}" target="_blank" class="btn btn-outline-primary btn-sm">
-                                <i class="fas fa-map-marker-alt"></i> View on Google Maps
-                            </a>
-                            @endif
-
                             {{-- Bank Account Details --}}
+                            <h6 class="text-primary mb-3"><i class="fas fa-university"></i> Bank Account Details</h6>
                             @if($application->bank_name || $application->account_number || $application->ifsc_code || $application->beneficiary_name || $application->upi_id)
-                            <hr>
-                            <h6 class="text-muted mb-3">Bank Account Details</h6>
                             <div class="row">
                                 <div class="col-12 col-md-6">
-                                    <table class="table table-sm table-borderless">
-                                        @if($application->bank_name)
+                                    <div class="table-responsive">
+                                    <table class="table table-sm table-borderless" style="word-break: break-word;">
                                         <tr>
-                                            <td class="text-muted" width="45%">Bank Name</td>
-                                            <td><strong>{{ $application->bank_name }}</strong></td>
+                                            <td class="text-muted" style="width: 45%; min-width: 100px;">Bank Name</td>
+                                            <td><strong>{{ $application->bank_name ?? '-' }}</strong></td>
                                         </tr>
-                                        @endif
-                                        @if($application->account_number)
                                         <tr>
                                             <td class="text-muted">Account Number</td>
-                                            <td><strong>{{ $application->account_number }}</strong></td>
+                                            <td><strong>{{ $application->account_number ?? '-' }}</strong></td>
                                         </tr>
-                                        @endif
-                                        @if($application->ifsc_code)
                                         <tr>
                                             <td class="text-muted">IFSC Code</td>
-                                            <td><strong>{{ $application->ifsc_code }}</strong></td>
+                                            <td><strong>{{ $application->ifsc_code ?? '-' }}</strong></td>
                                         </tr>
-                                        @endif
                                     </table>
+                                    </div>
                                 </div>
                                 <div class="col-12 col-md-6">
-                                    <table class="table table-sm table-borderless">
-                                        @if($application->beneficiary_name)
+                                    <div class="table-responsive">
+                                    <table class="table table-sm table-borderless" style="word-break: break-word;">
                                         <tr>
-                                            <td class="text-muted" width="45%">Beneficiary Name</td>
-                                            <td><strong>{{ $application->beneficiary_name }}</strong></td>
+                                            <td class="text-muted" style="width: 45%; min-width: 100px;">Beneficiary Name</td>
+                                            <td><strong>{{ $application->beneficiary_name ?? '-' }}</strong></td>
                                         </tr>
-                                        @endif
-                                        @if($application->upi_id)
                                         <tr>
                                             <td class="text-muted">UPI ID</td>
-                                            <td><strong>{{ $application->upi_id }}</strong></td>
+                                            <td><strong>{{ $application->upi_id ?? '-' }}</strong></td>
                                         </tr>
-                                        @endif
                                     </table>
+                                    </div>
+                                </div>
+                            </div>
+                            @else
+                            <p class="text-muted">No bank details provided</p>
+                            @endif
+
+                            {{-- Commission & Settings (for approved apps) --}}
+                            @if($application->isApproved() && ($application->commission_percent || $application->discount_percent || $application->rating))
+                            <hr>
+                            <h6 class="text-primary mb-3"><i class="fas fa-cog"></i> Commission & Discount Settings</h6>
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="table-responsive">
+                                    <table class="table table-sm table-borderless" style="word-break: break-word;">
+                                        <tr>
+                                            <td class="text-muted" style="width: 20%; min-width: 120px;">Commission</td>
+                                            <td><strong>{{ $application->commission_percent ?? '0' }}%</strong></td>
+                                            <td class="text-muted" style="width: 20%; min-width: 120px;">Discount</td>
+                                            <td><strong>{{ $application->discount_percent ?? '0' }}%</strong></td>
+                                            <td class="text-muted" style="width: 15%; min-width: 80px;">Rating</td>
+                                            <td><strong>{{ $application->rating ?? '0' }} <i class="fas fa-star text-warning"></i></strong></td>
+                                        </tr>
+                                    </table>
+                                    </div>
                                 </div>
                             </div>
                             @endif
@@ -199,9 +263,10 @@
                                 }
                                 $allImages = array_merge($allImages, $additionalImages);
                             @endphp
-                            @if(count($allImages) > 0)
+
                             <hr>
-                            <h6 class="text-muted mb-3">Store Images</h6>
+                            <h6 class="text-primary mb-3"><i class="fas fa-images"></i> Store Images</h6>
+                            @if(count($allImages) > 0)
                             <div class="row">
                                 @foreach($allImages as $index => $image)
                                 <div class="col-6 col-md-4 col-lg-3 mb-3">
@@ -211,22 +276,59 @@
                                 </div>
                                 @endforeach
                             </div>
+                            @else
+                            <p class="text-muted">No images uploaded</p>
                             @endif
 
-                            @if($application->verification_notes)
+                            {{-- Application Status Timeline --}}
+                            @if($application->verification_notes || $application->isVerified() || $application->isApproved() || $application->isRejected())
                             <hr>
-                            <h6 class="text-muted mb-2">Verification Notes</h6>
-                            <p class="mb-0">{{ $application->verification_notes }}</p>
-                            <small class="text-muted">Verified on {{ $application->verified_at?->format('d M Y, h:i A') }}</small>
-                            @endif
+                            <h6 class="text-primary mb-3"><i class="fas fa-history"></i> Application Timeline</h6>
 
-                            @if($application->rejection_reason)
-                            <hr>
-                            <div class="alert alert-danger">
-                                <h6 class="mb-2">Rejection Reason</h6>
-                                <p class="mb-0">{{ $application->rejection_reason }}</p>
-                                <small class="text-muted">Rejected on {{ $application->rejected_at?->format('d M Y, h:i A') }}</small>
+                            @if($application->verification_notes || $application->verified_at)
+                            <div class="alert alert-info mb-2">
+                                <strong><i class="fas fa-check-circle"></i> Verified</strong>
+                                @if($application->verified_at)
+                                <small class="float-right">{{ $application->verified_at->format('d M Y, h:i A') }}</small>
+                                @endif
+                                @if($application->verifier)
+                                <br><small class="text-muted">By: {{ $application->verifier->name ?? 'Admin' }}</small>
+                                @endif
+                                @if($application->verification_notes)
+                                <p class="mb-0 mt-2">{{ $application->verification_notes }}</p>
+                                @endif
                             </div>
+                            @endif
+
+                            @if($application->isApproved())
+                            <div class="alert alert-success mb-2">
+                                <strong><i class="fas fa-check"></i> Approved</strong>
+                                @if($application->approved_at)
+                                <small class="float-right">{{ $application->approved_at->format('d M Y, h:i A') }}</small>
+                                @endif
+                                @if($application->approver)
+                                <br><small class="text-muted">By: {{ $application->approver->name ?? 'Admin' }}</small>
+                                @endif
+                                @if($application->seller_email)
+                                <p class="mb-0 mt-2">Credentials sent to: <strong>{{ $application->seller_email }}</strong></p>
+                                @endif
+                            </div>
+                            @endif
+
+                            @if($application->rejection_reason || $application->isRejected())
+                            <div class="alert alert-danger mb-2">
+                                <strong><i class="fas fa-times"></i> Rejected</strong>
+                                @if($application->rejected_at)
+                                <small class="float-right">{{ $application->rejected_at->format('d M Y, h:i A') }}</small>
+                                @endif
+                                @if($application->rejecter)
+                                <br><small class="text-muted">By: {{ $application->rejecter->name ?? 'Admin' }}</small>
+                                @endif
+                                @if($application->rejection_reason)
+                                <p class="mb-0 mt-2"><strong>Reason:</strong> {{ $application->rejection_reason }}</p>
+                                @endif
+                            </div>
+                            @endif
                             @endif
                         </div>
                     </div>
