@@ -4,18 +4,23 @@ namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Auth;
+use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use App\Models\PurchasedCoins;
+use App\Models\CoinLedger;
 use App\Models\UserCoins;
 use App\Models\NewsletterSubscription;
+use App\Services\CoinLedgerService;
 use Illuminate\Support\Facades\Validator;
 
 class UserDashboardController extends Controller
 {
-    public function __construct()
+    protected CoinLedgerService $coinLedgerService;
+
+    public function __construct(CoinLedgerService $coinLedgerService)
     {
         $this->middleware('auth:api');
+        $this->coinLedgerService = $coinLedgerService;
     }
 
     /**
@@ -49,50 +54,48 @@ class UserDashboardController extends Controller
 
     /**
      * My Dashboard - Get user statistics
+     * Uses CoinLedger system (single source of truth) with expiration-aware balances.
      */
     public function myDashboard()
     {
         $user = Auth::guard('api')->user();
 
-        // 1. Calculate Coin Balance (Ledger Style)
-        // Assuming 'coins' column is signed (positive for credit, negative for debit)? 
-        // OR 'type' column distinguishes it.
-        // Based on my view of code earlier: 
-        // SUM(CASE WHEN type = 'credit' THEN coins ELSE 0 END) as credit
-        // SUM(CASE WHEN type = 'debit' THEN coins ELSE 0 END) as debit
+        // Get balance breakdown from CoinLedger (expiration-aware)
+        $breakdown = $this->coinLedgerService->getBalanceBreakdown($user->id);
 
-        $coinsStats = UserCoins::selectRaw("
-                SUM(CASE WHEN type = 'credit' THEN coins ELSE 0 END) as credit,
-                SUM(CASE WHEN type = 'debit' THEN coins ELSE 0 END) as debit
-            ")
-            ->where('user_id', $user->id)
-            // ->whereDate('coin_expires', '>=', now()->toDateString()) // Taking all lifetime or only valid? Spec implies wallet balance. Usually expirations apply to credits.
-            // Simplified for now: Balance = Total Credit - Total Debit
-            ->first();
+        // Calculate total credits and debits from CoinLedger
+        $creditCoins = CoinLedger::where('user_id', $user->id)
+            ->where('coins_in', '>', 0)
+            ->sum('coins_in');
 
-        $creditCoins = $coinsStats->credit ?? 0;
-        $debitCoins = $coinsStats->debit ?? 0;
-        $balanceCoins = $creditCoins - $debitCoins;
+        $debitCoins = CoinLedger::where('user_id', $user->id)
+            ->where('coins_out', '>', 0)
+            ->sum('coins_out');
 
-        // 2. Redemption Count
-        // Count transactions where user has redeemed coins.
-        // Ideally look at Transaction table (where visitor_id -> user) OR UserCoins type='debit' count
-        $redemptionCount = UserCoins::where('user_id', $user->id)
-            ->where('type', 'debit')
+        // Redemption count (number of redemption transactions)
+        $redemptionCount = CoinLedger::where('user_id', $user->id)
+            ->where('entry_type', CoinLedger::TYPE_REDEEM)
             ->count();
 
-        // Hardcoded or Settings-based value
-        $coinValueINR = 0.25;
+        // Get coin value from config
+        $coinValueINR = config('coins.value_inr', 0.25);
 
         return response()->json([
             'success' => true,
             'message' => "Dashboard fetched successfully",
             'data' => [
-                'balance_coins' => (int) $balanceCoins,
+                'balance_coins' => (int) $breakdown['total'],
                 'credit_coins' => (int) $creditCoins,
                 'debit_coins' => (int) $debitCoins,
+                'paid_coins' => (int) $breakdown['paid'],
+                'reward_coins' => (int) $breakdown['reward'],
                 'coin_value_inr' => $coinValueINR,
-                'redemption_count' => (int) $redemptionCount
+                'redemption_count' => (int) $redemptionCount,
+                'expiring_soon' => [
+                    'coins' => (int) $breakdown['next_expiry']['coins'],
+                    'date' => $breakdown['next_expiry']['date'],
+                    'days_left' => $breakdown['next_expiry']['days_left'],
+                ],
             ]
         ]);
     }
@@ -144,7 +147,7 @@ class UserDashboardController extends Controller
                 // Let's rely on standard logic.
 
                 // If we have a Transaction model linked?
-                // The current UserCoins model has `order_id` relation to Order. 
+                // The current UserCoins model has `order_id` relation to Order.
                 // But our Redemption uses Transaction model.
                 // We should try to store Transaction ID in order_id if it fits (likely int so Transaction->id).
 

@@ -59,12 +59,30 @@ class CheckoutController extends Controller
             });
         }
         $query = $query->where('status', 1);
+
+        // Filter by payment_status of the purchase if provided
+        if ($request->has('payment_status') && $request->payment_status) {
+            $query->whereHas('purchasedCampaign', function ($q) use ($request) {
+                $q->where('payment_status', $request->payment_status);
+            });
+        }
+
         // Filter by purchased_camp_id if provided
         if ($request->has('purchased_camp_id') && $request->purchased_camp_id) {
             $query->where('purchased_camp_id', $request->purchased_camp_id);
         }
 
-        $coupons = $query->orderBy('id', 'desc')->paginate(15);
+        // Apply sorting
+        $sortBy = $request->get('sort_by', 'id');
+        $order = $request->get('order', 'desc');
+        $allowedSortFields = ['id', 'created_at', 'coupon_expires', 'coupon_code'];
+        if (in_array($sortBy, $allowedSortFields)) {
+            $query->orderBy($sortBy, $order === 'asc' ? 'asc' : 'desc');
+        } else {
+            $query->orderBy('id', 'desc');
+        }
+
+        $coupons = $query->paginate(15);
 
         // Transform output
         $data = $coupons->items();
@@ -399,6 +417,12 @@ class CheckoutController extends Controller
         $purchase->payment_status = $request->payment_status;
         $purchase->razorpay_signature = $request->razorpay_signature;
         $purchase->save();
+
+        // ✅ Activate coupons when payment is successful
+        if ($request->payment_status === 'success') {
+            UserCoupons::where('purchased_camp_id', $purchase->id)
+                ->update(['status' => 1]);
+        }
 
         $baseplan = Baseplans::find($purchase->base_plan_id);
 

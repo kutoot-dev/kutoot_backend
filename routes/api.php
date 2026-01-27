@@ -367,10 +367,6 @@ Route::group(['middleware' => ['demo', 'XSS']], function () {
             // NEW KUTOOT REDEMPTION APIS
             // -----------------------------------------------------
 
-            // 1. Dashboard
-            // my-dashboard already exists but we will update controller logic
-            Route::get('/my-dashboard', [UserDashboardController::class, 'myDashboard'])->name('my-dashboard');
-
             // 8. Transactions
             Route::get('/coin-transactions', [CoinLedgerController::class, 'getHistory']);
             Route::get('/wallet', [CoinLedgerController::class, 'getWallet']);

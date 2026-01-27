@@ -389,6 +389,8 @@ public function newupdateProfile(Request $request)
             'phone'   => 'required',
             'country' => 'nullable',
             'address' => 'nullable',
+            'gender'  => 'nullable|in:male,female,other',
+            'zip_code' => 'nullable|string|max:10',
         ];
 
         $customMessages = [
@@ -400,11 +402,14 @@ public function newupdateProfile(Request $request)
         $this->validate($request, $rules,$customMessages);
 
         $user->name = $request->name;
+        $user->email = $request->email;
         $user->phone = $request->phone;
+        $user->gender = $request->gender;
         $user->country_id = $request->country;
         $user->state_id = $request->state;
         $user->city_id = $request->city;
         $user->address = $request->address;
+        $user->zip_code = $request->zip_code;
         $user->save();
 
         if($request->file('image')){
