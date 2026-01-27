@@ -33,6 +33,8 @@
                                     <th>{{__('coin_campaign.ticket_price')}}</th>
                                      <th>Quantity</th>
                                      <th>Total Price</th>
+                                     <th>Coins Purchased</th>
+                                     <th>Coin Expires</th>
                                     <th>{{__('coin_campaign.status')}}</th>
                                     <th>{{__('Created At')}}</th>
                                     <th>{{__('admin.Action')}}</th>
@@ -55,6 +57,8 @@
             <td>{{ $campaign->camp_ticket_price }}</td>
             <td>{{ $campaign->quantity }}</td>
             <td>{{ $campaign->quantity * $campaign->camp_ticket_price }}</td>
+            <td>{{ $campaign->coins_purchased ?? '-' }}</td>
+            <td>{{ $campaign->coin_expires_at ? \Carbon\Carbon::parse($campaign->coin_expires_at)->format('d M Y') : 'N/A' }}</td>
             <td>{{ $campaign->status }}</td>
             <td>{{ $campaign->created_at }}</td>
             <td>
@@ -64,7 +68,7 @@
     @endforeach
 @else
     <tr>
-        <td colspan="9" class="text-center">No data available.</td>
+        <td colspan="11" class="text-center">No data available.</td>
     </tr>
 @endif
 

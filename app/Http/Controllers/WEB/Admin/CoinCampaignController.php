@@ -66,13 +66,23 @@ class CoinCampaignController extends Controller
     ->orderBy('id', 'desc')
     ->get();
 
+    // Append coin purchase and expiry data from CoinLedger
+    $data->transform(function ($purchase) {
+        $coinLedgerEntry = \App\Models\CoinLedger::where('reference_id', 'OID' . $purchase->id)
+            ->where('entry_type', \App\Models\CoinLedger::TYPE_PAID_CREDIT)
+            ->first();
+        $purchase->coins_purchased = $purchase->camp_coins_per_campaign * $purchase->quantity;
+        $purchase->coin_expires_at = $coinLedgerEntry ? $coinLedgerEntry->expiry_date : null;
+        return $purchase;
+    });
+
     return view('admin.coin-campaign.purchaseindex', compact('data'));
 }
 
 
     public function winnerslist(Request $request)
     {
-    
+
         $data = Winners::with('campaign','campaign.campaign','userdetails')->orderBy('id', 'desc')->paginate(10);
         return response()->json($data);
     }
@@ -91,7 +101,7 @@ class CoinCampaignController extends Controller
 
     public function prizeindex(Request $request)
     {
-    
+
         $data = MasterPrize::all();
         return view('admin.coin-campaign.prizeindex', compact('data'));
     }
@@ -122,7 +132,7 @@ class CoinCampaignController extends Controller
         'upcoming' => collect([]),
         'completed' => collect([])
     ];
-       
+
      switch ($type) {
     case 1:
         $data = CoinCampaigns::running();
@@ -203,7 +213,7 @@ class CoinCampaignController extends Controller
     public function store(Request $request)
     {
         $data = $request->all();
- 
+
         $validation = [
             'title' => 'required|string|max:255',
             'title1'=> 'nullable|string|max:255',
@@ -227,7 +237,7 @@ class CoinCampaignController extends Controller
             'tag1' => 'nullable|string|max:255',
             'tag2' => 'nullable|string|max:255',
             'marketing_start_percent' => 'required|numeric|min:0|max:100',
-   
+
         ];
         $validator = Validator::make($data, $validation);
         if ($validator->fails()) {
@@ -237,7 +247,7 @@ $data['img'] = handleImageUpload($request, 'img', 'coin-campaign');
 $data['image1'] = handleImageUpload($request, 'image1', 'image1');
 $data['image2'] = handleImageUpload($request, 'image2', 'image2');
 
-        
+
         if ($request->hasFile('video')) {
             $image = $request->file('video');
             $imageName = 'coin-video-'.time() . '.' . $image->getClientOriginalExtension();
@@ -294,11 +304,11 @@ $data['highlights'] = $finalHighlights;
         $data['total_target']=100;
         $data['marketing_message']=$manifest['message'];
         $data['progress']=$manifest['display_percentage'];
-            
+
         return response()->json(['data' => $data]);
     }
 
-    
+
     public function show($id)
     {
         $data = CoinCampaigns::find($id);
@@ -314,7 +324,7 @@ $data['highlights'] = $finalHighlights;
     public function edit($id)
     {
         $data = CoinCampaigns::find($id);
-        
+
         return view('admin.coin-campaign.edit',compact('data'));
     }
 
@@ -353,7 +363,7 @@ public function update(Request $request, $id)
         'tag2' => 'nullable|string|max:255',
         'marketing_start_percent' => 'required|numeric|min:0|max:100',
          'highlights' => 'nullable|array',
-        
+
     ];
 
     $validator = Validator::make($data, $validation);

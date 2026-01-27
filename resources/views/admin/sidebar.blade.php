@@ -31,7 +31,7 @@
             </ul>
           </li>
 
-          <li class="nav-item dropdown {{ Route::is('admin.all-coin-campaigns') || Route::is('admin.statementsindex') || Route::is('admin.coin-campaign-orders') || Route::is('admin.create-coin-campaign')|| Route::is('admin.all-baseplans') || Route::is('admin.create-baseplans') || Route::is('admin.edit-baseplans') || Route::is('admin.view-baseplans') ||  Route::is('admin.all-prize-campaigns') ||Route::is('admin.edit-coin-campaign') || Route::is('admin.winners.index') || Route::is('admin.view-coin-campaign')  ? 'active' : '' }}">
+          <li class="nav-item dropdown {{ Route::is('admin.all-coin-campaigns') || Route::is('admin.coin-campaign-orders') || Route::is('admin.create-coin-campaign')|| Route::is('admin.all-baseplans') || Route::is('admin.create-baseplans') || Route::is('admin.edit-baseplans') || Route::is('admin.view-baseplans') ||  Route::is('admin.all-prize-campaigns') ||Route::is('admin.edit-coin-campaign') || Route::is('admin.winners.index') || Route::is('admin.view-coin-campaign')  ? 'active' : '' }}">
             <a href="#" class="nav-link has-dropdown"><i class="fas fa-bullseye"></i><span>{{__('admin.Coin Campaigns')}}</span></a>
 
             <ul class="dropdown-menu">
@@ -48,9 +48,6 @@
               <li class="{{ Route::is('admin.coin-campaign-orders') || Route::is('admin.purchasedetails') ? 'active' : '' }}">
                   <a class="nav-link" href="{{ route('admin.coin-campaign-orders') }}">{{ __('admin.Coin Campaign Orders') }}</a>
               </li>
-
-
-              <li class="{{ Route::is('admin.statementsindex') ? 'active' : '' }}"><a class="nav-link" href="{{ route('admin.statementsindex') }}">{{__('User Coins')}}</a></li>
 
               <li class="{{ Route::is('admin.winners.index') ? 'active' : '' }}"><a class="nav-link" href="{{ route('admin.winners.index') }}">Winners</a></li>
 

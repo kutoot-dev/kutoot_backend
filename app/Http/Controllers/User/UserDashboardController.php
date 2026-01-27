@@ -210,6 +210,15 @@ class UserDashboardController extends Controller
         $campaigns = $campaigns->orderBy('created_at', 'desc')
             ->paginate(15);
 
+        // Append coin_expires_at from CoinLedger for each purchase
+        $campaigns->getCollection()->transform(function ($purchase) {
+            $coinLedgerEntry = CoinLedger::where('reference_id', 'OID' . $purchase->id)
+                ->where('entry_type', CoinLedger::TYPE_PAID_CREDIT)
+                ->first();
+            $purchase->coin_expires_at = $coinLedgerEntry ? $coinLedgerEntry->expiry_date : null;
+            return $purchase;
+        });
+
         return response()->json([
             'status' => true,
             'data' => $campaigns
