@@ -37,6 +37,31 @@
                                     <input type="password" id="password" class="form-control"  name="password">
                                 </div>
 
+                                {{-- <div class="form-group col-12">
+                                    <div class="col-md-6">
+                                        <label>Add New Role</label>
+                                        <div class="input-group">
+                                            <input type="text" id="new_role" class="form-control">
+                                            <div class="input-group-append">
+                                                <button type="button" id="addRoleBtn" class="btn btn-success">Add</button>
+                                            </div>
+                                        </div>
+                                        <small id="roleError" class="text-danger d-none"></small>
+                                </div> --}}
+
+
+                                  <div class="col-md-6">
+                                        <label>Assign Role</label>
+                                        <select name="role_id" id="roleSelect" class="form-control">
+                                            <option value="">-- Select Role --</option>
+                                            @foreach($roles as $role)
+                                                <option value="{{ $role->id }}">{{ $role->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+
+
+
                                 <div class="form-group col-12">
                                     <label>{{__('admin.Status')}} <span class="text-danger">*</span></label>
                                     <select name="status" class="form-control">
@@ -59,3 +84,54 @@
       </div>
 
 @endsection
+@push('scripts')
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+
+    // /* ADD ROLE */
+    // const addBtn = document.getElementById('addRoleBtn');
+    // const roleInput = document.getElementById('new_role');
+    // const roleSelect = document.getElementById('roleSelect');
+    // const errorBox = document.getElementById('roleError');
+
+    // addBtn.addEventListener('click', function () {
+    //     const roleName = roleInput.value.trim();
+
+    //     if (!roleName) {
+    //         errorBox.textContent = 'Role name required';
+    //         errorBox.classList.remove('d-none');
+    //         return;
+    //     }
+
+    //     fetch("{{ route('admin.roles.ajax.store') }}", {
+    //         method: 'POST',
+    //         headers: {
+    //             'X-CSRF-TOKEN': "{{ csrf_token() }}",
+    //             'Content-Type': 'application/json'
+    //         },
+    //         body: JSON.stringify({ name: roleName })
+    //     })
+    //     .then(res => res.json())
+    //     .then(data => {
+    //         if (data.success) {
+    //             roleSelect.add(new Option(data.role.name, data.role.id, true, true));
+    //             roleInput.value = '';
+    //             errorBox.classList.add('d-none');
+    //         }
+    //     });
+    // });
+
+    /* MODULE MOVE */
+    // document.getElementById('moveRight').onclick = () => move('allModules','assignedModules');
+    // document.getElementById('moveLeft').onclick  = () => move('assignedModules','allModules');
+
+    // function move(from,to){
+    //     const f=document.getElementById(from);
+    //     const t=document.getElementById(to);
+    //     [...f.selectedOptions].forEach(o=>t.appendChild(o));
+    // }
+
+});
+</script>
+@endpush
+

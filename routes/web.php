@@ -123,6 +123,104 @@ use App\Http\Controllers\CouponTicketController;
 
 use App\Http\Controllers\ZohoAuthController;
 
+use App\Http\Controllers\Admin\UserController;
+// use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\ModuleController;
+
+
+
+Route::prefix('admin')->name('admin.')->group(function () {
+    Route::resource('user', UserController::class);
+});
+
+
+
+
+
+Route::prefix('admin')->name('admin.')->group(function () {
+
+    Route::get('/user/create', [UserController::class, 'create'])
+        ->name('user.create');
+
+    Route::post('/user/store', [UserController::class, 'store'])
+        ->name('user.store');
+
+    Route::post('/roles/ajax-store', [UserController::class, 'ajaxRoleStore'])
+        ->name('roles.ajax.store');
+});
+
+
+
+
+Route::post('/admin/roles/ajax-store',
+    [\App\Http\Controllers\Admin\RoleController::class, 'ajaxStore']
+)->name('admin.roles.ajax.store');
+
+
+
+Route::post('/admin/modules/assign', [UserController::class, 'assignModule'])
+    ->name('admin.modules.assign');
+
+Route::get('/admin/modules/{admin}', [UserController::class, 'getAssignedModules'])
+    ->name('admin.modules.assigned');
+
+
+
+Route::get('/admin/modules/{admin}', [UserController::class, 'getAssignedModules'])->name('admin.modules.assigned');
+Route::post('/admin/modules/save', [UserController::class, 'saveModules'])->name('admin.modules.save');
+
+
+
+
+Route::post('/admin/modules/assign', [ModuleController::class, 'assign'])
+    ->name('admin.modules.assign');
+
+// Route::get('/admin/create', [AdminController::class, 'addAdmin'])
+//      ->name('admin.create');
+
+
+
+
+Route::get('/admin/{id}/edit', [AdminController::class, 'edit'])
+    ->name('admin.edit');
+
+Route::put('/admin/{id}', [AdminController::class, 'update'])
+    ->name('admin.update');
+
+
+
+
+Route::prefix('admin')->name('admin.')->group(function () {
+
+    Route::get('/dashboard', [DashboardController::class, 'index'])
+        ->name('dashboard');
+
+    Route::get('/admin', [AdminController::class, 'index'])
+        ->name('admin.index');
+
+    Route::get('/admin/{id}/edit', [AdminController::class, 'edit'])
+        ->name('admin.edit');
+
+    Route::put('/admin/{id}', [AdminController::class, 'update'])
+        ->name('admin.update');
+});
+
+
+
+Route::delete('/admin/user/{role}',
+    [UserController::class, 'destroy']
+)->name('admin.user.destroy');
+
+
+
+
+
+
+
+
+Route::get('/admin/create', [AdminController::class, 'create'])->name('admin.admin.create');
+
+
 Route::get('/zoho/connect', [ZohoAuthController::class, 'redirectToZoho']);
 Route::get('/zoho/callback', [ZohoAuthController::class, 'handleCallback']);
 
@@ -943,6 +1041,10 @@ Route::group(['as'=> 'admin.', 'prefix' => 'admin'],function (){
     Route::get('/increment-order-quantity/{id}/{order_id}', [OrderController::class, 'incrementOrderQuantity'])->name('order-quantity-increment');
     Route::get('/decrement-order-quantity/{id}/{order_id}', [OrderController::class, 'decrementOrderQuantity'])->name('order-quantity-decrement');
     Route::delete('/delete-order-product/{id}/{order_id}', [OrderController::class, 'deleteOrderProduct'])->name('delete-order-product');
+
+
+
+
 
 
 });

@@ -1,3 +1,10 @@
+<style>
+#allModules,
+#assignedModules {
+    min-height: 260px;
+}
+</style>
+
 @php
     $setting = App\Models\Setting::first();
 @endphp
@@ -70,3 +77,4 @@
   </div>
 
   @include('admin.footer')
+  @stack('scripts')

@@ -404,24 +404,24 @@ class HomeController extends Controller
 
 
 
+        $sliderVisibilty = HomePageOneVisibility::find(1);
+
+        $sliders = Slider::orderBy('serial','asc')->where(['status' => 1])->get()->take($sliderVisibilty->qty);
+
+        $sliderVisibilty = $sliderVisibilty->status == 1 ? true : false;
+
+
         // $sliderVisibilty = HomePageOneVisibility::find(1);
 
-        // $sliders = Slider::orderBy('serial','asc')->where(['status' => 1])->get()->take($sliderVisibilty->qty);
+        // $qty = $sliderVisibilty ? $sliderVisibilty->qty : 0;
+        // $status = $sliderVisibilty ? $sliderVisibilty->status : 0;
 
-        // $sliderVisibilty = $sliderVisibilty->status == 1 ? true : false;
+        // $sliders = Slider::where('status', 1)
+        //     ->orderBy('serial', 'asc')
+        //     ->take($qty)
+        //     ->get();
 
-
-$sliderVisibilty = HomePageOneVisibility::find(1);
-
-$qty = $sliderVisibilty ? $sliderVisibilty->qty : 0;
-$status = $sliderVisibilty ? $sliderVisibilty->status : 0;
-
-$sliders = Slider::where('status', 1)
-    ->orderBy('serial', 'asc')
-    ->take($qty)
-    ->get();
-
-$sliderVisibilty = $status == 1;
+        // $sliderVisibilty = $status == 1;
 
 
 
@@ -652,174 +652,250 @@ $sliderVisibilty = $status == 1;
 
 
 
-//  protected function sectionConfig(int $id): array
-//     {
-//         $config = HomePageOneVisibility::find($id);
-
-//         return [
-//             'qty' => $config->qty ?? 0,
-//             'visible' => ($config->status ?? 0) === 1,
-//         ];
-//     }
-
-
-
 // public function index()
 // {
-//     $setting = Setting::first();
-//     $seoSetting = SeoSetting::find(1);
 
+//     Artisan::call('optimize:clear');
 
-//     $sliderConfig = $this->sectionConfig(1);
-//     $sliders = Slider::where('status', 1)
-//         ->orderBy('serial')
-//         ->limit($sliderConfig['qty'])
+//     // -------------------------------
+//     // Slider Section
+//     // -------------------------------
+//     $sliderVisibilty = HomePageOneVisibility::find(1);
+//     $sliderQty = $sliderVisibilty?->qty ?? 5; // default 5 sliders if record missing
+//     $sliderStatus = $sliderVisibilty?->status == 1 ? true : false;
+
+//     $sliders = Slider::orderBy('serial', 'asc')
+//         ->where('status', 1)
+//         ->take($sliderQty)
 //         ->get();
 
+//     $sliderVisibilty = $sliderStatus;
 
-//     $serviceConfig = $this->sectionConfig(2);
-//     $services = Service::where('status', 1)
-//         ->limit($serviceConfig['qty'])
+//     $sliderBannerOne = BannerImage::select(
+//         'id','product_slug','image','banner_location','title_one','title_two','badge','status'
+//     )->find(16);
+
+//     $sliderBannerTwo = BannerImage::select(
+//         'id','product_slug','image','banner_location','title_one','title_two','badge','status'
+//     )->find(17);
+
+//     // -------------------------------
+//     // Services Section
+//     // -------------------------------
+//     $serviceVisibilty = HomePageOneVisibility::find(2);
+//     $serviceQty = $serviceVisibilty?->qty ?? 4; // default 4 services
+//     $serviceStatus = $serviceVisibilty?->status == 1 ? true : false;
+
+//     $services = Service::where('status',1)
+//         ->take($serviceQty)
 //         ->get();
 
-//     $popularCategoryConfig = $this->sectionConfig(4);
+//     $serviceVisibilty = $serviceStatus;
+
+//     // -------------------------------
+//     // Popular Categories Section
+//     // -------------------------------
+//     $popularCategoryVisibilty = HomePageOneVisibility::find(4);
+//     $popularQty = $popularCategoryVisibilty?->qty ?? 5;
+//     $popularStatus = $popularCategoryVisibilty?->status == 1 ? true : false;
+
 //     $popularCategories = PopularCategory::with('category')->get();
-//     $popularCategoryIds = $popularCategories->pluck('category_id')->toArray();
+//     $category_arr = $popularCategories->pluck('category_id')->toArray();
 
 //     $popularCategoryProducts = Product::with('activeVariants.activeVariantItems')
-//         ->whereIn('category_id', $popularCategoryIds)
-//         ->where([
-//             'status' => 1,
-//             'approval_status' => ProductApprovalStatus::APPROVED
-//         ])
-//         ->orderByDesc('id')
-//         ->limit($popularCategoryConfig['qty'])
+//         ->select(
+//             'id','name','short_name','slug','thumb_image','qty','sold_qty','price','offer_price',
+//             'is_undefine','is_featured','new_product','is_top','is_best','category_id','sub_category_id','child_category_id','brand_id'
+//         )
+//         ->whereIn('category_id', $category_arr)
+//         ->where(['status' => 1,'approval_status' => ProductApprovalStatus::APPROVED])
+//         ->orderBy('id','desc')
+//         ->take($popularQty)
 //         ->get();
 
-//     $brandConfig = $this->sectionConfig(5);
-//     $brands = Brand::where('status', 1)
-//         ->limit($brandConfig['qty'])
+//     $popularCategoryVisibilty = $popularStatus;
+
+//     // -------------------------------
+//     // Settings
+//     // -------------------------------
+//     $setting = Setting::first();
+//     $popularCategorySidebarBanner = $setting?->popular_category_banner;
+//     $featuredCategorySidebarBanner = $setting?->featured_category_banner;
+//     $section_title = json_decode($setting?->homepage_section_title);
+//     $seoSetting = SeoSetting::find(1);
+
+//     // -------------------------------
+//     // Brands Section
+//     // -------------------------------
+//     $brandVisibility = HomePageOneVisibility::find(5);
+//     $brandQty = $brandVisibility?->qty ?? 6;
+//     $brandStatus = $brandVisibility?->status == 1 ? true : false;
+
+//     $brands = Brand::where('status',1)
+//         ->take($brandQty)
 //         ->get();
 
+//     $brandVisibility = $brandStatus;
 
-//     $topRatedConfig = $this->sectionConfig(6);
+//     // -------------------------------
+//     // Flash Sale Section
+//     // -------------------------------
+//     $flashSale = FlashSale::first();
+//     $flashSaleSidebarBanner = BannerImage::select(
+//         'id','link as play_store','image','banner_location','status','title as app_store'
+//     )->find(24);
+
+//     // -------------------------------
+//     // Top Rated Products
+//     // -------------------------------
+//     $topRatedVisibility = HomePageOneVisibility::find(6);
+//     $topRatedQty = $topRatedVisibility?->qty ?? 5;
+//     $topRatedStatus = $topRatedVisibility?->status == 1 ? true : false;
+
 //     $topRatedProducts = Product::with('activeVariants.activeVariantItems')
-//         ->where([
-//             'is_top' => 1,
-//             'status' => 1,
-//             'approval_status' => ProductApprovalStatus::APPROVED
-//         ])
-//         ->orderByDesc('id')
-//         ->limit($topRatedConfig['qty'])
+//         ->select(
+//             'id','name','short_name','slug','thumb_image','qty','sold_qty','price','offer_price',
+//             'is_undefine','is_featured','new_product','is_top','is_best','category_id','sub_category_id','child_category_id','brand_id'
+//         )
+//         ->where(['is_top' => 1, 'status' => 1,'approval_status' => ProductApprovalStatus::APPROVED])
+//         ->orderBy('id','desc')
+//         ->take($topRatedQty)
 //         ->get();
 
+//     $topRatedVisibility = $topRatedStatus;
 
-//     $sellerConfig = $this->sectionConfig(7);
-//     $sellers = Vendor::where('status', 1)
+//     // -------------------------------
+//     // Sellers Section
+//     // -------------------------------
+//     $sellerVisibility = HomePageOneVisibility::find(7);
+//     $sellerQty = $sellerVisibility?->qty ?? 5;
+//     $sellerStatus = $sellerVisibility?->status == 1 ? true : false;
+
+//     $sellers = Vendor::where('status',1)
 //         ->select('id','logo','banner_image','shop_name','slug')
-//         ->limit($sellerConfig['qty'])
+//         ->take($sellerQty)
 //         ->get();
 
+//     $sellerVisibility = $sellerStatus;
 
-//     $featuredConfig = $this->sectionConfig(8);
+//     // -------------------------------
+//     // Featured Products Section
+//     // -------------------------------
+//     $featuredProductVisibility = HomePageOneVisibility::find(8);
+//     $featuredQty = $featuredProductVisibility?->qty ?? 5;
+//     $featuredStatus = $featuredProductVisibility?->status == 1 ? true : false;
+
 //     $featuredCategories = FeaturedCategory::with('category')->get();
-//     $featuredCategoryIds = $featuredCategories->pluck('category_id')->toArray();
+//     $category_arr = $featuredCategories->pluck('category_id')->toArray();
 
 //     $featuredCategoryProducts = Product::with('activeVariants.activeVariantItems')
-//         ->whereIn('category_id', $featuredCategoryIds)
-//         ->where([
-//             'status' => 1,
-//             'approval_status' => ProductApprovalStatus::APPROVED
-//         ])
-//         ->orderByDesc('id')
-//         ->limit($featuredConfig['qty'])
+//         ->select(
+//             'id','name','short_name','slug','thumb_image','qty','sold_qty','price','offer_price',
+//             'is_undefine','is_featured','new_product','is_top','is_best','category_id','sub_category_id','child_category_id','brand_id'
+//         )
+//         ->whereIn('category_id', $category_arr)
+//         ->where(['status' => 1,'approval_status' => ProductApprovalStatus::APPROVED])
+//         ->orderBy('id','desc')
+//         ->take($featuredQty)
 //         ->get();
 
+//     $featuredProductVisibility = $featuredStatus;
 
-//     $newArrivalConfig = $this->sectionConfig(9);
+//     // -------------------------------
+//     // New Arrivals Section
+//     // -------------------------------
+//     $newArrivalProductVisibility = HomePageOneVisibility::find(9);
+//     $newArrivalQty = $newArrivalProductVisibility?->qty ?? 5;
+//     $newArrivalStatus = $newArrivalProductVisibility?->status == 1 ? true : false;
+
 //     $newArrivalProducts = Product::with('activeVariants.activeVariantItems')
-//         ->where([
-//             'new_product' => 1,
-//             'status' => 1,
-//             'approval_status' => ProductApprovalStatus::APPROVED
-//         ])
-//         ->orderByDesc('id')
-//         ->limit($newArrivalConfig['qty'])
+//         ->select(
+//             'id','name','short_name','slug','thumb_image','qty','sold_qty','price','offer_price',
+//             'is_undefine','is_featured','new_product','is_top','is_best','category_id','sub_category_id','child_category_id','brand_id'
+//         )
+//         ->where(['new_product' => 1, 'status' => 1,'approval_status' => ProductApprovalStatus::APPROVED])
+//         ->orderBy('id','desc')
+//         ->take($newArrivalQty)
 //         ->get();
 
+//     $newArrivalProductVisibility = $newArrivalStatus;
 
-//     $bestConfig = $this->sectionConfig(10);
+//     // -------------------------------
+//     // Best Products Section
+//     // -------------------------------
+//     $bestProductVisibility = HomePageOneVisibility::find(10);
+//     $bestQty = $bestProductVisibility?->qty ?? 5;
+//     $bestStatus = $bestProductVisibility?->status == 1 ? true : false;
+
 //     $bestProducts = Product::with('activeVariants.activeVariantItems')
-//         ->where([
-//             'is_best' => 1,
-//             'status' => 1,
-//             'approval_status' => ProductApprovalStatus::APPROVED
-//         ])
-//         ->orderByDesc('id')
-//         ->limit($bestConfig['qty'])
+//         ->select(
+//             'id','name','short_name','slug','thumb_image','qty','sold_qty','price','offer_price',
+//             'is_undefine','is_featured','new_product','is_top','is_best','category_id','sub_category_id','child_category_id','brand_id'
+//         )
+//         ->where(['is_best' => 1, 'status' => 1,'approval_status' => ProductApprovalStatus::APPROVED])
+//         ->orderBy('id','desc')
+//         ->take($bestQty)
 //         ->get();
 
+//     $bestProductVisibility = $bestStatus;
 
-//     $banners = BannerImage::whereIn('id', [
-//         16,17,19,20,21,22,24,27
-//     ])->get()->keyBy('id');
+//     // -------------------------------
+//     // Banners Section
+//     // -------------------------------
+//     $singleBannerOne = BannerImage::select('id','product_slug','image','banner_location','status','title_one','title_two')->find(21);
+//     $singleBannerTwo = BannerImage::select('id','product_slug','image','banner_location','status','title_one')->find(22);
+//     $twoColumnBannerOne = BannerImage::select('id','product_slug','image','banner_location','status','title_one','title_two','badge')->find(19);
+//     $twoColumnBannerTwo = BannerImage::select('id','product_slug','image','banner_location','status','title_one','title_two','badge')->find(20);
+//     $subscriptionBanner = BannerImage::select('id','image','banner_location','header','title')->find(27);
 
-
+//     // -------------------------------
+//     // Homepage Categories
+//     // -------------------------------
 //     $homepage_categories = Category::where('status', 1)
 //         ->select('id','name','slug','icon','image')
-//         ->limit(15)
+//         ->take(15)
 //         ->get();
 
-//     $section_title = json_decode($setting->homepage_section_title ?? '{}');
-
+//     // -------------------------------
+//     // Return JSON Response
+//     // -------------------------------
 //     return response()->json([
 //         'section_title' => $section_title,
 //         'seoSetting' => $seoSetting,
-
-//         'sliderVisibilty' => $sliderConfig['visible'],
+//         'sliderVisibilty' => $sliderVisibilty,
 //         'sliders' => $sliders,
-
-//         'serviceVisibilty' => $serviceConfig['visible'],
+//         'sliderBannerOne' => $sliderBannerOne,
+//         'sliderBannerTwo' => $sliderBannerTwo,
+//         'serviceVisibilty' => $serviceVisibilty,
 //         'services' => $services,
-
-//         'popularCategoryVisibilty' => $popularCategoryConfig['visible'],
+//         'homepage_categories' => $homepage_categories,
+//         'popularCategorySidebarBanner' => $popularCategorySidebarBanner,
+//         'popularCategoryVisibilty' => $popularCategoryVisibilty,
 //         'popularCategories' => $popularCategories,
 //         'popularCategoryProducts' => $popularCategoryProducts,
-//         'popularCategorySidebarBanner' => $setting->popular_category_banner ?? null,
-
-//         'brandVisibility' => $brandConfig['visible'],
+//         'brandVisibility' => $brandVisibility,
 //         'brands' => $brands,
-
-//         'topRatedVisibility' => $topRatedConfig['visible'],
+//         'flashSale' => $flashSale,
+//         'flashSaleSidebarBanner' => $flashSaleSidebarBanner,
+//         'topRatedVisibility' => $topRatedVisibility,
 //         'topRatedProducts' => $topRatedProducts,
-
-//         'sellerVisibility' => $sellerConfig['visible'],
+//         'sellerVisibility' => $sellerVisibility,
 //         'sellers' => $sellers,
-
-//         'featuredProductVisibility' => $featuredConfig['visible'],
+//         'twoColumnBannerOne' => $twoColumnBannerOne,
+//         'twoColumnBannerTwo' => $twoColumnBannerTwo,
+//         'featuredProductVisibility' => $featuredProductVisibility,
+//         'featuredCategorySidebarBanner' => $featuredCategorySidebarBanner,
 //         'featuredCategories' => $featuredCategories,
 //         'featuredCategoryProducts' => $featuredCategoryProducts,
-//         'featuredCategorySidebarBanner' => $setting->featured_category_banner ?? null,
-
-//         'newArrivalProductVisibility' => $newArrivalConfig['visible'],
+//         'singleBannerOne' => $singleBannerOne,
+//         'newArrivalProductVisibility' => $newArrivalProductVisibility,
 //         'newArrivalProducts' => $newArrivalProducts,
-
-//         'bestProductVisibility' => $bestConfig['visible'],
+//         'bestProductVisibility' => $bestProductVisibility,
+//         'singleBannerTwo' => $singleBannerTwo,
 //         'bestProducts' => $bestProducts,
-
-//         'homepage_categories' => $homepage_categories,
-
-//         'sliderBannerOne' => $banners[16] ?? null,
-//         'sliderBannerTwo' => $banners[17] ?? null,
-//         'twoColumnBannerOne' => $banners[19] ?? null,
-//         'twoColumnBannerTwo' => $banners[20] ?? null,
-//         'singleBannerOne' => $banners[21] ?? null,
-//         'singleBannerTwo' => $banners[22] ?? null,
-//         'flashSaleSidebarBanner' => $banners[24] ?? null,
-//         'subscriptionBanner' => $banners[27] ?? null,
+//         'subscriptionBanner' => $subscriptionBanner,
 //     ]);
 // }
-
 
 
 

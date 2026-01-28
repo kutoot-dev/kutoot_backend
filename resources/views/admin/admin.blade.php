@@ -15,6 +15,7 @@
           </div>
 
           <div class="section-body">
+            <a href="{{ route('admin.user.create') }}" class="btn btn-primary"><i class="fas fa-plus"></i> {{__('admin.Modules to Roles')}}</a>
             <a href="{{ route('admin.admin.create') }}" class="btn btn-primary"><i class="fas fa-plus"></i> {{__('admin.Add New')}}</a>
             <div class="row mt-4">
                 <div class="col">
@@ -27,6 +28,7 @@
                                     <th>{{__('admin.SN')}}</th>
                                     <th>{{__('admin.Name')}}</th>
                                     <th>{{__('admin.Email')}}</th>
+                                    <th>{{__('admin.Role')}}</th>
                                     <th>{{__('admin.Image')}}</th>
                                     <th>{{__('admin.Status')}}</th>
                                     <th>{{__('admin.Action')}}</th>
@@ -38,6 +40,12 @@
                                         <td>{{ ++$index }}</td>
                                         <td>{{ $admin->name }}</td>
                                         <td>{{ $admin->email }}</td>
+                                        <td>
+                                            @if($admin->role)
+                                                {{ $admin->role->name }}
+                                            @else
+                                                {{"--"}}
+                                            @endif
                                         <td>
                                             @if ($admin->image)
                                             <img src="{{ asset($admin->image) }}" alt="" width="80px" class="rounded-circle">
@@ -61,7 +69,10 @@
                                         </td>
                                         <td>
                                             @if ($admin->admin_type == 0)
+
+                                                <a href="{{ route('admin.admin.edit', $admin->id) }}" class="btn btn-primary btn-sm"><i class="fa fa-edit" aria-hidden="true"></i></a>
                                                 <a href="javascript:;" data-toggle="modal" data-target="#deleteModal" class="btn btn-danger btn-sm" onclick="deleteData({{ $admin->id }})"><i class="fa fa-trash" aria-hidden="true"></i></a>
+
                                             @endif
                                         </td>
 

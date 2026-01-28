@@ -9,12 +9,15 @@ use App\Models\BannerImage;
 use Hash;
 use Auth;
 
+
+
 class AdminController extends Controller
 {
     public function __construct()
     {
         $this->middleware('auth:admin-api');
     }
+
 
     public function index(){
         $admins = Admin::orderBy('id','asc')->get();
@@ -28,6 +31,7 @@ class AdminController extends Controller
             'name' => 'required',
             'email' => 'required|unique:admins',
             'password' => 'required|min:4',
+            // 'role_id'  => 'required|exists:roles,id',
             'status' => 'required',
         ];
         $customMessages = [
@@ -43,6 +47,7 @@ class AdminController extends Controller
         $admin->name =$request->name;
         $admin->email =$request->email;
         $admin->status =$request->status;
+        // $admin->role_id  = $request->role_id;
         $admin->password =Hash::make($request->status);
         $admin->save();
 
@@ -110,3 +115,4 @@ class AdminController extends Controller
         return response()->json($message);
     }
 }
+

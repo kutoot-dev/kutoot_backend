@@ -31,7 +31,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         Product::created(function ($product) {
-        \Log::info('Product created event fired', [
+        Log::info('Product created event fired', [
             'product_id' => $product->id
         ]);
 

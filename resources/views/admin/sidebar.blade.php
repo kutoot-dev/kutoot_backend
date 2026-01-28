@@ -17,11 +17,14 @@
       <div class="sidebar-brand sidebar-brand-sm">
         <a href="{{ route('admin.dashboard') }}">{{ $setting->sidebar_sm_header }}</a>
       </div>
+
       <ul class="sidebar-menu">
           <li class="{{ Route::is('admin.dashboard') ? 'active' : '' }}"><a class="nav-link" href="{{ route('admin.dashboard') }}"><i class="fas fa-home"></i> <span>{{__('admin.Dashboard')}}</span></a></li>
 
+          @if(auth('admin')->user()->hasModule('website'))
           <li class="nav-item dropdown {{ Route::is('admin.all-coin-campaigns') || Route::is('admin.statementsindex') || Route::is('admin.coin-campaign-orders') || Route::is('admin.create-coin-campaign')|| Route::is('admin.all-baseplans') || Route::is('admin.create-baseplans') || Route::is('admin.edit-baseplans') || Route::is('admin.view-baseplans') ||  Route::is('admin.all-prize-campaigns') ||Route::is('admin.edit-coin-campaign') || Route::is('admin.winners.index') || Route::is('admin.view-coin-campaign')  ? 'active' : '' }}">
             <a href="#" class="nav-link has-dropdown"><i class="fas fa-bullseye"></i><span>{{__('admin.Coin Campaigns')}}</span></a>
+
 
             <ul class="dropdown-menu">
 
@@ -35,8 +38,8 @@
               <li class="{{ Route::is('admin.all-baseplans') || Route::is('admin.create-baseplans') || Route::is('admin.edit-baseplans') || Route::is('admin.view-baseplans') ? 'active' : '' }}"><a class="nav-link" href="{{ route('admin.all-baseplans') }}">{{__('Base Plans')}}</a></li>
 
               <li class="{{ request()->is('admin/coin-campaign-orders') || request()->is('admin/admin/purchase/*') ? 'active' : '' }}">
-    <a class="nav-link" href="{{ route('admin.coin-campaign-orders') }}">{{ __('admin.Coin Campaign Orders') }}</a>
-</li>
+                <a class="nav-link" href="{{ route('admin.coin-campaign-orders') }}">{{ __('admin.Coin Campaign Orders') }}</a>
+            </li>
 
               {{-- <li class="{{ Route::is('coin-campaign-orders') || Route::is('purchasedetails') ? 'active' : '' }}"><a class="nav-link" href="{{ route('admin.coin-campaign-orders') }}">{{__('admin.Coin Campaign Orders')}}</a></li> --}}
 
@@ -49,6 +52,10 @@
 
             </ul>
           </li>
+            @endif
+
+
+          @if(auth('admin')->user()->hasModule('E-commerce'))
 
           <li class="nav-item dropdown {{ Route::is('admin.all-order') || Route::is('admin.order-show') || Route::is('admin.pending-order') || Route::is('admin.progress-order') || Route::is('admin.delivered-order') ||  Route::is('admin.completed-order') || Route::is('admin.declined-order') || Route::is('admin.cash-on-delivery')  ? 'active' : '' }}">
             <a href="#" class="nav-link has-dropdown"><i class="fas fa-shopping-cart"></i><span>{{__('admin.Orders')}}</span></a>
@@ -67,6 +74,9 @@
               <li class="{{ Route::is('admin.cash-on-delivery') ? 'active' : '' }}"><a class="nav-link" href="{{ route('admin.cash-on-delivery') }}">{{__('admin.Cash On Delivery')}}</a></li>
             </ul>
           </li>
+            @endif
+
+          @if(auth('admin')->user()->hasModule('E-commerce'))
 
           <li class="nav-item dropdown {{ Route::is('admin.product-category.*') || Route::is('admin.product-sub-category.*') || Route::is('admin.product-child-category.*') || Route::is('admin.mega-menu-category.*') || Route::is('admin.mega-menu-sub-category') || Route::is('admin.create-mega-menu-sub-category') || Route::is('admin.edit-mega-menu-sub-category') || Route::is('admin.mega-menu-banner') || Route::is('admin.popular-category') || Route::is('admin.featured-category') ? 'active' : '' }}">
             <a href="#" class="nav-link has-dropdown"><i class="fas fa-th-large"></i><span>{{__('admin.Manage Categories')}}</span></a>
@@ -90,7 +100,11 @@
 
             </ul>
           </li>
+            @endif
 
+
+
+          @if(auth('admin')->user()->hasModule('E-commerce'))
 
           <li class="nav-item dropdown {{ Route::is('admin.product.*') || Route::is('admin.product-brand.*') || Route::is('admin.product-variant') || Route::is('admin.create-product-variant') || Route::is('admin.edit-product-variant') || Route::is('admin.product-gallery') || Route::is('admin.product-variant-item') || Route::is('admin.create-product-variant-item') || Route::is('admin.edit-product-variant-item') || Route::is('admin.product-review') || Route::is('admin.show-product-review') || Route::is('admin.seller-product') || Route::is('admin.seller-pending-product') ||  Route::is('admin.product-report') || Route::is('admin.show-product-report') || Route::is('admin.specification-key.*') || Route::is('admin.stockout-product') || Route::is('admin.product-import-page') ? 'active' : '' }}">
             <a href="#" class="nav-link has-dropdown"><i class="fas fa-th-large"></i><span>{{__('admin.Manage Products')}}</span></a>
@@ -121,10 +135,12 @@
 
             </ul>
           </li>
+            @endif
 
+          @if(auth('admin')->user()->hasModule('E-commerce'))
 
           <li class="{{ Route::is('admin.inventory') || Route::is('admin.stock-history') ? 'active' : '' }}"><a class="nav-link" href="{{ route('admin.inventory') }}"><i class="fas fa-th-large"></i> <span>{{__('admin.Inventory')}}</span></a></li>
-
+           @endif
           <!-- <li class="nav-item dropdown {{ Route::is('admin.pos.index') || Route::is('admin.pos.bulk.order') ? 'active' : '' }}">
             <a href="#" class="nav-link has-dropdown">
             <div class="icon">
@@ -139,6 +155,9 @@
             </ul>
 
           </li> -->
+
+          @if(auth('admin')->user()->hasModule('E-commerce'))
+
           <li class="nav-item dropdown {{ Route::is('admin.country.*') || Route::is('admin.state.*') || Route::is('admin.city.*') ? 'active' : '' }}">
             <a href="#" class="nav-link has-dropdown"><i class="fas fa-map-marker-alt"></i><span>{{__('admin.Locations')}}</span></a>
 
@@ -152,6 +171,8 @@
 
             </ul>
           </li>
+           @endif
+
 
           <!-- <li class="nav-item dropdown {{ Route::is('admin.delivery-man.*') || Route::is('admin.balance-list') || Route::is('admin.delivery-man-withdraw-list') || Route::is('admin.delivery-man-review') || Route::is('admin.delivery-man-order-amount') || Route::is('admin.delivery-man-order-amount.create') ? 'active' : '' }}">
             <a href="#" class="nav-link has-dropdown"><i class="fas fa-walking"></i><span>{{__('Delivery Man')}}</span></a>
@@ -182,11 +203,14 @@
             </ul>
           </li> -->
 
+  @if(auth('admin')->user()->hasModule('E-commerce'))
+       {{-- @can('marketing-manager') --}}
+
           <li class="nav-item dropdown {{ Route::is('admin.flash-sale') || Route::is('admin.currency.*') || Route::is('admin.shipping.*') || Route::is('admin.coupon.*') || Route::is('admin.payment-method') || Route::is('admin.flash-sale-product') || Route::is('admin.shipping-import-page') ? 'active' : '' }}">
             <a href="#" class="nav-link has-dropdown"><i class="fas fa-shopping-cart"></i><span>{{__('admin.Ecommerce')}}</span></a>
 
             <ul class="dropdown-menu">
-                <li class="{{ Route::is('admin.flash-sale') ? 'active' : '' }}"><a class="nav-link" href="{{ route('admin.flash-sale') }}">{{__('admin.Flash Sale')}}</a></li>
+                <li class="{{ Route::is('admin.flash-sale') ? 'active' : '' }}><a class="nav-link" href="{{ route('admin.flash-sale') }}">{{__('admin.Flash Sale')}}</a></li>
 
                 <li class="{{ Route::is('admin.flash-sale-product') ? 'active' : '' }}"><a class="nav-link" href="{{ route('admin.flash-sale-product') }}">{{__('admin.Flash Sale Product')}}</a></li>
 
@@ -198,6 +222,12 @@
 
             </ul>
           </li>
+
+         {{-- @endcan --}}
+  @endif
+
+
+          @if(auth('admin')->user()->hasModule('E-commerce'))
 
           <li class="{{ Route::is('admin.advertisement') ? 'active' : '' }}"><a class="nav-link" href="{{ route('admin.advertisement') }}"><i class="fas fa-ad"></i> <span>{{__('admin.Advertisement')}}</span></a></li>
 
@@ -213,27 +243,42 @@
 
             </ul>
           </li>
+            @endif
+
+
+          {{-- @if(auth('admin')->user()->hasModule('E-commerce') &&
+           auth('admin')->user()->hasModule('store')) --}}
+           @if(auth('admin')->user()->hasModule('E-commerce')||auth('admin')->user()->hasModule('Stores'))
 
           <li class="nav-item dropdown {{  Route::is('admin.customer-list') || Route::is('admin.customer-show') || Route::is('admin.pending-customer-list') || Route::is('admin.seller-list') || Route::is('admin.seller-show') || Route::is('admin.pending-seller-list') || Route::is('admin.seller-shop-detail') || Route::is('admin.seller-reviews') || Route::is('admin.show-seller-review-details') || Route::is('admin.send-email-to-seller') || Route::is('admin.email-history') || Route::is('admin.product-by-seller') || Route::is('admin.send-email-to-all-seller') || Route::is('admin.send-email-to-all-customer') || Route::is('admin.seller-applications.*') ? 'active' : '' }}">
             <a href="#" class="nav-link has-dropdown"><i class="fas fa-user"></i><span>{{__('admin.Users')}}</span></a>
             <ul class="dropdown-menu">
+                 @if(auth('admin')->user()->hasModule('E-commerce'))
+
                 <li class="{{ Route::is('admin.customer-list') || Route::is('admin.customer-show') || Route::is('admin.send-email-to-all-customer') ? 'active' : '' }}"><a class="nav-link" href="{{ route('admin.customer-list') }}">{{__('admin.Customer List')}}</a></li>
 
                 <li class="{{ Route::is('admin.pending-customer-list') ? 'active' : '' }}"><a class="nav-link" href="{{ route('admin.pending-customer-list') }}">{{__('admin.Pending Customers')}}</a></li>
-
-                <li class="{{ Route::is('admin.seller-applications.*') ? 'active' : '' }}"><a class="nav-link" href="{{ route('admin.seller-applications.index') }}">Store Applications</a></li>
+                   @endif
+                @if(auth('admin')->user()->hasModule('Stores'))
+                            <li class="{{ Route::is('admin.seller-applications.*') ? 'active' : '' }}"><a class="nav-link" href="{{ route('admin.seller-applications.index') }}">Store Applications</a></li>
+                @endif
+                 @if(auth('admin')->user()->hasModule('E-commerce'))
 
                 <li class="{{ Route::is('admin.seller-list') || Route::is('admin.seller-show') || Route::is('admin.seller-shop-detail') || Route::is('admin.seller-reviews') || Route::is('admin.show-seller-review-details') || Route::is('admin.send-email-to-seller') || Route::is('admin.email-history') || Route::is('admin.product-by-seller') || Route::is('admin.send-email-to-all-seller') ? 'active' : '' }}"><a class="nav-link" href="{{ route('admin.seller-list') }}">{{__('admin.Seller List')}}</a></li>
 
                 <li class="{{ Route::is('admin.pending-seller-list') ? 'active' : '' }}"><a class="nav-link" href="{{ route('admin.pending-seller-list') }}">{{__('admin.Pending Sellers')}}</a></li>
-
+                    @endif
             </ul>
           </li>
+            @endif
 
+          {{-- @if(auth('admin')->user()->hasModule('E-commerce')||auth('admin')->user()->hasModule('Stores')) --}}
+             @if(auth('admin')->user()->hasModule('E-commerce'))
           <li class="nav-item dropdown {{ Route::is('admin.service.*') || Route::is('admin.maintainance-mode') || Route::is('admin.announcement') ||  Route::is('admin.slider.*') || Route::is('admin.home-page') || Route::is('admin.banner-image.index') || Route::is('admin.homepage-one-visibility') || Route::is('admin.cart-bottom-banner') || Route::is('admin.shop-page') || Route::is('admin.seo-setup') || Route::is('admin.menu-visibility') || Route::is('admin.product-detail-page') || Route::is('admin.default-avatar') || Route::is('admin.seller-conditions') || Route::is('admin.subscription-banner') || Route::is('admin.testimonial.*') || Route::is('admin.homepage-section-title') || Route::is('admin.image-content') ? 'active' : '' }}">
             <a href="#" class="nav-link has-dropdown"><i class="fas fa-globe"></i><span>{{__('admin.Manage Website')}}</span></a>
 
             <ul class="dropdown-menu">
+          {{-- @if(auth('admin')->user()->hasModule('E-commerce')) --}}
 
                 <li class="{{ Route::is('admin.seo-setup') ? 'active' : '' }}"><a class="nav-link" href="{{ route('admin.seo-setup') }}">{{__('admin.SEO Setup')}}</a></li>
 
@@ -248,6 +293,8 @@
                 <li class="{{ Route::is('admin.seller-conditions') ? 'active' : '' }}"><a class="nav-link" href="{{ route('admin.seller-conditions') }}">{{__('admin.Seller Conditions')}}</a></li>
 
                <li class="{{ Route::is('admin.image-items.*') ? 'active' : '' }}"><a class="nav-link" href="{{ route('admin.image-items.index') }}">{{__('Image Items')}}</a></li>
+            {{-- @endif --}}
+
 
                 <li class="{{ Route::is('admin.testimonial.*') ? 'active' : '' }}"><a class="nav-link" href="{{ route('admin.testimonial.index') }}">{{__('admin.Testimonial')}}</a></li>
 
@@ -264,6 +311,10 @@
 
             </ul>
           </li>
+            @endif
+
+
+           @if(auth('admin')->user()->hasModule('website'))
 
           <li class="nav-item dropdown {{ Route::is('admin.footer.*') || Route::is('admin.social-link.*') || Route::is('admin.footer-link.*') || Route::is('admin.second-col-footer-link') || Route::is('admin.third-col-footer-link') ? 'active' : '' }}">
             <a href="#" class="nav-link has-dropdown"><i class="fas fa-th-large"></i><span>{{__('admin.Website Footer')}}</span></a>
@@ -281,8 +332,9 @@
 
             </ul>
           </li>
+          @endif
 
-
+          @if(auth('admin')->user()->hasModule('website'))
 
           <li class="nav-item dropdown {{ Route::is('admin.about-us.*') || Route::is('admin.custom-page.*') || Route::is('admin.terms-and-condition.*') || Route::is('admin.privacy-policy.*') || Route::is('admin.faq.*') || Route::is('admin.error-page.*') || Route::is('admin.contact-us.*') || Route::is('admin.login-page') ? 'active' : '' }}">
             <a href="#" class="nav-link has-dropdown"><i class="fas fa-columns"></i><span>{{__('admin.Pages')}}</span></a>
@@ -306,6 +358,9 @@
 
             </ul>
           </li>
+            @endif
+
+          @if(auth('admin')->user()->hasModule('E-commerce'))
 
           <li class="nav-item dropdown {{ Route::is('admin.blog-category.*') || Route::is('admin.blog.*') || Route::is('admin.popular-blog.*') || Route::is('admin.blog-comment.*') ? 'active' : '' }}">
             <a href="#" class="nav-link has-dropdown"><i class="fas fa-th-large"></i><span>{{__('admin.Blogs')}}</span></a>
@@ -320,7 +375,10 @@
                 <li class="{{ Route::is('admin.blog-comment.*') ? 'active' : '' }}"><a class="nav-link" href="{{ route('admin.blog-comment.index') }}">{{__('admin.Comments')}}</a></li>
             </ul>
           </li>
+            @endif
 
+
+            @if(auth('admin')->user()->hasModule('website'))
           <li class="nav-item dropdown {{ Route::is('admin.email-configuration') || Route::is('admin.email-template') || Route::is('admin.edit-email-template') ? 'active' : '' }}">
             <a href="#" class="nav-link has-dropdown"><i class="fas fa-envelope"></i><span>{{__('admin.Email Configuration')}}</span></a>
 
@@ -330,18 +388,22 @@
                 <li class="{{ Route::is('admin.email-template') || Route::is('admin.edit-email-template') ? 'active' : '' }}"><a class="nav-link" href="{{ route('admin.email-template') }}">{{__('admin.Email Template')}}</a></li>
             </ul>
           </li>
+            @endif
 
-          <li class="nav-item dropdown {{ Route::is('admin.sms-notification') || Route::is('admin.sms-template') || Route::is('admin.edit-sms-template') ? 'active' : '' }}">
-            <a href="#" class="nav-link has-dropdown"><i class="fas fa-envelope"></i><span>{{__('admin.Sms Configuration')}}</span></a>
+         @if(auth('admin')->user()->hasModule('website'))
+            <li class="nav-item dropdown {{ Route::is('admin.sms-notification') || Route::is('admin.sms-template') || Route::is('admin.edit-sms-template') ? 'active' : '' }}">
+                <a href="#" class="nav-link has-dropdown"><i class="fas fa-envelope"></i><span>{{__('admin.Sms Configuration')}}</span></a>
 
-            <ul class="dropdown-menu">
-                <li class="{{ Route::is('admin.sms-notification') ? 'active' : '' }}"><a class="nav-link" href="{{ route('admin.sms-notification') }}">{{__('admin.Setting')}}</a></li>
+                <ul class="dropdown-menu">
+                    <li class="{{ Route::is('admin.sms-notification') ? 'active' : '' }}"><a class="nav-link" href="{{ route('admin.sms-notification') }}">{{__('admin.Setting')}}</a></li>
 
-                <li class="{{ Route::is('admin.sms-template') || Route::is('admin.edit-sms-template') ? 'active' : '' }}"><a class="nav-link" href="{{ route('admin.sms-template') }}">{{__('admin.Sms Template')}}</a></li>
-            </ul>
-          </li>
+                    <li class="{{ Route::is('admin.sms-template') || Route::is('admin.edit-sms-template') ? 'active' : '' }}"><a class="nav-link" href="{{ route('admin.sms-template') }}">{{__('admin.Sms Template')}}</a></li>
+                </ul>
+            </li>
+         @endif
 
 
+  @if(auth('admin')->user()->hasModule('Admin'))
 
           <li class="nav-item dropdown {{ Route::is('admin.admin-language') || Route::is('admin.admin-validation-language') || Route::is('admin.website-language') || Route::is('admin.website-validation-language') ? 'active' : '' }}">
             <a href="#" class="nav-link has-dropdown"><i class="fas fa-th-large"></i><span>{{__('admin.Language')}}</span></a>
@@ -355,22 +417,30 @@
                 <li class="{{ Route::is('admin.website-validation-language') ? 'active' : '' }}"><a class="nav-link" href="{{ route('admin.website-validation-language') }}">{{__('admin.Frontend Validation')}}</a></li>
             </ul>
           </li>
+            @endif
 
-          <li class="{{ Route::is('admin.currency.*') ? 'active' : '' }}"><a class="nav-link" href="{{ route('admin.currency.index') }}"><i class="fas fa-dollar-sign"></i> <span>{{__('admin.Currencies')}}</span></a></li>
+         @if(auth('admin')->user()->hasModule('Admin'))
+
+            <li class="{{ Route::is('admin.currency.*') ? 'active' : '' }}"><a class="nav-link" href="{{ route('admin.currency.index') }}"><i class="fas fa-dollar-sign"></i> <span>{{__('admin.Currencies')}}</span></a></li>
+
+        @endif
+         @if(auth('admin')->user()->hasModule('Admin'))
 
           <li class="{{ Route::is('admin.general-setting') ? 'active' : '' }}"><a class="nav-link" href="{{ route('admin.general-setting') }}"><i class="fas fa-cog"></i> <span>{{__('admin.Setting')}}</span></a></li>
-
+         @endif
           @php
               $logedInAdmin = Auth::guard('admin')->user();
           @endphp
           @if ($logedInAdmin && $logedInAdmin->admin_type == 1)
           <!-- <li  class="{{ Route::is('admin.clear-database') ? 'active' : '' }}"><a class="nav-link" href="{{ route('admin.clear-database') }}"><i class="fas fa-trash"></i> <span>{{__('admin.Clear Database')}}</span></a></li> -->
           @endif
-
+         @if(auth('admin')->user()->hasModule('Marketing'))
           <li class="{{ Route::is('admin.subscriber') ? 'active' : '' }}"><a class="nav-link" href="{{ route('admin.subscriber') }}"><i class="fas fa-fire"></i> <span>{{__('admin.Subscribers')}}</span></a></li>
+         @endif
 
+         @if(auth('admin')->user()->hasModule('Admin'))
           <li class="{{ Route::is('admin.contact-message') || Route::is('admin.show-contact-message') ? 'active' : '' }}"><a class="nav-link" href="{{ route('admin.contact-message') }}"><i class="fas fa-fa fa-envelope"></i> <span>{{__('admin.Contact Message')}}</span></a></li>
-
+         @endif
           @if ($logedInAdmin && $logedInAdmin->admin_type == 1)
             <li class="{{ Route::is('admin.admin.index') ? 'active' : '' }}"><a class="nav-link" href="{{ route('admin.admin.index') }}"><i class="fas fa-user"></i> <span>{{__('admin.Admin list')}}</span></a></li>
           @endif

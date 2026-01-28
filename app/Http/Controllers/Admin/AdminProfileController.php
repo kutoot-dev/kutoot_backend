@@ -27,12 +27,12 @@ class AdminProfileController extends Controller
     public function update(Request $request){
         $admin=Auth::guard('admin')->user();
         $rules = [
-            'name'=>'required',
+            // 'name'=>'required',
             'email'=>'required|unique:admins,email,'.$admin->id,
             'password'=>'confirmed',
         ];
         $customMessages = [
-            'name.required' => trans('Name is required'),
+            // 'name.required' => trans('Name is required'),
             'email.required' => trans('Email is required'),
             'email.unique' => trans('Email already exist'),
             'password.confirmed' => trans('Confirm password does not match'),
