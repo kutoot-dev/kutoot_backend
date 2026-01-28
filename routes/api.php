@@ -165,18 +165,18 @@ Route::group([
 });
 Route::group(['middleware' => ['demo', 'XSS']], function () {
 
+    // Public Store Categories API with rate limiting (60 requests per minute)
+    Route::middleware(['throttle:60,1'])->group(function () {
+        Route::get('/store-categories', [StoreCategoryController::class, 'apiIndex']);
+        Route::get('/store-categories/{categoryId}/stores', [StoreCategoryController::class, 'apiStoresByCategory']);
+    });
+
     Route::group([], function () {
         // Public sponsors API for store panel
         Route::get('/sponsors', [SponsorController::class, 'apiIndex']);
 
         // Public store banners API
         Route::get('/store-banners', [StoreBannerController::class, 'apiIndex']);
-
-        // Public store categories API with search
-        Route::get('/store-categories', [StoreCategoryController::class, 'apiIndex']);
-
-        // Public API: Get stores by category with filters (city, state, country, tags, search)
-        Route::get('/store-categories/{categoryId}/stores', [StoreCategoryController::class, 'apiStoresByCategory']);
 
         Route::get('/coin-campaigns', [CoinCampaignController::class, 'indexAPI'])->name('coin-campaigns');
 
