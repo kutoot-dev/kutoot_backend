@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddApprovalStatusToBrandsTable extends Migration
+class AddRoleIdToAdminsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class AddApprovalStatusToBrandsTable extends Migration
      */
     public function up()
     {
-        Schema::table('brands', function (Blueprint $table) {
-            $table->tinyInteger('approval_status')->default(0)->after('status');
+        Schema::table('admins', function (Blueprint $table) {
+            //
         });
     }
 
@@ -25,8 +25,8 @@ class AddApprovalStatusToBrandsTable extends Migration
      */
     public function down()
     {
-        Schema::table('brands', function (Blueprint $table) {
-            $table->dropColumn('approval_status');
+        Schema::table('admins', function (Blueprint $table) {
+            //
         });
     }
 }
