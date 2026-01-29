@@ -52,7 +52,10 @@ class DashboardController extends Controller
         $thisYearEarning = round($yearlyOrders->sum('amount_real_currency'),2);
         $thisYearProductSale = $yearlyOrders->where('order_status',3)->sum('product_qty');
 
-        $setting = Setting::first();
+        $setting = Setting::first() ?? Setting::create([
+            'currency_icon' => '₹',
+            'currency_name' => 'INR',
+        ]);
         $products = Product::all();
         $reviews = ProductReview::all();
         $reports = ProductReport::all();

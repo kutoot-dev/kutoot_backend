@@ -5,7 +5,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-   <link rel="shortcut icon"  href="{{ asset($setting->favicon) }}"  type="image/x-icon">
+   <link rel="shortcut icon"  href="{{ asset($setting?->favicon ?? 'favicon.ico') }}"  type="image/x-icon">
   <meta charset="UTF-8">
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
   @yield('title')
@@ -18,7 +18,7 @@
   <link rel="stylesheet" href="{{ asset('backend/css/style.css') }}">
   <link rel="stylesheet" href="{{ asset('backend/css/bootstrap-social.css') }}">
   <link rel="stylesheet" href="{{ asset('backend/css/components.css') }}">
-  @if ($setting->text_direction == 'rtl')
+  @if ($setting?->text_direction == 'rtl')
     <link rel="stylesheet" href="{{ asset('backend/css/rtl.css') }}">
     <link rel="stylesheet" href="{{ asset('backend/css/dev_rtl.css') }}">
     @endif

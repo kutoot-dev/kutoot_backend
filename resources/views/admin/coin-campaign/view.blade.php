@@ -32,18 +32,18 @@
                                     <td>
                                   @if ($data->img)
                                     <img id="preview-img" class="admin-img" src={{ $data->img }} alt="">
-                                  @endif   
+                                  @endif
                                   </td>
                                    <td>
                                   @if ($data->image1)
                                     <img id="image1" class="admin-img" src={{ asset($data['image1']) }} alt="">
                                   @endif
-                                </td>  
+                                </td>
                                  <td>
                                   @if ($data->image2)
                                     <img id="image2" class="admin-img" src={{ asset($data['image2']) }} alt="">
                                   @endif
-                                </td>  
+                                </td>
                                 <td>
                                   @if ($data->video)
                                     <video width="320" height="240" controls>
@@ -133,7 +133,7 @@
                               </tr>
                                   <tr>
                                 <td>{{ $data->tag1 ?? ''}}</td>
-                                
+
                                 <td>{{ $data->tag2 ?? '' }}</td>
                               </tr>
 
@@ -143,10 +143,10 @@
                               </tr>
                               <tr>
                                 <tr>
-                                  <th>{{ _('Winnner Announcement Date') }} </th>
+                                  <th>{{ __('Winnner Announcement Date') }} </th>
                                   <td>{{ $data->winner_announcement_date ? date('d/m/Y', strtotime($data->winner_announcement_date)) : null }}</td>
                                 </tr>
-                              
+
 
                                 <tr>
     <th>{{ __('Highlights') }}</th>
@@ -174,7 +174,7 @@
 </tr>
 
                               <tr>
-                              
+
                                 <td colspan="2" class="text-right">
                                   <a href="{{ route('admin.all-coin-campaigns') }}" class="btn btn-primary">{{__('admin.Back')}}</a>
                                 </td>

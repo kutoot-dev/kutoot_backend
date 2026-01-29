@@ -37,7 +37,7 @@ class AdvertisementController extends Controller
 
         $homepageFlashSaleSidebarBanner = BannerImage::whereId('24')->select('product_slug','image','id','banner_location','status','title')->first();
 
-        $shopPageCenterBanner = BannerImage::whereId('25')->select('product_slug','image','id','banner_location','after_product_qty','status','title_one')->first();
+        $shopPageCenterBanner = BannerImage::whereId('25')->select('product_slug','image','id','banner_location','status','title_one','title_two','badge')->first();
 
         $shopPageSidebarBanner = BannerImage::whereId('26')->select('product_slug','image','id','banner_location','status','title_one','title_two')->first();
 
@@ -417,13 +417,13 @@ class AdvertisementController extends Controller
     public function shopPageCenterBanner(Request $request){
         $rules = [
             'product_slug' => 'required',
-            'after_product_qty' => 'required',
             'status' => 'required',
-            'title' => 'required',
+            'title_one' => 'required',
+            'title_two' => 'required',
+            'badge' => 'required',
         ];
         $customMessages = [
             'product_slug.required' => trans('admin_validation.Link is required'),
-            'after_product_qty.required' => trans('admin_validation.After product quantity is required'),
             'status.required' => trans('admin_validation.Status is required'),
         ];
         $this->validate($request, $rules,$customMessages);
@@ -443,10 +443,11 @@ class AdvertisementController extends Controller
                 if(File::exists(public_path().'/'.$existing_banner))unlink(public_path().'/'.$existing_banner);
             }
         }
-        $shopPageCenterBanner->after_product_qty = $request->after_product_qty;
         $shopPageCenterBanner->product_slug = $request->product_slug;
         $shopPageCenterBanner->status = $request->status;
-        $shopPageCenterBanner->title_one = $request->title;
+        $shopPageCenterBanner->title_one = $request->title_one;
+        $shopPageCenterBanner->title_two = $request->title_two;
+        $shopPageCenterBanner->badge = $request->badge;
         $shopPageCenterBanner->save();
 
         $notification= trans('admin_validation.Update Successfully');

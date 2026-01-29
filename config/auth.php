@@ -167,7 +167,19 @@ return [
             'throttle' => 60,
         ],
 
+        'deliverymans' => [
+            'provider' => 'deliverymans',
+            'table' => 'password_resets',
+            'expire' => 60,
+            'throttle' => 60,
+        ],
 
+        'store_sellers' => [
+            'provider' => 'store_sellers',
+            'table' => 'password_resets',
+            'expire' => 60,
+            'throttle' => 60,
+        ],
     ],
 
     /*

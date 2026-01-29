@@ -16,6 +16,16 @@ class CreateOrderAddressesTable extends Migration
         Schema::create('order_addresses', function (Blueprint $table) {
             $table->id();
             $table->integer('order_id');
+            // Simple address columns (used by OrderSeeder)
+            $table->string('name')->nullable();
+            $table->string('email')->nullable();
+            $table->string('phone')->nullable();
+            $table->string('address')->nullable();
+            $table->string('city')->nullable();
+            $table->string('state')->nullable();
+            $table->string('country')->nullable();
+            $table->string('zip_code')->nullable();
+            // Detailed billing columns
             $table->string('billing_first_name')->nullable();
             $table->string('billing_last_name')->nullable();
             $table->string('billing_email')->nullable();

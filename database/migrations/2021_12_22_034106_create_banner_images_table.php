@@ -15,7 +15,12 @@ class CreateBannerImagesTable extends Migration
     {
         Schema::create('banner_images', function (Blueprint $table) {
             $table->id();
+            $table->string('product_slug')->nullable();
+            $table->string('header')->nullable();
             $table->string('title')->nullable();
+            $table->string('title_one')->nullable();
+            $table->string('title_two')->nullable();
+            $table->string('badge')->nullable();
             $table->string('details')->nullable();
             $table->string('link')->nullable();
             $table->string('image')->nullable();

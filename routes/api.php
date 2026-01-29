@@ -46,6 +46,7 @@ use App\Http\Controllers\Admin\SellerController;
 use App\Http\Controllers\Admin\MegaMenuController;
 use App\Http\Controllers\Admin\MegaMenuSubCategoryController;
 use App\Http\Controllers\Admin\SliderController;
+use App\Http\Controllers\Admin\StoreBannerController;
 use App\Http\Controllers\Admin\HomePageController;
 use App\Http\Controllers\Admin\ShippingMethodController;
 use App\Http\Controllers\Admin\WithdrawMethodController;
@@ -64,6 +65,8 @@ use App\Http\Controllers\Admin\AdvertisementController;
 use App\Http\Controllers\Admin\FlashSaleController;
 use App\Http\Controllers\Admin\ImageItemController;
 use App\Http\Controllers\Admin\CountryController;
+use App\Http\Controllers\Admin\SponsorController;
+use App\Http\Controllers\Admin\StoreCategoryController;
 use App\Http\Controllers\Admin\CountryStateController;
 use App\Http\Controllers\Admin\CityController;
 
@@ -107,6 +110,7 @@ use App\Http\Controllers\User\PaypalController;
 use App\Http\Controllers\User\MessageController;
 use App\Http\Controllers\User\AddressCotroller;
 use App\Http\Controllers\User\UserDashboardController;
+use App\Http\Controllers\API\Customer\CoinLedgerController;
 use App\Http\Controllers\API\UserOrderController;
 
 
@@ -161,7 +165,19 @@ Route::group([
 });
 Route::group(['middleware' => ['demo', 'XSS']], function () {
 
+    // Public Store Categories API with rate limiting (60 requests per minute)
+    Route::middleware(['throttle:60,1'])->group(function () {
+        Route::get('/store-categories', [StoreCategoryController::class, 'apiIndex']);
+        Route::get('/store-categories/{categoryId}/stores', [StoreCategoryController::class, 'apiStoresByCategory']);
+    });
+
     Route::group([], function () {
+        // Public sponsors API for store panel
+        Route::get('/sponsors', [SponsorController::class, 'apiIndex']);
+
+        // Public store banners API
+        Route::get('/store-banners', [StoreBannerController::class, 'apiIndex']);
+
         Route::get('/coin-campaigns', [CoinCampaignController::class, 'indexAPI'])->name('coin-campaigns');
 
         Route::get('/baseplans', [BasePlanController::class, 'indexAPI'])->name('baseplans');
@@ -351,12 +367,10 @@ Route::group(['middleware' => ['demo', 'XSS']], function () {
             // NEW KUTOOT REDEMPTION APIS
             // -----------------------------------------------------
 
-            // 1. Dashboard
-            // my-dashboard already exists but we will update controller logic
-            Route::get('/my-dashboard', [UserDashboardController::class, 'myDashboard'])->name('my-dashboard');
-
             // 8. Transactions
-            Route::get('/coin-transactions', [UserDashboardController::class, 'coinTransactions']);
+            Route::get('/coin-transactions', [CoinLedgerController::class, 'getHistory']);
+            Route::get('/wallet', [CoinLedgerController::class, 'getWallet']);
+            Route::get('/wallet/history', [CoinLedgerController::class, 'getHistory']);
 
             // Redemption & Stores
             Route::get('/redeem/home', [\App\Http\Controllers\API\Customer\RedeemController::class, 'home']);
@@ -475,18 +489,29 @@ Route::group(['middleware' => ['demo', 'XSS']], function () {
     */
 
     // Public APIs
-    Route::get('/store-categories', [\App\Http\Controllers\API\SellerApplicationController::class, 'getCategories']);
+    // Note: /store-categories route is defined above with search support (StoreCategoryController@apiIndex)
     Route::post('/seller/apply', [\App\Http\Controllers\API\SellerApplicationController::class, 'apply']);
     Route::get('/seller/application-status', [\App\Http\Controllers\API\SellerApplicationController::class, 'checkStatus']);
 
     // Admin APIs for Seller Applications
     Route::prefix('admin')->middleware('auth:admin-api')->group(function () {
+        // Seller Applications CRUD
         Route::get('/seller-applications', [\App\Http\Controllers\WEB\Admin\SellerApplicationController::class, 'apiIndex']);
+        Route::post('/seller-applications', [\App\Http\Controllers\WEB\Admin\SellerApplicationController::class, 'apiStore']);
         Route::get('/seller-applications/{applicationId}', [\App\Http\Controllers\WEB\Admin\SellerApplicationController::class, 'apiShow']);
         Route::patch('/seller-applications/{applicationId}', [\App\Http\Controllers\WEB\Admin\SellerApplicationController::class, 'apiUpdate']);
+        Route::delete('/seller-applications/{applicationId}', [\App\Http\Controllers\WEB\Admin\SellerApplicationController::class, 'apiDestroy']);
         Route::patch('/seller-applications/{applicationId}/verify', [\App\Http\Controllers\WEB\Admin\SellerApplicationController::class, 'apiVerify']);
         Route::patch('/seller-applications/{applicationId}/approve', [\App\Http\Controllers\WEB\Admin\SellerApplicationController::class, 'apiApprove']);
         Route::patch('/seller-applications/{applicationId}/reject', [\App\Http\Controllers\WEB\Admin\SellerApplicationController::class, 'apiReject']);
+
+        // Approved Stores Management
+        Route::get('/approved-stores', [\App\Http\Controllers\WEB\Admin\AdminShopController::class, 'index']);
+        Route::get('/shops/filters', [\App\Http\Controllers\WEB\Admin\AdminShopController::class, 'getFilters']);
+        Route::get('/shops/{shopId}', [\App\Http\Controllers\WEB\Admin\AdminShopController::class, 'show']);
+        Route::put('/shops/{shopId}', [\App\Http\Controllers\WEB\Admin\AdminShopController::class, 'update']);
+        Route::post('/shops/{shopId}/images', [\App\Http\Controllers\WEB\Admin\AdminShopController::class, 'uploadImages']);
+        Route::delete('/shops/{shopId}/images/{imageId}', [\App\Http\Controllers\WEB\Admin\AdminShopController::class, 'deleteImage']);
     });
 
     /*
@@ -508,6 +533,7 @@ Route::group(['middleware' => ['demo', 'XSS']], function () {
         Route::get('stores/{storeId}', [\App\Http\Controllers\API\Customer\RedeemController::class, 'storeDetails']);
         Route::post('redeem/preview', [\App\Http\Controllers\API\Customer\RedeemController::class, 'preview']);
         Route::post('redeem/pay', [\App\Http\Controllers\API\Customer\RedeemController::class, 'pay']);
+        Route::post('redeem/confirm', [\App\Http\Controllers\API\Customer\RedeemController::class, 'confirm']);
     });
 
     //delivery man routes
@@ -854,6 +880,16 @@ Route::group(['middleware' => ['demo', 'XSS']], function () {
         Route::resource('slider', SliderController::class);
         Route::put('slider-status/{id}', [SliderController::class, 'changeStatus'])->name('slider-status');
 
+        // Store Banner CRUD routes
+        Route::resource('store-banner', StoreBannerController::class);
+        Route::put('store-banner-status/{id}', [StoreBannerController::class, 'changeStatus'])->name('store-banner-status');
+        Route::post('store-banner-order', [StoreBannerController::class, 'updateOrder'])->name('store-banner-order');
+        Route::get('store-banners-active', [StoreBannerController::class, 'getActiveBanners'])->name('store-banners-active');
+        Route::get('store-banners-location/{location}', [StoreBannerController::class, 'getByLocation'])->name('store-banners-location');
+
+        // Sponsor CRUD routes
+        Route::resource('sponsor', SponsorController::class);
+        Route::put('sponsor-status/{id}', [SponsorController::class, 'changeStatus'])->name('sponsor-status');
 
         Route::get('popular-category', [HomePageController::class, 'popularCategory'])->name('popular-category');
         Route::post('store-popular-category', [HomePageController::class, 'storePopularCategory'])->name('store-popular-category');
@@ -913,6 +949,8 @@ Route::group(['middleware' => ['demo', 'XSS']], function () {
 
         Route::get('admin-validation-language', [LanguageController::class, 'adminValidationLnagugae'])->name('admin-validation-language');
         Route::post('update-admin-validation-language', [LanguageController::class, 'updateAdminValidationLnagugae'])->name('update-admin-validation-language');
+
+        Route::post('wallet/credit', [CoinLedgerController::class, 'adminCredit'])->name('wallet.credit');
 
         Route::get('website-language', [LanguageController::class, 'websiteLanguage'])->name('website-language');
         Route::post('update-language', [LanguageController::class, 'updateLanguage'])->name('update-language');

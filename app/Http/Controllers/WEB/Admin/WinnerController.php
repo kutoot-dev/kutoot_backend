@@ -31,14 +31,14 @@ class WinnerController extends Controller
         $coupons = UserCoupons::whereHas('purchasedCampaign', function ($q) use ($camp_id) {
             $q->where('camp_id', $camp_id);
         })->get(['id', 'coupon_code']);
-        
+
         return response()->json($coupons);
     }
 
 
     public function index()
     {
-        $winners = Winners::all();
+        $winners = Winners::with(['coinCampaign', 'user'])->get();
 
         return view('admin.winner', compact('winners'));
     }
@@ -79,7 +79,7 @@ class WinnerController extends Controller
         $testimonial = Winners::find($id);
         $testimonial->delete();
 
-       
+
 
         $notification = trans('admin_validation.Delete Successfully');
         $notification=array('messege'=>$notification,'alert-type'=>'success');

@@ -34,7 +34,7 @@
                                 @foreach ($sliders as $index => $slider)
                                     <tr>
                                         <td>
-                                            <img src="{{ asset($slider->image) }}" width="150px" alt="">
+                                            <img src="{{ asset($slider->image) }}" width="150px" alt="Slider" class="banner-img">
                                         </td>
                                         <td>{{ $slider->serial }}</td>
                                         <td>

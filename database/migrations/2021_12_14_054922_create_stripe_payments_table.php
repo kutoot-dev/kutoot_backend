@@ -18,6 +18,7 @@ class CreateStripePaymentsTable extends Migration
             $table->integer('status')->default(0);
             $table->text('stripe_key')->nullable();
             $table->text('stripe_secret')->nullable();
+            $table->integer('currency_id')->nullable();
             $table->timestamps();
         });
     }

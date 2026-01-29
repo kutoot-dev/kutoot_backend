@@ -34,7 +34,7 @@
                                 @foreach ($images as $index => $image)
                                     <tr>
                                         <td>{{ $image->location }}</td>
-                                        <td><img src="{{ asset($image->image) }}" width="200px" class="m-2" alt=""></td>
+                                        <td><img src="{{ asset($image->image) }}" width="200px" class="m-2 banner-img" alt="Breadcrumb"></td>
                                         <form action="{{ route('admin.banner-image.update',$image->id) }}" method="POST" enctype="multipart/form-data">
                                             @csrf
                                             @method('PUT')

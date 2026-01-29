@@ -17,6 +17,8 @@ class CreateCategoriesTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('slug');
+            $table->string('icon')->nullable();
+            $table->string('image')->nullable();
             $table->string('logo');
             $table->integer('status')->default(0);
             $table->integer('is_featured')->default(0);
@@ -37,3 +39,4 @@ class CreateCategoriesTable extends Migration
         Schema::dropIfExists('categories');
     }
 }
+

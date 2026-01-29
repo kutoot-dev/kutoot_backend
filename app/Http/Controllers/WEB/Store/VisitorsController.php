@@ -3,11 +3,11 @@
 namespace App\Http\Controllers\WEB\Store;
 
 use App\Http\Controllers\Controller;
-use App\Models\Store\AdminShopCommissionDiscount;
 use App\Models\Store\ShopVisitor;
 use App\Models\Store\Transaction;
 use App\Models\User;
 use App\Models\UserCoins;
+use App\Services\CoinLedgerService;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -48,10 +48,10 @@ class VisitorsController extends Controller
     public function index(Request $request)
     {
         $seller = Auth::guard('store')->user();
-        $seller->loadMissing('shop');
-        $shop = $seller->shop;
+        $seller->loadMissing('application');
+        $application = $seller->application;
 
-        if (!$shop) {
+        if (!$application || $application->status !== 'APPROVED') {
             return view('store.visitors', [
                 'rows' => collect(),
                 'filters' => $request->all(),
@@ -59,7 +59,7 @@ class VisitorsController extends Controller
             ]);
         }
 
-        $q = ShopVisitor::query()->where('shop_id', $shop->id)->with('user');
+        $q = ShopVisitor::query()->where('seller_application_id', $application->id)->with('user');
 
         if ($request->filled('from')) {
             $q->whereDate('visited_on', '>=', $request->query('from'));
@@ -81,8 +81,7 @@ class VisitorsController extends Controller
             });
         }
 
-        $master = AdminShopCommissionDiscount::resolveForShop($shop->id);
-        $minimumBillAmount = (float) ($master?->minimum_bill_amount ?? 0);
+        $minimumBillAmount = (float) ($application->min_bill_amount ?? 0);
 
         return view('store.visitors', [
             'filters' => $request->all(),
@@ -93,8 +92,8 @@ class VisitorsController extends Controller
     public function data(Request $request)
     {
         $seller = Auth::guard('store')->user();
-        $seller->loadMissing('shop');
-        $shop = $seller->shop;
+        $seller->loadMissing('application');
+        $application = $seller->application;
 
         $draw = (int) $request->input('draw', 1);
         $start = max(0, (int) $request->input('start', 0));
@@ -102,7 +101,7 @@ class VisitorsController extends Controller
         // DataTables uses -1 for "All"
         $length = $rawLength === -1 ? -1 : min(200, max(10, $rawLength));
 
-        if (!$shop) {
+        if (!$application || $application->status !== 'APPROVED') {
             return response()->json([
                 'draw' => $draw,
                 'recordsTotal' => 0,
@@ -111,16 +110,15 @@ class VisitorsController extends Controller
             ]);
         }
 
-        $master = AdminShopCommissionDiscount::resolveForShop($shop->id);
-        $minimumBillAmount = (float) ($master?->minimum_bill_amount ?? 0);
+        $minimumBillAmount = (float) ($application->min_bill_amount ?? 0);
 
         $base = ShopVisitor::query()
             ->from('shop_visitors as sv')
             ->leftJoin('users as u', 'u.id', '=', 'sv.user_id')
-            ->leftJoin('transactions as t', function ($join) use ($shop) {
-                $join->on('t.visitor_id', '=', 'sv.id')->where('t.shop_id', '=', $shop->id);
+            ->leftJoin('transactions as t', function ($join) use ($application) {
+                $join->on('t.visitor_id', '=', 'sv.id')->where('t.seller_application_id', '=', $application->id);
             })
-            ->where('sv.shop_id', $shop->id)
+            ->where('sv.seller_application_id', $application->id)
             ->select([
                 'sv.id',
                 'sv.user_id',
@@ -252,13 +250,13 @@ class VisitorsController extends Controller
     public function calculateTransaction($visitorId, Request $request)
     {
         $seller = Auth::guard('store')->user();
-        $seller->loadMissing('shop');
-        $shop = $seller->shop;
+        $seller->loadMissing('application');
+        $application = $seller->application;
 
-        if (!$shop) {
+        if (!$application || $application->status !== 'APPROVED') {
             return response()->json([
                 'success' => false,
-                'message' => 'Shop not found'
+                'message' => 'Store not found'
             ], 404);
         }
 
@@ -275,7 +273,7 @@ class VisitorsController extends Controller
         }
 
         $visitor = ShopVisitor::where('id', $visitorId)
-            ->where('shop_id', $shop->id)
+            ->where('seller_application_id', $application->id)
             ->with('user')
             ->first();
 
@@ -294,9 +292,8 @@ class VisitorsController extends Controller
         }
 
         $billAmount = (float) $request->bill_amount;
-        $master = AdminShopCommissionDiscount::resolveForShop($shop->id);
-        $discountPercent = (float) ($master?->discount_percent ?? 0);
-        $minimumBillAmount = (float) ($shop->min_bill_amount ?? $master?->minimum_bill_amount ?? 0);
+        $discountPercent = (float) ($application->discount_percent ?? 0);
+        $minimumBillAmount = (float) ($application->min_bill_amount ?? 0);
         $coinValue = (float) config('kutoot.coin_value', 0.25);
 
         // Get user's available coins
@@ -339,8 +336,8 @@ class VisitorsController extends Controller
                     'redeemed' => $visitor->redeemed,
                 ],
                 'shop' => [
-                    'id' => $shop->id,
-                    'shop_name' => $shop->shop_name,
+                    'id' => $application->id,
+                    'shop_name' => $application->store_name,
                 ],
                 'settings' => [
                     'discount_percent' => $discountPercent,
@@ -356,9 +353,9 @@ class VisitorsController extends Controller
                     'discount_amount' => round($discountAmount, 2),
                     'final_amount' => round($finalAmount, 2),
                     'is_eligible' => $isEligible,
-                    'eligibility_message' => !$visitor->redeemed 
+                    'eligibility_message' => !$visitor->redeemed
                         ? 'Visitor has not redeemed yet'
-                        : ($billAmount < $minimumBillAmount 
+                        : ($billAmount < $minimumBillAmount
                             ? "Bill amount must be at least {$minimumBillAmount}"
                             : 'Eligible for discount'),
                 ],
@@ -373,13 +370,13 @@ class VisitorsController extends Controller
     public function calculateByUser(Request $request)
     {
         $seller = Auth::guard('store')->user();
-        $seller->loadMissing('shop');
-        $shop = $seller->shop;
+        $seller->loadMissing('application');
+        $application = $seller->application;
 
-        if (!$shop) {
+        if (!$application || $application->status !== 'APPROVED') {
             return response()->json([
                 'success' => false,
-                'message' => 'Shop not found'
+                'message' => 'Store not found'
             ], 404);
         }
 
@@ -409,9 +406,8 @@ class VisitorsController extends Controller
             ], 404);
         }
 
-        $master = AdminShopCommissionDiscount::resolveForShop($shop->id);
-        $discountPercent = (float) ($master?->discount_percent ?? 0);
-        $minimumBillAmount = (float) ($shop->min_bill_amount ?? $master?->minimum_bill_amount ?? 0);
+        $discountPercent = (float) ($application->discount_percent ?? 0);
+        $minimumBillAmount = (float) ($application->min_bill_amount ?? 0);
         $coinValue = (float) config('kutoot.coin_value', 0.25);
 
         // Get user's available coins
@@ -454,8 +450,8 @@ class VisitorsController extends Controller
                     'redeemed' => $redeemed,
                 ],
                 'shop' => [
-                    'id' => $shop->id,
-                    'shop_name' => $shop->shop_name,
+                    'id' => $application->id,
+                    'shop_name' => $application->store_name,
                 ],
                 'settings' => [
                     'discount_percent' => $discountPercent,
@@ -471,9 +467,9 @@ class VisitorsController extends Controller
                     'discount_amount' => round($discountAmount, 2),
                     'final_amount' => round($finalAmount, 2),
                     'is_eligible' => $isEligible,
-                    'eligibility_message' => !$redeemed 
+                    'eligibility_message' => !$redeemed
                         ? 'Visitor has not redeemed yet'
-                        : ($billAmount < $minimumBillAmount 
+                        : ($billAmount < $minimumBillAmount
                             ? "Bill amount must be at least {$minimumBillAmount}"
                             : 'Eligible for discount'),
                 ],
@@ -488,13 +484,13 @@ class VisitorsController extends Controller
     public function createTransaction($visitorId, Request $request)
     {
         $seller = Auth::guard('store')->user();
-        $seller->loadMissing('shop');
-        $shop = $seller->shop;
+        $seller->loadMissing('application');
+        $application = $seller->application;
 
-        if (!$shop) {
+        if (!$application || $application->status !== 'APPROVED') {
             return response()->json([
                 'success' => false,
-                'message' => 'Shop not found'
+                'message' => 'Store not found'
             ], 404);
         }
 
@@ -520,7 +516,7 @@ class VisitorsController extends Controller
         }
 
         $visitor = ShopVisitor::where('id', $visitorId)
-            ->where('shop_id', $shop->id)
+            ->where('seller_application_id', $application->id)
             ->with('user')
             ->first();
 
@@ -539,9 +535,8 @@ class VisitorsController extends Controller
         }
 
         $billAmount = (float) $request->bill_amount;
-        $master = AdminShopCommissionDiscount::resolveForShop($shop->id);
-        $discountPercent = (float) ($master?->discount_percent ?? 0);
-        $minimumBillAmount = (float) ($shop->min_bill_amount ?? $master?->minimum_bill_amount ?? 0);
+        $discountPercent = (float) ($application->discount_percent ?? 0);
+        $minimumBillAmount = (float) ($application->min_bill_amount ?? 0);
         $coinValue = (float) config('kutoot.coin_value', 0.25);
 
         // Get user's available coins
@@ -586,7 +581,7 @@ class VisitorsController extends Controller
 
             // Create transaction
             $transaction = Transaction::create([
-                'shop_id' => $shop->id,
+                'seller_application_id' => $application->id,
                 'visitor_id' => $visitor->id,
                 'txn_code' => $txnCode,
                 'total_amount' => $billAmount,
@@ -598,13 +593,8 @@ class VisitorsController extends Controller
 
             // Deduct coins from user if coins were redeemed
             if ($redeemableCoins > 0 && $isEligible) {
-                UserCoins::create([
-                    'user_id' => $visitor->user_id,
-                    'coins' => $redeemableCoins,
-                    'type' => 'debit',
-                    'coin_expires' => now()->addDays(30),
-                    'status' => 1,
-                ]);
+                $coinService = app(CoinLedgerService::class);
+                $coinService->redeem($visitor->user_id, (int) $redeemableCoins, $txnCode);
             }
 
             DB::commit();
@@ -645,18 +635,18 @@ class VisitorsController extends Controller
     public function searchUsers(Request $request)
     {
         $seller = Auth::guard('store')->user();
-        $seller->loadMissing('shop');
-        $shop = $seller->shop;
+        $seller->loadMissing('application');
+        $application = $seller->application;
 
-        if (!$shop) {
+        if (!$application || $application->status !== 'APPROVED') {
             return response()->json([
                 'success' => false,
-                'message' => 'Shop not found'
+                'message' => 'Store not found'
             ], 404);
         }
 
         $search = $request->query('search', '');
-        
+
         if (strlen($search) < 2) {
             return response()->json([
                 'success' => true,
@@ -687,13 +677,13 @@ class VisitorsController extends Controller
     public function addTransactionWithUser(Request $request)
     {
         $seller = Auth::guard('store')->user();
-        $seller->loadMissing('shop');
-        $shop = $seller->shop;
+        $seller->loadMissing('application');
+        $application = $seller->application;
 
-        if (!$shop) {
+        if (!$application || $application->status !== 'APPROVED') {
             return response()->json([
                 'success' => false,
-                'message' => 'Shop not found'
+                'message' => 'Store not found'
             ], 404);
         }
 
@@ -726,15 +716,15 @@ class VisitorsController extends Controller
         $userId = $request->user_id;
         $billAmount = (float) $request->bill_amount;
         $txnCode = trim($request->txn_code);
-        $visitedOn = $request->filled('visited_on') 
-            ? Carbon::parse($request->visited_on)->toDateString() 
+        $visitedOn = $request->filled('visited_on')
+            ? Carbon::parse($request->visited_on)->toDateString()
             : now()->toDateString();
         $redeemed = $request->filled('redeemed') ? (bool) $request->redeemed : false;
 
         // Get or create visitor
         $visitor = ShopVisitor::firstOrCreate(
             [
-                'shop_id' => $shop->id,
+                'seller_application_id' => $application->id,
                 'user_id' => $userId,
             ],
             [
@@ -771,9 +761,8 @@ class VisitorsController extends Controller
         }
 
         // Calculate transaction details
-        $master = AdminShopCommissionDiscount::resolveForShop($shop->id);
-        $discountPercent = (float) ($master?->discount_percent ?? 0);
-        $minimumBillAmount = (float) ($shop->min_bill_amount ?? $master?->minimum_bill_amount ?? 0);
+        $discountPercent = (float) ($application->discount_percent ?? 0);
+        $minimumBillAmount = (float) ($application->min_bill_amount ?? 0);
         $coinValue = (float) config('kutoot.coin_value', 0.25);
 
         // Get user's available coins
@@ -801,7 +790,7 @@ class VisitorsController extends Controller
 
             // Create transaction
             $transaction = Transaction::create([
-                'shop_id' => $shop->id,
+                'seller_application_id' => $application->id,
                 'visitor_id' => $visitor->id,
                 'txn_code' => $txnCode,
                 'total_amount' => $billAmount,
@@ -813,13 +802,8 @@ class VisitorsController extends Controller
 
             // Deduct coins from user if coins were redeemed
             if ($redeemableCoins > 0 && $isEligible) {
-                UserCoins::create([
-                    'user_id' => $visitor->user_id,
-                    'coins' => $redeemableCoins,
-                    'type' => 'debit',
-                    'coin_expires' => now()->addDays(30),
-                    'status' => 1,
-                ]);
+                $coinService = app(CoinLedgerService::class);
+                $coinService->redeem($visitor->user_id, (int) $redeemableCoins, $txnCode);
             }
 
             DB::commit();

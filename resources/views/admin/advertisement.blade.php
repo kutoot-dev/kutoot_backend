@@ -531,10 +531,19 @@
                                                             </div>
 
                                                             <div class="form-group col-12">
-                                                                <label>{{__('admin.Title')}} <span class="text-danger">*</span></label>
-                                                                <input type="text" name="title" class="form-control" value="{{ $shopPageCenterBanner->title_one }}">
+                                                                <label>{{__('admin.Title One')}} <span class="text-danger">*</span></label>
+                                                                <input type="text" name="title_one" class="form-control" value="{{ $shopPageCenterBanner->title_one }}">
                                                             </div>
 
+                                                            <div class="form-group col-12">
+                                                                <label>{{__('admin.Title Two')}} <span class="text-danger">*</span></label>
+                                                                <input type="text" name="title_two" class="form-control" value="{{ $shopPageCenterBanner->title_two }}">
+                                                            </div>
+
+                                                            <div class="form-group col-12">
+                                                                <label>{{__('admin.Badge')}} <span class="text-danger">*</span></label>
+                                                                <input type="text" name="badge" class="form-control" value="{{ $shopPageCenterBanner->badge }}">
+                                                            </div>
 
                                                             <div class="form-group col-12">
                                                                 <label>{{__('admin.Category Link')}} <span class="text-danger">*</span></label>
@@ -544,11 +553,6 @@
                                                                         <option {{ $shopPageCenterBanner->product_slug == $product->slug ? 'selected' : '' }} value="{{ $product->slug }}">{{ $product->name }}</option>
                                                                     @endforeach
                                                                 </select>
-                                                            </div>
-
-                                                            <div class="form-group col-12">
-                                                                <label>{{__('admin.After Product Qty')}} <span class="text-danger">*</span></label>
-                                                                <input type="number" name="after_product_qty"  class="form-control" value="{{ $shopPageCenterBanner->after_product_qty }}">
                                                             </div>
 
 

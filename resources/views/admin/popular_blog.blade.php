@@ -60,7 +60,7 @@
                                         <td>{{ ++$index }}</td>
                                         <td>{{ $popularBlog->blog->title }}</td>
                                         <td>{{ $popularBlog->blog->category->name }}</td>
-                                        <td><img src="{{ asset($popularBlog->blog->image) }}" width="80px" class="rounded-circle" alt=""></td>
+                                        <td><img src="{{ asset($popularBlog->blog->image) }}" width="80px" class="rounded-circle blog-img" alt="{{ $popularBlog->blog->title }}"></td>
                                         <td>
                                             @if($popularBlog->status == 1)
                                             <a href="javascript:;" onclick="changePopularBlogStatus({{ $popularBlog->id }})">

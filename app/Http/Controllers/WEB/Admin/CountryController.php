@@ -47,6 +47,7 @@ class CountryController extends Controller
             'iso2' => 'nullable|string|max:2|unique:countries,iso2',
             'iso3' => 'nullable|string|max:3',
             'phone_code' => 'nullable|string|max:10',
+            'status' => 'required|in:0,1',
         ]);
 
         Country::create([
@@ -54,6 +55,7 @@ class CountryController extends Controller
             'iso2' => $request->iso2 ? strtoupper($request->iso2) : strtoupper(substr($request->name, 0, 2)),
             'iso3' => $request->iso3 ? strtoupper($request->iso3) : strtoupper(substr($request->name, 0, 3)),
             'phone_code' => $request->phone_code ?? '',
+            'status' => $request->status,
         ]);
 
         return redirect()->route('admin.country.index')
@@ -81,6 +83,7 @@ class CountryController extends Controller
             'iso2' => 'nullable|string|max:2|unique:countries,iso2,' . $id,
             'iso3' => 'nullable|string|max:3',
             'phone_code' => 'nullable|string|max:10',
+            'status' => 'required|in:0,1',
         ]);
 
         $country->update([
@@ -88,6 +91,7 @@ class CountryController extends Controller
             'iso2' => $request->iso2 ? strtoupper($request->iso2) : $country->iso2,
             'iso3' => $request->iso3 ? strtoupper($request->iso3) : $country->iso3,
             'phone_code' => $request->phone_code ?? '',
+            'status' => $request->status,
         ]);
 
         return redirect()->route('admin.country.index')
@@ -107,10 +111,25 @@ class CountryController extends Controller
             ->with(['messege' => 'Country deleted successfully', 'alert-type' => 'success']);
     }
 
+    public function changeStatus($id)
+    {
+        $country = Country::find($id);
+        if ($country->status == 1) {
+            $country->status = 0;
+            $country->save();
+            $message = trans('admin_validation.Inactive Successfully');
+        } else {
+            $country->status = 1;
+            $country->save();
+            $message = trans('admin_validation.Active Successfully');
+        }
+        return response()->json($message);
+    }
+
     // API methods
     public function apiIndex()
     {
-        $countries = Country::orderBy('name', 'asc')->get();
+        $countries = Country::where('status', 1)->orderBy('name', 'asc')->get();
         return response()->json(['countries' => $countries]);
     }
 }

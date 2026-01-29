@@ -17,7 +17,7 @@
           <div class="section-body">
             <div class="row mb-3">
                 <div class="col-md-6">
-                    <a href="{{ route('admin.currency.create') }}" class="btn btn-primary"><i class="fas fa-plus"></i> {{__('admin.Add New')}}</a>
+                    {{-- World package currencies are read-only --}}
                 </div>
                 <div class="col-md-6">
                     <form action="" method="GET" class="float-right">
@@ -40,47 +40,23 @@
                                 <tr>
                                     <th>{{__('admin.SN')}}</th>
                                     <th>{{__('admin.Currency Name')}}</th>
-                                    <th>{{__('admin.Country Code')}}</th>
+                                    <th>{{__('admin.Country')}}</th>
                                     <th>{{__('admin.Currency Code')}}</th>
-                                    <th>{{__('admin.Currency Icon')}}</th>
-                                    <th>{{__('admin.Currency Rate')}}</th>
-                                    <th>{{__('admin.Default')}}</th>
-                                    <th>{{__('admin.Status')}}</th>
-                                    <th>{{__('admin.Action')}}</th>
+                                    <th>{{__('admin.Symbol')}}</th>
+                                    <th>{{__('admin.Native Symbol')}}</th>
+                                    <th>{{__('admin.Precision')}}</th>
                                   </tr>
                             </thead>
                             <tbody>
                                 @foreach ($currencies as $index => $currency)
                                     <tr>
                                         <td>{{ $currencies->firstItem() + $index }}</td>
-                                        <td>{{ $currency->currency_name }}</td>
-                                        <td>{{ $currency->country_code }}</td>
-                                        <td>{{ $currency->currency_code }}</td>
-                                        <td>{{ $currency->currency_icon }}</td>
-                                        <td>{{ $currency->currency_rate }}</td>
-
-                                        <td>
-                                            @if ($currency->is_default == 'Yes')
-                                                <span class="badge badge-success">{{__('admin.Yes')}}</span>
-                                            @else
-                                            <span class="badge badge-danger">{{__('admin.No')}}</span>
-                                            @endif
-                                        </td>
-
-                                        <td>
-                                            @if ($currency->status == 1)
-                                                <span class="badge badge-success">{{__('admin.Active')}}</span>
-                                            @else
-                                            <span class="badge badge-danger">{{__('admin.In-active')}}</span>
-                                            @endif
-                                        </td>
-                                        <td>
-                                            <a href="{{ route('admin.currency.edit',$currency->id) }}" class="btn btn-primary btn-sm"><i class="fa fa-edit" aria-hidden="true"></i></a>
-
-                                            @if ($currency->id != 1)
-                                                <a href="javascript:;" data-toggle="modal" data-target="#deleteModal" class="btn btn-danger btn-sm" onclick="deleteData({{ $currency->id }})" disabled><i class="fa fa-trash" aria-hidden="true"></i></a>
-                                            @endif
-                                        </td>
+                                        <td>{{ $currency->name }}</td>
+                                        <td>{{ $currency->country->name ?? 'N/A' }}</td>
+                                        <td>{{ $currency->code }}</td>
+                                        <td>{{ $currency->symbol }}</td>
+                                        <td>{{ $currency->symbol_native }}</td>
+                                        <td>{{ $currency->precision }}</td>
                                     </tr>
                                   @endforeach
                             </tbody>

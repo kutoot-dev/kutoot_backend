@@ -93,7 +93,7 @@
 
                                         <td class="wsus__pro_name">
                                             <p><a href="{{ route('product-detail', $cartContent->options->slug) }}">{{ $cartContent->name }}</a></p>
-                                                @foreach ($cartContent->options->variants as $indx => $variant)
+                                                @foreach ($cartContent->options->variants ?? [] as $indx => $variant)
                                                     <span>{{ $variant }}: {{ $cartContent->options->values[$indx] }}({{ $setting->currency_icon }}{{ $cartContent->options->prices[$indx] }})</span>
 
                                                     @php

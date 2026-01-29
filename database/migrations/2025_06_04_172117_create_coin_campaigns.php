@@ -17,8 +17,14 @@ class CreateCoinCampaigns extends Migration
         if (!Schema::hasTable($this->tableName)) {
             Schema::create($this->tableName, function (Blueprint $table) {
                 $table->id();
+                $table->string('campaign_id');
+                $table->string('title1')->nullable();
+                $table->string('title2')->nullable();
                 $table->string('title')->index();
                 $table->text('description')->nullable();
+                $table->json('highlights')->nullable();
+                $table->string('sponsored_by')->nullable();
+                $table->text('details_content')->nullable();
                 $table->float('ticket_price', 8, 2)->default(0.00);
                 $table->string('img')->nullable();
                 $table->integer('total_tickets')->default(0);
@@ -33,6 +39,17 @@ class CreateCoinCampaigns extends Migration
                 $table->text('category')->nullable();
                 $table->text('video')->nullable();
                 $table->string('promotion')->nullable();
+                $table->char('series_prefix', 1);
+                $table->unsignedTinyInteger('number_min')->default(1);
+                $table->unsignedTinyInteger('number_max');
+                $table->unsignedTinyInteger('numbers_per_ticket');
+                $table->string('tag1')->nullable();
+                $table->string('tag2')->nullable();
+                $table->string('image1')->nullable();
+                $table->string('image2')->nullable();
+                $table->text('short_description')->nullable();
+                $table->date('winner_announcement_date')->nullable();
+                $table->integer('marketing_start_percent')->default(10);
                 $table->timestamps();
             });
         }

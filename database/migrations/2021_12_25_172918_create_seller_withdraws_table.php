@@ -22,6 +22,7 @@ class CreateSellerWithdrawsTable extends Migration
             $table->double('withdraw_charge');
             $table->text('account_info');
             $table->integer('status')->default(0);
+            $table->date('approved_date')->nullable();
             $table->timestamps();
         });
     }

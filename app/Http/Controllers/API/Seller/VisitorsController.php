@@ -6,8 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Models\Store\Seller;
 use App\Models\Store\ShopVisitor;
 use App\Models\Store\Transaction;
-use App\Models\Store\AdminShopCommissionDiscount;
-use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -17,13 +15,13 @@ class VisitorsController extends Controller
     {
         /** @var Seller $seller */
         $seller = Auth::guard('store-api')->user();
-        $seller->loadMissing('shop');
-        $shop = $seller->shop;
+        $seller->loadMissing('application');
+        $application = $seller->application;
 
-        if (!$shop) {
+        if (!$application || $application->status !== 'APPROVED') {
             return response()->json([
                 'success' => false,
-                'message' => 'Shop not found for this seller',
+                'message' => 'Store not found for this seller',
             ], 404);
         }
 
@@ -33,7 +31,7 @@ class VisitorsController extends Controller
         $page = max(1, (int) $request->query('page', 1));
         $limit = min(100, max(1, (int) $request->query('limit', 20)));
 
-        $q = ShopVisitor::query()->where('shop_id', $shop->id)->with('user');
+        $q = ShopVisitor::query()->where('seller_application_id', $application->id)->with('user');
 
         if ($from) {
             $q->whereDate('visited_on', '>=', $from);
@@ -61,13 +59,12 @@ class VisitorsController extends Controller
 
         $visitorIds = $rows->pluck('id')->all();
         $txByVisitor = Transaction::query()
-            ->where('shop_id', $shop->id)
+            ->where('seller_application_id', $application->id)
             ->whereIn('visitor_id', $visitorIds)
             ->get()
             ->keyBy('visitor_id');
 
-        $master = AdminShopCommissionDiscount::resolveForShop($shop->id);
-        $minimumBillAmount = (float) ($master?->minimum_bill_amount ?? 0);
+        $minimumBillAmount = (float) ($application->min_bill_amount ?? 0);
 
         $outRows = $rows->map(function (ShopVisitor $v) use ($txByVisitor, $minimumBillAmount) {
             $tx = $txByVisitor->get($v->id);

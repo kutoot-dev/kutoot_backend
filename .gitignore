@@ -5,6 +5,7 @@
 /public/hot
 /public/storage
 /storage/*.key
+/storage
 vendor
 .env
 .env.backup
@@ -21,6 +22,7 @@ yarn-error.log
 **/.DS_Store
 /node_modules
 /bootstrap/cache/*.php
+/bootstrap/cache/*.tmp
 /public/uploads/website-images/coin_campaigns/*
 /public/uploads/*/*.*
 /public/uploads/

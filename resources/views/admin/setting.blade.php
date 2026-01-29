@@ -615,7 +615,7 @@
                                                             <div class="form-group">
                                                                 <label for="">{{__('admin.Existing Logo')}}</label>
                                                                 <div>
-                                                                    <img src="{{ asset($setting->logo) }}" alt="" width="200px">
+                                                                    <img src="{{ asset($setting->logo) }}" alt="Logo" width="200px" class="logo-img">
                                                                 </div>
                                                             </div>
                                                             <div class="form-group">
@@ -625,7 +625,7 @@
                                                             <div class="form-group">
                                                                 <label for="">{{__('admin.Existing Favicon')}}</label>
                                                                 <div>
-                                                                    <img src="{{ asset($setting->favicon) }}" alt="" width="50px">
+                                                                    <img src="{{ asset($setting->favicon) }}" alt="Favicon" width="50px" class="logo-img">
                                                                 </div>
                                                             </div>
                                                             <div class="form-group">

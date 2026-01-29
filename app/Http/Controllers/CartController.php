@@ -80,6 +80,10 @@ class CartController extends Controller
 
 
         $productStock = Product::find($request->product_id);
+        if (!$productStock) {
+            $notification = trans('user_validation.Product not found');
+            return response()->json(['message' => $notification], 404);
+        }
         $stock = $productStock->qty - $productStock->sold_qty;
 
         if($stock == 0){
@@ -121,9 +125,17 @@ class CartController extends Controller
 
     public function cartItemIncrement($id){
         $item = ShoppingCart::find($id);
+        if (!$item) {
+            $notification = trans('user_validation.Item not found');
+            return response()->json(['message' => $notification], 404);
+        }
         $current_qty = $item->qty;
 
         $productStock = Product::find($item->product_id);
+        if (!$productStock) {
+            $notification = trans('user_validation.Product not found');
+            return response()->json(['message' => $notification], 404);
+        }
         $stock = $productStock->qty - $productStock->sold_qty;
 
         if($stock < $current_qty){

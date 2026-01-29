@@ -14,6 +14,16 @@
         </div>
 
         <div class="section-body">
+            <div class="row mb-3">
+                <div class="col-12">
+                    <a href="{{ route('admin.seller-applications.create') }}" class="btn btn-primary">
+                        <i class="fas fa-plus"></i> {{__('admin.Create New Application')}}
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-body">
             {{-- Status Filter Tabs --}}
             <div class="row mb-4">
                 <div class="col-12">
@@ -101,7 +111,9 @@
                                                     <a href="{{ route('admin.seller-applications.show', $app->id) }}" class="btn btn-primary btn-sm" title="View Details">
                                                         <i class="fa fa-eye"></i>
                                                     </a>
-                                                    
+                                                    <a href="{{ route('admin.seller-applications.edit', $app->id) }}" class="btn btn-info btn-sm" title="Edit">
+                                                        <i class="fa fa-edit"></i>
+                                                    </a>
                                                     @if($app->status != 'APPROVED')
                                                         <a href="javascript:;" data-toggle="modal" data-target="#deleteModal" class="btn btn-danger btn-sm" onclick="deleteData({{ $app->id }})" title="Delete">
                                                             <i class="fa fa-trash"></i>
@@ -117,7 +129,7 @@
                                     </tbody>
                                 </table>
                             </div>
-                            
+
                             {{-- Pagination --}}
                             <div class="mt-4">
                                 {{ $applications->appends(request()->query())->links() }}

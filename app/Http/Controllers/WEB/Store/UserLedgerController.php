@@ -73,10 +73,10 @@ class UserLedgerController extends Controller
         return max(0, $credit - $debit);
     }
 
-    private function ensureUserBelongsToStore(int $shopId, int $userId): bool
+    private function ensureUserBelongsToStore(int $applicationId, int $userId): bool
     {
         return ShopVisitor::query()
-            ->where('shop_id', $shopId)
+            ->where('seller_application_id', $applicationId)
             ->where('user_id', $userId)
             ->exists();
     }
@@ -84,17 +84,17 @@ class UserLedgerController extends Controller
     public function show(Request $request, User $user)
     {
         $seller = Auth::guard('store')->user();
-        $seller->loadMissing('shop');
-        $shop = $seller->shop;
+        $seller->loadMissing('application');
+        $application = $seller->application;
 
-        if (!$shop || !$this->ensureUserBelongsToStore($shop->id, (int) $user->id)) {
+        if (!$application || $application->status !== 'APPROVED' || !$this->ensureUserBelongsToStore($application->id, (int) $user->id)) {
             return redirect()->route('store.visitors')->with('error', 'User not found in this store visitors.');
         }
 
         $balanceCoins = $this->getUserCoinBalance((int) $user->id);
 
         $totals = Transaction::query()
-            ->where('shop_id', $shop->id)
+            ->where('seller_application_id', $application->id)
             ->whereHas('visitor', function ($q) use ($user) {
                 $q->where('user_id', $user->id);
             })
@@ -115,15 +115,15 @@ class UserLedgerController extends Controller
     public function data(Request $request, User $user)
     {
         $seller = Auth::guard('store')->user();
-        $seller->loadMissing('shop');
-        $shop = $seller->shop;
+        $seller->loadMissing('application');
+        $application = $seller->application;
 
         $draw = (int) $request->input('draw', 1);
         $start = max(0, (int) $request->input('start', 0));
         $rawLength = (int) $request->input('length', 10);
         $length = $rawLength === -1 ? -1 : min(200, max(10, $rawLength));
 
-        if (!$shop || !$this->ensureUserBelongsToStore($shop->id, (int) $user->id)) {
+        if (!$application || $application->status !== 'APPROVED' || !$this->ensureUserBelongsToStore($application->id, (int) $user->id)) {
             return response()->json([
                 'draw' => $draw,
                 'recordsTotal' => 0,
@@ -140,7 +140,7 @@ class UserLedgerController extends Controller
                     ->where('uc.user_id', '=', (int) $user->id)
                     ->where('uc.type', '=', 'debit');
             })
-            ->where('t.shop_id', $shop->id)
+            ->where('t.seller_application_id', $application->id)
             ->where('sv.user_id', (int) $user->id)
             ->select([
                 't.id',
@@ -232,15 +232,15 @@ class UserLedgerController extends Controller
     public function campaignData(Request $request, User $user)
     {
         $seller = Auth::guard('store')->user();
-        $seller->loadMissing('shop');
-        $shop = $seller->shop;
+        $seller->loadMissing('application');
+        $application = $seller->application;
 
         $draw = (int) $request->input('draw', 1);
         $start = max(0, (int) $request->input('start', 0));
         $rawLength = (int) $request->input('length', 10);
         $length = $rawLength === -1 ? -1 : min(200, max(10, $rawLength));
 
-        if (!$shop || !$this->ensureUserBelongsToStore($shop->id, (int) $user->id)) {
+        if (!$application || $application->status !== 'APPROVED' || !$this->ensureUserBelongsToStore($application->id, (int) $user->id)) {
             return response()->json([
                 'draw' => $draw,
                 'recordsTotal' => 0,

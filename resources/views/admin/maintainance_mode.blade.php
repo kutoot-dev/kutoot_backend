@@ -35,7 +35,7 @@
                             <div class="form-group">
                                 <label for="">{{__('admin.Existing Image')}}</label>
                                 <div>
-                                    <img src="{{ asset($maintainance->image) }}" width="200px" alt="">
+                                    <img src="{{ asset($maintainance->image) }}" width="200px" alt="Maintenance" class="banner-img">
                                 </div>
                             </div>
                             <div class="form-group">

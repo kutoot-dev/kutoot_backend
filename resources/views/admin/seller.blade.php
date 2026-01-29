@@ -40,7 +40,9 @@
                                         <td>{{ $seller->user->email }}</td>
                                         <td>
                                             @if ($seller->user->image)
-                                            <img src="{{ asset($seller->user->image) }}" class="rounded-circle" alt="" width="80px">
+                                            <img src="{{ asset($seller->user->image) }}" class="rounded-circle avatar-img" alt="{{ $seller->user->name }}" width="80px">
+                                            @else
+                                            <span class="img-fallback-icon avatar-img-fallback" style="width:80px;height:80px;display:inline-flex;border-radius:50%;font-size:32px;"><i class="fas fa-user-circle"></i></span>
                                             @endif
                                         </td>
                                         <td>

@@ -60,19 +60,23 @@ class User extends Authenticatable implements JWTSubject
         'email_verified_at' => 'datetime',
     ];
 
-    public function seller(){
+    public function seller()
+    {
         return $this->hasOne(Vendor::class);
     }
 
-    public function city(){
+    public function city()
+    {
         return $this->belongsTo(\Nnjeim\World\Models\City::class);
     }
 
-    public function state(){
+    public function state()
+    {
         return $this->belongsTo(\Nnjeim\World\Models\State::class);
     }
 
-    public function country(){
+    public function country()
+    {
         return $this->belongsTo(\Nnjeim\World\Models\Country::class);
     }
 
@@ -85,6 +89,26 @@ class User extends Authenticatable implements JWTSubject
     public function getJWTCustomClaims()
     {
         return [];
+    }
+
+    public function coinLedger()
+    {
+        return $this->hasMany(CoinLedger::class);
+    }
+
+    /**
+     * Get the current wallet balance (computed view).
+     * SUM(coins_in) - SUM(coins_out) for non-expired entries.
+     */
+    public function getWalletBalanceAttribute()
+    {
+        return $this->coinLedger()
+            ->where(function ($query) {
+                $query->whereNull('expiry_date')
+                    ->orWhere('expiry_date', '>=', now());
+            })
+            ->selectRaw('SUM(coins_in) - SUM(coins_out) as balance')
+            ->value('balance') ?? 0;
     }
 
 

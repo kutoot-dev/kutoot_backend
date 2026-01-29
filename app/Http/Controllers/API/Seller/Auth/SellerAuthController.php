@@ -36,7 +36,17 @@ class SellerAuthController extends Controller
 
         /** @var Seller $seller */
         $seller = Auth::guard('store-api')->user();
-        $seller->loadMissing('shop');
+
+        // Check if seller has approved store application
+        if (!$seller->hasApprovedApplication()) {
+            Auth::guard('store-api')->logout();
+            return response()->json([
+                'success' => false,
+                'message' => 'Your store application is not approved yet. Please wait for approval.',
+            ], 403);
+        }
+
+        $seller->loadMissing('application');
 
         $categories = StoreCategory::query()
             ->where('is_active', true)
@@ -53,8 +63,8 @@ class SellerAuthController extends Controller
                 'categories' => $categories,
                 'seller' => [
                     'sellerId' => $seller->seller_code,
-                    'shopId' => $seller->shop?->shop_code,
-                    'shopName' => $seller->shop?->shop_name,
+                    'shopId' => $seller->application?->shop_code,
+                    'shopName' => $seller->application?->store_name,
                     'ownerName' => $seller->owner_name,
                     'email' => $seller->email,
                     'phone' => $seller->phone,
@@ -78,14 +88,14 @@ class SellerAuthController extends Controller
     {
         /** @var Seller $seller */
         $seller = Auth::guard('store-api')->user();
-        $seller->loadMissing('shop');
+        $seller->loadMissing('application');
 
         return response()->json([
             'success' => true,
             'data' => [
                 'sellerId' => $seller->seller_code,
-                'shopId' => $seller->shop?->shop_code,
-                'shopName' => $seller->shop?->shop_name,
+                'shopId' => $seller->application?->shop_code,
+                'shopName' => $seller->application?->store_name,
                 'ownerName' => $seller->owner_name,
                 'email' => $seller->email,
                 'phone' => $seller->phone,

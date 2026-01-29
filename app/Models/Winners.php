@@ -10,7 +10,7 @@ class Winners extends Model
     use HasFactory;
 
     protected $table = 'table_prizewinner';
-   
+
     protected $fillable = [
         'camp_id',
         'purchased_camp_id',
@@ -47,6 +47,11 @@ class Winners extends Model
     public function campaign()
     {
         return $this->belongsTo(PurchasedCoins::class, 'purchased_camp_id');
+    }
+
+    public function coinCampaign()
+    {
+        return $this->belongsTo(CoinCampaigns::class, 'camp_id');
     }
 
 

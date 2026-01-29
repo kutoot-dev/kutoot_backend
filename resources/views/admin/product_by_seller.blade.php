@@ -42,7 +42,7 @@
                                         <td><x-product-seller-label :product="$product" link="true" /></td>
                                         <td><a href="{{ route('product-detail', $product->slug) }}">{{ $product->name }}</a> </td>
                                         <td>{{ $setting->currency_icon }}{{ $product->price }}</td>
-                                        <td> <img class="rounded-circle" src="{{ asset($product->thumb_image) }}" alt="" width="80px"></td>
+                                        <td> <img class="rounded-circle product-img" src="{{ asset($product->thumb_image) }}" alt="{{ $product->name }}" width="80px"></td>
                                         <td>
                                             @if ($product->is_undefine == 1)
                                                 {{__('admin.Undefine Product')}}

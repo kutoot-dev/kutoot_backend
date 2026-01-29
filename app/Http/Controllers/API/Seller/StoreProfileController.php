@@ -3,9 +3,8 @@
 namespace App\Http\Controllers\API\Seller;
 
 use App\Http\Controllers\Controller;
-use App\Models\Store\AdminShopCommissionDiscount;
 use App\Models\Store\Seller;
-use App\Models\Store\Shop;
+use App\Models\Store\SellerApplication;
 use App\Models\Store\ShopImage;
 use App\Models\Store\StoreCategory;
 use Illuminate\Http\Request;
@@ -19,47 +18,80 @@ class StoreProfileController extends Controller
     {
         /** @var Seller $seller */
         $seller = Auth::guard('store-api')->user();
-        $seller->loadMissing('shop.images');
+        $seller->loadMissing('application.shopImages');
 
-        if (!$seller->shop) {
+        /** @var SellerApplication|null $application */
+        $application = $seller->application;
+
+        if (!$application || $application->status !== SellerApplication::STATUS_APPROVED) {
             return response()->json([
                 'success' => false,
-                'message' => 'Shop not found for this seller',
+                'message' => 'Store not found for this seller',
             ], 404);
         }
 
-        $master = AdminShopCommissionDiscount::resolveForShop($seller->shop?->id);
 
-        $images = $seller->shop->images->map(function ($img) {
-            $v = (string) $img->image_url;
-            if ($v === '') {
+
+        // Additional images stored in JSON column
+        $additionalImages = collect($application->images ?? [])->map(function ($img) {
+            if (empty($img)) {
                 return null;
             }
-            return str_starts_with($v, 'http') ? $v : asset($v);
+            return str_starts_with($img, 'http') ? $img : asset($img);
         })->filter()->values();
 
         return response()->json([
             'success' => true,
             'data' => [
-                'shopId' => $seller->shop->shop_code,
-                'shopName' => $seller->shop->shop_name,
-                'category' => $seller->shop->category,
-                'ownerName' => $seller->shop->owner_name,
-                'phone' => $seller->shop->phone,
-                'email' => $seller->shop->email,
-                'gstNumber' => $seller->shop->gst_number,
-                'address' => $seller->shop->address,
-                'googleMapUrl' => $seller->shop->google_map_url,
+                // Basic Info
+                'shopId' => $application->shop_code,
+                'shopName' => $application->store_name,
+                'category' => $application->store_type,
+                'ownerName' => $application->owner_name,
+                'phone' => $application->owner_mobile,
+                'email' => $application->owner_email,
+                'gstNumber' => $application->gst_number,
+
+                // Address & Location
+                'address' => $application->store_address,
+                'city' => $application->city,
+                'state' => $application->state,
+                'country' => $application->country,
+                'googleMapUrl' => $application->google_map_url,
                 'location' => [
-                    'lat' => $seller->shop->location_lat,
-                    'lng' => $seller->shop->location_lng,
+                    'lat' => $application->lat,
+                    'lng' => $application->lng,
                 ],
-                'masterAdmin' => [
-                    'discountPercent' => $master?->discount_percent ?? 0,
-                    'commissionPercent' => $master?->commission_percent ?? 0,
-                    'minimumBillAmount' => (float) ($master?->minimum_bill_amount ?? 0),
+
+                // Commission, Discount & Billing
+                'commissionPercent' => (float) ($application->commission_percent ?? 0),
+                'discountPercent' => (float) ($application->discount_percent ?? 0),
+                'minimumBillAmount' => (float) ($application->min_bill_amount ?? 0),
+
+                // Rating
+                'rating' => (float) ($application->rating ?? 0),
+                'noOfRatings' => $application->no_of_ratings ?? 0,
+                'totalRatings' => $application->total_ratings ?? 0,
+
+                // Bank Details
+                'bankDetails' => [
+                    'bankName' => $application->bank_name,
+                    'accountNumber' => $application->account_number,
+                    'ifscCode' => $application->ifsc_code,
+                    'beneficiaryName' => $application->beneficiary_name,
+                    'upiId' => $application->upi_id,
+                    'razorpayAccountId' => $application->razorpay_account_id,
                 ],
-                'images' => $images,
+
+                // Tags & Features
+                'tags' => $application->tags ?? [],
+                'offerTag' => $application->offer_tag,
+                'isFeatured' => $application->is_featured ?? false,
+                'isActive' => $application->is_active ?? false,
+
+                // Images
+                'storeImage' => $application->store_image ? (str_starts_with($application->store_image, 'http') ? $application->store_image : asset($application->store_image)) : null,
+                'additionalImages' => $additionalImages,
             ],
         ]);
     }
@@ -99,30 +131,53 @@ class StoreProfileController extends Controller
 
         /** @var Seller $seller */
         $seller = Auth::guard('store-api')->user();
-        $seller->loadMissing('shop');
+        $seller->loadMissing('application');
 
-        /** @var Shop|null $shop */
-        $shop = $seller->shop;
-        if (!$shop) {
+        /** @var SellerApplication|null $application */
+        $application = $seller->application;
+        if (!$application) {
             return response()->json([
                 'success' => false,
-                'message' => 'Shop not found for this seller',
+                'message' => 'Store not found for this seller',
             ], 404);
         }
 
-        $shop->fill([
-            'shop_name' => $request->input('shopName', $shop->shop_name),
-            'category' => $request->input('category', $shop->category),
-            'owner_name' => $request->input('ownerName', $shop->owner_name),
-            'phone' => $request->input('phone', $shop->phone),
-            'email' => $request->input('email', $shop->email),
-            'gst_number' => $request->input('gstNumber', $shop->gst_number),
-            'address' => $request->input('address', $shop->address),
-            'google_map_url' => $request->input('googleMapUrl', $shop->google_map_url),
-            'location_lat' => data_get($request->input('location'), 'lat', $shop->location_lat),
-            'location_lng' => data_get($request->input('location'), 'lng', $shop->location_lng),
-        ]);
-        $shop->save();
+        // Map request fields directly to application columns
+        $updateData = [];
+
+        if ($request->has('shopName')) {
+            $updateData['store_name'] = $request->input('shopName');
+        }
+        if ($request->has('category')) {
+            $updateData['store_type'] = $request->input('category');
+        }
+        if ($request->has('ownerName')) {
+            $updateData['owner_name'] = $request->input('ownerName');
+        }
+        if ($request->has('phone')) {
+            $updateData['owner_mobile'] = $request->input('phone');
+        }
+        if ($request->has('email')) {
+            $updateData['owner_email'] = $request->input('email');
+        }
+        if ($request->has('gstNumber')) {
+            $updateData['gst_number'] = $request->input('gstNumber');
+        }
+        if ($request->has('address')) {
+            $updateData['store_address'] = $request->input('address');
+        }
+        if ($request->has('googleMapUrl')) {
+            $updateData['google_map_url'] = $request->input('googleMapUrl');
+        }
+        if ($request->has('location.lat')) {
+            $updateData['lat'] = $request->input('location.lat');
+        }
+        if ($request->has('location.lng')) {
+            $updateData['lng'] = $request->input('location.lng');
+        }
+
+        // Update application directly
+        $application->update($updateData);
 
         return response()->json([
             'success' => true,
@@ -134,13 +189,13 @@ class StoreProfileController extends Controller
     {
         /** @var Seller $seller */
         $seller = Auth::guard('store-api')->user();
-        $seller->loadMissing('shop');
-        $shop = $seller->shop;
+        $seller->loadMissing('application');
+        $application = $seller->application;
 
-        if (!$shop) {
+        if (!$application) {
             return response()->json([
                 'success' => false,
-                'message' => 'Shop not found for this seller',
+                'message' => 'Store not found for this seller',
             ], 404);
         }
 
@@ -155,8 +210,10 @@ class StoreProfileController extends Controller
         $files = is_array($files) ? $files : [$files];
         $uploaded = [];
 
+        $shopCode = $application->shop_code ?? $application->application_id;
+
         foreach ($files as $file) {
-            $dir = public_path("uploads/store/shops/{$shop->shop_code}");
+            $dir = public_path("uploads/store/shops/{$shopCode}");
             if (!File::exists($dir)) {
                 File::makeDirectory($dir, 0755, true);
             }
@@ -164,11 +221,11 @@ class StoreProfileController extends Controller
             $fileName = uniqid('shop_', true).'.'.$file->getClientOriginalExtension();
             $file->move($dir, $fileName);
 
-            $relativePath = "uploads/store/shops/{$shop->shop_code}/{$fileName}";
+            $relativePath = "uploads/store/shops/{$shopCode}/{$fileName}";
             $url = asset($relativePath);
 
             ShopImage::query()->create([
-                'shop_id' => $shop->id,
+                'seller_application_id' => $application->id,
                 'image_url' => $relativePath,
             ]);
 
@@ -199,13 +256,13 @@ class StoreProfileController extends Controller
 
         /** @var Seller $seller */
         $seller = Auth::guard('store-api')->user();
-        $seller->loadMissing('shop');
-        $shop = $seller->shop;
+        $seller->loadMissing('application');
+        $application = $seller->application;
 
-        if (!$shop) {
+        if (!$application) {
             return response()->json([
                 'success' => false,
-                'message' => 'Shop not found for this seller',
+                'message' => 'Store not found for this seller',
             ], 404);
         }
 
@@ -218,7 +275,7 @@ class StoreProfileController extends Controller
         }
 
         $img = ShopImage::query()
-            ->where('shop_id', $shop->id)
+            ->where('seller_application_id', $application->id)
             ->where(function ($q) use ($imageUrl, $needle) {
                 $q->where('image_url', $imageUrl)->orWhere('image_url', $needle);
             })

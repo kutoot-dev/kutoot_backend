@@ -7,21 +7,21 @@
       <div class="main-content">
         <section class="section">
           <div class="section-header">
-            <h1>{{__('All Purchase Orders')}}</h1>
+            <h1>{{__('admin.Coin Campaign Orders')}}</h1>
             <div class="section-header-breadcrumb">
               <div class="breadcrumb-item active"><a href="{{ route('admin.dashboard') }}">{{__('admin.Dashboard')}}</a></div>
-              <div class="breadcrumb-item">{{__('All Purchase Orders')}}</div>
+              <div class="breadcrumb-item">{{__('admin.Coin Campaign Orders')}}</div>
             </div>
           </div>
 
           <div class="section-body">
-           
+
             <div class="row mt-4">
                 <div class="col">
                   <div class="card">
                     <div class="card-body">
                       <div class="row">
-                    
+
                       </div>
                       <div class="table-responsive table-invoice">
                         <table class="table table-striped" id="dataTable">
@@ -33,14 +33,16 @@
                                     <th>{{__('coin_campaign.ticket_price')}}</th>
                                      <th>Quantity</th>
                                      <th>Total Price</th>
+                                     <th>Coins Purchased</th>
+                                     <th>Coin Expires</th>
                                     <th>{{__('coin_campaign.status')}}</th>
                                     <th>{{__('Created At')}}</th>
                                     <th>{{__('admin.Action')}}</th>
                                   </tr>
                             </thead>
                             <tbody>
-                              
-                              
+
+
                              @if($data->count())
     @foreach ($data as $key => $campaign)
         <tr>
@@ -55,6 +57,8 @@
             <td>{{ $campaign->camp_ticket_price }}</td>
             <td>{{ $campaign->quantity }}</td>
             <td>{{ $campaign->quantity * $campaign->camp_ticket_price }}</td>
+            <td>{{ $campaign->coins_purchased ?? '-' }}</td>
+            <td>{{ $campaign->coin_expires_at ? \Carbon\Carbon::parse($campaign->coin_expires_at)->format('d M Y') : 'N/A' }}</td>
             <td>{{ $campaign->status }}</td>
             <td>{{ $campaign->created_at }}</td>
             <td>
@@ -64,11 +68,11 @@
     @endforeach
 @else
     <tr>
-        <td colspan="9" class="text-center">No data available.</td>
+        <td colspan="11" class="text-center">No data available.</td>
     </tr>
 @endif
 
-                        
+
                             </tbody>
                         </table>
                       </div>

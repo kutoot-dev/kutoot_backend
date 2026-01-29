@@ -83,49 +83,154 @@ $(function() {
     }, 600);
   }
 
-  var sidebar_dropdown = function() {
-    if($(".main-sidebar").length) {
-      $(".main-sidebar").niceScroll(sidebar_nicescroll_opts);
-      sidebar_nicescroll = $(".main-sidebar").getNiceScroll();
+  /**
+   * Professional Sidebar Management
+   * - Auto-detects active menu item based on current URL
+   * - Preserves server-rendered active states
+   * - Handles dropdown toggle with proper state management
+   * - Uses event delegation for better performance
+   */
+  var SidebarManager = {
+    config: {
+      sidebarSelector: '.main-sidebar',
+      menuSelector: '.sidebar-menu',
+      dropdownTrigger: 'a.has-dropdown',
+      dropdownMenu: '.dropdown-menu',
+      activeClass: 'active',
+      currentPageClass: 'current-page',
+      animationSpeed: 350
+    },
 
-      $(".main-sidebar .sidebar-menu li a.has-dropdown").off('click').on('click', function() {
-        var me     = $(this);
-        var active = false;
-        if(me.parent().hasClass("active")){
-          active = true;
-        }
+    init: function() {
+      if (!$(this.config.sidebarSelector).length) return;
 
-        $('.main-sidebar .sidebar-menu li.active > .dropdown-menu').slideUp(500, function() {
+      this.initNiceScroll();
+      this.markCurrentPage();
+      this.autoExpandActiveDropdown();
+      this.bindDropdownEvents();
+    },
+
+    initNiceScroll: function() {
+      $(this.config.sidebarSelector).niceScroll(sidebar_nicescroll_opts);
+      sidebar_nicescroll = $(this.config.sidebarSelector).getNiceScroll();
+    },
+
+    /**
+     * Mark server-rendered active items to preserve them during interactions
+     */
+    markCurrentPage: function() {
+      var self = this;
+      var currentPath = window.location.pathname;
+
+      // Mark items that are already active from server-side rendering
+      $(this.config.sidebarSelector)
+        .find(this.config.menuSelector + ' li.' + this.config.activeClass)
+        .addClass(this.config.currentPageClass);
+
+      // Also detect active state from URL matching for SPA-like behavior
+      $(this.config.sidebarSelector)
+        .find(this.config.menuSelector + ' li:not(.menu-header) > a:not(.has-dropdown)')
+        .each(function() {
+          var href = $(this).attr('href');
+          if (href && href !== '#' && href !== 'javascript:void(0)') {
+            try {
+              var linkPath = new URL(href, window.location.origin).pathname;
+              if (currentPath === linkPath || currentPath.startsWith(linkPath + '/')) {
+                $(this).parent().addClass(self.config.activeClass + ' ' + self.config.currentPageClass);
+                // Expand parent dropdown if exists
+                $(this).parents('li.dropdown').addClass(self.config.activeClass + ' ' + self.config.currentPageClass);
+              }
+            } catch (e) {
+              // Invalid URL, skip
+            }
+          }
+        });
+    },
+
+    /**
+     * Auto-expand dropdowns that contain active items
+     */
+    autoExpandActiveDropdown: function() {
+      var self = this;
+      $(this.config.sidebarSelector)
+        .find(this.config.menuSelector + ' li.' + this.config.activeClass + ' > ' + this.config.dropdownMenu)
+        .slideDown(this.config.animationSpeed, function() {
           update_sidebar_nicescroll();
+        });
+    },
+
+    /**
+     * Bind click events for dropdown toggles using event delegation
+     */
+    bindDropdownEvents: function() {
+      var self = this;
+
+      // Remove any existing handlers to prevent duplicates
+      $(this.config.sidebarSelector)
+        .find(this.config.menuSelector)
+        .off('click.sidebarDropdown')
+        .on('click.sidebarDropdown', this.config.dropdownTrigger, function(e) {
+          e.preventDefault();
+          self.handleDropdownClick($(this));
           return false;
         });
+    },
 
-        $('.main-sidebar .sidebar-menu li.active').removeClass('active');
+    /**
+     * Handle dropdown toggle click
+     */
+    handleDropdownClick: function($trigger) {
+      var self = this;
+      var $parentLi = $trigger.parent();
+      var isActive = $parentLi.hasClass(this.config.activeClass);
 
-        if(active==true) {
-          me.parent().removeClass('active');
-          me.parent().find('> .dropdown-menu').slideUp(500, function() {
-            update_sidebar_nicescroll();
-            return false;
-          });
-        }else{
-          me.parent().addClass('active');
-          me.parent().find('> .dropdown-menu').slideDown(500, function() {
-            update_sidebar_nicescroll();
-            return false;
-          });
-        }
+      // Close other non-current dropdowns
+      $(this.config.sidebarSelector)
+        .find(this.config.menuSelector + ' li.' + this.config.activeClass + ':not(.' + this.config.currentPageClass + ')')
+        .not($parentLi)
+        .each(function() {
+          $(this).removeClass(self.config.activeClass);
+          $(this).find('> ' + self.config.dropdownMenu).slideUp(self.config.animationSpeed);
+        });
 
-        return false;
-      });
+      // Toggle clicked dropdown
+      if (isActive) {
+        $parentLi.removeClass(this.config.activeClass);
+        $parentLi.find('> ' + this.config.dropdownMenu).slideUp(this.config.animationSpeed, function() {
+          update_sidebar_nicescroll();
+        });
+      } else {
+        $parentLi.addClass(this.config.activeClass);
+        $parentLi.find('> ' + this.config.dropdownMenu).slideDown(this.config.animationSpeed, function() {
+          update_sidebar_nicescroll();
+        });
+      }
+    },
 
-      $('.main-sidebar .sidebar-menu li.active > .dropdown-menu').slideDown(500, function() {
-        update_sidebar_nicescroll();
-        return false;
-      });
+    /**
+     * Refresh sidebar state (useful after AJAX navigation)
+     */
+    refresh: function() {
+      // Reset current page markers
+      $(this.config.sidebarSelector)
+        .find(this.config.menuSelector + ' li')
+        .removeClass(this.config.currentPageClass);
+
+      this.markCurrentPage();
+      this.autoExpandActiveDropdown();
     }
-  }
-  sidebar_dropdown();
+  };
+
+  // Initialize sidebar
+  SidebarManager.init();
+
+  // Expose globally for external use
+  window.SidebarManager = SidebarManager;
+
+  // Legacy compatibility wrapper
+  var sidebar_dropdown = function() {
+    SidebarManager.init();
+  };
 
   if($("#top-5-scroll").length) {
     $("#top-5-scroll").css({

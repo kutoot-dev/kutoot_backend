@@ -44,7 +44,7 @@
                                         <td>{{ $deliveryman->email }}</td>
                                         <td>{{ sizeOf($order) }}</td>
                                         <td>
-                                          <img alt="image" src="{{ asset($deliveryman->man_image) }}" class="rounded-circle profile-widget-picture">
+                                          <img alt="{{ $deliveryman->fname }}" src="{{ asset($deliveryman->man_image) }}" class="rounded-circle profile-widget-picture avatar-img">
                                         </td>
                                         <td>
                                           @if($deliveryman->status == 1)

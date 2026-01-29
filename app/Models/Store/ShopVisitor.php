@@ -12,7 +12,7 @@ class ShopVisitor extends Model
     protected $appends = ['masked_phone'];
 
     protected $fillable = [
-        'shop_id',
+        'seller_application_id',
         'user_id',
         'visited_on',
         'redeemed',
@@ -23,9 +23,9 @@ class ShopVisitor extends Model
         'redeemed' => 'bool',
     ];
 
-    public function shop()
+    public function sellerApplication()
     {
-        return $this->belongsTo(Shop::class, 'shop_id');
+        return $this->belongsTo(SellerApplication::class, 'seller_application_id');
     }
 
     public function user()

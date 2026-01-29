@@ -36,7 +36,7 @@
                                     <tr>
                                         <td>{{ ++$index }}</td>
                                         <td>{{ $customPage->page_name }}</td>
-                                        <td> <img  src="{{ asset($customPage->banner_image) }}" alt="" width="100px"></td>
+                                        <td> <img src="{{ asset($customPage->banner_image) }}" alt="{{ $customPage->page_name }}" width="100px" class="banner-img"></td>
                                         <td>
                                             @if($customPage->status == 1)
                                             <a href="javascript:;" onclick="changeCustomPageStatus({{ $customPage->id }})">

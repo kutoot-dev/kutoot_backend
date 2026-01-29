@@ -18,6 +18,7 @@ class CreateAnnouncementModalsTable extends Migration
             $table->string('title');
             $table->text('description');
             $table->string('image');
+            $table->date('expired_date')->nullable();
             $table->timestamps();
         });
     }

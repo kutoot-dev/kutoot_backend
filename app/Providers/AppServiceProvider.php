@@ -31,12 +31,17 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         Product::created(function ($product) {
-        \Log::info('Product created event fired', [
-            'product_id' => $product->id
-        ]);
+            // Skip Zoho sync during seeding or console commands
+            if (app()->runningInConsole() && !app()->runningUnitTests()) {
+                \Log::debug('Skipping Zoho sync during console/seeder', ['product_id' => $product->id]);
+                return;
+            }
 
-        SyncProductToZohoJob::dispatch($product);
-    });
+            \Log::info('Product created event fired', [
+                'product_id' => $product->id
+            ]);
 
+            SyncProductToZohoJob::dispatch($product);
+        });
     }
 }

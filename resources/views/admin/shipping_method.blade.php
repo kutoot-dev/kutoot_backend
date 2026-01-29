@@ -68,7 +68,7 @@
                                             @if ($shipping->city_id == 0)
                                                 {{__('admin.All Delivery Area')}}
                                             @else
-                                                {{ $shipping->city->name }}, {{ $shipping->city->countryState->name }}, {{ $shipping->city->countryState->country->name }}
+                                                {{ $shipping->city->name ?? 'N/A' }}, {{ $shipping->city->state->name ?? 'N/A' }}, {{ $shipping->city->state->country->name ?? 'N/A' }}
                                             @endif
                                         </td>
                                         <td>
@@ -109,7 +109,7 @@
                                     <select name="city_id" id="" class="form-control select2">
                                         <option value="0">{{__('admin.All')}}</option>
                                         @foreach ($cities as $city)
-                                        <option value="{{ $city->id }}">{{ $city->name }}, {{ $city->countryState->name }}, {{ $city->countryState->country->name }}</option>
+                                        <option value="{{ $city->id }}">{{ $city->name }}, {{ $city->countryState->name ?? 'N/A' }}, {{ $city->countryState->country->name ?? 'N/A' }}</option>
                                         @endforeach
                                     </select>
                                 </div>

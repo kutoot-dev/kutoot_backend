@@ -42,7 +42,7 @@
                                         <td><x-product-seller-label :product="$product" /></td>
                                         <td><a target="_blank" href="{{ $frontend_url.$product->slug }}">{{ $product->name }}</a></td>
                                         <td>{{ $setting->currency_icon }}{{ $product->price }}</td>
-                                        <td> <img class="rounded-circle" src="{{ asset($product->thumb_image) }}" alt="" width="100px" height="100px"></td>
+                                        <td> <img class="rounded-circle product-img" src="{{ asset($product->thumb_image) }}" alt="{{ $product->name }}" width="100px" height="100px"></td>
                                         <td>
                                             @if ($product->new_product == 1)
                                             <span class="badge badge-primary p-1">{{__('admin.New')}}</span>

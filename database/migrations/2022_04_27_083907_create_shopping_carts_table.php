@@ -17,14 +17,16 @@ class CreateShoppingCartsTable extends Migration
             $table->id();
             $table->integer('user_id');
             $table->integer('product_id');
-            $table->text('name');
+            $table->text('name')->nullable();
             $table->integer('qty');
             $table->double('price');
-            $table->double('tax');
-            $table->double('coupon_price');
-            $table->integer('offer_type');
-            $table->text('image');
-            $table->text('slug');
+            $table->double('total_price')->nullable();
+            $table->double('tax')->nullable();
+            $table->double('coupon_price')->nullable();
+            $table->integer('offer_type')->nullable();
+            $table->text('image')->nullable();
+            $table->text('slug')->nullable();
+            $table->integer('reedem_coins')->default(0);
             $table->timestamps();
         });
     }

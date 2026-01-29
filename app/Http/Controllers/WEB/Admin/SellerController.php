@@ -102,13 +102,15 @@ class SellerController extends Controller
                 'country_id' => $id,
             ],
         ])->data;
-        $response='<option value="">'.trans('admin_validation.Select a State').'</option>';
+        $statesArray = [];
         if(count($states) > 0){
             foreach($states as $state){
-                $response .= "<option value=".$state['id'].">".$state['name']."</option>";
+                $stateId = is_array($state) ? $state['id'] : $state->id;
+                $stateName = is_array($state) ? $state['name'] : $state->name;
+                $statesArray[] = ['id' => $stateId, 'name' => $stateName];
             }
         }
-        return response()->json(['states'=>$response]);
+        return response()->json(['states' => $statesArray]);
     }
 
     public function cityByState($id){
@@ -117,13 +119,15 @@ class SellerController extends Controller
                 'state_id' => $id,
             ],
         ])->data;
-        $response='<option value="">'.trans('admin_validation.Select a City').'</option>';
-        if($cities->count() > 0){
+        $citiesArray = [];
+        if(count($cities) > 0){
             foreach($cities as $city){
-                $response .= "<option value=".$city->id.">".$city->name."</option>";
+                $cityId = is_array($city) ? $city['id'] : $city->id;
+                $cityName = is_array($city) ? $city['name'] : $city->name;
+                $citiesArray[] = ['id' => $cityId, 'name' => $cityName];
             }
         }
-        return response()->json(['cities'=>$response]);
+        return response()->json(['cities' => $citiesArray]);
     }
 
     public function updateSeller(Request $request , $id){

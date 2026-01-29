@@ -6,9 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Enums\BrandApprovalStatus;
 use App\Models\Brand;
 use Illuminate\Http\Request;
-use  Image;
-use File;
-use Str;
+use App\Helpers\ImageHelper;
+use Illuminate\Support\Str;
+
 class ProductBrandController extends Controller
 {
 
@@ -49,17 +49,16 @@ class ProductBrandController extends Controller
         $this->validate($request, $rules,$customMessages);
 
         $brand = new Brand();
-        if($request->logo){
-            $extention = $request->logo->getClientOriginalExtension();
-            $logo_name = Str::slug($request->name).date('-Y-m-d-h-i-s-').rand(999,9999).'.'.$extention;
-            $path = public_path().'/uploads/custom-images/';
-            if (!File::exists($path)) {
-                File::makeDirectory($path, 0777, true, true);
-            }
-            $logo_name = 'uploads/custom-images/'.$logo_name;
-            Image::make($request->logo)
-                ->save(public_path().'/'.$logo_name);
-            $brand->logo=$logo_name;
+        if($request->hasFile('logo')){
+            $brand->logo = ImageHelper::upload(
+                $request->file('logo'),
+                'custom-images',
+                'brand-' . Str::slug($request->name),
+                'brand',
+                80,
+                null,
+                true
+            );
         }
         $brand->name = $request->name;
         $brand->slug = $request->slug;
@@ -105,18 +104,16 @@ class ProductBrandController extends Controller
         ];
         $this->validate($request, $rules,$customMessages);
 
-        if($request->logo){
-            $old_logo = $brand->logo;
-            $extention = $request->logo->getClientOriginalExtension();
-            $logo_name = Str::slug($request->name).date('-Y-m-d-h-i-s-').rand(999,9999).'.'.$extention;
-            $logo_name = 'uploads/custom-images/'.$logo_name;
-            Image::make($request->logo)
-                ->save(public_path().'/'.$logo_name);
-            $brand->logo = $logo_name;
-            $brand->save();
-            if($old_logo){
-                if(File::exists(public_path().'/'.$old_logo))unlink(public_path().'/'.$old_logo);
-            }
+        if($request->hasFile('logo')){
+            $brand->logo = ImageHelper::upload(
+                $request->file('logo'),
+                'custom-images',
+                'brand-' . Str::slug($request->name),
+                'brand',
+                80,
+                $brand->logo,
+                true
+            );
         }
 
         $brand->name = $request->name;
@@ -138,9 +135,7 @@ class ProductBrandController extends Controller
         $brand = Brand::find($id);
         $old_logo = $brand->logo;
         $brand->delete();
-        if($old_logo){
-            if(File::exists(public_path().'/'.$old_logo))unlink(public_path().'/'.$old_logo);
-        }
+        ImageHelper::delete($old_logo);
 
         $notification = trans('Delete Successfully');
         return response()->json(['message' => $notification],200);

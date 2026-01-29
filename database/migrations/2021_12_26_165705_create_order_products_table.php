@@ -18,10 +18,12 @@ class CreateOrderProductsTable extends Migration
             $table->integer('order_id');
             $table->integer('product_id');
             $table->integer('seller_id')->default(0);
+            $table->integer('vendor_id')->nullable();
             $table->string('product_name');
             $table->double('unit_price')->default(0);
             $table->double('vat')->default(0);
             $table->integer('qty');
+            $table->double('price')->default(0);
             $table->timestamps();
         });
     }

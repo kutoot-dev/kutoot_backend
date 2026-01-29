@@ -19,6 +19,7 @@ class CreatePaypalPaymentsTable extends Migration
             $table->string('account_mode')->nullable();
             $table->text('client_id')->nullable();
             $table->text('secret_id')->nullable();
+            $table->integer('currency_id')->nullable();
             $table->timestamps();
         });
     }

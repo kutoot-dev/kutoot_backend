@@ -45,6 +45,11 @@ class StoreLoginController extends Controller
             return redirect()->back()->withErrors(['username' => 'Your account is inactive. Please contact support.'])->withInput();
         }
 
+        // Check if seller has approved store application
+        if (!$seller->hasApprovedApplication()) {
+            return redirect()->back()->withErrors(['username' => 'Your store application is not approved yet. Please wait for approval.'])->withInput();
+        }
+
         // Manually log in the seller
         Auth::guard('store')->login($seller);
 

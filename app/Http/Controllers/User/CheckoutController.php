@@ -59,15 +59,34 @@ class CheckoutController extends Controller
             });
         }
         $query = $query->where('status', 1);
+
+        // Filter by payment_status of the purchase if provided
+        if ($request->has('payment_status') && $request->payment_status) {
+            $query->whereHas('purchasedCampaign', function ($q) use ($request) {
+                $q->where('payment_status', $request->payment_status);
+            });
+        }
+
         // Filter by purchased_camp_id if provided
         if ($request->has('purchased_camp_id') && $request->purchased_camp_id) {
             $query->where('purchased_camp_id', $request->purchased_camp_id);
         }
 
-        $coupons = $query->orderBy('id', 'desc')->paginate(15);
+        // Apply sorting
+        $sortBy = $request->get('sort_by', 'id');
+        $order = $request->get('order', 'desc');
+        $allowedSortFields = ['id', 'created_at', 'coupon_expires', 'coupon_code'];
+        if (in_array($sortBy, $allowedSortFields)) {
+            $query->orderBy($sortBy, $order === 'asc' ? 'asc' : 'desc');
+        } else {
+            $query->orderBy('id', 'desc');
+        }
+
+        $coupons = $query->paginate(15);
 
         // Transform output
-        $data = $coupons->getCollection()->map(function ($coupon) {
+        $data = $coupons->items();
+        $data = collect($data)->map(function ($coupon) {
             return [
                 'id' => $coupon->id,
                 'coupon_code' => $coupon->coupon_code,
@@ -85,7 +104,7 @@ class CheckoutController extends Controller
             ];
         });
 
-        $coupons->setCollection($data);
+        $coupons->setCollection(collect($data));
 
         return response()->json([
             'status' => true,
@@ -116,7 +135,7 @@ class CheckoutController extends Controller
         $coins = $query->orderBy('id', 'desc')->paginate(15);
 
 
-        $data = $coins->map(function ($coin) {
+        $data = $coins->getCollection()->map(function ($coin) {
             return [
                 'id' => $coin->id,
                 'coins' => $coin->coins,
@@ -298,11 +317,6 @@ class CheckoutController extends Controller
             $purchase->camp_ticket_price = $payable_amount;
             $purchase->save();
 
-            if ($baseplan->coupons_per_campaign * $request->quantity > 5000) {
-                DB::rollBack();
-                return response()->json(['message' => 'Coupons count is more!'], 400);
-            }
-
             DB::commit();
 
             $purchase = PurchasedCoins::with('coupons')->where('id', $purchase->id)->where('user_id', $user->id)->first();
@@ -404,11 +418,13 @@ class CheckoutController extends Controller
         $purchase->razorpay_signature = $request->razorpay_signature;
         $purchase->save();
 
-        $baseplan = Baseplans::find($purchase->base_plan_id);
-
-        if ($baseplan->coupons_per_campaign * $purchase->quantity > 50) {
-            return response()->json(['message' => 'Coupons count is more!'], 400);
+        // ✅ Activate coupons when payment is successful
+        if ($request->payment_status === 'success') {
+            UserCoupons::where('purchased_camp_id', $purchase->id)
+                ->update(['status' => 1]);
         }
+
+        $baseplan = Baseplans::find($purchase->base_plan_id);
 
         $couponslist = [];
         // for ($j = 0; $j < $baseplan->coupons_per_campaign * $purchase->quantity; $j++) {
@@ -431,17 +447,13 @@ class CheckoutController extends Controller
         //     $couponslist[] = $newCoupon;
         // }
 
-        // Update all coupons status to 1 for this purchase
-        UserCoupons::where('purchased_camp_id', $purchase->id)->update(['status' => 1]);
-
-        $coinsdata = UserCoins::create([
-            'purchased_camp_id' => $purchase->id,
-            'user_id' => $user->id,
-            'coin_expires' => now()->addDays(30),
-            'coins' => $baseplan->coins_per_campaign * $purchase->quantity,
-            'type' => 'credit',
-            'status' => 1,
-        ]);
+        // DEDUCT COINS (INSERT DEBIT RECORD)
+        $coinService = app(\App\Services\CoinLedgerService::class);
+        $coinsdata = $coinService->creditPaid(
+            $user->id,
+            $baseplan->coins_per_campaign * $purchase->quantity,
+            "OID" . $purchase->id
+        );
 
         $purchase = PurchasedCoins::with('coupons')
             ->where('razor_order_id', $request->razorpay_order_id)
@@ -516,17 +528,7 @@ class CheckoutController extends Controller
         }
 
 
-        $coins = UserCoins::selectRaw("
-                SUM(CASE WHEN type = 'credit' THEN coins ELSE 0 END) as credit,
-                SUM(CASE WHEN type = 'debit' THEN coins ELSE 0 END) as debit
-            ")
-            ->where('user_id', $user->id)
-            ->whereDate('coin_expires', '>=', now()->toDateString())
-            ->first();
-
-        $creditCoins = $coins->credit ?? 0;
-        $debitCoins = $coins->debit ?? 0;
-        $balanceCoins = $creditCoins - $debitCoins;
+        $balanceCoins = $user->wallet_balance;
 
 
         $total_redeemable_coins = 0;
@@ -602,10 +604,6 @@ class CheckoutController extends Controller
         $baseplan = Baseplans::findOrFail($request->base_plan_id);
         $campaign = CoinCampaigns::findOrFail($request->camp_id);
         $user = Auth::guard('api')->user();
-
-        if ($baseplan->coupons_per_campaign * $request->quantity > 50) {
-            return response()->json(['message' => 'Coupons count is more!'], 400);
-        }
 
         // Generate coupons only (no saving purchase)
         $couponsList = [];

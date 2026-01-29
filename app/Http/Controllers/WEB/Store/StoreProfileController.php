@@ -3,9 +3,9 @@
 namespace App\Http\Controllers\WEB\Store;
 
 use App\Http\Controllers\Controller;
-use App\Models\Store\AdminShopCommissionDiscount;
 use App\Models\Store\StoreCategory;
 use App\Models\Store\ShopImage;
+use App\Models\Store\SellerApplication;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
@@ -16,16 +16,16 @@ class StoreProfileController extends Controller
     public function edit()
     {
         $seller = Auth::guard('store')->user();
-        $seller->loadMissing('shop.images');
+        $seller->loadMissing('application.shopImages');
 
-        $master = AdminShopCommissionDiscount::resolveForShop($seller->shop?->id);
+        $application = $seller->application;
         $categories = StoreCategory::query()->where('is_active', true)->orderBy('name')->get();
 
+        // All details are fetched directly from the store application
         return view('store.store_profile', [
             'seller' => $seller,
-            'shop' => $seller->shop,
-            'images' => $seller->shop?->images ?? collect(),
-            'master' => $master,
+            'shop' => $application,
+            'images' => $application?->shopImages ?? collect(),
             'categories' => $categories,
         ]);
     }
@@ -57,26 +57,30 @@ class StoreProfileController extends Controller
         }
 
         $seller = Auth::guard('store')->user();
-        $seller->loadMissing('shop');
-        $shop = $seller->shop;
+        $seller->loadMissing('application');
+        $application = $seller->application;
 
-        if (!$shop) {
-            return redirect()->back()->withErrors(['shop' => 'Shop not found for this seller']);
+        if (!$application) {
+            return redirect()->back()->withErrors(['shop' => 'Store application not found for this seller']);
         }
 
-        $shop->update([
-            'shop_name' => $request->input('shop_name'),
-            'category' => $request->input('category'),
+        // Map form fields directly to application columns
+        $updateData = [
+            'store_name' => $request->input('shop_name'),
+            'store_type' => $request->input('category'),
             'owner_name' => $request->input('owner_name'),
-            'phone' => $request->input('phone'),
-            'email' => $request->input('email'),
+            'owner_mobile' => $request->input('phone'),
+            'owner_email' => $request->input('email'),
             'gst_number' => $request->input('gst_number'),
-            'address' => $request->input('address'),
+            'store_address' => $request->input('address'),
             'google_map_url' => $request->input('google_map_url'),
-            'location_lat' => $request->input('location_lat'),
-            'location_lng' => $request->input('location_lng'),
-            'min_bill_amount' => $request->input('min_bill_amount', $shop->min_bill_amount ?? 0),
-        ]);
+            'lat' => $request->input('location_lat'),
+            'lng' => $request->input('location_lng'),
+            'min_bill_amount' => $request->input('min_bill_amount'),
+        ];
+
+        // Update application directly
+        $application->update(array_filter($updateData, fn($v) => $v !== null));
 
         // Optional image upload from same form
         if ($request->hasFile('images')) {
@@ -84,7 +88,7 @@ class StoreProfileController extends Controller
                 if (!$file) {
                     continue;
                 }
-                $dir = public_path("uploads/store/shops/{$shop->shop_code}");
+                $dir = public_path("uploads/store/shops/{$application->shop_code}");
                 if (!File::exists($dir)) {
                     File::makeDirectory($dir, 0755, true);
                 }
@@ -92,9 +96,9 @@ class StoreProfileController extends Controller
                 $fileName = uniqid('shop_', true).'.'.$file->getClientOriginalExtension();
                 $file->move($dir, $fileName);
 
-                $relativePath = "uploads/store/shops/{$shop->shop_code}/{$fileName}";
+                $relativePath = "uploads/store/shops/{$application->shop_code}/{$fileName}";
                 ShopImage::query()->create([
-                    'shop_id' => $shop->id,
+                    'seller_application_id' => $application->id,
                     'image_url' => $relativePath,
                 ]);
             }
@@ -106,14 +110,14 @@ class StoreProfileController extends Controller
     public function deleteImage($id)
     {
         $seller = Auth::guard('store')->user();
-        $seller->loadMissing('shop');
-        $shop = $seller->shop;
+        $seller->loadMissing('application');
+        $application = $seller->application;
 
-        if (!$shop) {
-            return redirect()->back()->withErrors(['shop' => 'Shop not found for this seller']);
+        if (!$application) {
+            return redirect()->back()->withErrors(['shop' => 'Store application not found for this seller']);
         }
 
-        $img = ShopImage::query()->where('shop_id', $shop->id)->where('id', $id)->first();
+        $img = ShopImage::query()->where('seller_application_id', $application->id)->where('id', $id)->first();
         if ($img) {
             if ($img->image_url && !str_starts_with($img->image_url, 'http')) {
                 $fullPath = public_path($img->image_url);

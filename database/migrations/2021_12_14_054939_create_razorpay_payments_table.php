@@ -23,6 +23,7 @@ class CreateRazorpayPaymentsTable extends Migration
             $table->string('color')->nullable();
             $table->text('key')->nullable();
             $table->text('secret_key')->nullable();
+            $table->integer('currency_id')->nullable();
             $table->timestamps();
         });
     }

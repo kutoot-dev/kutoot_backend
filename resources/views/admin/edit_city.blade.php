@@ -81,6 +81,16 @@
                                                value="{{ $city->name ?? '' }}">
                                     </div>
 
+                                    {{-- COUNTRY CODE --}}
+                                    <div class="form-group col-12">
+                                        <label>{{ __('admin.Country Code') }}</label>
+                                        <input type="text"
+                                               name="country_code"
+                                               class="form-control"
+                                               value="{{ $city->country_code ?? '' }}"
+                                               placeholder="IN">
+                                    </div>
+
                                 </div>
 
                                 <div class="row">

@@ -23,14 +23,24 @@ class SyncProductToZohoJob implements ShouldQueue
             return;
         }
 
-        $zohoItemId = $zohoService->createItem([
-            'name'  => $this->product->name,
-            'sku'   => $this->product->sku,
-            'price' => $this->product->price,
-        ]);
+        try {
+            $zohoItemId = $zohoService->createItem([
+                'name'  => $this->product->name,
+                'sku'   => $this->product->sku,
+                'price' => $this->product->price,
+            ]);
 
-        $this->product->update([
-            'zoho_item_id' => $zohoItemId,
-        ]);
+            $this->product->update([
+                'zoho_item_id' => $zohoItemId,
+            ]);
+        } catch (\Exception $e) {
+            \Log::warning('Zoho sync failed for product', [
+                'product_id' => $this->product->id,
+                'error' => $e->getMessage(),
+            ]);
+
+            // Don't re-throw - allow the job to complete without failing the queue
+            // Zoho sync can be retried manually via zoho:sync-products command
+        }
     }
 }

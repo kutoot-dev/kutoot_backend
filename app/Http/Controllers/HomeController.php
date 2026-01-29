@@ -445,15 +445,16 @@ $sliderVisibilty = $status == 1;
 
         $popularCategoryVisibilty = HomePageOneVisibility::find(4);
 
-        $popularCategories = PopularCategory::with('category')->get();
+        $popularCategories = PopularCategory::all();
 
         $category_arr = [];
 
         foreach($popularCategories as $popularCategory){
-
-            $category_arr[] = $popularCategory->category_id;
-
+            if ($popularCategory->first_category_id) $category_arr[] = $popularCategory->first_category_id;
+            if ($popularCategory->second_category_id) $category_arr[] = $popularCategory->second_category_id;
+            if ($popularCategory->third_category_id) $category_arr[] = $popularCategory->third_category_id;
         }
+        $category_arr = array_unique(array_filter($category_arr));
 
         $setting = Setting::first();
 
@@ -463,7 +464,7 @@ $sliderVisibilty = $status == 1;
 
         $popularCategoryVisibilty = $popularCategoryVisibilty->status == 1 ? true : false;
 
-        $popularCategorySidebarBanner = $setting->popular_category_banner;
+        $popularCategorySidebarBanner = $setting?->popular_category_banner;
 
 
 
@@ -976,7 +977,7 @@ $sliderVisibilty = $status == 1;
 
     public function blog(Request $request){
 
-        $paginateQty = CustomPagination::whereId('1')->first()->qty;
+        $paginateQty = CustomPagination::whereId('1')->first()?->qty ?? 10;
 
         $blogs = Blog::with('activeComments')->orderBy('id','desc')->where(['status' => 1]);
 
@@ -1034,7 +1035,7 @@ $sliderVisibilty = $status == 1;
 
 
 
-        $paginateQty = CustomPagination::whereId('4')->first()->qty;
+        $paginateQty = CustomPagination::whereId('4')->first()?->qty ?? 10;
 
         $activeComments = BlogComment::where('blog_id', $blog->id)->orderBy('id','desc')->paginate($paginateQty);
 
@@ -1236,7 +1237,7 @@ $sliderVisibilty = $status == 1;
 
 
 
-        $paginateQty = CustomPagination::whereId('2')->first()->qty;
+        $paginateQty = CustomPagination::whereId('2')->first()?->qty ?? 10;
 
         $products = Product::with('activeVariants.activeVariantItems')->orderBy('id','desc')->where(['status' => 1, 'vendor_id' => $seller->id, 'approval_status' => ProductApprovalStatus::APPROVED]);
 
@@ -1298,7 +1299,7 @@ $sliderVisibilty = $status == 1;
 
 
 
-        $paginateQty = CustomPagination::whereId('2')->first()->qty;
+        $paginateQty = CustomPagination::whereId('2')->first()?->qty ?? 10;
 
 
 
@@ -1324,7 +1325,7 @@ $sliderVisibilty = $status == 1;
 
 
 
-        $shopPageCenterBanner = BannerImage::select('product_slug','image','banner_location','status','after_product_qty','title_one')->find(25);
+        $shopPageCenterBanner = BannerImage::select('product_slug','image','banner_location','status','title_one','title_two','badge')->find(25);
 
         $shopPageSidebarBanner = BannerImage::select('product_slug','image','banner_location','status','title_one','title_two')->find(26);
 
@@ -1386,7 +1387,7 @@ $sliderVisibilty = $status == 1;
 
 
 
-        $paginateQty = CustomPagination::whereId('2')->first()->qty;
+        $paginateQty = CustomPagination::whereId('2')->first()?->qty ?? 10;
 
         $products = Product::with('activeVariants.activeVariantItems')->orderBy('id','desc')->where(['status' => 1, 'approval_status' => ProductApprovalStatus::APPROVED]);
 
@@ -1520,7 +1521,7 @@ $sliderVisibilty = $status == 1;
 
 
 
-        $shopPageCenterBanner = BannerImage::select('product_slug','image','banner_location','status','after_product_qty','title_one')->find(25);
+        $shopPageCenterBanner = BannerImage::select('product_slug','image','banner_location','status','title_one','title_two','badge')->find(25);
 
         $shopPageSidebarBanner = BannerImage::select('product_slug','image','banner_location','status','title_one','title_two')->find(26);
 
@@ -1558,7 +1559,7 @@ $sliderVisibilty = $status == 1;
 
     public function searchProduct(Request $request){
 
-        $paginateQty = CustomPagination::whereId('2')->first()->qty;
+        $paginateQty = CustomPagination::whereId('2')->first()?->qty ?? 10;
 
         if($request->variantItems){
 
@@ -1685,10 +1686,11 @@ $sliderVisibilty = $status == 1;
                 $pop_categories = PopularCategory::all();
 
                 foreach($pop_categories as $pop_category){
-
-                    $popularCategoryArr[] = $pop_category->category_id;
-
+                    if ($pop_category->first_category_id) $popularCategoryArr[] = $pop_category->first_category_id;
+                    if ($pop_category->second_category_id) $popularCategoryArr[] = $pop_category->second_category_id;
+                    if ($pop_category->third_category_id) $popularCategoryArr[] = $pop_category->third_category_id;
                 }
+                $popularCategoryArr = array_unique(array_filter($popularCategoryArr));
 
                 $products = $products->whereIn('category_id', $popularCategoryArr);
 
@@ -1822,7 +1824,7 @@ $sliderVisibilty = $status == 1;
 
 
 
-        $paginateQty = CustomPagination::whereId('5')->first()->qty;
+        $paginateQty = CustomPagination::whereId('5')->first()?->qty ?? 10;
 
         $productReviews = ProductReview::with('user')->where(['status' => 1, 'product_id' =>$product->id])->get()->take(10);
 
@@ -1886,7 +1888,7 @@ $sliderVisibilty = $status == 1;
 
 
 
-        $tagArray = json_decode($product->tags);
+        $tagArray = json_decode($product->tags ?? '[]') ?? [];
 
         $tags = '';
 
@@ -2064,7 +2066,7 @@ $sliderVisibilty = $status == 1;
 
 
 
-        $paginateQty = CustomPagination::whereId('2')->first()->qty;
+        $paginateQty = CustomPagination::whereId('2')->first()?->qty ?? 10;
 
         $products = Product::with('activeVariants.activeVariantItems')->whereIn('id', $product_arr)->orderBy('id','desc')->where(['status' => 1, 'approval_status' => ProductApprovalStatus::APPROVED])->select('id','name', 'short_name', 'slug', 'thumb_image','qty','sold_qty', 'price', 'offer_price','is_undefine','is_featured','new_product', 'is_top', 'is_best')->paginate($paginateQty);
 

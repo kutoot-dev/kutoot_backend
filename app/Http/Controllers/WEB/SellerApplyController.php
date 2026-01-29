@@ -104,12 +104,12 @@ class SellerApplyController extends Controller
         $validator = Validator::make($request->all(), [
             'store_name' => 'required|string|max:255',
             'owner_mobile' => 'required|string|regex:/^[0-9]{10}$/',
-            'owner_email' => 'required|email|max:255',
+            'owner_email' => 'nullable|email|max:255',
             'store_type' => 'required|string|max:100',
-            'store_address' => 'required|string|max:500',
-            'lat' => 'required|numeric',
-            'lng' => 'required|numeric',
-            'min_bill_amount' => 'required|numeric|min:0',
+            'store_address' => 'nullable|string|max:500',
+            'lat' => 'nullable|numeric',
+            'lng' => 'nullable|numeric',
+            'min_bill_amount' => 'nullable|numeric|min:0',
         ]);
 
         if ($validator->fails()) {
@@ -125,7 +125,7 @@ class SellerApplyController extends Controller
                 ->with('error', 'Please verify your mobile number with OTP first')
                 ->withInput();
         }
-        
+
         // Verify email OTP was completed
         $isEmailVerified = Cache::get('otp_email_verified_' . $request->owner_email);
         if (!$isEmailVerified) {
@@ -155,7 +155,7 @@ class SellerApplyController extends Controller
             'store_address' => $request->store_address,
             'lat' => $request->lat,
             'lng' => $request->lng,
-            'min_bill_amount' => $request->min_bill_amount,
+            'min_bill_amount' => $request->min_bill_amount ?? 0,
             'status' => SellerApplication::STATUS_PENDING,
         ]);
 
@@ -176,7 +176,7 @@ class SellerApplyController extends Controller
     public function success()
     {
         $applicationId = session('application_id');
-        
+
         if (!$applicationId) {
             return redirect()->route('seller.apply');
         }

@@ -41,7 +41,7 @@
                                         <td>{{ $brand->seller ? $brand->seller->shop_name : __('admin.Admin') }}</td>
                                         <td>{{ $brand->name }}</td>
                                         <td>{{ $brand->slug }}</td>
-                                        <td> <img class="rounded-circle" src="{{ asset($brand->logo) }}" alt="" width="50px"></td>
+                                        <td> <img class="rounded-circle brand-img" src="{{ asset($brand->logo) }}" alt="{{ $brand->name }}" width="50px"></td>
                                         <td>
                                             @if($brand->status == 1)
                                             <a href="javascript:;" onclick="changeProductBrandStatus({{ $brand->id }})">
@@ -130,7 +130,7 @@
         }
         $.ajax({
             type:"put",
-            data: { 
+            data: {
                 _token : '{{ csrf_token() }}',
                 approval_status: val
             },

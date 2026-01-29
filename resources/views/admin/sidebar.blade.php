@@ -8,9 +8,10 @@
       <div class="sidebar-brand">
         <a href="{{ route('admin.dashboard') }}">
           @if ($setting->logo)
-            <img style="max-width:150px;" src="{{ asset($setting->logo) }}" alt="logo" class="header-logo" />
+            <img style="max-width:150px;" src="{{ asset($setting->logo) }}" alt="logo" class="header-logo logo-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='inline';" />
+            <span style="display:none;font-size:20px;font-weight:700;color:#B22234;">KUTOOT</span>
           @else
-            <label>{{ config('app.name') }}</label>
+            <label style="font-size:20px;font-weight:700;color:#B22234;">KUTOOT</label>
           @endif
         </a>
       </div>
@@ -20,7 +21,17 @@
       <ul class="sidebar-menu">
           <li class="{{ Route::is('admin.dashboard') ? 'active' : '' }}"><a class="nav-link" href="{{ route('admin.dashboard') }}"><i class="fas fa-home"></i> <span>{{__('admin.Dashboard')}}</span></a></li>
 
-          <li class="nav-item dropdown {{ Route::is('admin.all-coin-campaigns') || Route::is('admin.statementsindex') || Route::is('admin.coin-campaign-orders') || Route::is('admin.create-coin-campaign')|| Route::is('admin.all-baseplans') || Route::is('admin.create-baseplans') || Route::is('admin.edit-baseplans') || Route::is('admin.view-baseplans') ||  Route::is('admin.all-prize-campaigns') ||Route::is('admin.edit-coin-campaign') || Route::is('admin.winners.index') || Route::is('admin.view-coin-campaign')  ? 'active' : '' }}">
+          <li class="nav-item dropdown {{ Route::is('admin.coin-ledger.*') ? 'active' : '' }}">
+            <a href="#" class="nav-link has-dropdown"><i class="fas fa-coins"></i><span>{{__('Coin Ledger')}}</span></a>
+
+            <ul class="dropdown-menu">
+              <li class="{{ Route::is('admin.coin-ledger.summary') ? 'active' : '' }}"><a class="nav-link" href="{{ route('admin.coin-ledger.summary') }}">{{__('Dashboard')}}</a></li>
+              <li class="{{ Route::is('admin.coin-ledger.index') ? 'active' : '' }}"><a class="nav-link" href="{{ route('admin.coin-ledger.index') }}">{{__('Transactions')}}</a></li>
+              <li class="{{ Route::is('admin.coin-ledger.zoho-mapping') ? 'active' : '' }}"><a class="nav-link" href="{{ route('admin.coin-ledger.zoho-mapping') }}">{{__('Zoho Mapping')}}</a></li>
+            </ul>
+          </li>
+
+          <li class="nav-item dropdown {{ Route::is('admin.all-coin-campaigns') || Route::is('admin.coin-campaign-orders') || Route::is('admin.create-coin-campaign')|| Route::is('admin.all-baseplans') || Route::is('admin.create-baseplans') || Route::is('admin.edit-baseplans') || Route::is('admin.view-baseplans') ||  Route::is('admin.all-prize-campaigns') ||Route::is('admin.edit-coin-campaign') || Route::is('admin.winners.index') || Route::is('admin.view-coin-campaign')  ? 'active' : '' }}">
             <a href="#" class="nav-link has-dropdown"><i class="fas fa-bullseye"></i><span>{{__('admin.Coin Campaigns')}}</span></a>
 
             <ul class="dropdown-menu">
@@ -34,14 +45,9 @@
 
               <li class="{{ Route::is('admin.all-baseplans') || Route::is('admin.create-baseplans') || Route::is('admin.edit-baseplans') || Route::is('admin.view-baseplans') ? 'active' : '' }}"><a class="nav-link" href="{{ route('admin.all-baseplans') }}">{{__('Base Plans')}}</a></li>
 
-              <li class="{{ request()->is('admin/coin-campaign-orders') || request()->is('admin/admin/purchase/*') ? 'active' : '' }}">
-    <a class="nav-link" href="{{ route('admin.coin-campaign-orders') }}">{{ __('admin.Coin Campaign Orders') }}</a>
-</li>
-
-              {{-- <li class="{{ Route::is('coin-campaign-orders') || Route::is('purchasedetails') ? 'active' : '' }}"><a class="nav-link" href="{{ route('admin.coin-campaign-orders') }}">{{__('admin.Coin Campaign Orders')}}</a></li> --}}
-
-
-              <li class="{{ Route::is('admin.statementsindex') ? 'active' : '' }}"><a class="nav-link" href="{{ route('admin.statementsindex') }}">{{__('User Coins')}}</a></li>
+              <li class="{{ Route::is('admin.coin-campaign-orders') || Route::is('admin.purchasedetails') ? 'active' : '' }}">
+                  <a class="nav-link" href="{{ route('admin.coin-campaign-orders') }}">{{ __('admin.Coin Campaign Orders') }}</a>
+              </li>
 
               <li class="{{ Route::is('admin.winners.index') ? 'active' : '' }}"><a class="nav-link" href="{{ route('admin.winners.index') }}">Winners</a></li>
 
@@ -230,54 +236,95 @@
             </ul>
           </li>
 
-          <li class="nav-item dropdown {{ Route::is('admin.service.*') || Route::is('admin.maintainance-mode') || Route::is('admin.announcement') ||  Route::is('admin.slider.*') || Route::is('admin.home-page') || Route::is('admin.banner-image.index') || Route::is('admin.homepage-one-visibility') || Route::is('admin.cart-bottom-banner') || Route::is('admin.shop-page') || Route::is('admin.seo-setup') || Route::is('admin.menu-visibility') || Route::is('admin.product-detail-page') || Route::is('admin.default-avatar') || Route::is('admin.seller-conditions') || Route::is('admin.subscription-banner') || Route::is('admin.testimonial.*') || Route::is('admin.homepage-section-title') || Route::is('admin.image-content') ? 'active' : '' }}">
+          @php
+              $manageWebsiteRoutes = [
+                  'admin.service.*',
+                  'admin.maintainance-mode',
+                  'admin.announcement',
+                  'admin.slider.*',
+                  'admin.home-page',
+                  'admin.banner-image.index',
+                  'admin.homepage-one-visibility',
+                  'admin.cart-bottom-banner',
+                  'admin.shop-page',
+                  'admin.seo-setup',
+                  'admin.menu-visibility',
+                  'admin.product-detail-page',
+                  'admin.default-avatar',
+                  'admin.seller-conditions',
+                  'admin.subscription-banner',
+                  'admin.testimonial.*',
+                  'admin.homepage-section-title',
+                  'admin.image-content',
+                  'admin.image-items.*',
+                  'admin.sponsor.*',
+                  'admin.store-banner.*',
+                  'admin.store-category.*',
+              ];
+          @endphp
+          <li class="nav-item dropdown {{ activeClass($manageWebsiteRoutes) }}">
             <a href="#" class="nav-link has-dropdown"><i class="fas fa-globe"></i><span>{{__('admin.Manage Website')}}</span></a>
 
             <ul class="dropdown-menu">
 
-                <li class="{{ Route::is('admin.seo-setup') ? 'active' : '' }}"><a class="nav-link" href="{{ route('admin.seo-setup') }}">{{__('admin.SEO Setup')}}</a></li>
+                <li class="{{ activeClass('admin.seo-setup') }}"><a class="nav-link" href="{{ route('admin.seo-setup') }}">{{__('admin.SEO Setup')}}</a></li>
 
-                <li class="{{ Route::is('admin.slider.*') ? 'active' : '' }}"><a class="nav-link" href="{{ route('admin.slider.index') }}">{{__('admin.Slider')}}</a></li>
+                <li class="{{ activeClass('admin.slider.*') }}"><a class="nav-link" href="{{ route('admin.slider.index') }}">{{__('admin.Slider')}}</a></li>
 
-                <li class="{{ Route::is('admin.shop-page') ? 'active' : '' }}"><a class="nav-link" href="{{ route('admin.shop-page') }}">{{ __('admin.Shop Page') }}</a></li>
+                <li class="{{ activeClass('admin.shop-page') }}"><a class="nav-link" href="{{ route('admin.shop-page') }}">{{ __('admin.Shop Page') }}</a></li>
 
-                <li class="{{ Route::is('admin.service.*') ? 'active' : '' }}"><a class="nav-link" href="{{ route('admin.service.index') }}">{{__('admin.Service')}}</a></li>
+                <li class="{{ activeClass('admin.service.*') }}"><a class="nav-link" href="{{ route('admin.service.index') }}">{{__('admin.Service')}}</a></li>
 
-                <li class="{{ Route::is('admin.homepage-section-title') ? 'active' : '' }}"><a class="nav-link" href="{{ route('admin.homepage-section-title') }}">{{__('admin.Homepage Section Title')}}</a></li>
+                <li class="{{ activeClass('admin.homepage-section-title') }}"><a class="nav-link" href="{{ route('admin.homepage-section-title') }}">{{__('admin.Homepage Section Title')}}</a></li>
 
-                <li class="{{ Route::is('admin.seller-conditions') ? 'active' : '' }}"><a class="nav-link" href="{{ route('admin.seller-conditions') }}">{{__('admin.Seller Conditions')}}</a></li>
+                <li class="{{ activeClass('admin.seller-conditions') }}"><a class="nav-link" href="{{ route('admin.seller-conditions') }}">{{__('admin.Seller Conditions')}}</a></li>
 
-               <li class="{{ Route::is('admin.image-items.*') ? 'active' : '' }}"><a class="nav-link" href="{{ route('admin.image-items.index') }}">{{__('Image Items')}}</a></li>
+               <li class="{{ activeClass('admin.image-items.*') }}"><a class="nav-link" href="{{ route('admin.image-items.index') }}">{{__('Image Items')}}</a></li>
 
-                <li class="{{ Route::is('admin.testimonial.*') ? 'active' : '' }}"><a class="nav-link" href="{{ route('admin.testimonial.index') }}">{{__('admin.Testimonial')}}</a></li>
+                <li class="{{ activeClass('admin.sponsor.*') }}"><a class="nav-link" href="{{ route('admin.sponsor.index') }}">{{__('admin.Sponsors')}}</a></li>
+
+                <li class="{{ activeClass('admin.store-banner.*') }}"><a class="nav-link" href="{{ route('admin.store-banner.index') }}">{{__('admin.Store Banners')}}</a></li>
+
+                <li class="{{ activeClass('admin.store-category.*') }}"><a class="nav-link" href="{{ route('admin.store-category.index') }}">{{__('admin.Store Categories')}}</a></li>
+
+                <li class="{{ activeClass('admin.testimonial.*') }}"><a class="nav-link" href="{{ route('admin.testimonial.index') }}">{{__('admin.Testimonial')}}</a></li>
 
 
-                <li class="{{ Route::is('admin.maintainance-mode') ? 'active' : '' }}"><a class="nav-link" href="{{ route('admin.maintainance-mode') }}">{{__('admin.Maintainance Mode')}}</a></li>
+                <li class="{{ activeClass('admin.maintainance-mode') }}"><a class="nav-link" href="{{ route('admin.maintainance-mode') }}">{{__('admin.Maintainance Mode')}}</a></li>
 
-                <li class="{{ Route::is('admin.announcement') ? 'active' : '' }}"><a class="nav-link" href="{{ route('admin.announcement') }}">{{__('admin.Announcement')}}</a></li>
+                <li class="{{ activeClass('admin.announcement') }}"><a class="nav-link" href="{{ route('admin.announcement') }}">{{__('admin.Announcement')}}</a></li>
 
-                <li class="{{ Route::is('admin.subscription-banner') ? 'active' : '' }}"><a class="nav-link" href="{{ route('admin.subscription-banner') }}">{{__('admin.Subscription Banner')}}</a></li>
+                <li class="{{ activeClass('admin.subscription-banner') }}"><a class="nav-link" href="{{ route('admin.subscription-banner') }}">{{__('admin.Subscription Banner')}}</a></li>
 
-                <li class="{{ Route::is('admin.image-content') ? 'active' : '' }}"><a class="nav-link" href="{{ route('admin.image-content') }}">{{__('admin.Image Content')}}</a></li>
+                <li class="{{ activeClass('admin.image-content') }}"><a class="nav-link" href="{{ route('admin.image-content') }}">{{__('admin.Image Content')}}</a></li>
 
-                <li class="{{ Route::is('admin.default-avatar') ? 'active' : '' }}"><a class="nav-link" href="{{ route('admin.default-avatar') }}">{{__('admin.Default Avatar')}}</a></li>
+                <li class="{{ activeClass('admin.default-avatar') }}"><a class="nav-link" href="{{ route('admin.default-avatar') }}">{{__('admin.Default Avatar')}}</a></li>
 
             </ul>
           </li>
 
-          <li class="nav-item dropdown {{ Route::is('admin.footer.*') || Route::is('admin.social-link.*') || Route::is('admin.footer-link.*') || Route::is('admin.second-col-footer-link') || Route::is('admin.third-col-footer-link') ? 'active' : '' }}">
+          @php
+              $footerRoutes = [
+                  'admin.footer.*',
+                  'admin.social-link.*',
+                  'admin.footer-link.*',
+                  'admin.second-col-footer-link',
+                  'admin.third-col-footer-link',
+              ];
+          @endphp
+          <li class="nav-item dropdown {{ activeClass($footerRoutes) }}">
             <a href="#" class="nav-link has-dropdown"><i class="fas fa-th-large"></i><span>{{__('admin.Website Footer')}}</span></a>
 
             <ul class="dropdown-menu">
-                <li class="{{ Route::is('admin.footer.*') ? 'active' : '' }}"><a class="nav-link" href="{{ route('admin.footer.index') }}">{{__('admin.Footer')}}</a></li>
+                <li class="{{ activeClass('admin.footer.*') }}"><a class="nav-link" href="{{ route('admin.footer.index') }}">{{__('admin.Footer')}}</a></li>
 
-                <li class="{{ Route::is('admin.social-link.*') ? 'active' : '' }}"><a class="nav-link" href="{{ route('admin.social-link.index') }}">{{__('admin.Social Link')}}</a></li>
+                <li class="{{ activeClass('admin.social-link.*') }}"><a class="nav-link" href="{{ route('admin.social-link.index') }}">{{__('admin.Social Link')}}</a></li>
 
-                <li class="{{ Route::is('admin.footer-link.*') ? 'active' : '' }}"><a class="nav-link" href="{{ route('admin.footer-link.index') }}">{{__('admin.First Column Link')}}</a></li>
+                <li class="{{ activeClass('admin.footer-link.*') }}"><a class="nav-link" href="{{ route('admin.footer-link.index') }}">{{__('admin.First Column Link')}}</a></li>
 
-                <li class="{{ Route::is('admin.second-col-footer-link') ? 'active' : '' }}"><a class="nav-link" href="{{ route('admin.second-col-footer-link') }}">{{__('admin.Second Column Link')}}</a></li>
+                <li class="{{ activeClass('admin.second-col-footer-link') }}"><a class="nav-link" href="{{ route('admin.second-col-footer-link') }}">{{__('admin.Second Column Link')}}</a></li>
 
-                <li class="{{ Route::is('admin.third-col-footer-link') ? 'active' : '' }}"><a class="nav-link" href="{{ route('admin.third-col-footer-link') }}">{{__('admin.Third Column Link')}}</a></li>
+                <li class="{{ activeClass('admin.third-col-footer-link') }}"><a class="nav-link" href="{{ route('admin.third-col-footer-link') }}">{{__('admin.Third Column Link')}}</a></li>
 
             </ul>
           </li>

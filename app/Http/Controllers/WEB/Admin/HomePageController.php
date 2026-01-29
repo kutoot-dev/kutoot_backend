@@ -25,7 +25,7 @@ class HomePageController extends Controller
     public function homepage_section_content(){
 
         $setting = Setting::first();
-        $sections = json_decode($setting->homepage_section_title);
+        $sections = json_decode($setting->homepage_section_title ?? '[]') ?? [];
         return view('admin.homepage_section_title', compact('sections'));
     }
 
