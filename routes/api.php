@@ -163,13 +163,16 @@ Route::group([
     Route::post('me', [AuthController::class, 'me']);
 
 });
-Route::group(['middleware' => ['demo', 'XSS']], function () {
 
-    // Public Store Categories API with rate limiting (60 requests per minute)
-    Route::middleware(['throttle:60,1'])->group(function () {
-        Route::get('/store-categories', [StoreCategoryController::class, 'apiIndex']);
-        Route::get('/store-categories/{categoryId}/stores', [StoreCategoryController::class, 'apiStoresByCategory']);
-    });
+// Public Store Categories API - NO AUTH REQUIRED (rate limited: 60 requests per minute)
+Route::middleware(['throttle:60,1'])->group(function () {
+    Route::get('/store-categories', [StoreCategoryController::class, 'apiIndex'])
+        ->withoutMiddleware(['auth:admin-api', 'auth:api', 'auth:sanctum', 'auth']);
+    Route::get('/store-categories/{categoryId}/stores', [StoreCategoryController::class, 'apiStoresByCategory'])
+        ->withoutMiddleware(['auth:admin-api', 'auth:api', 'auth:sanctum', 'auth']);
+});
+
+Route::group(['middleware' => ['demo', 'XSS']], function () {
 
     Route::group([], function () {
         // Public sponsors API for store panel
