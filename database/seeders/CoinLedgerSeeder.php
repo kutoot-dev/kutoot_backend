@@ -95,7 +95,7 @@ class CoinLedgerSeeder extends Seeder
                     'reference_id' => 'TXN_' . rand(10000, 99999),
                     'metadata' => json_encode([
                         'source' => 'store_redemption',
-                        'shop_id' => rand(1, 3),
+                        'seller_application_id' => rand(1, 3),
                         'transaction_id' => rand(1000, 9999),
                     ]),
                     'created_at' => $now->copy()->subDays($redeemDaysAgo),

@@ -71,7 +71,7 @@ class UserOrderController extends Controller
         }
 
         if (!$type || $type === 'Store') {
-            $storeQuery = Transaction::with('shop')
+            $storeQuery = Transaction::with('sellerApplication')
                 ->whereHas('visitor', function ($q) use ($user) {
                     $q->where('user_id', $user->id);
                 });
@@ -89,18 +89,18 @@ class UserOrderController extends Controller
             }
 
             $storeTransactions = $storeQuery->get()->map(function ($txn) {
-                $shop = $txn->shop;
+                $application = $txn->sellerApplication;
                 return [
                     'id' => 'ORD-STR-' . $txn->id,
                     'type' => 'Store',
-                    'title' => $shop->shop_name ?? 'Store Order',
+                    'title' => $application->store_name ?? 'Store Order',
                     'description' => '<p>Instant coin redeem bill at partner store near you.</p>', // from spec
-                    'image' => $shop->logo ?? asset('/images/placeholder-store.jpg'),
+                    'image' => $application->store_image ?? asset('/images/placeholder-store.jpg'),
                     'coins' => $txn->redeemed_coins,
                     'progress' => 100, // from spec for store
                     'bill' => [
                         'orderId' => 'ORD-STR-' . $txn->id,
-                        'storeOrCampaign' => $shop->shop_name ?? 'Store Order',
+                        'storeOrCampaign' => $application->store_name ?? 'Store Order',
                         'amount' => $txn->total_amount,
                         'discount' => $txn->discount_amount,
                         'finalPaid' => $txn->total_amount - $txn->discount_amount,
@@ -173,7 +173,7 @@ class UserOrderController extends Controller
             ];
         } elseif (str_starts_with($orderId, 'ORD-STR-')) {
             $id = str_replace('ORD-STR-', '', $orderId);
-            $txn = Transaction::with('shop')
+            $txn = Transaction::with('sellerApplication')
                 ->whereHas('visitor', function ($q) use ($user) {
                     $q->where('user_id', $user->id);
                 })
@@ -184,18 +184,18 @@ class UserOrderController extends Controller
                 return response()->json(['success' => false, 'message' => 'Order not found'], 404);
             }
 
-            $shop = $txn->shop;
+            $application = $txn->sellerApplication;
             $data = [
                 'id' => 'ORD-STR-' . $txn->id,
                 'type' => 'Store',
-                'title' => $shop->shop_name ?? 'Store Order',
+                'title' => $application->store_name ?? 'Store Order',
                 'description' => '<p>Instant coin redeem bill at partner store near you.</p>',
-                'image' => $shop->logo ?? asset('/images/placeholder-store.jpg'),
+                'image' => $application->store_image ?? asset('/images/placeholder-store.jpg'),
                 'coins' => $txn->redeemed_coins,
                 'progress' => 100,
                 'bill' => [
                     'orderId' => 'ORD-STR-' . $txn->id,
-                    'storeOrCampaign' => $shop->shop_name ?? 'Store Order',
+                    'storeOrCampaign' => $application->store_name ?? 'Store Order',
                     'amount' => $txn->total_amount,
                     'discount' => $txn->discount_amount,
                     'finalPaid' => $txn->total_amount - $txn->discount_amount,

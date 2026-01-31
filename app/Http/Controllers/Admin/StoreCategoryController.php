@@ -198,8 +198,11 @@ class StoreCategoryController extends Controller
     {
         $category = StoreCategory::active()->findOrFail($categoryId);
 
-        // Get shops that match the category name
-        $query = \App\Models\Store\Shop::with(['images', 'country', 'state', 'city'])->where('category', $category->name);
+        // Get approved seller applications that match the category name
+        $query = \App\Models\Store\SellerApplication::with(['shopImages'])
+            ->where('status', \App\Models\Store\SellerApplication::STATUS_APPROVED)
+            ->where('is_active', true)
+            ->where('store_type', $category->name);
 
         // Filter by city_id
         if ($request->has('city_id') && !empty($request->city_id)) {
@@ -216,24 +219,24 @@ class StoreCategoryController extends Controller
             $query->where('country_id', $request->country_id);
         }
 
-        // Filter by tags (comma-separated or array)
+        // Filter by tags (comma-separated IDs or array)
         if ($request->has('tags') && !empty($request->tags)) {
-            $tags = is_array($request->tags) ? $request->tags : explode(',', $request->tags);
-            $tags = array_map('trim', $tags);
+            $tagIds = is_array($request->tags) ? $request->tags : explode(',', $request->tags);
+            $tagIds = array_filter(array_map('intval', $tagIds));
 
-            $query->where(function ($q) use ($tags) {
-                foreach ($tags as $tag) {
-                    $q->orWhereJsonContains('tags', $tag);
-                }
-            });
+            if (!empty($tagIds)) {
+                $query->whereHas('storeTags', function ($q) use ($tagIds) {
+                    $q->whereIn('tags.id', $tagIds);
+                });
+            }
         }
 
-        // Search by shop name, address, or owner name
+        // Search by store name, address, or owner name
         if ($request->has('search') && !empty($request->search)) {
             $search = $request->search;
             $query->where(function ($q) use ($search) {
-                $q->where('shop_name', 'like', '%' . $search . '%')
-                  ->orWhere('address', 'like', '%' . $search . '%')
+                $q->where('store_name', 'like', '%' . $search . '%')
+                  ->orWhere('store_address', 'like', '%' . $search . '%')
                   ->orWhere('owner_name', 'like', '%' . $search . '%');
             });
         }
@@ -242,8 +245,8 @@ class StoreCategoryController extends Controller
         $perPage = $request->get('per_page', 15);
         $stores = $query->paginate($perPage);
 
-        $data = $stores->getCollection()->map(function ($shop) {
-            $images = $shop->images->map(function ($img) {
+        $data = $stores->getCollection()->map(function ($application) {
+            $images = $application->shopImages->map(function ($img) {
                 $v = (string) $img->image_url;
                 if ($v === '') {
                     return null;
@@ -252,22 +255,22 @@ class StoreCategoryController extends Controller
             })->filter()->values();
 
             return [
-                'id' => $shop->id,
-                'shop_code' => $shop->shop_code,
-                'shop_name' => $shop->shop_name,
-                'owner_name' => $shop->owner_name,
-                'phone' => $shop->phone,
-                'email' => $shop->email,
-                'address' => $shop->address,
-                'country' => $shop->country ? ['id' => $shop->country->id, 'name' => $shop->country->name] : null,
-                'state' => $shop->state ? ['id' => $shop->state->id, 'name' => $shop->state->name] : null,
-                'city' => $shop->city ? ['id' => $shop->city->id, 'name' => $shop->city->name] : null,
-                'tags' => $shop->tags ?? [],
+                'id' => $application->id,
+                'shop_code' => $application->shop_code,
+                'shop_name' => $application->store_name,
+                'owner_name' => $application->owner_name,
+                'phone' => $application->owner_mobile,
+                'email' => $application->owner_email,
+                'address' => $application->store_address,
+                'country' => $application->country_id ? ['id' => $application->country_id, 'name' => $application->country] : null,
+                'state' => $application->state_id ? ['id' => $application->state_id, 'name' => $application->state] : null,
+                'city' => $application->city_id ? ['id' => $application->city_id, 'name' => $application->city] : null,
+                'tags' => $application->tags ?? [],
                 'location' => [
-                    'lat' => $shop->location_lat,
-                    'lng' => $shop->location_lng,
+                    'lat' => $application->lat,
+                    'lng' => $application->lng,
                 ],
-                'google_map_url' => $shop->google_map_url,
+                'google_map_url' => $application->google_map_url,
                 'images' => $images,
             ];
         });

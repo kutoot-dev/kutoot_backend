@@ -252,6 +252,19 @@ class SellerApplication extends Model
     }
 
     /**
+     * Get tags for this store
+     */
+    public function storeTags()
+    {
+        return $this->belongsToMany(
+            Tag::class,
+            'store_tag',
+            'seller_application_id',
+            'tag_id'
+        );
+    }
+
+    /**
      * Generate a unique shop code
      */
     public static function generateShopCode(): string

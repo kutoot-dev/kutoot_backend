@@ -515,6 +515,11 @@ Route::group(['middleware' => ['demo', 'XSS']], function () {
         Route::put('/shops/{shopId}', [\App\Http\Controllers\WEB\Admin\AdminShopController::class, 'update']);
         Route::post('/shops/{shopId}/images', [\App\Http\Controllers\WEB\Admin\AdminShopController::class, 'uploadImages']);
         Route::delete('/shops/{shopId}/images/{imageId}', [\App\Http\Controllers\WEB\Admin\AdminShopController::class, 'deleteImage']);
+
+        // Store Tags Management
+        Route::get('/tags', [\App\Http\Controllers\WEB\Admin\TagController::class, 'index']);
+        Route::post('/tags', [\App\Http\Controllers\WEB\Admin\TagController::class, 'store']);
+        Route::delete('/tags/{tagId}', [\App\Http\Controllers\WEB\Admin\TagController::class, 'destroy']);
     });
 
     /*

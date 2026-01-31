@@ -24,11 +24,10 @@ class StoreMigrateFresh extends Command
             'shop_visitors',
             'shop_images',
             'store_categories',
-            'shops',
+            'seller_applications',
             'seller_bank_accounts',
             'seller_notification_settings',
             'store_sellers',
-            'admin_shop_commission_discounts',
             'store_migrations',
         ] as $table) {
             if (Schema::hasTable($table)) {

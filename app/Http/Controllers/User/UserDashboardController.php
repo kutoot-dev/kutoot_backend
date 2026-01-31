@@ -153,10 +153,10 @@ class UserDashboardController extends Controller
 
                 if ($item->order_id) {
                     // Try finding transaction
-                    $txn = \App\Models\Store\Transaction::find($item->order_id);
+                    $txn = \App\Models\Store\Transaction::with('sellerApplication')->find($item->order_id);
                     if ($txn) {
-                        $title = "Redeemed at " . ($txn->shop->shop_name ?? 'Store');
-                        $storeId = $txn->shop_id;
+                        $title = "Redeemed at " . ($txn->sellerApplication->store_name ?? 'Store');
+                        $storeId = $txn->seller_application_id;
                         $transactionId = $txn->txn_code;
                         $amountINR = $txn->discount_amount;
                     }
