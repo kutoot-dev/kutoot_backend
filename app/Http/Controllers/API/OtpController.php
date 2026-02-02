@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Mail\OtpMail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 
@@ -52,15 +53,18 @@ class OtpController extends Controller
 
         // Attempt to send SMS
         $smsSent = false;
+        $smsResult = null;
         try {
             $smsResult = SmsHelper::sendOtp($phone, $otp);
-            $smsSent = $smsResult['success'] ?? false;
+            $smsSent = isset($smsResult['success']) && $smsResult['success'];
         } catch (\Exception $e) {
-            \Log::error('SMS sending failed: ' . $e->getMessage());
+            Log::error('SMS sending failed: ' . $e->getMessage());
+            // Return success even if SMS fails, but log the error
+            // The OTP is still valid for 10 minutes
         }
 
         // Log for debugging (remove in production)
-        \Log::info('OTP for ' . $phone . ': ' . $otp);
+        Log::info('OTP for ' . $phone . ': ' . $otp);
 
         $response = [
             'success' => true,
@@ -170,11 +174,11 @@ class OtpController extends Controller
             Mail::to($email)->send(new OtpMail($otp));
             $emailSent = true;
         } catch (\Exception $e) {
-            \Log::error('OTP email sending failed: ' . $e->getMessage());
+            Log::error('OTP email sending failed: ' . $e->getMessage());
         }
 
         // Log for debugging
-        \Log::info('OTP for email ' . $email . ': ' . $otp);
+        Log::info('OTP for email ' . $email . ': ' . $otp);
 
         $response = [
             'success' => true,
