@@ -3380,7 +3380,7 @@ pre {
     top: 0;
     height: 100%;
     width: 250px;
-    background-color: #fff;
+    background-color: #3B322B;
     z-index: 880;
     left: 0;
 }
@@ -3901,7 +3901,7 @@ body.layout-3 .main-footer {
     padding: 0 20px;
     width: 100%;
     letter-spacing: 0.3px;
-    color: #78828a;
+    color: #f2f2f2;
     text-decoration: none;
 }
 .main-sidebar .sidebar-menu li a .badge {
@@ -3922,9 +3922,11 @@ body.layout-3 .main-footer {
     background-color: #f8fafb;
 }
 .main-sidebar .sidebar-menu li.active a {
-    color: black;
+    color: white;
     font-weight: 600;
-    background-color:linear-gradient(rgba(255, 122, 24, 0.1));
+    background-color: linear-gradient(rgba(255, 122, 24, 0.1));
+    /* background-color: #FFFDF2; */
+
 
 }
 .main-sidebar .sidebar-menu li.active a.has-dropdown:after {
@@ -3964,8 +3966,8 @@ body.layout-3 .main-footer {
     font-weight: 400;
 }
 .main-sidebar .sidebar-menu li ul.dropdown-menu li a:hover {
-    color: #6777ef;
-    background-color: inherit;
+    color: rgb(255, 170, 105);
+    background-color: #FFFDF2;
 }
 .main-sidebar .sidebar-menu li ul.dropdown-menu li.active > a {
     color: #6777ef;
