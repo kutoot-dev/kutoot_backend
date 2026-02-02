@@ -55,6 +55,14 @@ class SellerAuthController extends Controller
             ->values()
             ->all();
 
+        // Get bank details
+        $bank = \App\Models\Store\SellerBankAccount::query()->where('seller_id', $seller->id)->first();
+        $maskedAccountNumber = null;
+        if ($bank?->account_number) {
+            $last4 = substr($bank->account_number, -4);
+            $maskedAccountNumber = 'XXXXXX' . $last4;
+        }
+
         return response()->json([
             'success' => true,
             'message' => 'Login successful',
@@ -69,6 +77,13 @@ class SellerAuthController extends Controller
                     'email' => $seller->email,
                     'phone' => $seller->phone,
                     'status' => $seller->status ? 'ACTIVE' : 'INACTIVE',
+                ],
+                'bankDetails' => [
+                    'bankName' => $bank?->bank_name,
+                    'accountNumber' => $maskedAccountNumber,
+                    'ifsc' => $bank?->ifsc,
+                    'upiId' => $bank?->upi_id,
+                    'beneficiaryName' => $bank?->beneficiary_name,
                 ],
             ],
         ]);
@@ -90,6 +105,14 @@ class SellerAuthController extends Controller
         $seller = Auth::guard('store-api')->user();
         $seller->loadMissing('application');
 
+        // Get bank details
+        $bank = \App\Models\Store\SellerBankAccount::query()->where('seller_id', $seller->id)->first();
+        $maskedAccountNumber = null;
+        if ($bank?->account_number) {
+            $last4 = substr($bank->account_number, -4);
+            $maskedAccountNumber = 'XXXXXX' . $last4;
+        }
+
         return response()->json([
             'success' => true,
             'data' => [
@@ -99,9 +122,14 @@ class SellerAuthController extends Controller
                 'ownerName' => $seller->owner_name,
                 'email' => $seller->email,
                 'phone' => $seller->phone,
+                'bankDetails' => [
+                    'bankName' => $bank?->bank_name,
+                    'accountNumber' => $maskedAccountNumber,
+                    'ifsc' => $bank?->ifsc,
+                    'upiId' => $bank?->upi_id,
+                    'beneficiaryName' => $bank?->beneficiary_name,
+                ],
             ],
         ]);
     }
 }
-
-

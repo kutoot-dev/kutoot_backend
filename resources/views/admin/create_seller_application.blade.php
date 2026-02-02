@@ -2,6 +2,11 @@
 @section('title')
 <title>Create Store Application</title>
 @endsection
+
+{{-- Leaflet CSS for map --}}
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+{{-- Leaflet JS for map --}}
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 @section('admin-content')
 <div class="main-content">
     <section class="section">
@@ -144,12 +149,30 @@
 
                                         <div class="form-group">
                                             <label>Latitude</label>
-                                            <input type="number" name="lat" class="form-control" step="0.0000001" value="{{ old('lat') }}" placeholder="e.g., 12.9716">
+                                            <input type="number" name="lat" id="lat" class="form-control" step="0.0000001" value="{{ old('lat') }}" placeholder="e.g., 12.9716">
                                         </div>
 
                                         <div class="form-group">
                                             <label>Longitude</label>
-                                            <input type="number" name="lng" class="form-control" step="0.0000001" value="{{ old('lng') }}" placeholder="e.g., 77.5946">
+                                            <input type="number" name="lng" id="lng" class="form-control" step="0.0000001" value="{{ old('lng') }}" placeholder="e.g., 77.5946">
+                                        </div>
+
+                                        <div class="form-group" id="googleMapsLinkContainer" style="display: none;">
+                                            <a href="#" id="googleMapsLink" target="_blank" class="btn btn-outline-primary btn-sm">
+                                                <i class="fas fa-external-link-alt"></i> View on Google Maps
+                                            </a>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label>&nbsp;</label>
+                                            <div class="btn-group w-100" role="group">
+                                                <button type="button" class="btn btn-info" onclick="getCurrentLocation()">
+                                                    <i class="fas fa-crosshairs"></i> Current Location
+                                                </button>
+                                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#mapModal">
+                                                    <i class="fas fa-map-marker-alt"></i> Select on Map
+                                                </button>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -261,9 +284,195 @@
     </section>
 </div>
 
+{{-- Map Modal for Location Selection --}}
+<div class="modal fade" id="mapModal" tabindex="-1" role="dialog" aria-labelledby="mapModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="mapModalLabel">Select Location on Map</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div id="map" style="height: 400px; width: 100%;"></div>
+                <div class="mt-2 text-muted">
+                    <small>Click on the map to select a location or use the "Current Location" button</small>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary" onclick="confirmLocation()">Confirm Location</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script>
     (function($) {
         "use strict";
+
+        let map = null;
+        let marker = null;
+
+        // Initialize map when modal is shown
+        $('#mapModal').on('shown.bs.modal', function () {
+            setTimeout(function() {
+                // Try to get current location when map modal opens
+                if (navigator.geolocation && !$('#lat').val() && !$('#lng').val()) {
+                    navigator.geolocation.getCurrentPosition(
+                        function(position) {
+                            const lat = position.coords.latitude;
+                            const lng = position.coords.longitude;
+                            $('#lat').val(lat.toFixed(7));
+                            $('#lng').val(lng.toFixed(7));
+                            // Update Google Maps link
+                            updateGoogleMapsLink(lat.toFixed(7), lng.toFixed(7));
+                            initMap();
+                        },
+                        function() {
+                            // Fallback to default if geolocation fails
+                            initMap();
+                        },
+                        { enableHighAccuracy: true, timeout: 5000 }
+                    );
+                } else {
+                    if (map) {
+                        map.invalidateSize();
+                    } else {
+                        initMap();
+                    }
+                }
+            }, 300); // Increased timeout for modal animation to complete
+        });
+
+        function initMap() {
+            // Get initial coordinates from inputs or default to center
+            const lat = parseFloat($('#lat').val()) || 20.5937; // Default to India center
+            const lng = parseFloat($('#lng').val()) || 78.9629;
+
+            // Initialize Leaflet map
+            map = L.map('map').setView([lat, lng], 13);
+
+            // Add OpenStreetMap tiles
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; OpenStreetMap contributors'
+            }).addTo(map);
+
+            // Add marker if coordinates exist
+            if ($('#lat').val() && $('#lng').val()) {
+                marker = L.marker([lat, lng], { draggable: true }).addTo(map);
+            }
+
+            // Add click handler to place marker
+            map.on('click', function(e) {
+                if (marker) {
+                    marker.setLatLng(e.latlng);
+                } else {
+                    marker = L.marker(e.latlng, { draggable: true }).addTo(map);
+                }
+                updateCoordinates(e.latlng);
+            });
+
+            // Update coordinates when marker is dragged
+            if (marker) {
+                marker.on('dragend', function(e) {
+                    updateCoordinates(e.target.getLatLng());
+                });
+            }
+        }
+
+        function updateCoordinates(latlng) {
+            $('#lat').val(latlng.lat.toFixed(7));
+            $('#lng').val(latlng.lng.toFixed(7));
+            // Update Google Maps link
+            updateGoogleMapsLink(latlng.lat.toFixed(7), latlng.lng.toFixed(7));
+        }
+
+        // Update Google Maps link dynamically
+        function updateGoogleMapsLink(lat, lng) {
+            const $link = $('#googleMapsLink');
+            const $container = $('#googleMapsLinkContainer');
+            if (lat && lng) {
+                $link.attr('href', 'https://www.google.com/maps?q=' + lat + ',' + lng);
+                $container.show();
+            } else {
+                $container.hide();
+            }
+        }
+
+        // Listen for manual input changes on lat/lng fields
+        $('#lat, #lng').on('input change', function() {
+            const lat = $('#lat').val();
+            const lng = $('#lng').val();
+            updateGoogleMapsLink(lat, lng);
+        });
+
+        // Get current location using Geolocation API
+        window.getCurrentLocation = function() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    function(position) {
+                        const lat = position.coords.latitude;
+                        const lng = position.coords.longitude;
+
+                        $('#lat').val(lat.toFixed(7));
+                        $('#lng').val(lng.toFixed(7));
+
+                        // Update Google Maps link
+                        updateGoogleMapsLink(lat.toFixed(7), lng.toFixed(7));
+
+                        // Update map if it's initialized
+                        if (map) {
+                            map.setView([lat, lng], 15);
+                            if (marker) {
+                                marker.setLatLng([lat, lng]);
+                            } else {
+                                marker = L.marker([lat, lng], { draggable: true }).addTo(map);
+                                marker.on('dragend', function(e) {
+                                    updateCoordinates(e.target.getLatLng());
+                                });
+                            }
+                        }
+
+                        // Show modal with current location if map is not visible
+                        if (!$('#mapModal').hasClass('show')) {
+                            $('#mapModal').modal('show');
+                        }
+
+                        alert('Location found! Latitude: ' + lat.toFixed(5) + ', Longitude: ' + lng.toFixed(5));
+                    },
+                    function(error) {
+                        let errorMessage = 'Unable to get your location.';
+                        switch(error.code) {
+                            case error.PERMISSION_DENIED:
+                                errorMessage = 'Location access was denied. Please enable location permissions.';
+                                break;
+                            case error.POSITION_UNAVAILABLE:
+                                errorMessage = 'Location information is unavailable.';
+                                break;
+                            case error.TIMEOUT:
+                                errorMessage = 'Location request timed out.';
+                                break;
+                        }
+                        alert(errorMessage);
+                    },
+                    {
+                        enableHighAccuracy: true,
+                        timeout: 10000,
+                        maximumAge: 0
+                    }
+                );
+            } else {
+                alert('Geolocation is not supported by this browser.');
+            }
+        };
+
+        // Confirm location from modal
+        window.confirmLocation = function() {
+            $('#mapModal').modal('hide');
+        };
+
         $(document).ready(function () {
             // Initialize select2 if available
             if ($.fn.select2) {

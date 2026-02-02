@@ -2,6 +2,9 @@
 @section('title')
 <title>Seller Application - {{ $application->application_id }}</title>
 @endsection
+
+{{-- Leaflet CSS for map --}}
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 @section('admin-content')
 <div class="main-content">
     <section class="section">
@@ -180,9 +183,12 @@
                                 <h6 class="text-muted mb-2">Full Address</h6>
                                 <p class="mb-2 p-2 bg-light rounded">{{ $application->store_address ?? 'Not Provided' }}</p>
                                 @if($application->lat && $application->lng)
+                                <div id="viewMap" style="height: 250px; width: 100%;" class="mb-2"></div>
                                 <a href="https://www.google.com/maps?q={{ $application->lat }},{{ $application->lng }}" target="_blank" class="btn btn-outline-primary btn-sm">
-                                    <i class="fas fa-map-marker-alt"></i> View on Google Maps
+                                    <i class="fas fa-external-link-alt"></i> View on Google Maps
                                 </a>
+                                @else
+                                <p class="text-muted">No location coordinates available</p>
                                 @endif
                             </div>
 
@@ -532,5 +538,33 @@
         </div>
     </section>
 </div>
+
+{{-- Leaflet JS for map --}}
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+    (function($) {
+        "use strict";
+
+        $(document).ready(function () {
+            @if($application->lat && $application->lng)
+            // Initialize map for viewing location
+            const lat = {{ $application->lat }};
+            const lng = {{ $application->lng }};
+
+            const map = L.map('viewMap').setView([lat, lng], 15);
+
+            // Add OpenStreetMap tiles
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; OpenStreetMap contributors'
+            }).addTo(map);
+
+            // Add marker for the location
+            L.marker([lat, lng]).addTo(map)
+                .bindPopup('<strong>{{ $application->store_name ?? 'Store Location' }}</strong><br>{{ $application->store_address ?? '' }}')
+                .openPopup();
+            @endif
+        });
+    })(jQuery);
+</script>
 @endsection
 
