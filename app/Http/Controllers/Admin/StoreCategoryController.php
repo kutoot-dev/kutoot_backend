@@ -236,8 +236,8 @@ class StoreCategoryController extends Controller
             $search = $request->search;
             $query->where(function ($q) use ($search) {
                 $q->where('store_name', 'like', '%' . $search . '%')
-                  ->orWhere('store_address', 'like', '%' . $search . '%')
-                  ->orWhere('owner_name', 'like', '%' . $search . '%');
+                    ->orWhere('store_address', 'like', '%' . $search . '%')
+                    ->orWhere('owner_name', 'like', '%' . $search . '%');
             });
         }
 
@@ -246,13 +246,32 @@ class StoreCategoryController extends Controller
         $stores = $query->paginate($perPage);
 
         $data = $stores->getCollection()->map(function ($application) {
-            $images = $application->shopImages->map(function ($img) {
+            // Determine main image
+            $mainImage = $application->store_image ?
+                (str_starts_with($application->store_image, 'http') ? $application->store_image : asset($application->store_image)) :
+                null;
+
+            // Additional images from relationship (shop_images table)
+            $relImages = $application->shopImages->map(function ($img) {
                 $v = (string) $img->image_url;
-                if ($v === '') {
+                if ($v === '')
                     return null;
-                }
                 return str_starts_with($v, 'http') ? $v : asset($v);
-            })->filter()->values();
+            })->filter()->values()->toArray();
+
+            // Additional images from JSON field (images column)
+            $fieldImages = [];
+            if ($application->images) {
+                $imageArray = is_array($application->images) ? $application->images : json_decode($application->images, true);
+                if ($imageArray) {
+                    foreach ($imageArray as $img) {
+                        $fieldImages[] = str_starts_with($img, 'http') ? $img : asset($img);
+                    }
+                }
+            }
+
+            // Combined unique additional images
+            $allAdditionalImages = array_values(array_unique(array_merge($relImages, $fieldImages)));
 
             return [
                 'id' => $application->id,
@@ -271,7 +290,9 @@ class StoreCategoryController extends Controller
                     'lng' => $application->lng,
                 ],
                 'google_map_url' => $application->google_map_url,
-                'images' => $images,
+                'image' => $mainImage,
+                'images' => $allAdditionalImages,
+                'additional_images' => $allAdditionalImages,
             ];
         });
 
