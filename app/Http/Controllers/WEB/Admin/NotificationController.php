@@ -8,6 +8,9 @@ use App\Models\TwilioSms;
 use App\Models\BiztechSms;
 use App\Models\SmsTemplate;
 
+/**
+ * @group Notification
+ */
 class NotificationController extends Controller
 {
     public function __construct()

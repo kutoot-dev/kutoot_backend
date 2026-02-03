@@ -7,6 +7,9 @@ use App\Models\DeliveryManReview;
 use App\Http\Controllers\Controller;
 use Auth;
 
+/**
+ * @group My Review
+ */
 class MyReviewController extends Controller
 {
     public function index(){

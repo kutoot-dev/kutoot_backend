@@ -17,6 +17,9 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use Nnjeim\World\World;
 
+/**
+ * @group Seller Application
+ */
 class SellerApplicationController extends Controller
 {
     public function __construct()

@@ -8,6 +8,9 @@ use App\Models\StoreBanner;
 use App\Helpers\ImageHelper;
 use Illuminate\Support\Str;
 
+/**
+ * @group Store Banner
+ */
 class StoreBannerController extends Controller
 {
     public function __construct()

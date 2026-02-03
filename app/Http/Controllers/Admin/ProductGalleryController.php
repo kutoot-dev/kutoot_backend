@@ -8,6 +8,9 @@ use App\Models\Product;
 use Illuminate\Http\Request;
 use App\Helpers\ImageHelper;
 
+/**
+ * @group Product Gallery
+ */
 class ProductGalleryController extends Controller
 {
     public function __construct()

@@ -8,6 +8,9 @@ use App\Http\Controllers\Controller;
 use Auth;
 use Hash;
 
+/**
+ * @group Delivery Man Login
+ */
 class DeliveryManLoginController extends Controller
 {
    public function loginPage(){

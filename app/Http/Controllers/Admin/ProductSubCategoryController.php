@@ -9,6 +9,9 @@ use Illuminate\Http\Request;
 use App\Models\PopularCategory;
 use App\Models\ThreeColumnCategory;
 use App\Models\MegaMenuSubCategory;
+/**
+ * @group Product Sub Category
+ */
 class ProductSubCategoryController extends Controller
 {
     public function __construct()

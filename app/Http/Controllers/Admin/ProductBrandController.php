@@ -9,6 +9,9 @@ use Illuminate\Http\Request;
 use App\Helpers\ImageHelper;
 use Illuminate\Support\Str;
 
+/**
+ * @group Product Brand
+ */
 class ProductBrandController extends Controller
 {
 

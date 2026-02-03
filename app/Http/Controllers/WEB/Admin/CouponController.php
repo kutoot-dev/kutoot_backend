@@ -6,6 +6,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Coupon;
 use App\Models\Setting;
+/**
+ * @group Coupon
+ */
 class CouponController extends Controller
 {
     public function __construct()

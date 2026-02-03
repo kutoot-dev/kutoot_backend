@@ -6,6 +6,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\HomePageOneVisibility;
 
+/**
+ * @group Gen Homepage Visibility
+ */
 class GenHomepageVisibilityController extends Controller
 {
      public function __construct()

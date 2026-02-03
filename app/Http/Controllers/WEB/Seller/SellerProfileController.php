@@ -18,6 +18,9 @@ use Image;
 use File;
 use Str;
 use Hash;
+/**
+ * @group Seller Profile
+ */
 class SellerProfileController extends Controller
 {
     public function __construct()

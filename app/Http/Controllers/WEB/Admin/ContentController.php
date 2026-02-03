@@ -12,6 +12,9 @@ use App\Models\ShopPage;
 use App\Models\SeoSetting;
 use Image;
 use File;
+/**
+ * @group Content
+ */
 class ContentController extends Controller
 {
     public function __construct()

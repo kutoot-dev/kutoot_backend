@@ -12,6 +12,9 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 
+/**
+ * @group Otp
+ */
 class OtpController extends Controller
 {
     /**

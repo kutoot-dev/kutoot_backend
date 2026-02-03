@@ -6,6 +6,9 @@ use App\Models\Order;
 use App\Services\ShiprocketService;
 use Illuminate\Http\Request;
 
+/**
+ * @group Shipping
+ */
 class ShippingController extends Controller
 {
     /**

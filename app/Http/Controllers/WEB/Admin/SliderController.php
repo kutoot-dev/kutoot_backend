@@ -8,6 +8,9 @@ use App\Models\Slider;
 use App\Models\Product;
 use App\Helpers\ImageHelper;
 
+/**
+ * @group Slider
+ */
 class SliderController extends Controller
 {
     public function __construct()

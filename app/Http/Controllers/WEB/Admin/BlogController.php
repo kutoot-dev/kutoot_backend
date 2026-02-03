@@ -12,6 +12,9 @@ use Illuminate\Http\Request;
 use  Image;
 use File;
 use Auth;
+/**
+ * @group Blog
+ */
 class BlogController extends Controller
 {
     public function __construct()

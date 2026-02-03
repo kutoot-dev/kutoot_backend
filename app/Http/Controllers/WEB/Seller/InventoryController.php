@@ -8,6 +8,9 @@ use App\Models\Product;
 use App\Models\Inventory;
 use App\Models\Setting;
 use Auth;
+/**
+ * @group Inventory
+ */
 class InventoryController extends Controller
 {
     public function __construct()

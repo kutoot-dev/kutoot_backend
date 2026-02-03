@@ -9,6 +9,9 @@ use App\Models\OrderAmount;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
+/**
+ * @group Delivery Man Order Amount
+ */
 class DeliveryManOrderAmountController extends Controller
 {
     public function index(){

@@ -7,6 +7,9 @@ use Illuminate\Http\Request;
 use App\Models\ContactPage;
 use Image;
 use File;
+/**
+ * @group Contact Page
+ */
 class ContactPageController extends Controller
 {
     public function __construct()

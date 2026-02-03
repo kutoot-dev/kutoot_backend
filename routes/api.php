@@ -328,7 +328,7 @@ Route::group(['middleware' => ['demo', 'XSS']], function () {
             Route::get('clear-wishlist', [UserProfileController::class, 'clearWishlist'])->name('clear-wishlist');
             Route::post('product-report', [UserProfileController::class, 'storeProductReport'])->name('product-report');
             Route::post('store-product-review', [UserProfileController::class, 'storeProductReview'])->name('store-product-review');
-            Route::post('update-review/{id}', [UserProfileController::class, 'updateReview'])->name('update-review');
+            // Route::post('update-review/{id}', [UserProfileController::class, 'updateReview'])->name('update-review');
 
             Route::delete('remove-account', [UserProfileController::class, 'remove_account'])->name('remove-account');
 

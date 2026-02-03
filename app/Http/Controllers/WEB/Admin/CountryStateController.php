@@ -7,6 +7,9 @@ use Illuminate\Http\Request;
 use Nnjeim\World\Models\State;
 use Nnjeim\World\Models\Country;
 
+/**
+ * @group Country State
+ */
 class CountryStateController extends Controller
 {
     public function __construct()

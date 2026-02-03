@@ -10,6 +10,9 @@ use App\Models\Product;
 use App\Models\Category;
 use Image;
 use File;
+/**
+ * @group Advertisement
+ */
 class AdvertisementController extends Controller
 {
     public function __construct()

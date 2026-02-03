@@ -12,6 +12,9 @@ use Pusher;
 use Auth;
 use App\Events\SellerToUser;
 
+/**
+ * @group Seller Message Contoller
+ */
 class SellerMessageContoller extends Controller
 {
 

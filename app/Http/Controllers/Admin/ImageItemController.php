@@ -8,6 +8,9 @@ use App\Models\ImageItem;
 use App\Models\ImageType;
 use Illuminate\Support\Facades\Storage;
 
+/**
+ * @group Image Item
+ */
 class ImageItemController extends Controller
 {
     /**

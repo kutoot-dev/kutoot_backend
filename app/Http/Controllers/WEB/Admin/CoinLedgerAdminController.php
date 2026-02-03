@@ -10,6 +10,9 @@ use App\Exports\CoinLedgerExport;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 
+/**
+ * @group Coin Ledger Admin
+ */
 class CoinLedgerAdminController extends Controller
 {
     protected $coinService;

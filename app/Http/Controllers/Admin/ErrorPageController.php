@@ -5,6 +5,9 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\ErrorPage;
+/**
+ * @group Error Page
+ */
 class ErrorPageController extends Controller
 {
     public function __construct()

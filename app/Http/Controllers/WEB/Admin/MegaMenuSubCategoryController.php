@@ -8,6 +8,9 @@ use App\Models\MegaMenuCategory;
 use App\Models\MegaMenuSubCategory;
 use App\Models\SubCategory;
 use App\Models\Category;
+/**
+ * @group Mega Menu Sub Category
+ */
 class MegaMenuSubCategoryController extends Controller
 {
     public function __construct()

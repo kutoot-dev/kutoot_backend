@@ -12,6 +12,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Schema;
 
+/**
+ * @group User Ledger
+ */
 class UserLedgerController extends Controller
 {
     private function parseIndianOrIsoDateTime(?string $value, ?Carbon $fallback = null): ?Carbon

@@ -11,6 +11,9 @@ use Auth;
 use Image;
 use File;
 
+/**
+ * @group Seller Brand
+ */
 class SellerBrandController extends Controller
 {
     public function __construct()

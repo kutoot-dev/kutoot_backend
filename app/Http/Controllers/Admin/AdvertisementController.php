@@ -8,6 +8,9 @@ use App\Models\BannerImage;
 use App\Models\ShopPage;
 use Image;
 use File;
+/**
+ * @group Advertisement
+ */
 class AdvertisementController extends Controller
 {
     public function __construct()

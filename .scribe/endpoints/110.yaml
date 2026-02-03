@@ -1,0 +1,165 @@
+name: Footer
+description: ''
+endpoints:
+  -
+    httpMethods:
+      - GET
+    uri: api/admin/footer
+    metadata:
+      groupName: Footer
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: ''
+      description: ''
+      authenticated: false
+      custom: []
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        status: 401
+        content: '{"message":"UnAuthenticated"}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          access-control-allow-origin: '*'
+          access-control-allow-methods: 'GET, POST, PUT, DELETE, OPTIONS, PATCH'
+          access-control-allow-headers: 'Origin, X-Requested-With, Content-Type, Accept, Authorization, X-CSRF-TOKEN'
+          access-control-allow-credentials: 'true'
+          access-control-max-age: '86400'
+        description: null
+        custom: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - PUT
+      - PATCH
+    uri: 'api/admin/footer/{id}'
+    metadata:
+      groupName: Footer
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: ''
+      description: ''
+      authenticated: false
+      custom: []
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      id:
+        name: id
+        description: 'The ID of the footer.'
+        required: true
+        example: 19
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+    cleanUrlParameters:
+      id: 19
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      email:
+        name: email
+        description: ''
+        required: true
+        example: et
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+      phone:
+        name: phone
+        description: ''
+        required: true
+        example: eum
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+      address:
+        name: address
+        description: ''
+        required: true
+        example: autem
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+      copyright:
+        name: copyright
+        description: ''
+        required: true
+        example: repudiandae
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+      first_column:
+        name: first_column
+        description: ''
+        required: true
+        example: ad
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+      second_column:
+        name: second_column
+        description: ''
+        required: true
+        example: rerum
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+      third_column:
+        name: third_column
+        description: ''
+        required: true
+        example: dolorem
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+    cleanBodyParameters:
+      email: et
+      phone: eum
+      address: autem
+      copyright: repudiandae
+      first_column: ad
+      second_column: rerum
+      third_column: dolorem
+    fileParameters: []
+    responses: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []

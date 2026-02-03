@@ -6,6 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Models\BlogCategory;
 use Illuminate\Http\Request;
 
+/**
+ * @group Blog Category
+ */
 class BlogCategoryController extends Controller
 {
     public function __construct()

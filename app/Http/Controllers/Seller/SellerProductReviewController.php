@@ -6,6 +6,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\ProductReview;
 use Auth;
+/**
+ * @group Seller Product Review
+ */
 class SellerProductReviewController extends Controller
 {
     public function __construct()

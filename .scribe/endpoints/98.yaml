@@ -1,0 +1,745 @@
+name: 'Payment Method'
+description: ''
+endpoints:
+  -
+    httpMethods:
+      - GET
+    uri: api/admin/payment-method
+    metadata:
+      groupName: 'Payment Method'
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: ''
+      description: ''
+      authenticated: false
+      custom: []
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        status: 401
+        content: '{"message":"UnAuthenticated"}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          access-control-allow-origin: '*'
+          access-control-allow-methods: 'GET, POST, PUT, DELETE, OPTIONS, PATCH'
+          access-control-allow-headers: 'Origin, X-Requested-With, Content-Type, Accept, Authorization, X-CSRF-TOKEN'
+          access-control-allow-credentials: 'true'
+          access-control-max-age: '86400'
+        description: null
+        custom: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - PUT
+    uri: api/admin/update-paypal
+    metadata:
+      groupName: 'Payment Method'
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: ''
+      description: ''
+      authenticated: false
+      custom: []
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      paypal_client_id:
+        name: paypal_client_id
+        description: ''
+        required: true
+        example: temporibus
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+      paypal_secret_key:
+        name: paypal_secret_key
+        description: ''
+        required: true
+        example: officiis
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+      account_mode:
+        name: account_mode
+        description: ''
+        required: true
+        example: expedita
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+      country_name:
+        name: country_name
+        description: ''
+        required: true
+        example: dolore
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+      currency_name:
+        name: currency_name
+        description: ''
+        required: true
+        example: assumenda
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+      currency_rate:
+        name: currency_rate
+        description: ''
+        required: true
+        example: laboriosam
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+    cleanBodyParameters:
+      paypal_client_id: temporibus
+      paypal_secret_key: officiis
+      account_mode: expedita
+      country_name: dolore
+      currency_name: assumenda
+      currency_rate: laboriosam
+    fileParameters: []
+    responses: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - PUT
+    uri: api/admin/update-stripe
+    metadata:
+      groupName: 'Payment Method'
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: ''
+      description: ''
+      authenticated: false
+      custom: []
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      stripe_key:
+        name: stripe_key
+        description: ''
+        required: true
+        example: est
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+      stripe_secret:
+        name: stripe_secret
+        description: ''
+        required: true
+        example: rerum
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+      country_name:
+        name: country_name
+        description: ''
+        required: true
+        example: vero
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+      currency_name:
+        name: currency_name
+        description: ''
+        required: true
+        example: beatae
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+      currency_rate:
+        name: currency_rate
+        description: ''
+        required: true
+        example: eaque
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+    cleanBodyParameters:
+      stripe_key: est
+      stripe_secret: rerum
+      country_name: vero
+      currency_name: beatae
+      currency_rate: eaque
+    fileParameters: []
+    responses: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - PUT
+    uri: api/admin/update-razorpay
+    metadata:
+      groupName: 'Payment Method'
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: ''
+      description: ''
+      authenticated: false
+      custom: []
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      razorpay_key:
+        name: razorpay_key
+        description: ''
+        required: true
+        example: id
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+      razorpay_secret:
+        name: razorpay_secret
+        description: ''
+        required: true
+        example: eos
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+      name:
+        name: name
+        description: ''
+        required: true
+        example: ducimus
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+      description:
+        name: description
+        description: ''
+        required: true
+        example: est
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+      currency_rate:
+        name: currency_rate
+        description: ''
+        required: true
+        example: doloremque
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+      theme_color:
+        name: theme_color
+        description: ''
+        required: true
+        example: dolorum
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+      currency_name:
+        name: currency_name
+        description: ''
+        required: true
+        example: molestiae
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+      country_name:
+        name: country_name
+        description: ''
+        required: true
+        example: error
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+    cleanBodyParameters:
+      razorpay_key: id
+      razorpay_secret: eos
+      name: ducimus
+      description: est
+      currency_rate: doloremque
+      theme_color: dolorum
+      currency_name: molestiae
+      country_name: error
+    fileParameters: []
+    responses: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - PUT
+    uri: api/admin/update-bank
+    metadata:
+      groupName: 'Payment Method'
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: ''
+      description: ''
+      authenticated: false
+      custom: []
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      account_info:
+        name: account_info
+        description: ''
+        required: true
+        example: non
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+    cleanBodyParameters:
+      account_info: non
+    fileParameters: []
+    responses: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - PUT
+    uri: api/admin/update-mollie
+    metadata:
+      groupName: 'Payment Method'
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: ''
+      description: ''
+      authenticated: false
+      custom: []
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      mollie_key:
+        name: mollie_key
+        description: ''
+        required: true
+        example: aut
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+      mollie_currency_rate:
+        name: mollie_currency_rate
+        description: ''
+        required: true
+        example: veritatis
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+      mollie_country_name:
+        name: mollie_country_name
+        description: ''
+        required: true
+        example: labore
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+      mollie_currency_name:
+        name: mollie_currency_name
+        description: ''
+        required: true
+        example: cumque
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+    cleanBodyParameters:
+      mollie_key: aut
+      mollie_currency_rate: veritatis
+      mollie_country_name: labore
+      mollie_currency_name: cumque
+    fileParameters: []
+    responses: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - PUT
+    uri: api/admin/update-paystack
+    metadata:
+      groupName: 'Payment Method'
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: ''
+      description: ''
+      authenticated: false
+      custom: []
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      paystack_public_key:
+        name: paystack_public_key
+        description: ''
+        required: true
+        example: enim
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+      paystack_secret_key:
+        name: paystack_secret_key
+        description: ''
+        required: true
+        example: iste
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+      paystack_currency_rate:
+        name: paystack_currency_rate
+        description: ''
+        required: true
+        example: in
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+      paystack_currency_name:
+        name: paystack_currency_name
+        description: ''
+        required: true
+        example: rerum
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+      paystack_country_name:
+        name: paystack_country_name
+        description: ''
+        required: true
+        example: labore
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+    cleanBodyParameters:
+      paystack_public_key: enim
+      paystack_secret_key: iste
+      paystack_currency_rate: in
+      paystack_currency_name: rerum
+      paystack_country_name: labore
+    fileParameters: []
+    responses: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - PUT
+    uri: api/admin/update-flutterwave
+    metadata:
+      groupName: 'Payment Method'
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: ''
+      description: ''
+      authenticated: false
+      custom: []
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      public_key:
+        name: public_key
+        description: ''
+        required: true
+        example: modi
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+      secret_key:
+        name: secret_key
+        description: ''
+        required: true
+        example: voluptate
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+      title:
+        name: title
+        description: ''
+        required: true
+        example: molestiae
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+      currency_rate:
+        name: currency_rate
+        description: ''
+        required: true
+        example: assumenda
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+      currency_name:
+        name: currency_name
+        description: ''
+        required: true
+        example: numquam
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+      country_name:
+        name: country_name
+        description: ''
+        required: true
+        example: asperiores
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+    cleanBodyParameters:
+      public_key: modi
+      secret_key: voluptate
+      title: molestiae
+      currency_rate: assumenda
+      currency_name: numquam
+      country_name: asperiores
+    fileParameters: []
+    responses: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - PUT
+    uri: api/admin/update-instamojo
+    metadata:
+      groupName: 'Payment Method'
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: ''
+      description: ''
+      authenticated: false
+      custom: []
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      account_mode:
+        name: account_mode
+        description: ''
+        required: true
+        example: qui
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+      api_key:
+        name: api_key
+        description: ''
+        required: true
+        example: et
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+      auth_token:
+        name: auth_token
+        description: ''
+        required: true
+        example: et
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+      currency_rate:
+        name: currency_rate
+        description: ''
+        required: true
+        example: porro
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+    cleanBodyParameters:
+      account_mode: qui
+      api_key: et
+      auth_token: et
+      currency_rate: porro
+    fileParameters: []
+    responses: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - PUT
+    uri: api/admin/update-cash-on-delivery
+    metadata:
+      groupName: 'Payment Method'
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: ''
+      description: ''
+      authenticated: false
+      custom: []
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []

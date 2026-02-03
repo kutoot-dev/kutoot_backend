@@ -9,6 +9,9 @@ use App\Models\CoinCampaigns;
 use App\Models\Winners;
 use App\Http\Controllers\Controller;
 
+/**
+ * @group Winner
+ */
 class WinnerController extends Controller
 {
     public function create($camp_id)

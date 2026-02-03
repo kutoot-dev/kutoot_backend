@@ -14,6 +14,9 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
+/**
+ * @group Visitors
+ */
 class VisitorsController extends Controller
 {
     private function parseIndianOrIsoDateTime(?string $value, ?Carbon $fallback = null): ?Carbon

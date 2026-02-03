@@ -9,6 +9,9 @@ use App\Models\SellerWithdraw;
 use App\Models\OrderProduct;
 use App\Models\Setting;
 use Auth;
+/**
+ * @group Withdraw
+ */
 class WithdrawController extends Controller
 {
     public function __construct()

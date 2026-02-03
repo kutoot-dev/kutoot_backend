@@ -30,6 +30,9 @@ use Str;
 use Auth;
 
 
+/**
+ * @group Seller Product
+ */
 class SellerProductController extends Controller
 {
     public function __construct()

@@ -8,6 +8,9 @@ use App\Models\DeliveryMessage;
 use App\Http\Controllers\Controller;
 use Auth;
 
+/**
+ * @group Delivery Message
+ */
 class DeliveryMessageController extends Controller
 {
     

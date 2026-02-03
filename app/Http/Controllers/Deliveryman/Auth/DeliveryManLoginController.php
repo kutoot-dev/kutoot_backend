@@ -11,6 +11,9 @@ use App\Models\DeliveryMan;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
+/**
+ * @group Delivery Man Login
+ */
 class DeliveryManLoginController extends Controller
 {
     // public function __construct()

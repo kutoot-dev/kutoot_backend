@@ -7,6 +7,9 @@ use Illuminate\Http\Request;
 use App\Models\Shipping;
 use Nnjeim\World\Models\City;
 use App\Models\Setting;
+/**
+ * @group Shipping Method
+ */
 class ShippingMethodController extends Controller
 {
     public function __construct()

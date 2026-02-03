@@ -10,6 +10,9 @@ use App\Models\OrderProduct;
 use App\Models\OrderProductVariant;
 use App\Models\OrderAddress;
 use Auth;
+/**
+ * @group Seller Order
+ */
 class SellerOrderController extends Controller
 {
     public function __construct()

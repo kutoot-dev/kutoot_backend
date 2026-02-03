@@ -11,6 +11,9 @@ use App\Models\Category;
 use App\Models\BannerImage;
 use Image;
 use File;
+/**
+ * @group Mega Menu
+ */
 class MegaMenuController extends Controller
 {
     public function __construct()

@@ -8,6 +8,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
 
+/**
+ * @group Coupon Ticket
+ */
 class CouponTicketController extends Controller
 {
     public function index(CouponCampaign $campaign)

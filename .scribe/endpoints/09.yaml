@@ -1,0 +1,685 @@
+name: 'Store Banner'
+description: ''
+endpoints:
+  -
+    httpMethods:
+      - GET
+    uri: api/store-banners
+    metadata:
+      groupName: 'Store Banner'
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Public API: Get all active store banners with optional location filter'
+      description: ''
+      authenticated: false
+      custom: []
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        status: 200
+        content: '{"success":true,"data":[{"id":1,"title":"Shop the Latest Trends","description":"Discover our newest collection with exclusive styles and premium quality.","image":"http:\/\/test.test\/uploads\/store-banners\/store-banner-1-2026-01-25-23-30-56-9668.webp","image_tablet":"http:\/\/test.test\/uploads\/store-banners\/store-banner-1-2026-01-25-23-30-56-9668_tablet.webp","image_mobile":"http:\/\/test.test\/uploads\/store-banners\/store-banner-1-2026-01-25-23-30-56-9668_mobile.webp","link":"\/shop","button_text":"Shop Now","location":"hero","serial":1},{"id":2,"title":"Flash Sale - 50% Off","description":"Limited time offer on selected items. Don''t miss out!","image":"http:\/\/test.test\/uploads\/store-banners\/store-banner-2-2026-01-25-23-31-04-8810.webp","image_tablet":"http:\/\/test.test\/uploads\/store-banners\/store-banner-2-2026-01-25-23-31-04-8810_tablet.webp","image_mobile":"http:\/\/test.test\/uploads\/store-banners\/store-banner-2-2026-01-25-23-31-04-8810_mobile.webp","link":"\/sale","button_text":"View Deals","location":"promo","serial":2},{"id":3,"title":"New Arrivals","description":"Be the first to explore our fresh collection.","image":"http:\/\/test.test\/uploads\/store-banners\/store-banner-3-2026-01-25-23-31-12-8536.webp","image_tablet":"http:\/\/test.test\/uploads\/store-banners\/store-banner-3-2026-01-25-23-31-12-8536_tablet.webp","image_mobile":"http:\/\/test.test\/uploads\/store-banners\/store-banner-3-2026-01-25-23-31-12-8536_mobile.webp","link":"\/new-arrivals","button_text":"Explore","location":"category","serial":3},{"id":4,"title":"Best Sellers","description":"Top-rated products loved by our customers.","image":"http:\/\/test.test\/uploads\/store-banners\/store-banner-4-2026-01-25-23-31-20-1087.webp","image_tablet":"http:\/\/test.test\/uploads\/store-banners\/store-banner-4-2026-01-25-23-31-20-1087_tablet.webp","image_mobile":"http:\/\/test.test\/uploads\/store-banners\/store-banner-4-2026-01-25-23-31-20-1087_mobile.webp","link":"\/best-sellers","button_text":"Shop Best Sellers","location":"featured","serial":4},{"id":5,"title":"Free Shipping Worldwide","description":"Enjoy free delivery on all orders over $50.","image":"http:\/\/test.test\/uploads\/store-banners\/store-banner-5-2026-01-25-23-31-28-6984.webp","image_tablet":"http:\/\/test.test\/uploads\/store-banners\/store-banner-5-2026-01-25-23-31-28-6984_tablet.webp","image_mobile":"http:\/\/test.test\/uploads\/store-banners\/store-banner-5-2026-01-25-23-31-28-6984_mobile.webp","link":"\/shipping","button_text":"Learn More","location":"footer","serial":5}]}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          x-ratelimit-limit: '60'
+          x-ratelimit-remaining: '55'
+          access-control-allow-origin: '*'
+          access-control-allow-methods: 'GET, POST, PUT, DELETE, OPTIONS, PATCH'
+          access-control-allow-headers: 'Origin, X-Requested-With, Content-Type, Accept, Authorization, X-CSRF-TOKEN'
+          access-control-allow-credentials: 'true'
+          access-control-max-age: '86400'
+        description: null
+        custom: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - GET
+    uri: api/admin/store-banner
+    metadata:
+      groupName: 'Store Banner'
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Display a listing of banners'
+      description: ''
+      authenticated: false
+      custom: []
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        status: 401
+        content: '{"message":"UnAuthenticated"}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          access-control-allow-origin: '*'
+          access-control-allow-methods: 'GET, POST, PUT, DELETE, OPTIONS, PATCH'
+          access-control-allow-headers: 'Origin, X-Requested-With, Content-Type, Accept, Authorization, X-CSRF-TOKEN'
+          access-control-allow-credentials: 'true'
+          access-control-max-age: '86400'
+        description: null
+        custom: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - POST
+    uri: api/admin/store-banner
+    metadata:
+      groupName: 'Store Banner'
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Store a newly created banner'
+      description: ''
+      authenticated: false
+      custom: []
+    headers:
+      Content-Type: multipart/form-data
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      banner_image:
+        name: banner_image
+        description: 'Must be an image. Must not be greater than 5120 kilobytes.'
+        required: true
+        example: null
+        type: file
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+      title:
+        name: title
+        description: 'Must not be greater than 255 characters.'
+        required: true
+        example: avrjgcunwznvhpesovw
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+      status:
+        name: status
+        description: ''
+        required: true
+        example: '1'
+        type: string
+        enumValues:
+          - '0'
+          - '1'
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+      serial:
+        name: serial
+        description: ''
+        required: true
+        example: 14
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+      description:
+        name: description
+        description: ''
+        required: false
+        example: 'Maiores ea qui libero autem velit.'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        custom: []
+      link:
+        name: link
+        description: 'Must be a valid URL.'
+        required: false
+        example: 'http://adams.org/sit-sed-ad-ullam-sapiente-vel-facilis-accusamus'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        custom: []
+      button_text:
+        name: button_text
+        description: 'Must not be greater than 100 characters.'
+        required: false
+        example: njfzhzcvlfdkwahrzkn
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        custom: []
+      location:
+        name: location
+        description: 'Must not be greater than 100 characters.'
+        required: false
+        example: yzauxhxvrqfeetmutfuf
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        custom: []
+      start_date:
+        name: start_date
+        description: 'Must be a valid date.'
+        required: false
+        example: '2026-02-03T20:37:22'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        custom: []
+      end_date:
+        name: end_date
+        description: 'Must be a valid date. Must be a date after or equal to <code>start_date</code>.'
+        required: false
+        example: '2042-01-15'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        custom: []
+    cleanBodyParameters:
+      title: avrjgcunwznvhpesovw
+      status: '1'
+      serial: 14
+      description: 'Maiores ea qui libero autem velit.'
+      link: 'http://adams.org/sit-sed-ad-ullam-sapiente-vel-facilis-accusamus'
+      button_text: njfzhzcvlfdkwahrzkn
+      location: yzauxhxvrqfeetmutfuf
+      start_date: '2026-02-03T20:37:22'
+      end_date: '2042-01-15'
+    fileParameters:
+      banner_image: null
+    responses: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - GET
+    uri: 'api/admin/store-banner/{id}'
+    metadata:
+      groupName: 'Store Banner'
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Display the specified banner'
+      description: ''
+      authenticated: false
+      custom: []
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      id:
+        name: id
+        description: 'The ID of the store banner.'
+        required: true
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+    cleanUrlParameters:
+      id: 1
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        status: 401
+        content: '{"message":"UnAuthenticated"}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          access-control-allow-origin: '*'
+          access-control-allow-methods: 'GET, POST, PUT, DELETE, OPTIONS, PATCH'
+          access-control-allow-headers: 'Origin, X-Requested-With, Content-Type, Accept, Authorization, X-CSRF-TOKEN'
+          access-control-allow-credentials: 'true'
+          access-control-max-age: '86400'
+        description: null
+        custom: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - PUT
+      - PATCH
+    uri: 'api/admin/store-banner/{id}'
+    metadata:
+      groupName: 'Store Banner'
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Update the specified banner'
+      description: ''
+      authenticated: false
+      custom: []
+    headers:
+      Content-Type: multipart/form-data
+      Accept: application/json
+    urlParameters:
+      id:
+        name: id
+        description: 'The ID of the store banner.'
+        required: true
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+    cleanUrlParameters:
+      id: 1
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      banner_image:
+        name: banner_image
+        description: 'Must be an image. Must not be greater than 5120 kilobytes.'
+        required: false
+        example: null
+        type: file
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        custom: []
+      title:
+        name: title
+        description: 'Must not be greater than 255 characters.'
+        required: true
+        example: cgkz
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+      status:
+        name: status
+        description: ''
+        required: true
+        example: '0'
+        type: string
+        enumValues:
+          - '0'
+          - '1'
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+      serial:
+        name: serial
+        description: ''
+        required: true
+        example: 18
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+      description:
+        name: description
+        description: ''
+        required: false
+        example: 'Quam tempora voluptate at.'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        custom: []
+      link:
+        name: link
+        description: 'Must be a valid URL.'
+        required: false
+        example: 'http://oberbrunner.com/saepe-cum-hic-fugit-accusamus'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        custom: []
+      button_text:
+        name: button_text
+        description: 'Must not be greater than 100 characters.'
+        required: false
+        example: vguybrsqoxdj
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        custom: []
+      location:
+        name: location
+        description: 'Must not be greater than 100 characters.'
+        required: false
+        example: xekbfmsujvunmcaipayd
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        custom: []
+      start_date:
+        name: start_date
+        description: 'Must be a valid date.'
+        required: false
+        example: '2026-02-03T20:37:22'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        custom: []
+      end_date:
+        name: end_date
+        description: 'Must be a valid date. Must be a date after or equal to <code>start_date</code>.'
+        required: false
+        example: '2083-07-15'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: true
+        custom: []
+    cleanBodyParameters:
+      title: cgkz
+      status: '0'
+      serial: 18
+      description: 'Quam tempora voluptate at.'
+      link: 'http://oberbrunner.com/saepe-cum-hic-fugit-accusamus'
+      button_text: vguybrsqoxdj
+      location: xekbfmsujvunmcaipayd
+      start_date: '2026-02-03T20:37:22'
+      end_date: '2083-07-15'
+    fileParameters:
+      banner_image: null
+    responses: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - DELETE
+    uri: 'api/admin/store-banner/{id}'
+    metadata:
+      groupName: 'Store Banner'
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Remove the specified banner'
+      description: ''
+      authenticated: false
+      custom: []
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      id:
+        name: id
+        description: 'The ID of the store banner.'
+        required: true
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+    cleanUrlParameters:
+      id: 1
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - PUT
+    uri: 'api/admin/store-banner-status/{id}'
+    metadata:
+      groupName: 'Store Banner'
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Toggle banner status'
+      description: ''
+      authenticated: false
+      custom: []
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      id:
+        name: id
+        description: 'The ID of the store banner status.'
+        required: true
+        example: iure
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+    cleanUrlParameters:
+      id: iure
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - POST
+    uri: api/admin/store-banner-order
+    metadata:
+      groupName: 'Store Banner'
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Update banner order (serial)'
+      description: ''
+      authenticated: false
+      custom: []
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      banners:
+        name: banners
+        description: ''
+        required: true
+        example:
+          - []
+        type: 'object[]'
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+      'banners[].id':
+        name: 'banners[].id'
+        description: 'The <code>id</code> of an existing record in the store_banners table.'
+        required: true
+        example: nulla
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+      'banners[].serial':
+        name: 'banners[].serial'
+        description: ''
+        required: true
+        example: 10
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+    cleanBodyParameters:
+      banners:
+        -
+          id: nulla
+          serial: 10
+    fileParameters: []
+    responses: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - GET
+    uri: api/admin/store-banners-active
+    metadata:
+      groupName: 'Store Banner'
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Get all active banners (public API)'
+      description: ''
+      authenticated: false
+      custom: []
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        status: 401
+        content: '{"message":"UnAuthenticated"}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          access-control-allow-origin: '*'
+          access-control-allow-methods: 'GET, POST, PUT, DELETE, OPTIONS, PATCH'
+          access-control-allow-headers: 'Origin, X-Requested-With, Content-Type, Accept, Authorization, X-CSRF-TOKEN'
+          access-control-allow-credentials: 'true'
+          access-control-max-age: '86400'
+        description: null
+        custom: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - GET
+    uri: 'api/admin/store-banners-location/{location}'
+    metadata:
+      groupName: 'Store Banner'
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Get banners for a specific location (public API)'
+      description: ''
+      authenticated: false
+      custom: []
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      location:
+        name: location
+        description: ''
+        required: true
+        example: ad
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+    cleanUrlParameters:
+      location: ad
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        status: 401
+        content: '{"message":"UnAuthenticated"}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          access-control-allow-origin: '*'
+          access-control-allow-methods: 'GET, POST, PUT, DELETE, OPTIONS, PATCH'
+          access-control-allow-headers: 'Origin, X-Requested-With, Content-Type, Accept, Authorization, X-CSRF-TOKEN'
+          access-control-allow-credentials: 'true'
+          access-control-max-age: '86400'
+        description: null
+        custom: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []

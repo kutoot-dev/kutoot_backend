@@ -14,6 +14,9 @@ use App\Models\FeaturedCategory;
 use App\Models\Setting;
 use Image;
 use File;
+/**
+ * @group Home Page
+ */
 class HomePageController extends Controller
 {
     public function __construct()

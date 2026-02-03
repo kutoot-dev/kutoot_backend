@@ -14,6 +14,9 @@ use Illuminate\Http\Request;
 use App\Models\DeliveryManWithdraw;
 use App\Http\Controllers\Controller;
 
+/**
+ * @group Delivery Man Profile
+ */
 class DeliveryManProfileController extends Controller
 {
     public function index(){

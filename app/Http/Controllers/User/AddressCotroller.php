@@ -8,6 +8,9 @@ use App\Models\Address;
 use Nnjeim\World\World;
 use Auth;
 
+/**
+ * @group Address Cotroller
+ */
 class AddressCotroller extends Controller
 {
 

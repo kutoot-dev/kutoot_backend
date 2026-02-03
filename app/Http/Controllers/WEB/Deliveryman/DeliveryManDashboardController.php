@@ -9,6 +9,9 @@ use Illuminate\Http\Request;
 use App\Models\DeliveryManWithdraw;
 use App\Http\Controllers\Controller;
 
+/**
+ * @group Delivery Man Dashboard
+ */
 class DeliveryManDashboardController extends Controller
 {
     public function index(){

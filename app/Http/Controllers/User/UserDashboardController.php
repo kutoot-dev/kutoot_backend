@@ -13,6 +13,9 @@ use App\Models\NewsletterSubscription;
 use App\Services\CoinLedgerService;
 use Illuminate\Support\Facades\Validator;
 
+/**
+ * @group User Dashboard
+ */
 class UserDashboardController extends Controller
 {
     protected CoinLedgerService $coinLedgerService;

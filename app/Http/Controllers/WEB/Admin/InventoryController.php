@@ -7,6 +7,9 @@ use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\Inventory;
 use App\Models\Setting;
+/**
+ * @group Inventory
+ */
 class InventoryController extends Controller
 {
     public function __construct()

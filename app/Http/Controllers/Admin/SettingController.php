@@ -75,6 +75,9 @@ use Image;
 use File;
 use Artisan;
 use Validator;
+/**
+ * @group Setting
+ */
 class SettingController extends Controller
 {
     public function __construct()

@@ -1,0 +1,1841 @@
+name: Home
+description: ''
+endpoints:
+  -
+    httpMethods:
+      - GET
+    uri: api/website-setup
+    metadata:
+      groupName: Home
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: ''
+      description: ''
+      authenticated: false
+      custom: []
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        status: 500
+        content: |-
+          {
+              "message": "Server Error"
+          }
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          x-ratelimit-limit: '60'
+          x-ratelimit-remaining: '49'
+          access-control-allow-origin: '*'
+          access-control-allow-methods: 'GET, POST, PUT, DELETE, OPTIONS, PATCH'
+          access-control-allow-headers: 'Origin, X-Requested-With, Content-Type, Accept, Authorization, X-CSRF-TOKEN'
+          access-control-allow-credentials: 'true'
+          access-control-max-age: '86400'
+        description: null
+        custom: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - GET
+    uri: 'api/subcategory-by-category/{id}'
+    metadata:
+      groupName: Home
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: ''
+      description: ''
+      authenticated: false
+      custom: []
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      id:
+        name: id
+        description: 'The ID of the subcategory by category.'
+        required: true
+        example: et
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+    cleanUrlParameters:
+      id: et
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        status: 200
+        content: '{"subCategories":[]}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          x-ratelimit-limit: '60'
+          x-ratelimit-remaining: '48'
+          access-control-allow-origin: '*'
+          access-control-allow-methods: 'GET, POST, PUT, DELETE, OPTIONS, PATCH'
+          access-control-allow-headers: 'Origin, X-Requested-With, Content-Type, Accept, Authorization, X-CSRF-TOKEN'
+          access-control-allow-credentials: 'true'
+          access-control-max-age: '86400'
+        description: null
+        custom: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - GET
+    uri: 'api/childcategory-by-subcategory/{id}'
+    metadata:
+      groupName: Home
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: ''
+      description: ''
+      authenticated: false
+      custom: []
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      id:
+        name: id
+        description: 'The ID of the childcategory by subcategory.'
+        required: true
+        example: quidem
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+    cleanUrlParameters:
+      id: quidem
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        status: 200
+        content: '{"childCategories":[]}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          x-ratelimit-limit: '60'
+          x-ratelimit-remaining: '47'
+          access-control-allow-origin: '*'
+          access-control-allow-methods: 'GET, POST, PUT, DELETE, OPTIONS, PATCH'
+          access-control-allow-headers: 'Origin, X-Requested-With, Content-Type, Accept, Authorization, X-CSRF-TOKEN'
+          access-control-allow-credentials: 'true'
+          access-control-max-age: '86400'
+        description: null
+        custom: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - GET
+    uri: api/category-list
+    metadata:
+      groupName: Home
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: ''
+      description: ''
+      authenticated: false
+      custom: []
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        status: 200
+        content: '{"categories":[{"id":1,"name":"Electronics","slug":"electronics","icon":"uploads\/categories\/icon-electronics-2026-01-25-23-21-16-8432.webp","image":"uploads\/categories\/image-electronics-2026-01-25-23-21-18-7915.webp","logo":"uploads\/categories\/logo-electronics-2026-01-25-23-21-14-3052.webp","status":1,"is_featured":1,"is_top":1,"is_popular":0,"is_trending":0,"created_at":"2026-01-25T17:51:18.000000Z","updated_at":"2026-01-25T17:51:18.000000Z"},{"id":2,"name":"Fashion","slug":"fashion","icon":"uploads\/categories\/icon-fashion-2026-01-25-23-21-21-1772.webp","image":"uploads\/categories\/image-fashion-2026-01-25-23-21-23-4312.webp","logo":"uploads\/categories\/logo-fashion-2026-01-25-23-21-20-2237.webp","status":1,"is_featured":1,"is_top":0,"is_popular":1,"is_trending":0,"created_at":"2026-01-25T17:51:23.000000Z","updated_at":"2026-01-25T17:51:23.000000Z"},{"id":3,"name":"Home & Living","slug":"home-living","icon":"uploads\/categories\/icon-home-living-2026-01-25-23-21-26-1340.webp","image":"uploads\/categories\/image-home-living-2026-01-25-23-21-31-7283.webp","logo":"uploads\/categories\/logo-home-living-2026-01-25-23-21-24-2784.webp","status":1,"is_featured":1,"is_top":0,"is_popular":0,"is_trending":0,"created_at":"2026-01-25T17:51:31.000000Z","updated_at":"2026-01-25T17:51:31.000000Z"},{"id":4,"name":"Sports & Fitness","slug":"sports-fitness","icon":"uploads\/categories\/icon-sports-fitness-2026-01-25-23-21-39-8423.webp","image":"uploads\/categories\/image-sports-fitness-2026-01-25-23-21-44-2776.webp","logo":"uploads\/categories\/logo-sports-fitness-2026-01-25-23-21-34-9804.webp","status":1,"is_featured":0,"is_top":1,"is_popular":0,"is_trending":0,"created_at":"2026-01-25T17:51:44.000000Z","updated_at":"2026-01-25T17:51:44.000000Z"},{"id":5,"name":"Beauty & Health","slug":"beauty-health","icon":"uploads\/categories\/icon-beauty-health-2026-01-25-23-21-46-7282.webp","image":"uploads\/categories\/image-beauty-health-2026-01-25-23-21-48-7031.webp","logo":"uploads\/categories\/logo-beauty-health-2026-01-25-23-21-45-1642.webp","status":1,"is_featured":0,"is_top":0,"is_popular":1,"is_trending":0,"created_at":"2026-01-25T17:51:48.000000Z","updated_at":"2026-01-25T17:51:48.000000Z"},{"id":6,"name":"Books & Stationery","slug":"books-stationery","icon":"uploads\/categories\/icon-books-stationery-2026-01-25-23-21-52-5898.webp","image":"uploads\/categories\/image-books-stationery-2026-01-25-23-21-54-9900.webp","logo":"uploads\/categories\/logo-books-stationery-2026-01-25-23-21-49-2212.webp","status":1,"is_featured":0,"is_top":0,"is_popular":0,"is_trending":0,"created_at":"2026-01-25T17:51:54.000000Z","updated_at":"2026-01-25T17:51:54.000000Z"},{"id":7,"name":"Toys & Games","slug":"toys-games","icon":"uploads\/categories\/icon-toys-games-2026-01-25-23-22-05-5135.webp","image":"uploads\/categories\/image-toys-games-2026-01-25-23-22-14-1780.webp","logo":"uploads\/categories\/logo-toys-games-2026-01-25-23-21-59-9837.webp","status":1,"is_featured":0,"is_top":0,"is_popular":0,"is_trending":1,"created_at":"2026-01-25T17:52:15.000000Z","updated_at":"2026-01-25T17:52:15.000000Z"},{"id":8,"name":"Jewelry & Watches","slug":"jewelry-watches","icon":"uploads\/categories\/icon-jewelry-watches-2026-01-25-23-22-28-7742.webp","image":"uploads\/categories\/image-jewelry-watches-2026-01-25-23-22-33-3122.webp","logo":"uploads\/categories\/logo-jewelry-watches-2026-01-25-23-22-21-7183.webp","status":1,"is_featured":1,"is_top":0,"is_popular":0,"is_trending":0,"created_at":"2026-01-25T17:52:34.000000Z","updated_at":"2026-01-25T17:52:34.000000Z"},{"id":9,"name":"Automotive","slug":"automotive","icon":"uploads\/categories\/icon-automotive-2026-01-25-23-22-38-1032.webp","image":"uploads\/categories\/image-automotive-2026-01-25-23-22-42-1446.webp","logo":"uploads\/categories\/logo-automotive-2026-01-25-23-22-37-5647.webp","status":1,"is_featured":0,"is_top":0,"is_popular":0,"is_trending":0,"created_at":"2026-01-25T17:52:42.000000Z","updated_at":"2026-01-25T17:52:42.000000Z"},{"id":10,"name":"Grocery","slug":"grocery","icon":"uploads\/categories\/icon-grocery-2026-01-25-23-22-45-4589.webp","image":"uploads\/categories\/image-grocery-2026-01-25-23-22-46-6552.webp","logo":"uploads\/categories\/logo-grocery-2026-01-25-23-22-43-1535.webp","status":1,"is_featured":0,"is_top":1,"is_popular":0,"is_trending":0,"created_at":"2026-01-25T17:52:46.000000Z","updated_at":"2026-01-25T17:52:46.000000Z"}]}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          x-ratelimit-limit: '60'
+          x-ratelimit-remaining: '46'
+          access-control-allow-origin: '*'
+          access-control-allow-methods: 'GET, POST, PUT, DELETE, OPTIONS, PATCH'
+          access-control-allow-headers: 'Origin, X-Requested-With, Content-Type, Accept, Authorization, X-CSRF-TOKEN'
+          access-control-allow-credentials: 'true'
+          access-control-max-age: '86400'
+        description: null
+        custom: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - GET
+    uri: 'api/category/{id}'
+    metadata:
+      groupName: Home
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: ''
+      description: ''
+      authenticated: false
+      custom: []
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      id:
+        name: id
+        description: 'The ID of the category.'
+        required: true
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+    cleanUrlParameters:
+      id: 1
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        status: 200
+        content: '{"category":{"id":1,"name":"Electronics","slug":"electronics","icon":"uploads\/categories\/icon-electronics-2026-01-25-23-21-16-8432.webp","image":"uploads\/categories\/image-electronics-2026-01-25-23-21-18-7915.webp","logo":"uploads\/categories\/logo-electronics-2026-01-25-23-21-14-3052.webp","status":1,"is_featured":1,"is_top":1,"is_popular":0,"is_trending":0,"created_at":"2026-01-25T17:51:18.000000Z","updated_at":"2026-01-25T17:51:18.000000Z"}}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          x-ratelimit-limit: '60'
+          x-ratelimit-remaining: '45'
+          access-control-allow-origin: '*'
+          access-control-allow-methods: 'GET, POST, PUT, DELETE, OPTIONS, PATCH'
+          access-control-allow-headers: 'Origin, X-Requested-With, Content-Type, Accept, Authorization, X-CSRF-TOKEN'
+          access-control-allow-credentials: 'true'
+          access-control-max-age: '86400'
+        description: null
+        custom: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - GET
+    uri: 'api/sub-category/{id}'
+    metadata:
+      groupName: Home
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: ''
+      description: ''
+      authenticated: false
+      custom: []
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      id:
+        name: id
+        description: 'The ID of the sub category.'
+        required: true
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+    cleanUrlParameters:
+      id: 1
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        status: 200
+        content: '{"sub_category":{"id":1,"category_id":1,"name":"Smartphones","slug":"smartphones","status":1,"created_at":"2026-01-25T17:51:18.000000Z","updated_at":"2026-01-25T17:51:18.000000Z"}}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          x-ratelimit-limit: '60'
+          x-ratelimit-remaining: '44'
+          access-control-allow-origin: '*'
+          access-control-allow-methods: 'GET, POST, PUT, DELETE, OPTIONS, PATCH'
+          access-control-allow-headers: 'Origin, X-Requested-With, Content-Type, Accept, Authorization, X-CSRF-TOKEN'
+          access-control-allow-credentials: 'true'
+          access-control-max-age: '86400'
+        description: null
+        custom: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - GET
+    uri: 'api/child-category/{id}'
+    metadata:
+      groupName: Home
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: ''
+      description: ''
+      authenticated: false
+      custom: []
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      id:
+        name: id
+        description: 'The ID of the child category.'
+        required: true
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+    cleanUrlParameters:
+      id: 1
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        status: 200
+        content: '{"child_category":{"id":1,"category_id":1,"sub_category_id":1,"name":"Android Phones","slug":"android-phones","status":1,"created_at":"2026-01-25T17:52:46.000000Z","updated_at":"2026-01-25T17:52:46.000000Z"}}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          x-ratelimit-limit: '60'
+          x-ratelimit-remaining: '43'
+          access-control-allow-origin: '*'
+          access-control-allow-methods: 'GET, POST, PUT, DELETE, OPTIONS, PATCH'
+          access-control-allow-headers: 'Origin, X-Requested-With, Content-Type, Accept, Authorization, X-CSRF-TOKEN'
+          access-control-allow-credentials: 'true'
+          access-control-max-age: '86400'
+        description: null
+        custom: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - GET
+    uri: 'api/product-by-category/{id}'
+    metadata:
+      groupName: Home
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: ''
+      description: ''
+      authenticated: false
+      custom: []
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      id:
+        name: id
+        description: 'The ID of the product by category.'
+        required: true
+        example: ex
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+    cleanUrlParameters:
+      id: ex
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        status: 200
+        content: '{"category":null,"products":[]}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          x-ratelimit-limit: '60'
+          x-ratelimit-remaining: '42'
+          access-control-allow-origin: '*'
+          access-control-allow-methods: 'GET, POST, PUT, DELETE, OPTIONS, PATCH'
+          access-control-allow-headers: 'Origin, X-Requested-With, Content-Type, Accept, Authorization, X-CSRF-TOKEN'
+          access-control-allow-credentials: 'true'
+          access-control-max-age: '86400'
+        description: null
+        custom: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - GET
+    uri: api/webinfo
+    metadata:
+      groupName: Home
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: ''
+      description: ''
+      authenticated: false
+      custom: []
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        status: 200
+        content: '{"section_title":[{"key":"slider","default":"Top Deals","custom":"Top Deals"},{"key":"service","default":"Our Services","custom":"Our Services"},{"key":"popular_category","default":"Popular Categories","custom":"Popular Categories"},{"key":"flash_sale","default":"Flash Sale","custom":"Flash Sale"},{"key":"top_rated","default":"Top Rated Products","custom":"Top Rated Products"},{"key":"seller","default":"Featured Sellers","custom":"Featured Sellers"},{"key":"featured_category","default":"Featured Products","custom":"Featured Products"},{"key":"new_arrival","default":"New Arrivals","custom":"New Arrivals"},{"key":"best_product","default":"Best Products","custom":"Best Products"}],"seoSetting":{"id":1,"page_name":"Home Page","seo_title":"Home - Welcome to Shop","seo_description":"A best ecommerce script","created_at":"2026-01-25T18:26:31.000000Z","updated_at":"2026-01-25T18:26:31.000000Z"},"sliderVisibilty":true,"sliders":[{"id":1,"title":"New Collection 2026","description":"Discover our latest arrivals with exclusive designs and premium quality materials.","image":"uploads\/sliders\/slider-1-2026-01-25-23-27-14-3753.webp","status":1,"serial":1,"slider_location":"home","created_at":"2026-01-25T17:57:15.000000Z","updated_at":"2026-01-25T17:57:15.000000Z"},{"id":2,"title":"Summer Sale","description":"Up to 50% off on selected items. Limited time offer - Shop now!","image":"uploads\/sliders\/slider-2-2026-01-25-23-27-16-4536.webp","status":1,"serial":2,"slider_location":"home","created_at":"2026-01-25T17:57:17.000000Z","updated_at":"2026-01-25T17:57:17.000000Z"},{"id":3,"title":"Premium Quality","description":"Experience the finest craftsmanship with our premium product range.","image":"uploads\/sliders\/slider-3-2026-01-25-23-27-21-5435.webp","status":1,"serial":3,"slider_location":"home","created_at":"2026-01-25T17:57:23.000000Z","updated_at":"2026-01-25T17:57:23.000000Z"},{"id":4,"title":"Free Shipping","description":"Enjoy free shipping on orders over $50. Fast and reliable delivery.","image":"uploads\/sliders\/slider-4-2026-01-25-23-27-27-2117.webp","status":1,"serial":4,"slider_location":"home","created_at":"2026-01-25T17:57:29.000000Z","updated_at":"2026-01-25T17:57:29.000000Z"},{"id":5,"title":"Trending Now","description":"Check out what''s trending. Be the first to get the latest styles.","image":"uploads\/sliders\/slider-5-2026-01-25-23-27-31-4629.webp","status":1,"serial":5,"slider_location":"home","created_at":"2026-01-25T17:57:31.000000Z","updated_at":"2026-01-25T17:57:31.000000Z"}],"sliderBannerOne":{"id":16,"product_slug":null,"image":"uploads\/banners\/banner-16-2026-01-25-23-29-05-5112.webp","banner_location":"slider","title_one":"Discover","title_two":"Amazing Deals","badge":"Featured","status":1},"sliderBannerTwo":{"id":17,"product_slug":null,"image":"uploads\/banners\/banner-17-2026-01-25-23-29-11-4706.webp","banner_location":"slider","title_one":"Shop","title_two":"The Collection","badge":"New","status":1},"serviceVisibilty":true,"services":[{"id":1,"title":"Free Shipping","icon":"uploads\/services\/service-free-shipping-2026-01-25-23-33-29-1285.webp","description":"Free shipping on all orders over $50. Fast and reliable delivery to your doorstep.","status":1,"created_at":"2026-01-25T18:03:30.000000Z","updated_at":"2026-01-25T18:03:30.000000Z"},{"id":2,"title":"Secure Payment","icon":"uploads\/services\/service-secure-payment-2026-01-25-23-33-34-6797.webp","description":"100% secure payment with SSL encryption. We accept all major credit cards and PayPal.","status":1,"created_at":"2026-01-25T18:03:34.000000Z","updated_at":"2026-01-25T18:03:34.000000Z"},{"id":3,"title":"24\/7 Support","icon":"uploads\/services\/service-247-support-2026-01-25-23-33-39-7500.webp","description":"Our customer support team is available 24\/7 to help you with any questions or concerns.","status":1,"created_at":"2026-01-25T18:03:39.000000Z","updated_at":"2026-01-25T18:03:39.000000Z"},{"id":4,"title":"Easy Returns","icon":"uploads\/services\/service-easy-returns-2026-01-25-23-33-46-5616.webp","description":"30-day hassle-free returns. Not satisfied? Return it for a full refund, no questions asked.","status":1,"created_at":"2026-01-25T18:03:46.000000Z","updated_at":"2026-01-25T18:03:46.000000Z"}],"homepage_categories":[{"id":1,"name":"Electronics","slug":"electronics","icon":"uploads\/categories\/icon-electronics-2026-01-25-23-21-16-8432.webp","image":"uploads\/categories\/image-electronics-2026-01-25-23-21-18-7915.webp"},{"id":2,"name":"Fashion","slug":"fashion","icon":"uploads\/categories\/icon-fashion-2026-01-25-23-21-21-1772.webp","image":"uploads\/categories\/image-fashion-2026-01-25-23-21-23-4312.webp"},{"id":3,"name":"Home & Living","slug":"home-living","icon":"uploads\/categories\/icon-home-living-2026-01-25-23-21-26-1340.webp","image":"uploads\/categories\/image-home-living-2026-01-25-23-21-31-7283.webp"},{"id":4,"name":"Sports & Fitness","slug":"sports-fitness","icon":"uploads\/categories\/icon-sports-fitness-2026-01-25-23-21-39-8423.webp","image":"uploads\/categories\/image-sports-fitness-2026-01-25-23-21-44-2776.webp"},{"id":5,"name":"Beauty & Health","slug":"beauty-health","icon":"uploads\/categories\/icon-beauty-health-2026-01-25-23-21-46-7282.webp","image":"uploads\/categories\/image-beauty-health-2026-01-25-23-21-48-7031.webp"},{"id":6,"name":"Books & Stationery","slug":"books-stationery","icon":"uploads\/categories\/icon-books-stationery-2026-01-25-23-21-52-5898.webp","image":"uploads\/categories\/image-books-stationery-2026-01-25-23-21-54-9900.webp"},{"id":7,"name":"Toys & Games","slug":"toys-games","icon":"uploads\/categories\/icon-toys-games-2026-01-25-23-22-05-5135.webp","image":"uploads\/categories\/image-toys-games-2026-01-25-23-22-14-1780.webp"},{"id":8,"name":"Jewelry & Watches","slug":"jewelry-watches","icon":"uploads\/categories\/icon-jewelry-watches-2026-01-25-23-22-28-7742.webp","image":"uploads\/categories\/image-jewelry-watches-2026-01-25-23-22-33-3122.webp"},{"id":9,"name":"Automotive","slug":"automotive","icon":"uploads\/categories\/icon-automotive-2026-01-25-23-22-38-1032.webp","image":"uploads\/categories\/image-automotive-2026-01-25-23-22-42-1446.webp"},{"id":10,"name":"Grocery","slug":"grocery","icon":"uploads\/categories\/icon-grocery-2026-01-25-23-22-45-4589.webp","image":"uploads\/categories\/image-grocery-2026-01-25-23-22-46-6552.webp"}],"popularCategorySidebarBanner":"uploads\/website-images\/featured-category-2026-01-26-01-56-16-7070.webp","popularCategoryVisibilty":true,"popularCategories":[],"popularCategoryProducts":[],"brandVisibility":true,"brands":[{"id":1,"seller_id":null,"name":"Apple","slug":"apple","logo":"uploads\/brands\/brand-apple-2026-01-25-23-22-48-3842.webp","status":1,"approval_status":1,"is_featured":1,"is_top":1,"is_popular":0,"is_trending":0,"created_at":"2026-01-25T17:52:49.000000Z","updated_at":"2026-01-25T17:52:49.000000Z"},{"id":2,"seller_id":null,"name":"Samsung","slug":"samsung","logo":"uploads\/brands\/brand-samsung-2026-01-25-23-22-55-2216.webp","status":1,"approval_status":1,"is_featured":1,"is_top":1,"is_popular":0,"is_trending":0,"created_at":"2026-01-25T17:52:56.000000Z","updated_at":"2026-01-25T17:52:56.000000Z"},{"id":3,"seller_id":null,"name":"Nike","slug":"nike","logo":"uploads\/brands\/brand-nike-2026-01-25-23-23-02-8061.webp","status":1,"approval_status":1,"is_featured":1,"is_top":0,"is_popular":1,"is_trending":0,"created_at":"2026-01-25T17:53:02.000000Z","updated_at":"2026-01-25T17:53:02.000000Z"},{"id":4,"seller_id":null,"name":"Adidas","slug":"adidas","logo":"uploads\/brands\/brand-adidas-2026-01-25-23-23-04-1978.webp","status":1,"approval_status":1,"is_featured":1,"is_top":0,"is_popular":1,"is_trending":0,"created_at":"2026-01-25T17:53:04.000000Z","updated_at":"2026-01-25T17:53:04.000000Z"},{"id":5,"seller_id":null,"name":"Sony","slug":"sony","logo":"uploads\/brands\/brand-sony-2026-01-25-23-23-06-2284.webp","status":1,"approval_status":1,"is_featured":1,"is_top":0,"is_popular":0,"is_trending":1,"created_at":"2026-01-25T17:53:06.000000Z","updated_at":"2026-01-25T17:53:06.000000Z"},{"id":6,"seller_id":null,"name":"LG","slug":"lg","logo":"uploads\/brands\/brand-lg-2026-01-25-23-23-09-7398.webp","status":1,"approval_status":1,"is_featured":0,"is_top":1,"is_popular":0,"is_trending":0,"created_at":"2026-01-25T17:53:09.000000Z","updated_at":"2026-01-25T17:53:09.000000Z"},{"id":7,"seller_id":null,"name":"Puma","slug":"puma","logo":"uploads\/brands\/brand-puma-2026-01-25-23-23-10-8144.webp","status":1,"approval_status":1,"is_featured":0,"is_top":0,"is_popular":1,"is_trending":0,"created_at":"2026-01-25T17:53:10.000000Z","updated_at":"2026-01-25T17:53:10.000000Z"},{"id":8,"seller_id":null,"name":"Dell","slug":"dell","logo":"uploads\/brands\/brand-dell-2026-01-25-23-23-11-8594.webp","status":1,"approval_status":1,"is_featured":0,"is_top":0,"is_popular":0,"is_trending":1,"created_at":"2026-01-25T17:53:11.000000Z","updated_at":"2026-01-25T17:53:11.000000Z"},{"id":9,"seller_id":null,"name":"HP","slug":"hp","logo":"uploads\/brands\/brand-hp-2026-01-25-23-23-13-3054.webp","status":1,"approval_status":1,"is_featured":1,"is_top":0,"is_popular":0,"is_trending":0,"created_at":"2026-01-25T17:53:13.000000Z","updated_at":"2026-01-25T17:53:13.000000Z"},{"id":10,"seller_id":null,"name":"Lenovo","slug":"lenovo","logo":"uploads\/brands\/brand-lenovo-2026-01-25-23-23-14-4715.webp","status":1,"approval_status":1,"is_featured":0,"is_top":1,"is_popular":0,"is_trending":0,"created_at":"2026-01-25T17:53:14.000000Z","updated_at":"2026-01-25T17:53:14.000000Z"},{"id":11,"seller_id":null,"name":"Microsoft","slug":"microsoft","logo":"uploads\/brands\/brand-microsoft-2026-01-25-23-23-16-2045.webp","status":1,"approval_status":1,"is_featured":1,"is_top":1,"is_popular":0,"is_trending":0,"created_at":"2026-01-25T17:53:16.000000Z","updated_at":"2026-01-25T17:53:16.000000Z"},{"id":12,"seller_id":null,"name":"Google","slug":"google","logo":"uploads\/brands\/brand-google-2026-01-25-23-23-17-1560.webp","status":1,"approval_status":1,"is_featured":1,"is_top":0,"is_popular":0,"is_trending":1,"created_at":"2026-01-25T17:53:17.000000Z","updated_at":"2026-01-25T17:53:17.000000Z"}],"flashSale":{"id":1,"name":"Weekend Mega Sale","title":null,"slug":"weekend-mega-sale-1","image":null,"date":null,"start_date":"2026-01-25 23:44:52","end_date":"2026-01-28 23:44:52","end_time":null,"offer":30,"status":1,"created_at":"2026-01-25T18:14:52.000000Z","updated_at":"2026-01-25T18:14:52.000000Z"},"flashSaleSidebarBanner":{"id":24,"play_store":null,"image":"uploads\/banners\/banner-24-2026-01-25-23-30-03-4333.webp","banner_location":"popup","status":1,"app_store":"Popup Banner"},"topRatedVisibility":true,"topRatedProducts":[{"id":9,"name":"Stainless Steel Water Bottle","short_name":"Water Bottle","slug":"stainless-steel-water-bottle","thumb_image":"uploads\/products\/product-stainless-steel-water-bottle-2026-01-25-23-26-23-9037.webp","qty":130,"sold_qty":24,"price":29.99,"offer_price":null,"is_undefine":0,"is_featured":0,"new_product":0,"is_top":1,"is_best":0,"category_id":1,"sub_category_id":1,"child_category_id":0,"brand_id":1,"averageRating":"4.2500","totalSold":"13","active_variants":[]},{"id":6,"name":"Ultra HD 4K Monitor","short_name":"4K Monitor","slug":"ultra-hd-4k-monitor","thumb_image":"uploads\/products\/product-ultra-hd-4k-monitor-2026-01-25-23-25-39-9023.webp","qty":112,"sold_qty":23,"price":499.99,"offer_price":449.99,"is_undefine":0,"is_featured":1,"new_product":0,"is_top":1,"is_best":0,"category_id":1,"sub_category_id":1,"child_category_id":0,"brand_id":1,"averageRating":"4.3333","totalSold":"9","active_variants":[]},{"id":3,"name":"Portable Bluetooth Speaker","short_name":"Bluetooth Speaker","slug":"portable-bluetooth-speaker","thumb_image":"uploads\/products\/product-portable-bluetooth-speaker-2026-01-25-23-24-17-1592.webp","qty":116,"sold_qty":46,"price":79.99,"offer_price":null,"is_undefine":0,"is_featured":0,"new_product":0,"is_top":1,"is_best":0,"category_id":1,"sub_category_id":1,"child_category_id":0,"brand_id":1,"averageRating":"5.0000","totalSold":"16","active_variants":[]}],"sellerVisibility":true,"sellers":[{"id":1,"logo":"uploads\/vendors\/logo-techzone-electronics-2026-01-25-23-23-35-8307.webp","banner_image":"uploads\/vendors\/banner-techzone-electronics-2026-01-25-23-23-37-1012.webp","shop_name":"TechZone Electronics","slug":"techzone-electronics","averageRating":"4.4545"},{"id":2,"logo":"uploads\/vendors\/logo-fashion-hub-2026-01-25-23-23-39-9155.webp","banner_image":"uploads\/vendors\/banner-fashion-hub-2026-01-25-23-23-40-6821.webp","shop_name":"Fashion Hub","slug":"fashion-hub","averageRating":"0"},{"id":3,"logo":"uploads\/vendors\/logo-home-essentials-2026-01-25-23-23-43-7262.webp","banner_image":"uploads\/vendors\/banner-home-essentials-2026-01-25-23-23-45-7649.webp","shop_name":"Home Essentials","slug":"home-essentials","averageRating":"0"},{"id":4,"logo":"uploads\/vendors\/logo-sports-arena-2026-01-25-23-23-48-7241.webp","banner_image":"uploads\/vendors\/banner-sports-arena-2026-01-25-23-23-50-9403.webp","shop_name":"Sports Arena","slug":"sports-arena","averageRating":"0"},{"id":5,"logo":"uploads\/vendors\/logo-beauty-palace-2026-01-25-23-23-54-2629.webp","banner_image":"uploads\/vendors\/banner-beauty-palace-2026-01-25-23-23-57-7086.webp","shop_name":"Beauty Palace","slug":"beauty-palace","averageRating":"0"}],"twoColumnBannerOne":{"id":19,"product_slug":null,"image":"uploads\/banners\/banner-19-2026-01-25-23-29-24-2322.webp","banner_location":"two_column","status":1,"title_one":"New","title_two":"Arrivals","badge":"Hot"},"twoColumnBannerTwo":{"id":20,"product_slug":null,"image":"uploads\/banners\/banner-20-2026-01-25-23-29-30-8023.webp","banner_location":"two_column","status":1,"title_one":"Best","title_two":"Sellers","badge":""},"featuredProductVisibility":true,"featuredCategorySidebarBanner":"uploads\/website-images\/featured-category-2026-01-26-01-56-16-7070.webp","featuredCategories":[{"id":1,"category_id":1,"created_at":"2026-01-25T21:16:26.000000Z","updated_at":"2026-01-25T21:16:26.000000Z","category":{"id":1,"name":"Electronics","slug":"electronics","icon":"uploads\/categories\/icon-electronics-2026-01-25-23-21-16-8432.webp","image":"uploads\/categories\/image-electronics-2026-01-25-23-21-18-7915.webp","logo":"uploads\/categories\/logo-electronics-2026-01-25-23-21-14-3052.webp","status":1,"is_featured":1,"is_top":1,"is_popular":0,"is_trending":0,"created_at":"2026-01-25T17:51:18.000000Z","updated_at":"2026-01-25T17:51:18.000000Z"}}],"featuredCategoryProducts":[{"id":12,"name":"Laptop Backpack Professional","short_name":"Laptop Backpack","slug":"laptop-backpack-professional","thumb_image":"uploads\/products\/product-laptop-backpack-professional-2026-01-25-23-27-04-5931.webp","qty":136,"sold_qty":24,"price":79.99,"offer_price":null,"is_undefine":0,"is_featured":1,"new_product":0,"is_top":0,"is_best":0,"category_id":1,"sub_category_id":1,"child_category_id":0,"brand_id":1,"averageRating":"4.6667","totalSold":"6","active_variants":[]},{"id":11,"name":"Noise Cancelling Earbuds","short_name":"NC Earbuds","slug":"noise-cancelling-earbuds","thumb_image":"uploads\/products\/product-noise-cancelling-earbuds-2026-01-25-23-26-41-7945.webp","qty":76,"sold_qty":17,"price":199.99,"offer_price":179.99,"is_undefine":0,"is_featured":0,"new_product":1,"is_top":0,"is_best":1,"category_id":1,"sub_category_id":1,"child_category_id":0,"brand_id":1,"averageRating":"4.3333","totalSold":"9","active_variants":[]},{"id":10,"name":"Wireless Charging Pad","short_name":"Wireless Charger","slug":"wireless-charging-pad","thumb_image":"uploads\/products\/product-wireless-charging-pad-2026-01-25-23-26-30-1182.webp","qty":96,"sold_qty":34,"price":39.99,"offer_price":29.99,"is_undefine":0,"is_featured":1,"new_product":0,"is_top":0,"is_best":0,"category_id":1,"sub_category_id":1,"child_category_id":0,"brand_id":1,"averageRating":"4.0000","totalSold":"11","active_variants":[]},{"id":9,"name":"Stainless Steel Water Bottle","short_name":"Water Bottle","slug":"stainless-steel-water-bottle","thumb_image":"uploads\/products\/product-stainless-steel-water-bottle-2026-01-25-23-26-23-9037.webp","qty":130,"sold_qty":24,"price":29.99,"offer_price":null,"is_undefine":0,"is_featured":0,"new_product":0,"is_top":1,"is_best":0,"category_id":1,"sub_category_id":1,"child_category_id":0,"brand_id":1,"averageRating":"4.2500","totalSold":"13","active_variants":[]},{"id":8,"name":"Leather Wallet Premium","short_name":"Leather Wallet","slug":"leather-wallet-premium","thumb_image":"uploads\/products\/product-leather-wallet-premium-2026-01-25-23-26-09-2131.webp","qty":60,"sold_qty":25,"price":59.99,"offer_price":49.99,"is_undefine":0,"is_featured":0,"new_product":1,"is_top":0,"is_best":0,"category_id":1,"sub_category_id":1,"child_category_id":0,"brand_id":1,"averageRating":"5.0000","totalSold":"10","active_variants":[]},{"id":7,"name":"Sports Running Shoes","short_name":"Running Shoes","slug":"sports-running-shoes","thumb_image":"uploads\/products\/product-sports-running-shoes-2026-01-25-23-26-02-6748.webp","qty":88,"sold_qty":38,"price":89.99,"offer_price":null,"is_undefine":0,"is_featured":0,"new_product":0,"is_top":0,"is_best":1,"category_id":1,"sub_category_id":1,"child_category_id":0,"brand_id":1,"averageRating":"4.3333","totalSold":"19","active_variants":[]},{"id":6,"name":"Ultra HD 4K Monitor","short_name":"4K Monitor","slug":"ultra-hd-4k-monitor","thumb_image":"uploads\/products\/product-ultra-hd-4k-monitor-2026-01-25-23-25-39-9023.webp","qty":112,"sold_qty":23,"price":499.99,"offer_price":449.99,"is_undefine":0,"is_featured":1,"new_product":0,"is_top":1,"is_best":0,"category_id":1,"sub_category_id":1,"child_category_id":0,"brand_id":1,"averageRating":"4.3333","totalSold":"9","active_variants":[]},{"id":5,"name":"Gaming Mechanical Keyboard","short_name":"Gaming Keyboard","slug":"gaming-mechanical-keyboard","thumb_image":"uploads\/products\/product-gaming-mechanical-keyboard-2026-01-25-23-25-01-6570.webp","qty":78,"sold_qty":35,"price":129.99,"offer_price":null,"is_undefine":0,"is_featured":1,"new_product":1,"is_top":0,"is_best":0,"category_id":1,"sub_category_id":1,"child_category_id":0,"brand_id":1,"averageRating":"4.0000","totalSold":"7","active_variants":[]}],"singleBannerOne":{"id":21,"product_slug":null,"image":"uploads\/banners\/banner-21-2026-01-25-23-29-36-2203.webp","banner_location":"feature","status":1,"title_one":"Quality","title_two":"Products"},"newArrivalProductVisibility":true,"newArrivalProducts":[{"id":11,"name":"Noise Cancelling Earbuds","short_name":"NC Earbuds","slug":"noise-cancelling-earbuds","thumb_image":"uploads\/products\/product-noise-cancelling-earbuds-2026-01-25-23-26-41-7945.webp","qty":76,"sold_qty":17,"price":199.99,"offer_price":179.99,"is_undefine":0,"is_featured":0,"new_product":1,"is_top":0,"is_best":1,"category_id":1,"sub_category_id":1,"child_category_id":0,"brand_id":1,"averageRating":"4.3333","totalSold":"9","active_variants":[]},{"id":8,"name":"Leather Wallet Premium","short_name":"Leather Wallet","slug":"leather-wallet-premium","thumb_image":"uploads\/products\/product-leather-wallet-premium-2026-01-25-23-26-09-2131.webp","qty":60,"sold_qty":25,"price":59.99,"offer_price":49.99,"is_undefine":0,"is_featured":0,"new_product":1,"is_top":0,"is_best":0,"category_id":1,"sub_category_id":1,"child_category_id":0,"brand_id":1,"averageRating":"5.0000","totalSold":"10","active_variants":[]},{"id":5,"name":"Gaming Mechanical Keyboard","short_name":"Gaming Keyboard","slug":"gaming-mechanical-keyboard","thumb_image":"uploads\/products\/product-gaming-mechanical-keyboard-2026-01-25-23-25-01-6570.webp","qty":78,"sold_qty":35,"price":129.99,"offer_price":null,"is_undefine":0,"is_featured":1,"new_product":1,"is_top":0,"is_best":0,"category_id":1,"sub_category_id":1,"child_category_id":0,"brand_id":1,"averageRating":"4.0000","totalSold":"7","active_variants":[]},{"id":2,"name":"Smart Watch Pro Series","short_name":"Smart Watch Pro","slug":"smart-watch-pro-series","thumb_image":"uploads\/products\/product-smart-watch-pro-series-2026-01-25-23-24-09-2360.webp","qty":162,"sold_qty":10,"price":299.99,"offer_price":249.99,"is_undefine":0,"is_featured":1,"new_product":1,"is_top":0,"is_best":0,"category_id":1,"sub_category_id":1,"child_category_id":0,"brand_id":1,"averageRating":"4.6667","totalSold":"9","active_variants":[]}],"bestProductVisibility":true,"singleBannerTwo":{"id":22,"product_slug":null,"image":"uploads\/banners\/banner-22-2026-01-25-23-29-48-5884.webp","banner_location":"feature","status":1,"title_one":"Fast"},"bestProducts":[{"id":11,"name":"Noise Cancelling Earbuds","short_name":"NC Earbuds","slug":"noise-cancelling-earbuds","thumb_image":"uploads\/products\/product-noise-cancelling-earbuds-2026-01-25-23-26-41-7945.webp","qty":76,"sold_qty":17,"price":199.99,"offer_price":179.99,"is_undefine":0,"is_featured":0,"new_product":1,"is_top":0,"is_best":1,"category_id":1,"sub_category_id":1,"child_category_id":0,"brand_id":1,"averageRating":"4.3333","totalSold":"9","active_variants":[]},{"id":7,"name":"Sports Running Shoes","short_name":"Running Shoes","slug":"sports-running-shoes","thumb_image":"uploads\/products\/product-sports-running-shoes-2026-01-25-23-26-02-6748.webp","qty":88,"sold_qty":38,"price":89.99,"offer_price":null,"is_undefine":0,"is_featured":0,"new_product":0,"is_top":0,"is_best":1,"category_id":1,"sub_category_id":1,"child_category_id":0,"brand_id":1,"averageRating":"4.3333","totalSold":"19","active_variants":[]},{"id":4,"name":"Ergonomic Office Chair","short_name":"Office Chair","slug":"ergonomic-office-chair","thumb_image":"uploads\/products\/product-ergonomic-office-chair-2026-01-25-23-24-33-8293.webp","qty":69,"sold_qty":32,"price":349.99,"offer_price":299.99,"is_undefine":0,"is_featured":0,"new_product":0,"is_top":0,"is_best":1,"category_id":1,"sub_category_id":1,"child_category_id":0,"brand_id":1,"averageRating":"5.0000","totalSold":"8","active_variants":[]},{"id":1,"name":"Premium Wireless Headphones","short_name":"Wireless Headphones","slug":"premium-wireless-headphones","thumb_image":"uploads\/products\/product-premium-wireless-headphones-2026-01-25-23-23-59-9791.webp","qty":151,"sold_qty":40,"price":149.99,"offer_price":129.99,"is_undefine":0,"is_featured":1,"new_product":0,"is_top":0,"is_best":1,"category_id":1,"sub_category_id":1,"child_category_id":0,"brand_id":1,"averageRating":"4.0000","totalSold":"9","active_variants":[]}],"subscriptionBanner":{"id":27,"image":"uploads\/banners\/banner-27-2026-01-25-23-30-26-3929.webp","banner_location":"services","header":"Services","title":"Services Banner"}}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          x-ratelimit-limit: '60'
+          x-ratelimit-remaining: '60'
+          access-control-allow-origin: '*'
+          access-control-allow-methods: 'GET, POST, PUT, DELETE, OPTIONS, PATCH'
+          access-control-allow-headers: 'Origin, X-Requested-With, Content-Type, Accept, Authorization, X-CSRF-TOKEN'
+          access-control-allow-credentials: 'true'
+          access-control-max-age: '86400'
+        description: null
+        custom: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - GET
+    uri: api/about-us
+    metadata:
+      groupName: Home
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: ''
+      description: ''
+      authenticated: false
+      custom: []
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        status: 200
+        content: '{"aboutUs":null,"seoSetting":{"id":2,"page_name":"About Us","seo_title":"About Us - Our Story","seo_description":"Learn more about our company and mission","created_at":"2026-01-25T18:26:31.000000Z","updated_at":"2026-01-25T18:26:31.000000Z"},"testimonials":[{"id":1,"name":"Sarah Johnson","designation":"Marketing Director","image":"uploads\/testimonials\/testimonial-sarah-johnson-2026-01-25-23-34-04-2634.webp","rating":"5","comment":"Absolutely love shopping here! The quality of products is exceptional and the delivery is always on time. Customer service is top-notch!","status":1,"created_at":"2026-01-25T18:04:04.000000Z","updated_at":"2026-01-25T18:04:04.000000Z"},{"id":2,"name":"Michael Chen","designation":"Software Engineer","image":"uploads\/testimonials\/testimonial-michael-chen-2026-01-25-23-34-08-1535.webp","rating":"5","comment":"Best online shopping experience I''ve ever had. The product descriptions are accurate and the prices are very competitive.","status":1,"created_at":"2026-01-25T18:04:08.000000Z","updated_at":"2026-01-25T18:04:08.000000Z"},{"id":3,"name":"Emily Rodriguez","designation":"Interior Designer","image":"uploads\/testimonials\/testimonial-emily-rodriguez-2026-01-25-23-34-13-9405.webp","rating":"4","comment":"Great selection of home decor items. Found exactly what I was looking for at a great price. Will definitely shop here again!","status":1,"created_at":"2026-01-25T18:04:13.000000Z","updated_at":"2026-01-25T18:04:13.000000Z"},{"id":4,"name":"David Thompson","designation":"Business Owner","image":"uploads\/testimonials\/testimonial-david-thompson-2026-01-25-23-34-16-7400.webp","rating":"5","comment":"The quality exceeded my expectations. Fast shipping and secure packaging. This store has earned a loyal customer!","status":1,"created_at":"2026-01-25T18:04:17.000000Z","updated_at":"2026-01-25T18:04:17.000000Z"},{"id":5,"name":"Lisa Patel","designation":"Fitness Trainer","image":"uploads\/testimonials\/testimonial-lisa-patel-2026-01-25-23-34-20-5805.webp","rating":"5","comment":"Amazing products and even better customer service. They went above and beyond to help me find the right items.","status":1,"created_at":"2026-01-25T18:04:20.000000Z","updated_at":"2026-01-25T18:04:20.000000Z"},{"id":6,"name":"Robert Wilson","designation":"Photographer","image":"uploads\/testimonials\/testimonial-robert-wilson-2026-01-25-23-34-24-1077.webp","rating":"4","comment":"Very impressed with the product quality and packaging. The website is easy to navigate and checkout was smooth.","status":1,"created_at":"2026-01-25T18:04:24.000000Z","updated_at":"2026-01-25T18:04:24.000000Z"}],"services":[{"id":1,"title":"Free Shipping","icon":"uploads\/services\/service-free-shipping-2026-01-25-23-33-29-1285.webp","description":"Free shipping on all orders over $50. Fast and reliable delivery to your doorstep.","status":1,"created_at":"2026-01-25T18:03:30.000000Z","updated_at":"2026-01-25T18:03:30.000000Z"},{"id":2,"title":"Secure Payment","icon":"uploads\/services\/service-secure-payment-2026-01-25-23-33-34-6797.webp","description":"100% secure payment with SSL encryption. We accept all major credit cards and PayPal.","status":1,"created_at":"2026-01-25T18:03:34.000000Z","updated_at":"2026-01-25T18:03:34.000000Z"},{"id":3,"title":"24\/7 Support","icon":"uploads\/services\/service-247-support-2026-01-25-23-33-39-7500.webp","description":"Our customer support team is available 24\/7 to help you with any questions or concerns.","status":1,"created_at":"2026-01-25T18:03:39.000000Z","updated_at":"2026-01-25T18:03:39.000000Z"},{"id":4,"title":"Easy Returns","icon":"uploads\/services\/service-easy-returns-2026-01-25-23-33-46-5616.webp","description":"30-day hassle-free returns. Not satisfied? Return it for a full refund, no questions asked.","status":1,"created_at":"2026-01-25T18:03:46.000000Z","updated_at":"2026-01-25T18:03:46.000000Z"},{"id":5,"title":"Quality Guarantee","icon":"uploads\/services\/service-quality-guarantee-2026-01-25-23-33-50-8319.webp","description":"All products are quality checked before shipping. We guarantee 100% authentic products.","status":1,"created_at":"2026-01-25T18:03:50.000000Z","updated_at":"2026-01-25T18:03:50.000000Z"},{"id":6,"title":"Member Rewards","icon":"uploads\/services\/service-member-rewards-2026-01-25-23-33-59-4586.webp","description":"Join our loyalty program and earn points on every purchase. Redeem for exclusive discounts.","status":1,"created_at":"2026-01-25T18:03:59.000000Z","updated_at":"2026-01-25T18:03:59.000000Z"}],"blogs":[]}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          x-ratelimit-limit: '60'
+          x-ratelimit-remaining: '59'
+          access-control-allow-origin: '*'
+          access-control-allow-methods: 'GET, POST, PUT, DELETE, OPTIONS, PATCH'
+          access-control-allow-headers: 'Origin, X-Requested-With, Content-Type, Accept, Authorization, X-CSRF-TOKEN'
+          access-control-allow-credentials: 'true'
+          access-control-max-age: '86400'
+        description: null
+        custom: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - GET
+    uri: api/contact-us
+    metadata:
+      groupName: Home
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: ''
+      description: ''
+      authenticated: false
+      custom: []
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        status: 200
+        content: '{"contact":null,"recaptchaSetting":null,"seoSetting":{"id":3,"page_name":"Contact Us","seo_title":"Contact Us - Get in Touch","seo_description":"Contact us for any inquiries or support","created_at":"2026-01-25T18:26:31.000000Z","updated_at":"2026-01-25T18:26:31.000000Z"}}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          x-ratelimit-limit: '60'
+          x-ratelimit-remaining: '58'
+          access-control-allow-origin: '*'
+          access-control-allow-methods: 'GET, POST, PUT, DELETE, OPTIONS, PATCH'
+          access-control-allow-headers: 'Origin, X-Requested-With, Content-Type, Accept, Authorization, X-CSRF-TOKEN'
+          access-control-allow-credentials: 'true'
+          access-control-max-age: '86400'
+        description: null
+        custom: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - POST
+    uri: api/send-contact-message
+    metadata:
+      groupName: Home
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: ''
+      description: ''
+      authenticated: false
+      custom: []
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      name:
+        name: name
+        description: ''
+        required: true
+        example: cum
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+      email:
+        name: email
+        description: ''
+        required: true
+        example: vero
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+      subject:
+        name: subject
+        description: ''
+        required: true
+        example: suscipit
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+      message:
+        name: message
+        description: ''
+        required: true
+        example: aut
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+      g-recaptcha-response:
+        name: g-recaptcha-response
+        description: ''
+        required: false
+        example: null
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+    cleanBodyParameters:
+      name: cum
+      email: vero
+      subject: suscipit
+      message: aut
+    fileParameters: []
+    responses: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - GET
+    uri: api/blog
+    metadata:
+      groupName: Home
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: ''
+      description: ''
+      authenticated: false
+      custom: []
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        status: 500
+        content: |-
+          {
+              "message": "Server Error"
+          }
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          x-ratelimit-limit: '60'
+          x-ratelimit-remaining: '57'
+          access-control-allow-origin: '*'
+          access-control-allow-methods: 'GET, POST, PUT, DELETE, OPTIONS, PATCH'
+          access-control-allow-headers: 'Origin, X-Requested-With, Content-Type, Accept, Authorization, X-CSRF-TOKEN'
+          access-control-allow-credentials: 'true'
+          access-control-max-age: '86400'
+        description: null
+        custom: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - GET
+    uri: 'api/blog/{slug}'
+    metadata:
+      groupName: Home
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: ''
+      description: ''
+      authenticated: false
+      custom: []
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      slug:
+        name: slug
+        description: 'The slug of the blog.'
+        required: true
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+    cleanUrlParameters:
+      slug: 1
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        status: 500
+        content: |-
+          {
+              "message": "Server Error"
+          }
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          x-ratelimit-limit: '60'
+          x-ratelimit-remaining: '56'
+          access-control-allow-origin: '*'
+          access-control-allow-methods: 'GET, POST, PUT, DELETE, OPTIONS, PATCH'
+          access-control-allow-headers: 'Origin, X-Requested-With, Content-Type, Accept, Authorization, X-CSRF-TOKEN'
+          access-control-allow-credentials: 'true'
+          access-control-max-age: '86400'
+        description: null
+        custom: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - POST
+    uri: api/blog-comment
+    metadata:
+      groupName: Home
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: ''
+      description: ''
+      authenticated: false
+      custom: []
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      name:
+        name: name
+        description: ''
+        required: true
+        example: non
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+      email:
+        name: email
+        description: ''
+        required: true
+        example: porro
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+      comment:
+        name: comment
+        description: ''
+        required: true
+        example: et
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+      blog_id:
+        name: blog_id
+        description: ''
+        required: true
+        example: minus
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+      g-recaptcha-response:
+        name: g-recaptcha-response
+        description: ''
+        required: false
+        example: null
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+    cleanBodyParameters:
+      name: non
+      email: porro
+      comment: et
+      blog_id: minus
+    fileParameters: []
+    responses: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - GET
+    uri: 'api/track-order-response/{id}'
+    metadata:
+      groupName: Home
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: ''
+      description: ''
+      authenticated: false
+      custom: []
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      id:
+        name: id
+        description: 'The ID of the track order response.'
+        required: true
+        example: autem
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+    cleanUrlParameters:
+      id: autem
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        status: 200
+        content: '{"status":0,"message":"Order not found"}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          x-ratelimit-limit: '60'
+          x-ratelimit-remaining: '55'
+          access-control-allow-origin: '*'
+          access-control-allow-methods: 'GET, POST, PUT, DELETE, OPTIONS, PATCH'
+          access-control-allow-headers: 'Origin, X-Requested-With, Content-Type, Accept, Authorization, X-CSRF-TOKEN'
+          access-control-allow-credentials: 'true'
+          access-control-max-age: '86400'
+        description: null
+        custom: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - GET
+    uri: api/faq
+    metadata:
+      groupName: Home
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: ''
+      description: ''
+      authenticated: false
+      custom: []
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        status: 200
+        content: '{"faqs":[{"id":10,"question":"Are my personal and payment details secure?","answer":"Yes, we use industry-standard SSL encryption to protect all your personal and payment information. We never store your complete credit card details on our servers.","status":1,"serial":10,"created_at":"2026-01-25T18:26:31.000000Z","updated_at":"2026-01-25T18:26:31.000000Z"},{"id":9,"question":"How do I apply a coupon code?","answer":"During checkout, you will see a field labeled \"Promo Code\" or \"Coupon Code\". Enter your code and click \"Apply\" to see the discount reflected in your order total.","status":1,"serial":9,"created_at":"2026-01-25T18:26:31.000000Z","updated_at":"2026-01-25T18:26:31.000000Z"},{"id":8,"question":"Can I modify or cancel my order?","answer":"Orders can be modified or canceled within 2 hours of placing them. After this window, once the order enters processing, modifications are not possible. Please contact support immediately if you need to make changes.","status":1,"serial":8,"created_at":"2026-01-25T18:26:31.000000Z","updated_at":"2026-01-25T18:26:31.000000Z"},{"id":7,"question":"How do I contact customer support?","answer":"You can reach our customer support team via email at support@kutoot.com, through our live chat feature on the website, or by calling our helpline during business hours (9 AM - 6 PM IST).","status":1,"serial":7,"created_at":"2026-01-25T18:26:31.000000Z","updated_at":"2026-01-25T18:26:31.000000Z"},{"id":6,"question":"Do you offer international shipping?","answer":"Yes, we ship to over 50 countries worldwide. Shipping costs and delivery times vary by destination. You can check shipping availability by entering your address during checkout.","status":1,"serial":6,"created_at":"2026-01-25T18:26:31.000000Z","updated_at":"2026-01-25T18:26:31.000000Z"},{"id":5,"question":"How long does shipping take?","answer":"Standard shipping typically takes 5-7 business days. Express shipping is available for 2-3 business day delivery. International orders may take 10-15 business days depending on the destination.","status":1,"serial":5,"created_at":"2026-01-25T18:26:31.000000Z","updated_at":"2026-01-25T18:26:31.000000Z"},{"id":4,"question":"What is your return policy?","answer":"We offer a 30-day return policy for most products. Items must be unused, in original packaging, with tags attached. Some categories like electronics have specific return windows. Contact support for return authorization.","status":1,"serial":4,"created_at":"2026-01-25T18:26:31.000000Z","updated_at":"2026-01-25T18:26:31.000000Z"},{"id":3,"question":"How can I track my order?","answer":"Once your order is shipped, you will receive a tracking number via email. You can use this number to track your package on our website or the courier partner website.","status":1,"serial":3,"created_at":"2026-01-25T18:26:31.000000Z","updated_at":"2026-01-25T18:26:31.000000Z"},{"id":2,"question":"What payment methods do you accept?","answer":"We accept a variety of payment methods including credit\/debit cards (Visa, MasterCard, American Express), PayPal, and Cash on Delivery (COD) for eligible locations.","status":1,"serial":2,"created_at":"2026-01-25T18:26:31.000000Z","updated_at":"2026-01-25T18:26:31.000000Z"},{"id":1,"question":"How do I place an order?","answer":"To place an order, browse our products, add items to your cart, and proceed to checkout. Follow the steps to enter your shipping address and payment information to complete your purchase.","status":1,"serial":1,"created_at":"2026-01-25T18:26:31.000000Z","updated_at":"2026-01-25T18:26:31.000000Z"}]}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          x-ratelimit-limit: '60'
+          x-ratelimit-remaining: '54'
+          access-control-allow-origin: '*'
+          access-control-allow-methods: 'GET, POST, PUT, DELETE, OPTIONS, PATCH'
+          access-control-allow-headers: 'Origin, X-Requested-With, Content-Type, Accept, Authorization, X-CSRF-TOKEN'
+          access-control-allow-credentials: 'true'
+          access-control-max-age: '86400'
+        description: null
+        custom: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - GET
+    uri: api/page
+    metadata:
+      groupName: Home
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: ''
+      description: ''
+      authenticated: false
+      custom: []
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        status: 200
+        content: '{"pages":[]}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          x-ratelimit-limit: '60'
+          x-ratelimit-remaining: '53'
+          access-control-allow-origin: '*'
+          access-control-allow-methods: 'GET, POST, PUT, DELETE, OPTIONS, PATCH'
+          access-control-allow-headers: 'Origin, X-Requested-With, Content-Type, Accept, Authorization, X-CSRF-TOKEN'
+          access-control-allow-credentials: 'true'
+          access-control-max-age: '86400'
+        description: null
+        custom: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - GET
+    uri: 'api/page/{slug}'
+    metadata:
+      groupName: Home
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: ''
+      description: ''
+      authenticated: false
+      custom: []
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      slug:
+        name: slug
+        description: 'The slug of the page.'
+        required: true
+        example: et
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+    cleanUrlParameters:
+      slug: et
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        status: 500
+        content: |-
+          {
+              "message": "Server Error"
+          }
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          x-ratelimit-limit: '60'
+          x-ratelimit-remaining: '52'
+          access-control-allow-origin: '*'
+          access-control-allow-methods: 'GET, POST, PUT, DELETE, OPTIONS, PATCH'
+          access-control-allow-headers: 'Origin, X-Requested-With, Content-Type, Accept, Authorization, X-CSRF-TOKEN'
+          access-control-allow-credentials: 'true'
+          access-control-max-age: '86400'
+        description: null
+        custom: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - GET
+    uri: api/terms-and-conditions
+    metadata:
+      groupName: Home
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: ''
+      description: ''
+      authenticated: false
+      custom: []
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        status: 200
+        content: '{"terms_conditions":null}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          x-ratelimit-limit: '60'
+          x-ratelimit-remaining: '51'
+          access-control-allow-origin: '*'
+          access-control-allow-methods: 'GET, POST, PUT, DELETE, OPTIONS, PATCH'
+          access-control-allow-headers: 'Origin, X-Requested-With, Content-Type, Accept, Authorization, X-CSRF-TOKEN'
+          access-control-allow-credentials: 'true'
+          access-control-max-age: '86400'
+        description: null
+        custom: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - GET
+    uri: api/privacy-policy
+    metadata:
+      groupName: Home
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: ''
+      description: ''
+      authenticated: false
+      custom: []
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        status: 200
+        content: '{"privacyPolicy":null}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          x-ratelimit-limit: '60'
+          x-ratelimit-remaining: '50'
+          access-control-allow-origin: '*'
+          access-control-allow-methods: 'GET, POST, PUT, DELETE, OPTIONS, PATCH'
+          access-control-allow-headers: 'Origin, X-Requested-With, Content-Type, Accept, Authorization, X-CSRF-TOKEN'
+          access-control-allow-credentials: 'true'
+          access-control-max-age: '86400'
+        description: null
+        custom: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - GET
+    uri: api/seller-terms-conditoins
+    metadata:
+      groupName: Home
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: ''
+      description: ''
+      authenticated: false
+      custom: []
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        status: 200
+        content: '{"seller_tems_conditions":{"seller_condition":"By registering as a seller, you agree to our terms and conditions."}}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          x-ratelimit-limit: '60'
+          x-ratelimit-remaining: '49'
+          access-control-allow-origin: '*'
+          access-control-allow-methods: 'GET, POST, PUT, DELETE, OPTIONS, PATCH'
+          access-control-allow-headers: 'Origin, X-Requested-With, Content-Type, Accept, Authorization, X-CSRF-TOKEN'
+          access-control-allow-credentials: 'true'
+          access-control-max-age: '86400'
+        description: null
+        custom: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - GET
+    uri: api/sellers
+    metadata:
+      groupName: Home
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: ''
+      description: ''
+      authenticated: false
+      custom: []
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        status: 200
+        content: '{"sellers":{"current_page":1,"data":[{"id":5,"banner_image":"uploads\/vendors\/banner-beauty-palace-2026-01-25-23-23-57-7086.webp","shop_name":"Beauty Palace","slug":"beauty-palace","open_at":"09:00","closed_at":"21:00","address":"Block E, Commercial Complex, New Delhi","email":"nehagupta@vendor.com","logo":"uploads\/vendors\/logo-beauty-palace-2026-01-25-23-23-54-2629.webp","phone":"9894065889","averageRating":"0"},{"id":4,"banner_image":"uploads\/vendors\/banner-sports-arena-2026-01-25-23-23-50-9403.webp","shop_name":"Sports Arena","slug":"sports-arena","open_at":"09:00","closed_at":"21:00","address":"Block D, Commercial Complex, New Delhi","email":"vikramsingh@vendor.com","logo":"uploads\/vendors\/logo-sports-arena-2026-01-25-23-23-48-7241.webp","phone":"9840796638","averageRating":"0"},{"id":3,"banner_image":"uploads\/vendors\/banner-home-essentials-2026-01-25-23-23-45-7649.webp","shop_name":"Home Essentials","slug":"home-essentials","open_at":"09:00","closed_at":"21:00","address":"Block C, Commercial Complex, New Delhi","email":"amitkumar@vendor.com","logo":"uploads\/vendors\/logo-home-essentials-2026-01-25-23-23-43-7262.webp","phone":"9866498655","averageRating":"0"},{"id":2,"banner_image":"uploads\/vendors\/banner-fashion-hub-2026-01-25-23-23-40-6821.webp","shop_name":"Fashion Hub","slug":"fashion-hub","open_at":"09:00","closed_at":"21:00","address":"Block B, Commercial Complex, New Delhi","email":"priyasharma@vendor.com","logo":"uploads\/vendors\/logo-fashion-hub-2026-01-25-23-23-39-9155.webp","phone":"9830729455","averageRating":"0"},{"id":1,"banner_image":"uploads\/vendors\/banner-techzone-electronics-2026-01-25-23-23-37-1012.webp","shop_name":"TechZone Electronics","slug":"techzone-electronics","open_at":"09:00","closed_at":"21:00","address":"Block A, Commercial Complex, New Delhi","email":"rajpatel@vendor.com","logo":"uploads\/vendors\/logo-techzone-electronics-2026-01-25-23-23-35-8307.webp","phone":"9830376238","averageRating":"4.4545"}],"first_page_url":"http:\/\/test.test\/api\/sellers?page=1","from":1,"last_page":1,"last_page_url":"http:\/\/test.test\/api\/sellers?page=1","links":[{"url":null,"label":"&laquo; Previous","active":false},{"url":"http:\/\/test.test\/api\/sellers?page=1","label":"1","active":true},{"url":null,"label":"Next &raquo;","active":false}],"next_page_url":null,"path":"http:\/\/test.test\/api\/sellers","per_page":20,"prev_page_url":null,"to":5,"total":5},"seoSetting":{"id":5,"page_name":"Flash Deal","seo_title":"Flash Deals - Limited Time Offers","seo_description":"Grab amazing deals before they expire","created_at":"2026-01-25T18:26:31.000000Z","updated_at":"2026-01-25T18:26:31.000000Z"}}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          x-ratelimit-limit: '60'
+          x-ratelimit-remaining: '48'
+          access-control-allow-origin: '*'
+          access-control-allow-methods: 'GET, POST, PUT, DELETE, OPTIONS, PATCH'
+          access-control-allow-headers: 'Origin, X-Requested-With, Content-Type, Accept, Authorization, X-CSRF-TOKEN'
+          access-control-allow-credentials: 'true'
+          access-control-max-age: '86400'
+        description: null
+        custom: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - GET
+    uri: 'api/sellers/{shop_name}'
+    metadata:
+      groupName: Home
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: ''
+      description: ''
+      authenticated: false
+      custom: []
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      shop_name:
+        name: shop_name
+        description: ''
+        required: true
+        example: natus
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+    cleanUrlParameters:
+      shop_name: natus
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        status: 403
+        content: '{"message":"Seller not found"}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          x-ratelimit-limit: '60'
+          x-ratelimit-remaining: '47'
+          access-control-allow-origin: '*'
+          access-control-allow-methods: 'GET, POST, PUT, DELETE, OPTIONS, PATCH'
+          access-control-allow-headers: 'Origin, X-Requested-With, Content-Type, Accept, Authorization, X-CSRF-TOKEN'
+          access-control-allow-credentials: 'true'
+          access-control-max-age: '86400'
+        description: null
+        custom: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - GET
+    uri: api/product
+    metadata:
+      groupName: Home
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: ''
+      description: ''
+      authenticated: false
+      custom: []
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        status: 200
+        content: '{"searchCategoryArr":[],"searchBrandArr":[],"categories":[{"id":1,"name":"Electronics","slug":"electronics","icon":"uploads\/categories\/icon-electronics-2026-01-25-23-21-16-8432.webp","active_sub_categories":[{"id":1,"name":"Smartphones","slug":"smartphones","category_id":1,"active_child_categories":[{"id":1,"name":"Android Phones","slug":"android-phones","sub_category_id":1},{"id":2,"name":"iPhones","slug":"iphones","sub_category_id":1},{"id":3,"name":"Budget Phones","slug":"budget-phones","sub_category_id":1},{"id":4,"name":"Flagship Phones","slug":"flagship-phones","sub_category_id":1}]},{"id":2,"name":"Laptops","slug":"laptops","category_id":1,"active_child_categories":[{"id":5,"name":"Gaming Laptops","slug":"gaming-laptops","sub_category_id":2},{"id":6,"name":"Business Laptops","slug":"business-laptops","sub_category_id":2},{"id":7,"name":"Ultrabooks","slug":"ultrabooks","sub_category_id":2},{"id":8,"name":"Chromebooks","slug":"chromebooks","sub_category_id":2}]},{"id":3,"name":"Tablets","slug":"tablets","category_id":1,"active_child_categories":[]},{"id":4,"name":"Accessories","slug":"accessories","category_id":1,"active_child_categories":[]},{"id":41,"name":"Audio","slug":"audio","category_id":1,"active_child_categories":[]},{"id":42,"name":"Cameras","slug":"cameras","category_id":1,"active_child_categories":[]}]},{"id":2,"name":"Fashion","slug":"fashion","icon":"uploads\/categories\/icon-fashion-2026-01-25-23-21-21-1772.webp","active_sub_categories":[{"id":5,"name":"Men''s Wear","slug":"mens-wear","category_id":2,"active_child_categories":[]},{"id":6,"name":"Women''s Wear","slug":"womens-wear","category_id":2,"active_child_categories":[]},{"id":7,"name":"Kids Wear","slug":"kids-wear","category_id":2,"active_child_categories":[]},{"id":8,"name":"Footwear","slug":"footwear","category_id":2,"active_child_categories":[]},{"id":43,"name":"Men Clothing","slug":"men-clothing","category_id":2,"active_child_categories":[{"id":17,"name":"T-Shirts","slug":"t-shirts","sub_category_id":43},{"id":18,"name":"Shirts","slug":"shirts","sub_category_id":43},{"id":19,"name":"Jeans","slug":"jeans","sub_category_id":43},{"id":20,"name":"Jackets","slug":"jackets","sub_category_id":43}]},{"id":44,"name":"Women Clothing","slug":"women-clothing","category_id":2,"active_child_categories":[{"id":21,"name":"Dresses","slug":"dresses","sub_category_id":44},{"id":22,"name":"Tops","slug":"tops","sub_category_id":44},{"id":23,"name":"Pants","slug":"pants","sub_category_id":44},{"id":24,"name":"Skirts","slug":"skirts","sub_category_id":44}]},{"id":45,"name":"Accessories","slug":"accessories","category_id":2,"active_child_categories":[]}]},{"id":3,"name":"Home & Living","slug":"home-living","icon":"uploads\/categories\/icon-home-living-2026-01-25-23-21-26-1340.webp","active_sub_categories":[{"id":9,"name":"Furniture","slug":"furniture","category_id":3,"active_child_categories":[{"id":9,"name":"Living Room","slug":"living-room","sub_category_id":9},{"id":10,"name":"Bedroom","slug":"bedroom","sub_category_id":9},{"id":11,"name":"Office","slug":"office","sub_category_id":9},{"id":12,"name":"Outdoor","slug":"outdoor","sub_category_id":9}]},{"id":10,"name":"Decor","slug":"decor","category_id":3,"active_child_categories":[]},{"id":11,"name":"Kitchen","slug":"kitchen","category_id":3,"active_child_categories":[]},{"id":12,"name":"Bedding","slug":"bedding","category_id":3,"active_child_categories":[]},{"id":46,"name":"Lighting","slug":"lighting","category_id":3,"active_child_categories":[]}]},{"id":4,"name":"Sports & Fitness","slug":"sports-fitness","icon":"uploads\/categories\/icon-sports-fitness-2026-01-25-23-21-39-8423.webp","active_sub_categories":[{"id":13,"name":"Gym Equipment","slug":"gym-equipment","category_id":4,"active_child_categories":[]},{"id":14,"name":"Sportswear","slug":"sportswear","category_id":4,"active_child_categories":[]},{"id":15,"name":"Outdoor","slug":"outdoor","category_id":4,"active_child_categories":[]},{"id":16,"name":"Yoga","slug":"yoga","category_id":4,"active_child_categories":[]},{"id":47,"name":"General","slug":"general","category_id":4,"active_child_categories":[]},{"id":48,"name":"Featured","slug":"featured","category_id":4,"active_child_categories":[]},{"id":49,"name":"New Arrivals","slug":"new-arrivals","category_id":4,"active_child_categories":[]}]},{"id":5,"name":"Beauty & Health","slug":"beauty-health","icon":"uploads\/categories\/icon-beauty-health-2026-01-25-23-21-46-7282.webp","active_sub_categories":[{"id":17,"name":"Skincare","slug":"skincare","category_id":5,"active_child_categories":[{"id":13,"name":"Moisturizers","slug":"moisturizers","sub_category_id":17},{"id":14,"name":"Serums","slug":"serums","sub_category_id":17},{"id":15,"name":"Cleansers","slug":"cleansers","sub_category_id":17},{"id":16,"name":"Sunscreen","slug":"sunscreen","sub_category_id":17}]},{"id":18,"name":"Makeup","slug":"makeup","category_id":5,"active_child_categories":[]},{"id":19,"name":"Haircare","slug":"haircare","category_id":5,"active_child_categories":[]},{"id":20,"name":"Wellness","slug":"wellness","category_id":5,"active_child_categories":[]},{"id":50,"name":"General","slug":"general","category_id":5,"active_child_categories":[]},{"id":51,"name":"Featured","slug":"featured","category_id":5,"active_child_categories":[]},{"id":52,"name":"New Arrivals","slug":"new-arrivals","category_id":5,"active_child_categories":[]}]},{"id":6,"name":"Books & Stationery","slug":"books-stationery","icon":"uploads\/categories\/icon-books-stationery-2026-01-25-23-21-52-5898.webp","active_sub_categories":[{"id":21,"name":"Fiction","slug":"fiction","category_id":6,"active_child_categories":[]},{"id":22,"name":"Non-Fiction","slug":"non-fiction","category_id":6,"active_child_categories":[]},{"id":23,"name":"Office Supplies","slug":"office-supplies","category_id":6,"active_child_categories":[]},{"id":24,"name":"Art Supplies","slug":"art-supplies","category_id":6,"active_child_categories":[]},{"id":53,"name":"General","slug":"general","category_id":6,"active_child_categories":[]},{"id":54,"name":"Featured","slug":"featured","category_id":6,"active_child_categories":[]},{"id":55,"name":"New Arrivals","slug":"new-arrivals","category_id":6,"active_child_categories":[]}]},{"id":7,"name":"Toys & Games","slug":"toys-games","icon":"uploads\/categories\/icon-toys-games-2026-01-25-23-22-05-5135.webp","active_sub_categories":[{"id":25,"name":"Action Figures","slug":"action-figures","category_id":7,"active_child_categories":[]},{"id":26,"name":"Board Games","slug":"board-games","category_id":7,"active_child_categories":[]},{"id":27,"name":"Educational","slug":"educational","category_id":7,"active_child_categories":[]},{"id":28,"name":"Outdoor Toys","slug":"outdoor-toys","category_id":7,"active_child_categories":[]},{"id":56,"name":"General","slug":"general","category_id":7,"active_child_categories":[]},{"id":57,"name":"Featured","slug":"featured","category_id":7,"active_child_categories":[]},{"id":58,"name":"New Arrivals","slug":"new-arrivals","category_id":7,"active_child_categories":[]}]},{"id":8,"name":"Jewelry & Watches","slug":"jewelry-watches","icon":"uploads\/categories\/icon-jewelry-watches-2026-01-25-23-22-28-7742.webp","active_sub_categories":[{"id":29,"name":"Rings","slug":"rings","category_id":8,"active_child_categories":[]},{"id":30,"name":"Necklaces","slug":"necklaces","category_id":8,"active_child_categories":[]},{"id":31,"name":"Watches","slug":"watches","category_id":8,"active_child_categories":[]},{"id":32,"name":"Bracelets","slug":"bracelets","category_id":8,"active_child_categories":[]},{"id":59,"name":"General","slug":"general","category_id":8,"active_child_categories":[]},{"id":60,"name":"Featured","slug":"featured","category_id":8,"active_child_categories":[]},{"id":61,"name":"New Arrivals","slug":"new-arrivals","category_id":8,"active_child_categories":[]}]},{"id":9,"name":"Automotive","slug":"automotive","icon":"uploads\/categories\/icon-automotive-2026-01-25-23-22-38-1032.webp","active_sub_categories":[{"id":33,"name":"Car Accessories","slug":"car-accessories","category_id":9,"active_child_categories":[]},{"id":34,"name":"Bike Accessories","slug":"bike-accessories","category_id":9,"active_child_categories":[]},{"id":35,"name":"Tools","slug":"tools","category_id":9,"active_child_categories":[]},{"id":36,"name":"Care Products","slug":"care-products","category_id":9,"active_child_categories":[]},{"id":62,"name":"General","slug":"general","category_id":9,"active_child_categories":[]},{"id":63,"name":"Featured","slug":"featured","category_id":9,"active_child_categories":[]},{"id":64,"name":"New Arrivals","slug":"new-arrivals","category_id":9,"active_child_categories":[]}]},{"id":10,"name":"Grocery","slug":"grocery","icon":"uploads\/categories\/icon-grocery-2026-01-25-23-22-45-4589.webp","active_sub_categories":[{"id":37,"name":"Snacks","slug":"snacks","category_id":10,"active_child_categories":[]},{"id":38,"name":"Beverages","slug":"beverages","category_id":10,"active_child_categories":[]},{"id":39,"name":"Fresh Produce","slug":"fresh-produce","category_id":10,"active_child_categories":[]},{"id":40,"name":"Pantry","slug":"pantry","category_id":10,"active_child_categories":[]},{"id":65,"name":"General","slug":"general","category_id":10,"active_child_categories":[]},{"id":66,"name":"Featured","slug":"featured","category_id":10,"active_child_categories":[]},{"id":67,"name":"New Arrivals","slug":"new-arrivals","category_id":10,"active_child_categories":[]}]}],"brands":[{"id":1,"name":"Apple","slug":"apple"},{"id":2,"name":"Samsung","slug":"samsung"},{"id":3,"name":"Nike","slug":"nike"},{"id":4,"name":"Adidas","slug":"adidas"},{"id":5,"name":"Sony","slug":"sony"},{"id":6,"name":"LG","slug":"lg"},{"id":7,"name":"Puma","slug":"puma"},{"id":8,"name":"Dell","slug":"dell"},{"id":9,"name":"HP","slug":"hp"},{"id":10,"name":"Lenovo","slug":"lenovo"},{"id":11,"name":"Microsoft","slug":"microsoft"},{"id":12,"name":"Google","slug":"google"},{"id":13,"name":"Amazon Basics","slug":"amazon-basics"},{"id":14,"name":"Philips","slug":"philips"},{"id":15,"name":"Panasonic","slug":"panasonic"},{"id":16,"name":"Reebok","slug":"reebok"},{"id":17,"name":"Under Armour","slug":"under-armour"},{"id":18,"name":"New Balance","slug":"new-balance"},{"id":19,"name":"Bose","slug":"bose"},{"id":20,"name":"JBL","slug":"jbl"}],"activeVariants":[],"products":{"current_page":1,"data":[{"id":12,"name":"Laptop Backpack Professional","short_name":"Laptop Backpack","slug":"laptop-backpack-professional","thumb_image":"uploads\/products\/product-laptop-backpack-professional-2026-01-25-23-27-04-5931.webp","qty":136,"sold_qty":24,"price":79.99,"offer_price":null,"is_undefine":0,"is_featured":1,"new_product":0,"is_top":0,"is_best":0,"category_id":1,"sub_category_id":1,"child_category_id":0,"brand_id":1,"averageRating":"4.6667","totalSold":"6","active_variants":[]},{"id":11,"name":"Noise Cancelling Earbuds","short_name":"NC Earbuds","slug":"noise-cancelling-earbuds","thumb_image":"uploads\/products\/product-noise-cancelling-earbuds-2026-01-25-23-26-41-7945.webp","qty":76,"sold_qty":17,"price":199.99,"offer_price":179.99,"is_undefine":0,"is_featured":0,"new_product":1,"is_top":0,"is_best":1,"category_id":1,"sub_category_id":1,"child_category_id":0,"brand_id":1,"averageRating":"4.3333","totalSold":"9","active_variants":[]},{"id":10,"name":"Wireless Charging Pad","short_name":"Wireless Charger","slug":"wireless-charging-pad","thumb_image":"uploads\/products\/product-wireless-charging-pad-2026-01-25-23-26-30-1182.webp","qty":96,"sold_qty":34,"price":39.99,"offer_price":29.99,"is_undefine":0,"is_featured":1,"new_product":0,"is_top":0,"is_best":0,"category_id":1,"sub_category_id":1,"child_category_id":0,"brand_id":1,"averageRating":"4.0000","totalSold":"11","active_variants":[]},{"id":9,"name":"Stainless Steel Water Bottle","short_name":"Water Bottle","slug":"stainless-steel-water-bottle","thumb_image":"uploads\/products\/product-stainless-steel-water-bottle-2026-01-25-23-26-23-9037.webp","qty":130,"sold_qty":24,"price":29.99,"offer_price":null,"is_undefine":0,"is_featured":0,"new_product":0,"is_top":1,"is_best":0,"category_id":1,"sub_category_id":1,"child_category_id":0,"brand_id":1,"averageRating":"4.2500","totalSold":"13","active_variants":[]},{"id":8,"name":"Leather Wallet Premium","short_name":"Leather Wallet","slug":"leather-wallet-premium","thumb_image":"uploads\/products\/product-leather-wallet-premium-2026-01-25-23-26-09-2131.webp","qty":60,"sold_qty":25,"price":59.99,"offer_price":49.99,"is_undefine":0,"is_featured":0,"new_product":1,"is_top":0,"is_best":0,"category_id":1,"sub_category_id":1,"child_category_id":0,"brand_id":1,"averageRating":"5.0000","totalSold":"10","active_variants":[]},{"id":7,"name":"Sports Running Shoes","short_name":"Running Shoes","slug":"sports-running-shoes","thumb_image":"uploads\/products\/product-sports-running-shoes-2026-01-25-23-26-02-6748.webp","qty":88,"sold_qty":38,"price":89.99,"offer_price":null,"is_undefine":0,"is_featured":0,"new_product":0,"is_top":0,"is_best":1,"category_id":1,"sub_category_id":1,"child_category_id":0,"brand_id":1,"averageRating":"4.3333","totalSold":"19","active_variants":[]},{"id":6,"name":"Ultra HD 4K Monitor","short_name":"4K Monitor","slug":"ultra-hd-4k-monitor","thumb_image":"uploads\/products\/product-ultra-hd-4k-monitor-2026-01-25-23-25-39-9023.webp","qty":112,"sold_qty":23,"price":499.99,"offer_price":449.99,"is_undefine":0,"is_featured":1,"new_product":0,"is_top":1,"is_best":0,"category_id":1,"sub_category_id":1,"child_category_id":0,"brand_id":1,"averageRating":"4.3333","totalSold":"9","active_variants":[]},{"id":5,"name":"Gaming Mechanical Keyboard","short_name":"Gaming Keyboard","slug":"gaming-mechanical-keyboard","thumb_image":"uploads\/products\/product-gaming-mechanical-keyboard-2026-01-25-23-25-01-6570.webp","qty":78,"sold_qty":35,"price":129.99,"offer_price":null,"is_undefine":0,"is_featured":1,"new_product":1,"is_top":0,"is_best":0,"category_id":1,"sub_category_id":1,"child_category_id":0,"brand_id":1,"averageRating":"4.0000","totalSold":"7","active_variants":[]},{"id":4,"name":"Ergonomic Office Chair","short_name":"Office Chair","slug":"ergonomic-office-chair","thumb_image":"uploads\/products\/product-ergonomic-office-chair-2026-01-25-23-24-33-8293.webp","qty":69,"sold_qty":32,"price":349.99,"offer_price":299.99,"is_undefine":0,"is_featured":0,"new_product":0,"is_top":0,"is_best":1,"category_id":1,"sub_category_id":1,"child_category_id":0,"brand_id":1,"averageRating":"5.0000","totalSold":"8","active_variants":[]},{"id":3,"name":"Portable Bluetooth Speaker","short_name":"Bluetooth Speaker","slug":"portable-bluetooth-speaker","thumb_image":"uploads\/products\/product-portable-bluetooth-speaker-2026-01-25-23-24-17-1592.webp","qty":116,"sold_qty":46,"price":79.99,"offer_price":null,"is_undefine":0,"is_featured":0,"new_product":0,"is_top":1,"is_best":0,"category_id":1,"sub_category_id":1,"child_category_id":0,"brand_id":1,"averageRating":"5.0000","totalSold":"16","active_variants":[]}],"first_page_url":"http:\/\/test.test\/api\/product?page=1","from":1,"last_page":2,"last_page_url":"http:\/\/test.test\/api\/product?page=2","links":[{"url":null,"label":"&laquo; Previous","active":false},{"url":"http:\/\/test.test\/api\/product?page=1","label":"1","active":true},{"url":"http:\/\/test.test\/api\/product?page=2","label":"2","active":false},{"url":"http:\/\/test.test\/api\/product?page=2","label":"Next &raquo;","active":false}],"next_page_url":"http:\/\/test.test\/api\/product?page=2","path":"http:\/\/test.test\/api\/product","per_page":10,"prev_page_url":null,"to":10,"total":12},"seoSetting":null,"shopPageCenterBanner":{"product_slug":null,"image":"uploads\/banners\/banner-25-2026-01-25-23-30-10-8496.webp","banner_location":"hero","status":1,"title_one":"Shop","title_two":"Now","badge":"Featured"},"shopPageSidebarBanner":{"product_slug":null,"image":"uploads\/banners\/banner-26-2026-01-25-23-30-20-5311.webp","banner_location":"hero","status":1,"title_one":"Discover","title_two":"More"}}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          x-ratelimit-limit: '60'
+          x-ratelimit-remaining: '46'
+          access-control-allow-origin: '*'
+          access-control-allow-methods: 'GET, POST, PUT, DELETE, OPTIONS, PATCH'
+          access-control-allow-headers: 'Origin, X-Requested-With, Content-Type, Accept, Authorization, X-CSRF-TOKEN'
+          access-control-allow-credentials: 'true'
+          access-control-max-age: '86400'
+        description: null
+        custom: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - GET
+    uri: 'api/variant-items-by-variant/{variant_name}'
+    metadata:
+      groupName: Home
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: ''
+      description: ''
+      authenticated: false
+      custom: []
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      variant_name:
+        name: variant_name
+        description: ''
+        required: true
+        example: occaecati
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+    cleanUrlParameters:
+      variant_name: occaecati
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        status: 500
+        content: |-
+          {
+              "message": "Server Error"
+          }
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          x-ratelimit-limit: '60'
+          x-ratelimit-remaining: '45'
+          access-control-allow-origin: '*'
+          access-control-allow-methods: 'GET, POST, PUT, DELETE, OPTIONS, PATCH'
+          access-control-allow-headers: 'Origin, X-Requested-With, Content-Type, Accept, Authorization, X-CSRF-TOKEN'
+          access-control-allow-credentials: 'true'
+          access-control-max-age: '86400'
+        description: null
+        custom: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - GET
+    uri: api/search-product
+    metadata:
+      groupName: Home
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: ''
+      description: ''
+      authenticated: false
+      custom: []
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        status: 200
+        content: '{"products":{"current_page":1,"data":[{"id":12,"name":"Laptop Backpack Professional","short_name":"Laptop Backpack","slug":"laptop-backpack-professional","thumb_image":"uploads\/products\/product-laptop-backpack-professional-2026-01-25-23-27-04-5931.webp","qty":136,"sold_qty":24,"price":79.99,"offer_price":null,"is_undefine":0,"is_featured":1,"new_product":0,"is_top":0,"is_best":0,"category_id":1,"sub_category_id":1,"child_category_id":0,"brand_id":1,"averageRating":"4.6667","totalSold":"6","active_variants":[]},{"id":11,"name":"Noise Cancelling Earbuds","short_name":"NC Earbuds","slug":"noise-cancelling-earbuds","thumb_image":"uploads\/products\/product-noise-cancelling-earbuds-2026-01-25-23-26-41-7945.webp","qty":76,"sold_qty":17,"price":199.99,"offer_price":179.99,"is_undefine":0,"is_featured":0,"new_product":1,"is_top":0,"is_best":1,"category_id":1,"sub_category_id":1,"child_category_id":0,"brand_id":1,"averageRating":"4.3333","totalSold":"9","active_variants":[]},{"id":10,"name":"Wireless Charging Pad","short_name":"Wireless Charger","slug":"wireless-charging-pad","thumb_image":"uploads\/products\/product-wireless-charging-pad-2026-01-25-23-26-30-1182.webp","qty":96,"sold_qty":34,"price":39.99,"offer_price":29.99,"is_undefine":0,"is_featured":1,"new_product":0,"is_top":0,"is_best":0,"category_id":1,"sub_category_id":1,"child_category_id":0,"brand_id":1,"averageRating":"4.0000","totalSold":"11","active_variants":[]},{"id":9,"name":"Stainless Steel Water Bottle","short_name":"Water Bottle","slug":"stainless-steel-water-bottle","thumb_image":"uploads\/products\/product-stainless-steel-water-bottle-2026-01-25-23-26-23-9037.webp","qty":130,"sold_qty":24,"price":29.99,"offer_price":null,"is_undefine":0,"is_featured":0,"new_product":0,"is_top":1,"is_best":0,"category_id":1,"sub_category_id":1,"child_category_id":0,"brand_id":1,"averageRating":"4.2500","totalSold":"13","active_variants":[]},{"id":8,"name":"Leather Wallet Premium","short_name":"Leather Wallet","slug":"leather-wallet-premium","thumb_image":"uploads\/products\/product-leather-wallet-premium-2026-01-25-23-26-09-2131.webp","qty":60,"sold_qty":25,"price":59.99,"offer_price":49.99,"is_undefine":0,"is_featured":0,"new_product":1,"is_top":0,"is_best":0,"category_id":1,"sub_category_id":1,"child_category_id":0,"brand_id":1,"averageRating":"5.0000","totalSold":"10","active_variants":[]},{"id":7,"name":"Sports Running Shoes","short_name":"Running Shoes","slug":"sports-running-shoes","thumb_image":"uploads\/products\/product-sports-running-shoes-2026-01-25-23-26-02-6748.webp","qty":88,"sold_qty":38,"price":89.99,"offer_price":null,"is_undefine":0,"is_featured":0,"new_product":0,"is_top":0,"is_best":1,"category_id":1,"sub_category_id":1,"child_category_id":0,"brand_id":1,"averageRating":"4.3333","totalSold":"19","active_variants":[]},{"id":6,"name":"Ultra HD 4K Monitor","short_name":"4K Monitor","slug":"ultra-hd-4k-monitor","thumb_image":"uploads\/products\/product-ultra-hd-4k-monitor-2026-01-25-23-25-39-9023.webp","qty":112,"sold_qty":23,"price":499.99,"offer_price":449.99,"is_undefine":0,"is_featured":1,"new_product":0,"is_top":1,"is_best":0,"category_id":1,"sub_category_id":1,"child_category_id":0,"brand_id":1,"averageRating":"4.3333","totalSold":"9","active_variants":[]},{"id":5,"name":"Gaming Mechanical Keyboard","short_name":"Gaming Keyboard","slug":"gaming-mechanical-keyboard","thumb_image":"uploads\/products\/product-gaming-mechanical-keyboard-2026-01-25-23-25-01-6570.webp","qty":78,"sold_qty":35,"price":129.99,"offer_price":null,"is_undefine":0,"is_featured":1,"new_product":1,"is_top":0,"is_best":0,"category_id":1,"sub_category_id":1,"child_category_id":0,"brand_id":1,"averageRating":"4.0000","totalSold":"7","active_variants":[]},{"id":4,"name":"Ergonomic Office Chair","short_name":"Office Chair","slug":"ergonomic-office-chair","thumb_image":"uploads\/products\/product-ergonomic-office-chair-2026-01-25-23-24-33-8293.webp","qty":69,"sold_qty":32,"price":349.99,"offer_price":299.99,"is_undefine":0,"is_featured":0,"new_product":0,"is_top":0,"is_best":1,"category_id":1,"sub_category_id":1,"child_category_id":0,"brand_id":1,"averageRating":"5.0000","totalSold":"8","active_variants":[]},{"id":3,"name":"Portable Bluetooth Speaker","short_name":"Bluetooth Speaker","slug":"portable-bluetooth-speaker","thumb_image":"uploads\/products\/product-portable-bluetooth-speaker-2026-01-25-23-24-17-1592.webp","qty":116,"sold_qty":46,"price":79.99,"offer_price":null,"is_undefine":0,"is_featured":0,"new_product":0,"is_top":1,"is_best":0,"category_id":1,"sub_category_id":1,"child_category_id":0,"brand_id":1,"averageRating":"5.0000","totalSold":"16","active_variants":[]}],"first_page_url":"http:\/\/test.test\/api\/search-product?page=1","from":1,"last_page":2,"last_page_url":"http:\/\/test.test\/api\/search-product?page=2","links":[{"url":null,"label":"&laquo; Previous","active":false},{"url":"http:\/\/test.test\/api\/search-product?page=1","label":"1","active":true},{"url":"http:\/\/test.test\/api\/search-product?page=2","label":"2","active":false},{"url":"http:\/\/test.test\/api\/search-product?page=2","label":"Next &raquo;","active":false}],"next_page_url":"http:\/\/test.test\/api\/search-product?page=2","path":"http:\/\/test.test\/api\/search-product","per_page":10,"prev_page_url":null,"to":10,"total":12}}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          x-ratelimit-limit: '60'
+          x-ratelimit-remaining: '44'
+          access-control-allow-origin: '*'
+          access-control-allow-methods: 'GET, POST, PUT, DELETE, OPTIONS, PATCH'
+          access-control-allow-headers: 'Origin, X-Requested-With, Content-Type, Accept, Authorization, X-CSRF-TOKEN'
+          access-control-allow-credentials: 'true'
+          access-control-max-age: '86400'
+        description: null
+        custom: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - GET
+    uri: 'api/product/{slug}'
+    metadata:
+      groupName: Home
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: ''
+      description: ''
+      authenticated: false
+      custom: []
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      slug:
+        name: slug
+        description: 'The slug of the product.'
+        required: true
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+    cleanUrlParameters:
+      slug: 1
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        status: 403
+        content: '{"message":"Something went wrong"}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          x-ratelimit-limit: '60'
+          x-ratelimit-remaining: '43'
+          access-control-allow-origin: '*'
+          access-control-allow-methods: 'GET, POST, PUT, DELETE, OPTIONS, PATCH'
+          access-control-allow-headers: 'Origin, X-Requested-With, Content-Type, Accept, Authorization, X-CSRF-TOKEN'
+          access-control-allow-credentials: 'true'
+          access-control-max-age: '86400'
+        description: null
+        custom: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - GET
+    uri: 'api/product-review-list/{id}'
+    metadata:
+      groupName: Home
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: ''
+      description: ''
+      authenticated: false
+      custom: []
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      id:
+        name: id
+        description: 'The ID of the product review list.'
+        required: true
+        example: libero
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+    cleanUrlParameters:
+      id: libero
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        status: 200
+        content: '{"reviews":{"current_page":1,"data":[],"first_page_url":"http:\/\/test.test\/api\/product-review-list\/libero?page=1","from":null,"last_page":1,"last_page_url":"http:\/\/test.test\/api\/product-review-list\/libero?page=1","links":[{"url":null,"label":"&laquo; Previous","active":false},{"url":"http:\/\/test.test\/api\/product-review-list\/libero?page=1","label":"1","active":true},{"url":null,"label":"Next &raquo;","active":false}],"next_page_url":null,"path":"http:\/\/test.test\/api\/product-review-list\/libero","per_page":10,"prev_page_url":null,"to":null,"total":0}}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          x-ratelimit-limit: '60'
+          x-ratelimit-remaining: '42'
+          access-control-allow-origin: '*'
+          access-control-allow-methods: 'GET, POST, PUT, DELETE, OPTIONS, PATCH'
+          access-control-allow-headers: 'Origin, X-Requested-With, Content-Type, Accept, Authorization, X-CSRF-TOKEN'
+          access-control-allow-credentials: 'true'
+          access-control-max-age: '86400'
+        description: null
+        custom: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - GET
+    uri: api/compare
+    metadata:
+      groupName: Home
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: ''
+      description: ''
+      authenticated: false
+      custom: []
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        status: 500
+        content: |-
+          {
+              "message": "Server Error"
+          }
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          x-ratelimit-limit: '60'
+          x-ratelimit-remaining: '41'
+          access-control-allow-origin: '*'
+          access-control-allow-methods: 'GET, POST, PUT, DELETE, OPTIONS, PATCH'
+          access-control-allow-headers: 'Origin, X-Requested-With, Content-Type, Accept, Authorization, X-CSRF-TOKEN'
+          access-control-allow-credentials: 'true'
+          access-control-max-age: '86400'
+        description: null
+        custom: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - GET
+    uri: 'api/add-to-compare/{id}'
+    metadata:
+      groupName: Home
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: ''
+      description: ''
+      authenticated: false
+      custom: []
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      id:
+        name: id
+        description: 'The ID of the add to compare.'
+        required: true
+        example: aliquam
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+    cleanUrlParameters:
+      id: aliquam
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        status: 200
+        content: '{"status":1,"message":"Item added successfully"}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          x-ratelimit-limit: '60'
+          x-ratelimit-remaining: '40'
+          access-control-allow-origin: '*'
+          access-control-allow-methods: 'GET, POST, PUT, DELETE, OPTIONS, PATCH'
+          access-control-allow-headers: 'Origin, X-Requested-With, Content-Type, Accept, Authorization, X-CSRF-TOKEN'
+          access-control-allow-credentials: 'true'
+          access-control-max-age: '86400'
+        description: null
+        custom: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - GET
+    uri: 'api/remove-compare/{id}'
+    metadata:
+      groupName: Home
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: ''
+      description: ''
+      authenticated: false
+      custom: []
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      id:
+        name: id
+        description: 'The ID of the remove compare.'
+        required: true
+        example: fugiat
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+    cleanUrlParameters:
+      id: fugiat
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        status: 500
+        content: |-
+          {
+              "message": "Server Error"
+          }
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          x-ratelimit-limit: '60'
+          x-ratelimit-remaining: '39'
+          access-control-allow-origin: '*'
+          access-control-allow-methods: 'GET, POST, PUT, DELETE, OPTIONS, PATCH'
+          access-control-allow-headers: 'Origin, X-Requested-With, Content-Type, Accept, Authorization, X-CSRF-TOKEN'
+          access-control-allow-credentials: 'true'
+          access-control-max-age: '86400'
+        description: null
+        custom: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - GET
+    uri: api/flash-sale
+    metadata:
+      groupName: Home
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: ''
+      description: ''
+      authenticated: false
+      custom: []
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        status: 200
+        content: '{"flashSale":{"id":1,"name":"Weekend Mega Sale","title":null,"slug":"weekend-mega-sale-1","image":null,"date":null,"start_date":"2026-01-25 23:44:52","end_date":"2026-01-28 23:44:52","end_time":null,"offer":30,"status":1,"created_at":"2026-01-25T18:14:52.000000Z","updated_at":"2026-01-25T18:14:52.000000Z"},"products":{"current_page":1,"data":[{"id":12,"name":"Laptop Backpack Professional","short_name":"Laptop Backpack","slug":"laptop-backpack-professional","thumb_image":"uploads\/products\/product-laptop-backpack-professional-2026-01-25-23-27-04-5931.webp","qty":136,"sold_qty":24,"price":79.99,"offer_price":null,"is_undefine":0,"is_featured":1,"new_product":0,"is_top":0,"is_best":0,"averageRating":"4.6667","totalSold":"6","active_variants":[]},{"id":11,"name":"Noise Cancelling Earbuds","short_name":"NC Earbuds","slug":"noise-cancelling-earbuds","thumb_image":"uploads\/products\/product-noise-cancelling-earbuds-2026-01-25-23-26-41-7945.webp","qty":76,"sold_qty":17,"price":199.99,"offer_price":179.99,"is_undefine":0,"is_featured":0,"new_product":1,"is_top":0,"is_best":1,"averageRating":"4.3333","totalSold":"9","active_variants":[]},{"id":10,"name":"Wireless Charging Pad","short_name":"Wireless Charger","slug":"wireless-charging-pad","thumb_image":"uploads\/products\/product-wireless-charging-pad-2026-01-25-23-26-30-1182.webp","qty":96,"sold_qty":34,"price":39.99,"offer_price":29.99,"is_undefine":0,"is_featured":1,"new_product":0,"is_top":0,"is_best":0,"averageRating":"4.0000","totalSold":"11","active_variants":[]},{"id":9,"name":"Stainless Steel Water Bottle","short_name":"Water Bottle","slug":"stainless-steel-water-bottle","thumb_image":"uploads\/products\/product-stainless-steel-water-bottle-2026-01-25-23-26-23-9037.webp","qty":130,"sold_qty":24,"price":29.99,"offer_price":null,"is_undefine":0,"is_featured":0,"new_product":0,"is_top":1,"is_best":0,"averageRating":"4.2500","totalSold":"13","active_variants":[]},{"id":8,"name":"Leather Wallet Premium","short_name":"Leather Wallet","slug":"leather-wallet-premium","thumb_image":"uploads\/products\/product-leather-wallet-premium-2026-01-25-23-26-09-2131.webp","qty":60,"sold_qty":25,"price":59.99,"offer_price":49.99,"is_undefine":0,"is_featured":0,"new_product":1,"is_top":0,"is_best":0,"averageRating":"5.0000","totalSold":"10","active_variants":[]},{"id":7,"name":"Sports Running Shoes","short_name":"Running Shoes","slug":"sports-running-shoes","thumb_image":"uploads\/products\/product-sports-running-shoes-2026-01-25-23-26-02-6748.webp","qty":88,"sold_qty":38,"price":89.99,"offer_price":null,"is_undefine":0,"is_featured":0,"new_product":0,"is_top":0,"is_best":1,"averageRating":"4.3333","totalSold":"19","active_variants":[]},{"id":6,"name":"Ultra HD 4K Monitor","short_name":"4K Monitor","slug":"ultra-hd-4k-monitor","thumb_image":"uploads\/products\/product-ultra-hd-4k-monitor-2026-01-25-23-25-39-9023.webp","qty":112,"sold_qty":23,"price":499.99,"offer_price":449.99,"is_undefine":0,"is_featured":1,"new_product":0,"is_top":1,"is_best":0,"averageRating":"4.3333","totalSold":"9","active_variants":[]},{"id":5,"name":"Gaming Mechanical Keyboard","short_name":"Gaming Keyboard","slug":"gaming-mechanical-keyboard","thumb_image":"uploads\/products\/product-gaming-mechanical-keyboard-2026-01-25-23-25-01-6570.webp","qty":78,"sold_qty":35,"price":129.99,"offer_price":null,"is_undefine":0,"is_featured":1,"new_product":1,"is_top":0,"is_best":0,"averageRating":"4.0000","totalSold":"7","active_variants":[]},{"id":4,"name":"Ergonomic Office Chair","short_name":"Office Chair","slug":"ergonomic-office-chair","thumb_image":"uploads\/products\/product-ergonomic-office-chair-2026-01-25-23-24-33-8293.webp","qty":69,"sold_qty":32,"price":349.99,"offer_price":299.99,"is_undefine":0,"is_featured":0,"new_product":0,"is_top":0,"is_best":1,"averageRating":"5.0000","totalSold":"8","active_variants":[]},{"id":3,"name":"Portable Bluetooth Speaker","short_name":"Bluetooth Speaker","slug":"portable-bluetooth-speaker","thumb_image":"uploads\/products\/product-portable-bluetooth-speaker-2026-01-25-23-24-17-1592.webp","qty":116,"sold_qty":46,"price":79.99,"offer_price":null,"is_undefine":0,"is_featured":0,"new_product":0,"is_top":1,"is_best":0,"averageRating":"5.0000","totalSold":"16","active_variants":[]}],"first_page_url":"http:\/\/test.test\/api\/flash-sale?page=1","from":1,"last_page":2,"last_page_url":"http:\/\/test.test\/api\/flash-sale?page=2","links":[{"url":null,"label":"&laquo; Previous","active":false},{"url":"http:\/\/test.test\/api\/flash-sale?page=1","label":"1","active":true},{"url":"http:\/\/test.test\/api\/flash-sale?page=2","label":"2","active":false},{"url":"http:\/\/test.test\/api\/flash-sale?page=2","label":"Next &raquo;","active":false}],"next_page_url":"http:\/\/test.test\/api\/flash-sale?page=2","path":"http:\/\/test.test\/api\/flash-sale","per_page":10,"prev_page_url":null,"to":10,"total":12},"seoSetting":{"id":8,"page_name":"Dashboard","seo_title":"Dashboard - Manage Your Account","seo_description":"Access your account dashboard","created_at":"2026-01-25T18:26:31.000000Z","updated_at":"2026-01-25T18:26:31.000000Z"}}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          x-ratelimit-limit: '60'
+          x-ratelimit-remaining: '38'
+          access-control-allow-origin: '*'
+          access-control-allow-methods: 'GET, POST, PUT, DELETE, OPTIONS, PATCH'
+          access-control-allow-headers: 'Origin, X-Requested-With, Content-Type, Accept, Authorization, X-CSRF-TOKEN'
+          access-control-allow-credentials: 'true'
+          access-control-max-age: '86400'
+        description: null
+        custom: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - POST
+    uri: api/subscribe-request
+    metadata:
+      groupName: Home
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: ''
+      description: ''
+      authenticated: false
+      custom: []
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - GET
+    uri: 'api/subscriber-verification/{token}'
+    metadata:
+      groupName: Home
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: ''
+      description: ''
+      authenticated: false
+      custom: []
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      token:
+        name: token
+        description: ''
+        required: true
+        example: reiciendis
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+    cleanUrlParameters:
+      token: reiciendis
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        status: 500
+        content: |-
+          {
+              "message": "Server Error"
+          }
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          x-ratelimit-limit: '60'
+          x-ratelimit-remaining: '37'
+          access-control-allow-origin: '*'
+          access-control-allow-methods: 'GET, POST, PUT, DELETE, OPTIONS, PATCH'
+          access-control-allow-headers: 'Origin, X-Requested-With, Content-Type, Accept, Authorization, X-CSRF-TOKEN'
+          access-control-allow-credentials: 'true'
+          access-control-max-age: '86400'
+        description: null
+        custom: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []

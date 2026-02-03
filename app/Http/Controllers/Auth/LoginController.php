@@ -35,6 +35,9 @@ use Carbon\Carbon;
 use Exception;
 use Illuminate\Support\Facades\Validator;
 
+/**
+ * @group Login
+ */
 class LoginController extends Controller
 {
 

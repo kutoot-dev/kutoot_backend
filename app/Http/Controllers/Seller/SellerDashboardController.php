@@ -19,6 +19,9 @@ use App\Models\OrderProduct;
 use App\Models\SellerWithdraw;
 use Carbon\Carbon;
 use Auth;
+/**
+ * @group Seller Dashboard
+ */
 class SellerDashboardController extends Controller
 {
     public function __construct()

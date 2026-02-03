@@ -7,6 +7,9 @@ use App\Models\CustomPage;
 use Illuminate\Http\Request;
 use Image;
 use File;
+/**
+ * @group Custom Page
+ */
 class CustomPageController extends Controller
 {
     public function __construct()

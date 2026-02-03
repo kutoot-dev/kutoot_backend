@@ -1,0 +1,93 @@
+name: Endpoints
+description: ''
+endpoints:
+  -
+    httpMethods:
+      - GET
+    uri: api/test-shiprocket
+    metadata:
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: ''
+      description: ''
+      authenticated: false
+      custom: []
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        status: 200
+        content: '{"message":"Shiprocket service loaded"}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          x-ratelimit-limit: '60'
+          x-ratelimit-remaining: '59'
+          access-control-allow-origin: '*'
+          access-control-allow-methods: 'GET, POST, PUT, DELETE, OPTIONS, PATCH'
+          access-control-allow-headers: 'Origin, X-Requested-With, Content-Type, Accept, Authorization, X-CSRF-TOKEN'
+          access-control-allow-credentials: 'true'
+          access-control-max-age: '86400'
+        description: null
+        custom: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - GET
+      - POST
+    uri: api/broadcasting/auth
+    metadata:
+      groupName: Endpoints
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Authenticate the request for channel access.'
+      description: ''
+      authenticated: false
+      custom: []
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        status: 401
+        content: '{"message":"UnAuthenticated"}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+          access-control-allow-origin: '*'
+          access-control-allow-methods: 'GET, POST, PUT, DELETE, OPTIONS, PATCH'
+          access-control-allow-headers: 'Origin, X-Requested-With, Content-Type, Accept, Authorization, X-CSRF-TOKEN'
+          access-control-allow-credentials: 'true'
+          access-control-max-age: '86400'
+          set-cookie: 'kutoot_session=eyJpdiI6InJjd3dzMlo2bzBJTDh4RkNyMTFxNlE9PSIsInZhbHVlIjoiblJpM3h3dE5wZGpvUUFKZXM0TEk2eEV4dEhRYi9ybW5WSUZaZFhPcjJsTUVWRmxhcHRXeGZ1eFEvb3NvaENQWXB0eXpPNFZ0R25Sd3VReGNBNDloNFJjbG9MQzd2RHlpM3hNVXplWDZyNStCQlJTbi9lcHllU3Q1bytIdzBpRTIiLCJtYWMiOiJhY2U3MjNhODgxOWZkMzNlNTYwMzgxZmI1ZTJkOWZmY2QwNWI3ZDk3ZmY3NzcwMGE4ZmUxY2ZkMDA4ZTQ4YWIzIiwidGFnIjoiIn0%3D; expires=Tue, 03-Feb-2026 17:07:23 GMT; Max-Age=7200; path=/; httponly; samesite=lax'
+        description: null
+        custom: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []

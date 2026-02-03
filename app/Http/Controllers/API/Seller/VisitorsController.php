@@ -9,6 +9,9 @@ use App\Models\Store\Transaction;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
+/**
+ * @group Visitors
+ */
 class VisitorsController extends Controller
 {
     public function index(Request $request)

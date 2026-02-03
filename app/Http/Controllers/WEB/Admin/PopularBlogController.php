@@ -7,6 +7,9 @@ use App\Models\PopularPost;
 use App\Models\Blog;
 use Illuminate\Http\Request;
 
+/**
+ * @group Popular Blog
+ */
 class PopularBlogController extends Controller
 {
     public function __construct()

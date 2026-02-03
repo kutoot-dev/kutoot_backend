@@ -6,6 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Models\BlogComment;
 use Illuminate\Http\Request;
 
+/**
+ * @group Blog Comment
+ */
 class BlogCommentController extends Controller
 {
     public function __construct()

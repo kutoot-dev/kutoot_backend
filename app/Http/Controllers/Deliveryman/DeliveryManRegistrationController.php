@@ -9,6 +9,9 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 
+/**
+ * @group Delivery Man Registration
+ */
 class DeliveryManRegistrationController extends Controller
 {
     public function registration(Request $request){

@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\CouponCampaign;
 use Illuminate\Http\Request;
 
+/**
+ * @group Coupon Campaign
+ */
 class CouponCampaignController extends Controller
 {
     public function index()

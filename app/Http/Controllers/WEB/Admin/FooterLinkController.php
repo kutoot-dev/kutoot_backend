@@ -5,6 +5,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\FooterLink;
 use App\Models\Footer;
+/**
+ * @group Footer Link
+ */
 class FooterLinkController extends Controller
 {
     public function __construct()

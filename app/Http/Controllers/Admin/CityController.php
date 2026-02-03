@@ -9,6 +9,9 @@ use Nnjeim\World\Models\City;
 use Nnjeim\World\Models\State;
 use Nnjeim\World\Models\Country;
 
+/**
+ * @group City
+ */
 class CityController extends Controller
 {
     public function __construct()

@@ -16,6 +16,9 @@ use App\Models\Currency;
 use App\Models\Setting;
 use Image;
 use File;
+/**
+ * @group Payment Method
+ */
 class PaymentMethodController extends Controller
 {
     public function __construct()

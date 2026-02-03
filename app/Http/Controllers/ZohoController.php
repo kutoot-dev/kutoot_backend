@@ -3,6 +3,9 @@ namespace App\Http\Controllers;
 use App\Services\Zoho\ZohoSalesOrderService;
 use App\Models\Order;
 
+/**
+ * @group Zoho
+ */
 class ZohoController extends Controller
 {
     public function syncOrder(Order $order, ZohoSalesOrderService $service)

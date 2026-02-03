@@ -5,6 +5,9 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\EmailConfiguration;
+/**
+ * @group Email Configuration
+ */
 class EmailConfigurationController extends Controller
 {
     public function __construct()

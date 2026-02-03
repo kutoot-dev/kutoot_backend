@@ -13,6 +13,9 @@ use App\Mail\SellerWithdrawApproval;
 use Mail;
 use Auth;
 
+/**
+ * @group Seller Withdraw
+ */
 class SellerWithdrawController extends Controller
 {
     public function __construct()

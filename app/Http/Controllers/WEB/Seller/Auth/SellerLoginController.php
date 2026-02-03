@@ -11,6 +11,9 @@ use Hash;
 use App\Models\User;
 use App\Models\Setting;
 use App\Models\Vendor;
+/**
+ * @group Seller Login
+ */
 class SellerLoginController extends Controller
 {
     use AuthenticatesUsers;

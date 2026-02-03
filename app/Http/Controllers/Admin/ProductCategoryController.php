@@ -12,6 +12,9 @@ use Illuminate\Http\Request;
 use  Image;
 use File;
 use Str;
+/**
+ * @group Product Category
+ */
 class ProductCategoryController extends Controller
 {
     public function __construct()

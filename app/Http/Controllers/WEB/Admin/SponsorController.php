@@ -9,6 +9,9 @@ use Image;
 use File;
 use Str;
 
+/**
+ * @group Sponsor
+ */
 class SponsorController extends Controller
 {
     public function __construct()

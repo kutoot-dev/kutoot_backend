@@ -10,6 +10,9 @@ use App\Models\Product;
 use App\Models\Setting;
 use App\Models\ShoppingCartVariant;
 
+/**
+ * @group Seller Product Variant Item
+ */
 class SellerProductVariantItemController extends Controller
 {
     public function __construct()

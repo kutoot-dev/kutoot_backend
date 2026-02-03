@@ -38,6 +38,9 @@ use App\Models\ShoppingCart;
 use App\Models\ShoppingCartVariant;
 use Illuminate\Support\Facades\Validator;
 
+/**
+ * @group User Profile
+ */
 class UserProfileController extends Controller
 {
 

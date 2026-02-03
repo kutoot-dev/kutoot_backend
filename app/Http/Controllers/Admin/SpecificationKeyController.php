@@ -5,6 +5,9 @@ use App\Http\Controllers\Controller;
 use App\Models\ProductSpecificationKey;
 use Illuminate\Http\Request;
 
+/**
+ * @group Specification Key
+ */
 class SpecificationKeyController extends Controller
 {
     public function __construct()

@@ -6,6 +6,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\MenuVisibility;
 
+/**
+ * @group New Menu Visibility
+ */
 class NewMenuVisibilityController extends Controller
 {
      public function __construct()

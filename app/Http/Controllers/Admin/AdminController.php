@@ -9,6 +9,9 @@ use App\Models\BannerImage;
 use Hash;
 use Auth;
 
+/**
+ * @group Admin
+ */
 class AdminController extends Controller
 {
     public function __construct()

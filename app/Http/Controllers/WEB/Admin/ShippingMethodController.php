@@ -13,6 +13,9 @@ use App\Exports\ShippingExport;
 use App\Imports\ShippingImport;
 use Maatwebsite\Excel\Facades\Excel;
 
+/**
+ * @group Shipping Method
+ */
 class ShippingMethodController extends Controller
 {
     public function __construct()

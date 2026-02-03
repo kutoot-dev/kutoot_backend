@@ -8,6 +8,9 @@ use App\Models\BreadcrumbImage;
 use Image;
 use File;
 
+/**
+ * @group New Breadcrumb
+ */
 class NewBreadcrumbController extends Controller
 {
         public function __construct()

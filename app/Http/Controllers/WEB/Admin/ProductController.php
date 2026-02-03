@@ -32,6 +32,9 @@ use App\Exports\ProductExport;
 use App\Imports\ProductImport;
 use Maatwebsite\Excel\Facades\Excel;
 use Exception;
+/**
+ * @group Product
+ */
 class ProductController extends Controller
 {
     public function __construct()

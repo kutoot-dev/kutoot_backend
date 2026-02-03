@@ -62,6 +62,9 @@ use App\Models\TwilioSms;
 use App\Models\BiztechSms;
 use Exception;
 
+/**
+ * @group Paypal
+ */
 class PaypalController extends Controller
 {
     private $apiContext;

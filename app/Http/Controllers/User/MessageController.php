@@ -15,6 +15,9 @@ use App\Models\PusherCredentail;
 use App\Events\UserToSellerMessage;
 use App\Http\Controllers\Controller;
 
+/**
+ * @group Message
+ */
 class MessageController extends Controller
 {
 

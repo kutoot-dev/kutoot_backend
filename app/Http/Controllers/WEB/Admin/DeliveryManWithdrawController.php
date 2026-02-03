@@ -12,6 +12,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\DeliveryManWithdrawApproval;
 
+/**
+ * @group Delivery Man Withdraw
+ */
 class DeliveryManWithdrawController extends Controller
 {
     public function index(){

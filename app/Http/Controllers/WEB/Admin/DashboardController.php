@@ -16,6 +16,9 @@ use App\Models\Blog;
 use App\Models\Category;
 use App\Models\Brand;
 use Carbon\Carbon;
+/**
+ * @group Dashboard
+ */
 class DashboardController extends Controller
 {
     public function __construct()

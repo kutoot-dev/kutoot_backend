@@ -7,6 +7,9 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\DeliveryManWithdrawMethod;
 
+/**
+ * @group Delivery Man Withdraw Method
+ */
 class DeliveryManWithdrawMethodController extends Controller
 {
     /**

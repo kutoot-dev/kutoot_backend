@@ -24,6 +24,9 @@ use Auth;
 use Image;
 use File;
 use Mail;
+/**
+ * @group Seller
+ */
 class SellerController extends Controller
 {
     public function __construct()

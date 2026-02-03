@@ -24,6 +24,9 @@ use Exception;
 
 use Twilio\Rest\Client;
 
+/**
+ * @group Register
+ */
 class RegisterController extends Controller
 {
 

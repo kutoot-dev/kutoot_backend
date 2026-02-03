@@ -139,6 +139,9 @@ use Artisan;
 
 
 
+/**
+ * @group Home
+ */
 class HomeController extends Controller
 
 {

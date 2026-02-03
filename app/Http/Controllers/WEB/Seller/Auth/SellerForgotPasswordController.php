@@ -15,6 +15,9 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Str;
 
+/**
+ * @group Seller Forgot Password
+ */
 class SellerForgotPasswordController extends Controller
 {
     public function forgetPassword()

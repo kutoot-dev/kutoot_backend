@@ -14,6 +14,9 @@ use File;
 use Exception;
 
 
+/**
+ * @group Admin Profile
+ */
 class AdminProfileController extends Controller
 {
     public function __construct()

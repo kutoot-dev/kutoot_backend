@@ -54,6 +54,9 @@ use App\Models\UserCoins;
 use Nnjeim\World\World;
 
 
+/**
+ * @group Payment
+ */
 class PaymentController extends Controller
 {
     public $mfObj;

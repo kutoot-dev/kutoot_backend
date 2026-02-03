@@ -11,6 +11,9 @@ use Auth;
 use Image;
 use Str;
 use File;
+/**
+ * @group Admin Profile
+ */
 class AdminProfileController extends Controller
 {
     public function __construct()

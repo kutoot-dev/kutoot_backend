@@ -6,9 +6,11 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Nnjeim\World\Models\Currency;
 
-/**
+/** @group Currency
+ 
  * CurrencyController - Displays currencies from the World package.
- *
+ * @group Currency
+ 
  * This is a read-only view of currencies from the nnjeim/world package.
  * Currencies are seeded via `php artisan world:install`.
  */

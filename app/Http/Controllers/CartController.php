@@ -20,6 +20,9 @@ use App\Models\PurchasedCoins;
 use App\Models\UserCoupons;
 use App\Models\UserCoins;
 
+/**
+ * @group Cart
+ */
 class CartController extends Controller
 {
 

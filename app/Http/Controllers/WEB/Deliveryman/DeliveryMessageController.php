@@ -9,6 +9,9 @@ use App\Models\DeliveryMessage;
 use App\Events\DeliveryManToUser;
 use App\Http\Controllers\Controller;
 
+/**
+ * @group Delivery Message
+ */
 class DeliveryMessageController extends Controller
 {
     public function message_with_customer($order_id){

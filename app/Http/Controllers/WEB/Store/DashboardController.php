@@ -9,6 +9,9 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
+/**
+ * @group Dashboard
+ */
 class DashboardController extends Controller
 {
     private function parseIndianOrIsoDate(?string $value, ?Carbon $fallback = null): Carbon

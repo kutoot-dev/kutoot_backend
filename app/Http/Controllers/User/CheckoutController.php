@@ -38,6 +38,9 @@ use App\Models\BaseplanCampaignLinked;
 use DB;
 use Nnjeim\World\World;
 
+/**
+ * @group Checkout
+ */
 class CheckoutController extends Controller
 {
     public function __construct()

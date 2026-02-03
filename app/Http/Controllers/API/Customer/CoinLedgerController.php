@@ -8,6 +8,9 @@ use App\Services\CoinLedgerService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
+/**
+ * @group Coin Ledger
+ */
 class CoinLedgerController extends Controller
 {
     protected $service;

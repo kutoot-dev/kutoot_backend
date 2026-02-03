@@ -5,6 +5,9 @@ namespace App\Http\Controllers\API\Seller;
 use App\Http\Controllers\Controller;
 use App\Models\Store\StoreCategory;
 
+/**
+ * @group Store Categories
+ */
 class StoreCategoriesController extends Controller
 {
     public function index()

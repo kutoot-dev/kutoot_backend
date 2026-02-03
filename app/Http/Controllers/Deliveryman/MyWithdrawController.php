@@ -10,6 +10,9 @@ use App\Models\DeliveryManWithdraw;
 use App\Http\Controllers\Controller;
 use App\Models\DeliveryManWithdrawMethod;
 
+/**
+ * @group My Withdraw
+ */
 class MyWithdrawController extends Controller
 {
     /**

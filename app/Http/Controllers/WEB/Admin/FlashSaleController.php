@@ -10,6 +10,9 @@ use App\Models\Product;
 use Image;
 use File;
 
+/**
+ * @group Flash Sale
+ */
 class FlashSaleController extends Controller
 {
     public function __construct()

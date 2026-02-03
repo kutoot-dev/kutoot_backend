@@ -13,6 +13,9 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Log;
 use App\Models\BaseplanCampaignLinked;
 
+/**
+ * @group Base Plan
+ */
 class BasePlanController extends Controller
 {
     public $types;

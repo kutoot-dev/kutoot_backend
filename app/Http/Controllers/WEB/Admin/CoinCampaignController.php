@@ -11,6 +11,9 @@ use App\Models\MasterPrize;
 use App\Models\Winners;
 use Validator;
 
+/**
+ * @group Coin Campaign
+ */
 class CoinCampaignController extends Controller
 {
     public $types;

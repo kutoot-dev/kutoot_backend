@@ -16,6 +16,9 @@ use Auth;
 use App\Models\Setting;
 
 
+/**
+ * @group New Admin Forgot Password
+ */
 class NewAdminForgotPasswordController extends Controller
 {
      use SendsPasswordResetEmails;

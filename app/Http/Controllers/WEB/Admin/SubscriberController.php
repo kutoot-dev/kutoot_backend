@@ -13,6 +13,9 @@ use Mail;
 use Hash;
 use Auth;
 
+/**
+ * @group Subscriber
+ */
 class SubscriberController extends Controller
 {
     public function __construct()

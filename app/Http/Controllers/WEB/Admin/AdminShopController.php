@@ -10,6 +10,9 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 
+/**
+ * @group Admin Shop
+ */
 class AdminShopController extends Controller
 {
     public function __construct()

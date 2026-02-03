@@ -6,6 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Models\Faq;
 use Illuminate\Http\Request;
 
+/**
+ * @group Faq
+ */
 class FaqController extends Controller
 {
     public function __construct()

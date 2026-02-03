@@ -9,6 +9,9 @@ use Illuminate\Http\Request;
 use Image;
 use File;
 use Str;
+/**
+ * @group Product Gallery
+ */
 class ProductGalleryController extends Controller
 {
     public function __construct()

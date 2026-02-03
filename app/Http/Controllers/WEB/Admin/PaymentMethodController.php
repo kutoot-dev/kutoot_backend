@@ -19,6 +19,9 @@ use App\Models\SslcommerzPayment;
 use App\Models\MyfatoorahPayment;
 use Image;
 use File;
+/**
+ * @group Payment Method
+ */
 class PaymentMethodController extends Controller
 {
     public function __construct()

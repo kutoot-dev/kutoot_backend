@@ -11,6 +11,9 @@ use App\Models\ShoppingCartVariant;
 use Illuminate\Validation\Rule;
 
 
+/**
+ * @group Product Variant
+ */
 class ProductVariantController extends Controller
 {
     public function __construct()

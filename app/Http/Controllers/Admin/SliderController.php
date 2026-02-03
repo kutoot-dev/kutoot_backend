@@ -7,6 +7,9 @@ use Illuminate\Http\Request;
 use App\Models\Slider;
 use App\Helpers\ImageHelper;
 
+/**
+ * @group Slider
+ */
 class SliderController extends Controller
 {
     public function __construct()

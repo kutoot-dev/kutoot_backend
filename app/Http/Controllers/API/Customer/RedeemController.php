@@ -14,6 +14,9 @@ use Illuminate\Support\Facades\Validator;
 use App\Models\RazorpayPayment;
 use Razorpay\Api\Api;
 
+/**
+ * @group Redeem
+ */
 class RedeemController extends Controller
 {
 

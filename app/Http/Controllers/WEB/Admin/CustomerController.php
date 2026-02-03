@@ -17,6 +17,9 @@ use Mail;
 use App\Mail\SendSingleSellerMail;
 use Image;
 use File;
+/**
+ * @group Customer
+ */
 class CustomerController extends Controller
 {
     public function __construct()

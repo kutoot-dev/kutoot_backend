@@ -16,6 +16,9 @@ use App\Models\Category;
 use Nnjeim\World\Models\Country;
 use Illuminate\Support\Facades\DB;
 
+/**
+ * @group Order
+ */
 class OrderController extends Controller
 {
     public function __construct()

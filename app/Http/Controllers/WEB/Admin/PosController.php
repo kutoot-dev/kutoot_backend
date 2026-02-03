@@ -39,6 +39,9 @@ use Auth;
 use Hash;
 use Mail;
 
+/**
+ * @group Pos
+ */
 class PosController extends Controller
 {
     public function __construct()

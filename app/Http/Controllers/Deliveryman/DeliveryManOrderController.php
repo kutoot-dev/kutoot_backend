@@ -8,6 +8,9 @@ use App\Models\Setting;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
+/**
+ * @group Delivery Man Order
+ */
 class DeliveryManOrderController extends Controller
 {
     public function index(){

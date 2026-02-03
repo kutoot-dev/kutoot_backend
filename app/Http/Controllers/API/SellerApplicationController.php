@@ -8,6 +8,9 @@ use App\Models\Store\StoreCategory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
+/**
+ * @group Seller Application
+ */
 class SellerApplicationController extends Controller
 {
     /**

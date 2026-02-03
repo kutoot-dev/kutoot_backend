@@ -16,6 +16,9 @@ use App\Mail\DeliveryManForgetPasswordApi;
 use Illuminate\Support\Facades\Password;
 use Str;
 
+/**
+ * @group Delivery Man Reset Password
+ */
 class DeliveryManResetPasswordController extends Controller
 {
     

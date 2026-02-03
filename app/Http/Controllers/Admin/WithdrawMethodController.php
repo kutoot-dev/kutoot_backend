@@ -6,6 +6,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\WithdrawMethod;
 use App\Models\Setting;
+/**
+ * @group Withdraw Method
+ */
 class WithdrawMethodController extends Controller
 {
     public function __construct()

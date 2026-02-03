@@ -9,6 +9,9 @@ use App\Models\Store\Transaction;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 
+/**
+ * @group User Order
+ */
 class UserOrderController extends Controller
 {
     public function __construct()

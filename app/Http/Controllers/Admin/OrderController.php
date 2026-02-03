@@ -12,6 +12,9 @@ use App\Models\OrderAddress;
 use Illuminate\Support\Facades\DB;
 
 
+/**
+ * @group Order
+ */
 class OrderController extends Controller
 {
     public function __construct()

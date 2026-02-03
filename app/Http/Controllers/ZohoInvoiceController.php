@@ -7,6 +7,9 @@ use App\Models\Order;
 use App\Services\Zoho\ZohoInvoiceService;
 use Illuminate\Support\Facades\DB;
 
+/**
+ * @group Zoho Invoice
+ */
 class ZohoInvoiceController extends Controller
 {
     public function handlePaymentSuccess(

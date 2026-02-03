@@ -7,6 +7,9 @@ use App\Models\TermsAndCondition;
 use Illuminate\Http\Request;
 use Image;
 use File;
+/**
+ * @group Terms And Condition
+ */
 class TermsAndConditionController extends Controller
 {
     public function __construct()

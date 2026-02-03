@@ -9,6 +9,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
+/**
+ * @group Seller Auth
+ */
 class SellerAuthController extends Controller
 {
     public function login(Request $request)

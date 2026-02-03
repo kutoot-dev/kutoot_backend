@@ -9,6 +9,9 @@ use Image;
 use File;
 use Str;
 use Cache;
+/**
+ * @group Testimonial
+ */
 class TestimonialController extends Controller
 {
     public function __construct()

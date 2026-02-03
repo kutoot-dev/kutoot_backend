@@ -28,6 +28,9 @@ use App\Jobs\SyncProductToZohoJob;
 use App\Helpers\ImageHelper;
 use Illuminate\Support\Str;
 
+/**
+ * @group Product
+ */
 class ProductController extends Controller
 {
     public function __construct()

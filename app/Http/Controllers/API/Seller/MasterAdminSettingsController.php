@@ -6,6 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Models\Store\Seller;
 use Illuminate\Support\Facades\Auth;
 
+/**
+ * @group Master Admin Settings
+ */
 class MasterAdminSettingsController extends Controller
 {
     public function show()

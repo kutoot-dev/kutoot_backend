@@ -13,6 +13,7 @@
         "guzzlehttp/guzzle": "^7.10",
         "imliam/laravel-env-set-command": "^1.3",
         "intervention/image": "^2.7",
+        "knuckleswtf/scribe": "^4.40",
         "laravel/framework": "^8.65",
         "laravel/sanctum": "^2.11",
         "laravel/socialite": "^5.2",

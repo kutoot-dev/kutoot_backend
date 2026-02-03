@@ -9,6 +9,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Validator;
 
+/**
+ * @group Seller Apply
+ */
 class SellerApplyController extends Controller
 {
     /**

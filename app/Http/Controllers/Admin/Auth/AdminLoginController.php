@@ -10,6 +10,9 @@ use Auth;
 use Hash;
 use App\Models\Admin;
 use App\Models\Setting;
+/**
+ * @group Admin Login
+ */
 class AdminLoginController extends Controller
 {
     use AuthenticatesUsers;

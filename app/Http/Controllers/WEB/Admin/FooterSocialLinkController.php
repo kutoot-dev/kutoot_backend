@@ -5,6 +5,9 @@ namespace App\Http\Controllers\WEB\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\FooterSocialLink;
+/**
+ * @group Footer Social Link
+ */
 class FooterSocialLinkController extends Controller
 {
     public function __construct()

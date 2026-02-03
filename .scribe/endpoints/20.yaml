@@ -1,0 +1,247 @@
+name: Payment
+description: ''
+endpoints:
+  -
+    httpMethods:
+      - POST
+    uri: api/user/checkout/cash-on-delivery
+    metadata:
+      groupName: Payment
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: ''
+      description: ''
+      authenticated: false
+      custom: []
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      shipping_address_id:
+        name: shipping_address_id
+        description: ''
+        required: true
+        example: dolores
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+      billing_address_id:
+        name: billing_address_id
+        description: ''
+        required: true
+        example: excepturi
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+      shipping_method_id:
+        name: shipping_method_id
+        description: ''
+        required: true
+        example: aliquid
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+    cleanBodyParameters:
+      shipping_address_id: dolores
+      billing_address_id: excepturi
+      shipping_method_id: aliquid
+    fileParameters: []
+    responses: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - POST
+    uri: api/user/checkout/pay-with-stripe
+    metadata:
+      groupName: Payment
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: ''
+      description: ''
+      authenticated: false
+      custom: []
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      shipping_address_id:
+        name: shipping_address_id
+        description: ''
+        required: true
+        example: tempora
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+      billing_address_id:
+        name: billing_address_id
+        description: ''
+        required: true
+        example: et
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+      shipping_method_id:
+        name: shipping_method_id
+        description: ''
+        required: true
+        example: et
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+      card_number:
+        name: card_number
+        description: ''
+        required: true
+        example: vel
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+      year:
+        name: year
+        description: ''
+        required: true
+        example: totam
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+      month:
+        name: month
+        description: ''
+        required: true
+        example: voluptates
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+      cvv:
+        name: cvv
+        description: ''
+        required: true
+        example: exercitationem
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+    cleanBodyParameters:
+      shipping_address_id: tempora
+      billing_address_id: et
+      shipping_method_id: et
+      card_number: vel
+      year: totam
+      month: voluptates
+      cvv: exercitationem
+    fileParameters: []
+    responses: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - POST
+    uri: api/user/checkout/pay-with-bank
+    metadata:
+      groupName: Payment
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: ''
+      description: ''
+      authenticated: false
+      custom: []
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      shipping_address_id:
+        name: shipping_address_id
+        description: ''
+        required: true
+        example: esse
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+      billing_address_id:
+        name: billing_address_id
+        description: ''
+        required: true
+        example: est
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+      shipping_method_id:
+        name: shipping_method_id
+        description: ''
+        required: true
+        example: nulla
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+      tnx_info:
+        name: tnx_info
+        description: ''
+        required: true
+        example: sit
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+    cleanBodyParameters:
+      shipping_address_id: esse
+      billing_address_id: est
+      shipping_method_id: nulla
+      tnx_info: sit
+    fileParameters: []
+    responses: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []

@@ -8,6 +8,9 @@ use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\ProductVariantItem;
 use App\Models\ShoppingCartVariant;
+/**
+ * @group Seller Product Variant
+ */
 class SellerProductVariantController extends Controller
 {
     public function __construct()

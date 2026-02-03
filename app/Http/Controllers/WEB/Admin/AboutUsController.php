@@ -7,6 +7,9 @@ use App\Models\AboutUs;
 use Illuminate\Http\Request;
 use Image;
 use File;
+/**
+ * @group About Us
+ */
 class AboutUsController extends Controller
 {
 

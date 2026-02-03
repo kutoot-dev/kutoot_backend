@@ -9,6 +9,9 @@ use App\Models\SubCategory;
 use Illuminate\Http\Request;
 use App\Models\PopularCategory;
 use App\Models\ThreeColumnCategory;
+/**
+ * @group Product Child Category
+ */
 class ProductChildCategoryController extends Controller
 {
     public function __construct()

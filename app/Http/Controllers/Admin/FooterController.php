@@ -7,6 +7,9 @@ use Illuminate\Http\Request;
 use App\Models\Footer;
 use Image;
 use File;
+/**
+ * @group Footer
+ */
 class FooterController extends Controller
 {
     public function __construct()

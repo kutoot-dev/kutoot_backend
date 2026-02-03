@@ -9,6 +9,9 @@ use Image;
 use File;
 use Str;
 
+/**
+ * @group Store Category
+ */
 class StoreCategoryController extends Controller
 {
     public function __construct()

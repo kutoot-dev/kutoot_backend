@@ -1,0 +1,85 @@
+name: Shipping
+description: ''
+endpoints:
+  -
+    httpMethods:
+      - POST
+    uri: 'api/ship-order/{orderId}'
+    metadata:
+      groupName: Shipping
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Create shipment in Shiprocket'
+      description: ''
+      authenticated: false
+      custom: []
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      orderId:
+        name: orderId
+        description: ''
+        required: true
+        example: voluptates
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+    cleanUrlParameters:
+      orderId: voluptates
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - POST
+    uri: api/check-pincode
+    metadata:
+      groupName: Shipping
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Check pincode serviceability'
+      description: ''
+      authenticated: false
+      custom: []
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      pincode:
+        name: pincode
+        description: 'Must be 6 digits.'
+        required: true
+        example: '528176'
+        type: string
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        custom: []
+    cleanBodyParameters:
+      pincode: '528176'
+    fileParameters: []
+    responses: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
