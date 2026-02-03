@@ -3921,11 +3921,20 @@ body.layout-3 .main-footer {
 .main-sidebar .sidebar-menu li a:hover {
     background-color: #f8fafb;
 }
+
 .main-sidebar .sidebar-menu li.active a {
+    /* color: white;
+    font-weight: 600;
+    background-color: linear-gradient(rgba(255, 122, 24, 0.1)); */
+    /* background-color: #FFFDF2; */
+
     color: white;
     font-weight: 600;
-    background-color: linear-gradient(rgba(255, 122, 24, 0.1));
-    /* background-color: #FFFDF2; */
+    background: linear-gradient(
+        rgba(255, 122, 24, 0.1),
+        rgba(255, 122, 24, 0.1)
+    );
+
 
 
 }
@@ -3970,7 +3979,7 @@ body.layout-3 .main-footer {
     background-color: #FFFDF2;
 }
 .main-sidebar .sidebar-menu li ul.dropdown-menu li.active > a {
-    color: #6777ef;
+    /* color: #6777ef; */
     font-weight: 600;
 }
 .main-sidebar .sidebar-menu li ul.dropdown-menu li a i {
