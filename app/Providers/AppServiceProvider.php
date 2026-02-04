@@ -46,7 +46,7 @@ class AppServiceProvider extends ServiceProvider
         });
 
         LogViewer::auth(function ($request) {
-            // return true to allow viewing the Log Viewer.
+            return true;
         });
     }
 }
