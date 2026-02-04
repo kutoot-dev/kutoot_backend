@@ -69,7 +69,7 @@ endpoints:
         name: title
         description: ''
         required: true
-        example: consectetur
+        example: culpa
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -79,7 +79,7 @@ endpoints:
         name: end_time
         description: 'Must be a valid date.'
         required: true
-        example: '2026-02-03T20:37:22'
+        example: '2026-02-03T20:38:32'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -89,7 +89,7 @@ endpoints:
         name: offer
         description: ''
         required: true
-        example: 73204867.817294
+        example: 22988.09481
         type: number
         enumValues: []
         exampleWasSpecified: false
@@ -99,17 +99,17 @@ endpoints:
         name: status
         description: ''
         required: true
-        example: voluptatibus
+        example: et
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanBodyParameters:
-      title: consectetur
-      end_time: '2026-02-03T20:37:22'
-      offer: 73204867.817294
-      status: voluptatibus
+      title: culpa
+      end_time: '2026-02-03T20:38:32'
+      offer: 22988.09481
+      status: et
     fileParameters: []
     responses: []
     responseFields: []
@@ -196,14 +196,14 @@ endpoints:
         name: status
         description: ''
         required: true
-        example: eligendi
+        example: ut
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanBodyParameters:
-      status: eligendi
+      status: ut
     fileParameters: []
     responses: []
     responseFields: []
@@ -233,14 +233,14 @@ endpoints:
         name: id
         description: 'The ID of the flash sale product status.'
         required: true
-        example: sint
+        example: suscipit
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      id: sint
+      id: suscipit
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -274,14 +274,14 @@ endpoints:
         name: id
         description: 'The ID of the delete flash sale product.'
         required: true
-        example: non
+        example: est
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      id: non
+      id: est
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []

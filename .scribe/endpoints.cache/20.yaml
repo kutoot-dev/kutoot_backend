@@ -28,7 +28,7 @@ endpoints:
         name: shipping_address_id
         description: ''
         required: true
-        example: dolores
+        example: magni
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -38,7 +38,7 @@ endpoints:
         name: billing_address_id
         description: ''
         required: true
-        example: excepturi
+        example: iusto
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -48,16 +48,16 @@ endpoints:
         name: shipping_method_id
         description: ''
         required: true
-        example: aliquid
+        example: pariatur
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanBodyParameters:
-      shipping_address_id: dolores
-      billing_address_id: excepturi
-      shipping_method_id: aliquid
+      shipping_address_id: magni
+      billing_address_id: iusto
+      shipping_method_id: pariatur
     fileParameters: []
     responses: []
     responseFields: []
@@ -91,7 +91,7 @@ endpoints:
         name: shipping_address_id
         description: ''
         required: true
-        example: tempora
+        example: natus
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -101,7 +101,7 @@ endpoints:
         name: billing_address_id
         description: ''
         required: true
-        example: et
+        example: maiores
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -111,7 +111,7 @@ endpoints:
         name: shipping_method_id
         description: ''
         required: true
-        example: et
+        example: ut
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -121,7 +121,7 @@ endpoints:
         name: card_number
         description: ''
         required: true
-        example: vel
+        example: ea
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -131,7 +131,7 @@ endpoints:
         name: year
         description: ''
         required: true
-        example: totam
+        example: aut
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -141,7 +141,7 @@ endpoints:
         name: month
         description: ''
         required: true
-        example: voluptates
+        example: est
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -151,20 +151,20 @@ endpoints:
         name: cvv
         description: ''
         required: true
-        example: exercitationem
+        example: quas
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanBodyParameters:
-      shipping_address_id: tempora
-      billing_address_id: et
-      shipping_method_id: et
-      card_number: vel
-      year: totam
-      month: voluptates
-      cvv: exercitationem
+      shipping_address_id: natus
+      billing_address_id: maiores
+      shipping_method_id: ut
+      card_number: ea
+      year: aut
+      month: est
+      cvv: quas
     fileParameters: []
     responses: []
     responseFields: []
@@ -198,7 +198,7 @@ endpoints:
         name: shipping_address_id
         description: ''
         required: true
-        example: esse
+        example: rem
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -208,7 +208,7 @@ endpoints:
         name: billing_address_id
         description: ''
         required: true
-        example: est
+        example: sunt
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -218,7 +218,7 @@ endpoints:
         name: shipping_method_id
         description: ''
         required: true
-        example: nulla
+        example: nostrum
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -228,17 +228,17 @@ endpoints:
         name: tnx_info
         description: ''
         required: true
-        example: sit
+        example: quo
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanBodyParameters:
-      shipping_address_id: esse
-      billing_address_id: est
-      shipping_method_id: nulla
-      tnx_info: sit
+      shipping_address_id: rem
+      billing_address_id: sunt
+      shipping_method_id: nostrum
+      tnx_info: quo
     fileParameters: []
     responses: []
     responseFields: []

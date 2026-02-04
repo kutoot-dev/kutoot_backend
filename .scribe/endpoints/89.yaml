@@ -65,14 +65,14 @@ endpoints:
         name: id
         description: 'The ID of the customer show.'
         required: true
-        example: blanditiis
+        example: enim
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      id: blanditiis
+      id: enim
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -119,14 +119,14 @@ endpoints:
         name: id
         description: 'The ID of the customer status.'
         required: true
-        example: unde
+        example: magni
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      id: unde
+      id: magni
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -160,14 +160,14 @@ endpoints:
         name: id
         description: 'The ID of the customer delete.'
         required: true
-        example: molestiae
+        example: repellat
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      id: molestiae
+      id: repellat
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -291,7 +291,7 @@ endpoints:
         name: subject
         description: ''
         required: true
-        example: beatae
+        example: fugit
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -301,15 +301,15 @@ endpoints:
         name: message
         description: ''
         required: true
-        example: atque
+        example: qui
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanBodyParameters:
-      subject: beatae
-      message: atque
+      subject: fugit
+      message: qui
     fileParameters: []
     responses: []
     responseFields: []
@@ -339,14 +339,14 @@ endpoints:
         name: id
         description: 'The ID of the send mail to single user.'
         required: true
-        example: qui
+        example: consequuntur
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      id: qui
+      id: consequuntur
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
@@ -354,7 +354,7 @@ endpoints:
         name: subject
         description: ''
         required: true
-        example: consectetur
+        example: aspernatur
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -364,15 +364,15 @@ endpoints:
         name: message
         description: ''
         required: true
-        example: qui
+        example: quis
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanBodyParameters:
-      subject: consectetur
-      message: qui
+      subject: aspernatur
+      message: quis
     fileParameters: []
     responses: []
     responseFields: []

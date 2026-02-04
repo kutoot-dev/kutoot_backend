@@ -163,7 +163,7 @@ endpoints:
         name: user_id
         description: 'The <code>id</code> of an existing record in the users table.'
         required: true
-        example: cupiditate
+        example: enim
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -173,7 +173,7 @@ endpoints:
         name: amount
         description: 'Must be at least 1.'
         required: true
-        example: 26
+        example: 54
         type: integer
         enumValues: []
         exampleWasSpecified: false
@@ -195,7 +195,7 @@ endpoints:
         name: type
         description: ''
         required: true
-        example: pariatur
+        example: doloremque
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -205,7 +205,7 @@ endpoints:
         name: expiry_days
         description: ''
         required: false
-        example: 15
+        example: 7
         type: integer
         enumValues: []
         exampleWasSpecified: false
@@ -215,7 +215,7 @@ endpoints:
         name: reference_id
         description: ''
         required: false
-        example: recusandae
+        example: necessitatibus
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -232,12 +232,12 @@ endpoints:
         nullable: true
         custom: []
     cleanBodyParameters:
-      user_id: cupiditate
-      amount: 26
+      user_id: enim
+      amount: 54
       category: PAID
-      type: pariatur
-      expiry_days: 15
-      reference_id: recusandae
+      type: doloremque
+      expiry_days: 7
+      reference_id: necessitatibus
     fileParameters: []
     responses: []
     responseFields: []

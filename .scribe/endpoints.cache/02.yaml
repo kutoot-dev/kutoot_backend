@@ -28,7 +28,7 @@ endpoints:
         name: order_id
         description: ''
         required: true
-        example: 3
+        example: 7
         type: integer
         enumValues: []
         exampleWasSpecified: false
@@ -46,7 +46,7 @@ endpoints:
         nullable: false
         custom: []
     cleanBodyParameters:
-      order_id: 3
+      order_id: 7
       payment_status: success
     fileParameters: []
     responses: []

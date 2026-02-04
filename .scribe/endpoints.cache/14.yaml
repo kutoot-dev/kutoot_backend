@@ -28,7 +28,7 @@ endpoints:
         name: email
         description: ''
         required: true
-        example: qui
+        example: minima
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -45,7 +45,7 @@ endpoints:
         nullable: false
         custom: []
     cleanBodyParameters:
-      email: qui
+      email: minima
     fileParameters: []
     responses: []
     responseFields: []
@@ -79,7 +79,7 @@ endpoints:
         name: name
         description: ''
         required: true
-        example: neque
+        example: sunt
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -89,7 +89,7 @@ endpoints:
         name: agree
         description: ''
         required: true
-        example: illo
+        example: velit
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -99,7 +99,7 @@ endpoints:
         name: email
         description: ''
         required: true
-        example: incidunt
+        example: dolor
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -119,7 +119,7 @@ endpoints:
         name: password
         description: 'Must be at least 4 characters.'
         required: true
-        example: si`V-G/
+        example: ^S2;DOTc_+He
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -136,10 +136,10 @@ endpoints:
         nullable: false
         custom: []
     cleanBodyParameters:
-      name: neque
-      agree: illo
-      email: incidunt
-      password: si`V-G/
+      name: sunt
+      agree: velit
+      email: dolor
+      password: ^S2;DOTc_+He
     fileParameters: []
     responses: []
     responseFields: []
@@ -169,7 +169,7 @@ endpoints:
         name: token
         description: ''
         required: true
-        example: quod
+        example: suscipit
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -179,15 +179,15 @@ endpoints:
         name: id
         description: 'The ID of the {token}.'
         required: true
-        example: qui
+        example: porro
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      token: quod
-      id: qui
+      token: suscipit
+      id: porro
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []

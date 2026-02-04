@@ -71,7 +71,7 @@ endpoints:
         name: description
         description: ''
         required: true
-        example: quia
+        example: id
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -81,15 +81,15 @@ endpoints:
         name: banner_image
         description: ''
         required: true
-        example: ut
+        example: numquam
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanBodyParameters:
-      description: quia
-      banner_image: ut
+      description: id
+      banner_image: numquam
     fileParameters: []
     responses: []
     responseFields: []
@@ -120,14 +120,14 @@ endpoints:
         name: id
         description: 'The ID of the about u.'
         required: true
-        example: explicabo
+        example: consequatur
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      id: explicabo
+      id: consequatur
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
@@ -135,14 +135,14 @@ endpoints:
         name: description
         description: ''
         required: true
-        example: rerum
+        example: sed
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanBodyParameters:
-      description: rerum
+      description: sed
     fileParameters: []
     responses: []
     responseFields: []

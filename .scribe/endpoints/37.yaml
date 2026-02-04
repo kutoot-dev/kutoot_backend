@@ -28,7 +28,7 @@ endpoints:
         name: storeName
         description: 'Must not be greater than 255 characters.'
         required: true
-        example: aivefbzrn
+        example: siwvcduho
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -38,7 +38,7 @@ endpoints:
         name: ownerMobile
         description: 'Must not be greater than 15 characters.'
         required: true
-        example: ynwvpktdys
+        example: orawprc
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -48,7 +48,7 @@ endpoints:
         name: ownerEmail
         description: 'Must be a valid email address. Must not be greater than 255 characters.'
         required: false
-        example: mariane25@example.com
+        example: jacobi.alexie@example.com
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -58,7 +58,7 @@ endpoints:
         name: storeType
         description: 'Must not be greater than 100 characters.'
         required: true
-        example: nqsjiyyzg
+        example: qxwzsacpwodqliyeyzpcvk
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -68,7 +68,7 @@ endpoints:
         name: storeAddress
         description: 'Must not be greater than 500 characters.'
         required: false
-        example: oz
+        example: bxzedwhgukjgsbhhjpywwe
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -78,7 +78,7 @@ endpoints:
         name: lat
         description: ''
         required: false
-        example: 0.0
+        example: 38549800.53
         type: number
         enumValues: []
         exampleWasSpecified: false
@@ -88,7 +88,7 @@ endpoints:
         name: lng
         description: ''
         required: false
-        example: 4962.51119543
+        example: 16320096.3009
         type: number
         enumValues: []
         exampleWasSpecified: false
@@ -98,21 +98,21 @@ endpoints:
         name: minBillAmount
         description: 'Must be at least 0.'
         required: false
-        example: 12
+        example: 69
         type: number
         enumValues: []
         exampleWasSpecified: false
         nullable: true
         custom: []
     cleanBodyParameters:
-      storeName: aivefbzrn
-      ownerMobile: ynwvpktdys
-      ownerEmail: mariane25@example.com
-      storeType: nqsjiyyzg
-      storeAddress: oz
-      lat: 0.0
-      lng: 4962.51119543
-      minBillAmount: 12
+      storeName: siwvcduho
+      ownerMobile: orawprc
+      ownerEmail: jacobi.alexie@example.com
+      storeType: qxwzsacpwodqliyeyzpcvk
+      storeAddress: bxzedwhgukjgsbhhjpywwe
+      lat: 38549800.53
+      lng: 16320096.3009
+      minBillAmount: 69
     fileParameters: []
     responses: []
     responseFields: []
@@ -148,14 +148,14 @@ endpoints:
         name: mobile
         description: 'Must not be greater than 15 characters.'
         required: true
-        example: tcpzwzspqgjuexe
+        example: qais
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanBodyParameters:
-      mobile: tcpzwzspqgjuexe
+      mobile: qais
     fileParameters: []
     responses:
       -
@@ -251,7 +251,7 @@ endpoints:
         name: storeName
         description: 'Must not be greater than 255 characters.'
         required: true
-        example: lldhrimctypxeldcsgshzomb
+        example: nwfpgcoznyugdgbe
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -261,7 +261,7 @@ endpoints:
         name: ownerMobile
         description: 'Must not be greater than 15 characters.'
         required: true
-        example: tdiaslrigzmf
+        example: tddwfvkxajh
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -271,7 +271,7 @@ endpoints:
         name: ownerEmail
         description: 'Must be a valid email address. Must not be greater than 255 characters.'
         required: false
-        example: turner.langworth@example.net
+        example: kuvalis.thurman@example.net
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -281,7 +281,7 @@ endpoints:
         name: storeType
         description: 'Must not be greater than 100 characters.'
         required: true
-        example: ljettbaxycgngsfubkyhpju
+        example: oejwpkhnwyh
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -291,7 +291,7 @@ endpoints:
         name: storeAddress
         description: 'Must not be greater than 500 characters.'
         required: true
-        example: ilmktqtdfarmawk
+        example: kyqzdofhzghisohrpmitbwtcw
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -301,7 +301,7 @@ endpoints:
         name: state
         description: 'Must not be greater than 100 characters.'
         required: false
-        example: mvf
+        example: tdsukwziqdonawssdwegkay
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -311,7 +311,7 @@ endpoints:
         name: stateId
         description: ''
         required: false
-        example: 11
+        example: 2
         type: integer
         enumValues: []
         exampleWasSpecified: false
@@ -321,7 +321,7 @@ endpoints:
         name: city
         description: 'Must not be greater than 100 characters.'
         required: false
-        example: xs
+        example: cpdeukffxsoluik
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -331,7 +331,7 @@ endpoints:
         name: cityId
         description: ''
         required: false
-        example: 13
+        example: 12
         type: integer
         enumValues: []
         exampleWasSpecified: false
@@ -341,7 +341,7 @@ endpoints:
         name: country
         description: 'Must not be greater than 100 characters.'
         required: false
-        example: saxgcyetjem
+        example: hsufcfgjwhmrduhttpjk
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -351,7 +351,7 @@ endpoints:
         name: countryId
         description: ''
         required: false
-        example: 10
+        example: 8
         type: integer
         enumValues: []
         exampleWasSpecified: false
@@ -361,7 +361,7 @@ endpoints:
         name: lat
         description: ''
         required: false
-        example: 283102.59539498
+        example: 3564.19775
         type: number
         enumValues: []
         exampleWasSpecified: false
@@ -371,7 +371,7 @@ endpoints:
         name: lng
         description: ''
         required: false
-        example: 6.848
+        example: 102859011.51279
         type: number
         enumValues: []
         exampleWasSpecified: false
@@ -381,7 +381,7 @@ endpoints:
         name: minBillAmount
         description: 'Must be at least 0.'
         required: false
-        example: 64
+        example: 60
         type: number
         enumValues: []
         exampleWasSpecified: false
@@ -391,7 +391,7 @@ endpoints:
         name: gstNumber
         description: 'Must not be greater than 20 characters.'
         required: false
-        example: crvwbyokfliplvrwyu
+        example: vdqxb
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -401,7 +401,7 @@ endpoints:
         name: bankName
         description: 'Must not be greater than 255 characters.'
         required: false
-        example: qagtkjjlbvuqgrviqqosbx
+        example: aovmrfhco
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -411,7 +411,7 @@ endpoints:
         name: accountNumber
         description: 'Must not be greater than 50 characters.'
         required: false
-        example: xejhnitleek
+        example: qviidkymaxlwrxukbhisc
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -421,7 +421,7 @@ endpoints:
         name: ifscCode
         description: 'Must not be greater than 20 characters.'
         required: false
-        example: rrhbvkfkhwal
+        example: gq
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -431,7 +431,7 @@ endpoints:
         name: beneficiaryName
         description: 'Must not be greater than 255 characters.'
         required: false
-        example: ppixofenyjgewscm
+        example: xjyjctqrx
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -441,33 +441,33 @@ endpoints:
         name: upiId
         description: 'Must not be greater than 255 characters.'
         required: false
-        example: qapoozw
+        example: eqxbjvqdrst
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: true
         custom: []
     cleanBodyParameters:
-      storeName: lldhrimctypxeldcsgshzomb
-      ownerMobile: tdiaslrigzmf
-      ownerEmail: turner.langworth@example.net
-      storeType: ljettbaxycgngsfubkyhpju
-      storeAddress: ilmktqtdfarmawk
-      state: mvf
-      stateId: 11
-      city: xs
-      cityId: 13
-      country: saxgcyetjem
-      countryId: 10
-      lat: 283102.59539498
-      lng: 6.848
-      minBillAmount: 64
-      gstNumber: crvwbyokfliplvrwyu
-      bankName: qagtkjjlbvuqgrviqqosbx
-      accountNumber: xejhnitleek
-      ifscCode: rrhbvkfkhwal
-      beneficiaryName: ppixofenyjgewscm
-      upiId: qapoozw
+      storeName: nwfpgcoznyugdgbe
+      ownerMobile: tddwfvkxajh
+      ownerEmail: kuvalis.thurman@example.net
+      storeType: oejwpkhnwyh
+      storeAddress: kyqzdofhzghisohrpmitbwtcw
+      state: tdsukwziqdonawssdwegkay
+      stateId: 2
+      city: cpdeukffxsoluik
+      cityId: 12
+      country: hsufcfgjwhmrduhttpjk
+      countryId: 8
+      lat: 3564.19775
+      lng: 102859011.51279
+      minBillAmount: 60
+      gstNumber: vdqxb
+      bankName: aovmrfhco
+      accountNumber: qviidkymaxlwrxukbhisc
+      ifscCode: gq
+      beneficiaryName: xjyjctqrx
+      upiId: eqxbjvqdrst
     fileParameters: []
     responses: []
     responseFields: []
@@ -499,14 +499,14 @@ endpoints:
         name: applicationId
         description: ''
         required: true
-        example: odit
+        example: necessitatibus
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      applicationId: odit
+      applicationId: necessitatibus
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -555,14 +555,14 @@ endpoints:
         name: applicationId
         description: ''
         required: true
-        example: repellendus
+        example: praesentium
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      applicationId: repellendus
+      applicationId: praesentium
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
@@ -570,7 +570,7 @@ endpoints:
         name: storeName
         description: 'Must not be greater than 255 characters.'
         required: false
-        example: jxttyqcolgjor
+        example: tlangf
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -580,7 +580,7 @@ endpoints:
         name: ownerMobile
         description: 'Must not be greater than 15 characters.'
         required: false
-        example: chbvqyzq
+        example: dfctisl
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -590,7 +590,7 @@ endpoints:
         name: ownerEmail
         description: 'Must be a valid email address. Must not be greater than 255 characters.'
         required: false
-        example: stracke.carlie@example.org
+        example: ovonrueden@example.com
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -600,7 +600,7 @@ endpoints:
         name: storeType
         description: 'Must not be greater than 100 characters.'
         required: false
-        example: tswqgfgkkthb
+        example: tnfucvxkodxwoibvpskolamrf
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -610,7 +610,7 @@ endpoints:
         name: storeAddress
         description: 'Must not be greater than 500 characters.'
         required: false
-        example: a
+        example: hoaijhgceawsthsrry
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -620,7 +620,7 @@ endpoints:
         name: state
         description: 'Must not be greater than 100 characters.'
         required: false
-        example: nzjnuepyearqpbqxnztj
+        example: mystkgqgrdtceuytusud
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -630,7 +630,7 @@ endpoints:
         name: stateId
         description: ''
         required: false
-        example: 10
+        example: 6
         type: integer
         enumValues: []
         exampleWasSpecified: false
@@ -640,7 +640,7 @@ endpoints:
         name: city
         description: 'Must not be greater than 100 characters.'
         required: false
-        example: eiyjayvfycyurklzczthc
+        example: peqhxvtvwwmyjxzr
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -650,7 +650,7 @@ endpoints:
         name: cityId
         description: ''
         required: false
-        example: 2
+        example: 20
         type: integer
         enumValues: []
         exampleWasSpecified: false
@@ -660,7 +660,7 @@ endpoints:
         name: country
         description: 'Must not be greater than 100 characters.'
         required: false
-        example: q
+        example: mcljcxipjyrqpqjyohp
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -670,7 +670,7 @@ endpoints:
         name: countryId
         description: ''
         required: false
-        example: 15
+        example: 12
         type: integer
         enumValues: []
         exampleWasSpecified: false
@@ -680,7 +680,7 @@ endpoints:
         name: lat
         description: ''
         required: false
-        example: 7166.8
+        example: 44846355.118786
         type: number
         enumValues: []
         exampleWasSpecified: false
@@ -690,7 +690,7 @@ endpoints:
         name: lng
         description: ''
         required: false
-        example: 6.4
+        example: 1744765.160428
         type: number
         enumValues: []
         exampleWasSpecified: false
@@ -700,7 +700,7 @@ endpoints:
         name: minBillAmount
         description: 'Must be at least 0.'
         required: false
-        example: 81
+        example: 0
         type: number
         enumValues: []
         exampleWasSpecified: false
@@ -710,7 +710,7 @@ endpoints:
         name: gstNumber
         description: 'Must not be greater than 20 characters.'
         required: false
-        example: mrxaoxfksyyhfiuzlh
+        example: lmpqiqa
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -720,7 +720,7 @@ endpoints:
         name: bankName
         description: 'Must not be greater than 255 characters.'
         required: false
-        example: jgdojshjwbnikesgkaneujfaw
+        example: ixvc
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -730,7 +730,7 @@ endpoints:
         name: accountNumber
         description: 'Must not be greater than 50 characters.'
         required: false
-        example: pfqmpsbspfkjlgfka
+        example: nemxwebpkdxtvhkb
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -740,7 +740,7 @@ endpoints:
         name: ifscCode
         description: 'Must not be greater than 20 characters.'
         required: false
-        example: rprkxqac
+        example: hygrkkzgwj
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -750,7 +750,7 @@ endpoints:
         name: beneficiaryName
         description: 'Must not be greater than 255 characters.'
         required: false
-        example: jbuns
+        example: wqxqwauukyahvhcuqal
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -760,33 +760,33 @@ endpoints:
         name: upiId
         description: 'Must not be greater than 255 characters.'
         required: false
-        example: spxsgwtlo
+        example: fdhojmfwulznmmi
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanBodyParameters:
-      storeName: jxttyqcolgjor
-      ownerMobile: chbvqyzq
-      ownerEmail: stracke.carlie@example.org
-      storeType: tswqgfgkkthb
-      storeAddress: a
-      state: nzjnuepyearqpbqxnztj
-      stateId: 10
-      city: eiyjayvfycyurklzczthc
-      cityId: 2
-      country: q
-      countryId: 15
-      lat: 7166.8
-      lng: 6.4
-      minBillAmount: 81
-      gstNumber: mrxaoxfksyyhfiuzlh
-      bankName: jgdojshjwbnikesgkaneujfaw
-      accountNumber: pfqmpsbspfkjlgfka
-      ifscCode: rprkxqac
-      beneficiaryName: jbuns
-      upiId: spxsgwtlo
+      storeName: tlangf
+      ownerMobile: dfctisl
+      ownerEmail: ovonrueden@example.com
+      storeType: tnfucvxkodxwoibvpskolamrf
+      storeAddress: hoaijhgceawsthsrry
+      state: mystkgqgrdtceuytusud
+      stateId: 6
+      city: peqhxvtvwwmyjxzr
+      cityId: 20
+      country: mcljcxipjyrqpqjyohp
+      countryId: 12
+      lat: 44846355.118786
+      lng: 1744765.160428
+      minBillAmount: 0
+      gstNumber: lmpqiqa
+      bankName: ixvc
+      accountNumber: nemxwebpkdxtvhkb
+      ifscCode: hygrkkzgwj
+      beneficiaryName: wqxqwauukyahvhcuqal
+      upiId: fdhojmfwulznmmi
     fileParameters: []
     responses: []
     responseFields: []
@@ -818,14 +818,14 @@ endpoints:
         name: applicationId
         description: ''
         required: true
-        example: dolore
+        example: a
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      applicationId: dolore
+      applicationId: a
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -861,14 +861,14 @@ endpoints:
         name: applicationId
         description: ''
         required: true
-        example: minima
+        example: iste
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      applicationId: minima
+      applicationId: iste
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
@@ -876,7 +876,7 @@ endpoints:
         name: verifiedBy
         description: ''
         required: true
-        example: nesciunt
+        example: soluta
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -886,15 +886,15 @@ endpoints:
         name: verificationNotes
         description: 'Must not be greater than 1000 characters.'
         required: false
-        example: liphtonplc
+        example: eqpp
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: true
         custom: []
     cleanBodyParameters:
-      verifiedBy: nesciunt
-      verificationNotes: liphtonplc
+      verifiedBy: soluta
+      verificationNotes: eqpp
     fileParameters: []
     responses: []
     responseFields: []
@@ -926,14 +926,14 @@ endpoints:
         name: applicationId
         description: ''
         required: true
-        example: exercitationem
+        example: facere
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      applicationId: exercitationem
+      applicationId: facere
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
@@ -941,7 +941,7 @@ endpoints:
         name: approvedBy
         description: ''
         required: true
-        example: sed
+        example: qui
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -951,7 +951,7 @@ endpoints:
         name: sellerEmail
         description: 'Must be a valid email address.'
         required: true
-        example: oconner.jameson@example.org
+        example: conroy.alessandro@example.net
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -961,7 +961,7 @@ endpoints:
         name: commissionPercent
         description: 'Must be at least 0. Must not be greater than 100.'
         required: false
-        example: 20
+        example: 13
         type: number
         enumValues: []
         exampleWasSpecified: false
@@ -971,7 +971,7 @@ endpoints:
         name: discountPercent
         description: 'Must be at least 0. Must not be greater than 100.'
         required: false
-        example: 19
+        example: 21
         type: number
         enumValues: []
         exampleWasSpecified: false
@@ -981,18 +981,18 @@ endpoints:
         name: rating
         description: 'Must be at least 0. Must not be greater than 5.'
         required: false
-        example: 5
+        example: 2
         type: number
         enumValues: []
         exampleWasSpecified: false
         nullable: true
         custom: []
     cleanBodyParameters:
-      approvedBy: sed
-      sellerEmail: oconner.jameson@example.org
-      commissionPercent: 20
-      discountPercent: 19
-      rating: 5
+      approvedBy: qui
+      sellerEmail: conroy.alessandro@example.net
+      commissionPercent: 13
+      discountPercent: 21
+      rating: 2
     fileParameters: []
     responses: []
     responseFields: []
@@ -1024,14 +1024,14 @@ endpoints:
         name: applicationId
         description: ''
         required: true
-        example: quia
+        example: ipsam
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      applicationId: quia
+      applicationId: ipsam
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
@@ -1039,7 +1039,7 @@ endpoints:
         name: rejectedBy
         description: ''
         required: true
-        example: id
+        example: occaecati
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -1049,15 +1049,15 @@ endpoints:
         name: reason
         description: 'Must not be greater than 1000 characters.'
         required: true
-        example: rgaxnulvdkxpka
+        example: kwkbqsmfmeprugrldvhqdpzts
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanBodyParameters:
-      rejectedBy: id
-      reason: rgaxnulvdkxpka
+      rejectedBy: occaecati
+      reason: kwkbqsmfmeprugrldvhqdpzts
     fileParameters: []
     responses: []
     responseFields: []

@@ -22,14 +22,14 @@ endpoints:
         name: id
         description: 'The ID of the product gallery.'
         required: true
-        example: possimus
+        example: alias
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      id: possimus
+      id: alias
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -80,7 +80,7 @@ endpoints:
         name: images
         description: ''
         required: true
-        example: harum
+        example: qui
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -90,15 +90,15 @@ endpoints:
         name: product_id
         description: ''
         required: true
-        example: natus
+        example: a
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanBodyParameters:
-      images: harum
-      product_id: natus
+      images: qui
+      product_id: a
     fileParameters: []
     responses: []
     responseFields: []
@@ -128,14 +128,14 @@ endpoints:
         name: id
         description: 'The ID of the delete product image.'
         required: true
-        example: sit
+        example: dolorem
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      id: sit
+      id: dolorem
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -169,14 +169,14 @@ endpoints:
         name: id
         description: 'The ID of the product gallery status.'
         required: true
-        example: laboriosam
+        example: laudantium
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      id: laboriosam
+      id: laudantium
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []

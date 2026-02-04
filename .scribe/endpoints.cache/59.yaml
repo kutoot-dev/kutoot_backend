@@ -71,7 +71,7 @@ endpoints:
         name: name
         description: ''
         required: true
-        example: repudiandae
+        example: et
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -98,7 +98,7 @@ endpoints:
         nullable: false
         custom: []
     cleanBodyParameters:
-      name: repudiandae
+      name: et
     fileParameters: []
     responses: []
     responseFields: []

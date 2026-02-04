@@ -28,7 +28,7 @@ endpoints:
         name: oldPassword
         description: ''
         required: true
-        example: nihil
+        example: voluptatem
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -38,15 +38,15 @@ endpoints:
         name: newPassword
         description: 'Must be at least 6 characters.'
         required: true
-        example: vpkauvuttoiabjwstmjjguftkkkpalxzskwqvuemgxcronyccwthuzufnhrhljspcdvdmmg
+        example: okdodryeoqdcgrebqjfyajwdxalkiltnflmuvwebfemlumtzfmnmbzbwqqtkcpsgwda
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanBodyParameters:
-      oldPassword: nihil
-      newPassword: vpkauvuttoiabjwstmjjguftkkkpalxzskwqvuemgxcronyccwthuzufnhrhljspcdvdmmg
+      oldPassword: voluptatem
+      newPassword: okdodryeoqdcgrebqjfyajwdxalkiltnflmuvwebfemlumtzfmnmbzbwqqtkcpsgwda
     fileParameters: []
     responses: []
     responseFields: []
@@ -123,7 +123,7 @@ endpoints:
         name: bankName
         description: 'Must not be greater than 255 characters.'
         required: true
-        example: djgivrbqu
+        example: cjegzvuvwfdaqedyzmeuzb
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -133,7 +133,7 @@ endpoints:
         name: accountNumber
         description: 'Must not be greater than 50 characters.'
         required: true
-        example: bmkugvorwtfmoug
+        example: nxyvnrmxuectzg
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -143,7 +143,7 @@ endpoints:
         name: ifsc
         description: 'Must match the regex /^[A-Z]{4}0[A-Z0-9]{6}$/. Must not be greater than 20 characters.'
         required: true
-        example: yiqdb
+        example: aasgbrelszzxfaubnhi
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -153,7 +153,7 @@ endpoints:
         name: upiId
         description: 'Must not be greater than 255 characters.'
         required: false
-        example: zigiudtamrhletnb
+        example: egypkgivls
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -163,18 +163,18 @@ endpoints:
         name: beneficiaryName
         description: 'Must not be greater than 255 characters.'
         required: true
-        example: keebovikgerhmnddm
+        example: rhbusltehjdasmvjdbxau
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanBodyParameters:
-      bankName: djgivrbqu
-      accountNumber: bmkugvorwtfmoug
-      ifsc: yiqdb
-      upiId: zigiudtamrhletnb
-      beneficiaryName: keebovikgerhmnddm
+      bankName: cjegzvuvwfdaqedyzmeuzb
+      accountNumber: nxyvnrmxuectzg
+      ifsc: aasgbrelszzxfaubnhi
+      upiId: egypkgivls
+      beneficiaryName: rhbusltehjdasmvjdbxau
     fileParameters: []
     responses: []
     responseFields: []
@@ -251,7 +251,7 @@ endpoints:
         name: enabled
         description: ''
         required: true
-        example: true
+        example: false
         type: boolean
         enumValues: []
         exampleWasSpecified: false
@@ -271,7 +271,7 @@ endpoints:
         name: channels.email
         description: ''
         required: true
-        example: true
+        example: false
         type: boolean
         enumValues: []
         exampleWasSpecified: false
@@ -281,7 +281,7 @@ endpoints:
         name: channels.sms
         description: ''
         required: true
-        example: false
+        example: true
         type: boolean
         enumValues: []
         exampleWasSpecified: false
@@ -291,18 +291,18 @@ endpoints:
         name: channels.whatsapp
         description: ''
         required: true
-        example: true
+        example: false
         type: boolean
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanBodyParameters:
-      enabled: true
+      enabled: false
       channels:
-        email: true
-        sms: false
-        whatsapp: true
+        email: false
+        sms: true
+        whatsapp: false
     fileParameters: []
     responses: []
     responseFields: []

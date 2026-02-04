@@ -67,14 +67,14 @@ endpoints:
         name: id
         description: 'The ID of the state by country.'
         required: true
-        example: voluptatum
+        example: voluptas
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      id: voluptatum
+      id: voluptas
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -121,14 +121,14 @@ endpoints:
         name: id
         description: 'The ID of the city by state.'
         required: true
-        example: nihil
+        example: culpa
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      id: nihil
+      id: culpa
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -179,7 +179,7 @@ endpoints:
         name: name
         description: ''
         required: true
-        example: quo
+        example: esse
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -199,7 +199,7 @@ endpoints:
         name: phone
         description: ''
         required: true
-        example: officiis
+        example: exercitationem
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -209,7 +209,7 @@ endpoints:
         name: country
         description: ''
         required: true
-        example: qui
+        example: aut
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -219,7 +219,7 @@ endpoints:
         name: zip_code
         description: ''
         required: true
-        example: et
+        example: unde
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -229,18 +229,18 @@ endpoints:
         name: address
         description: ''
         required: true
-        example: dolore
+        example: est
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanBodyParameters:
-      name: quo
-      phone: officiis
-      country: qui
-      zip_code: et
-      address: dolore
+      name: esse
+      phone: exercitationem
+      country: aut
+      zip_code: unde
+      address: est
     fileParameters: []
     responses: []
     responseFields: []
@@ -317,14 +317,14 @@ endpoints:
         name: password
         description: 'Must be at least 4 characters.'
         required: true
-        example: 'vs[wa16*!'
+        example: '.&0{EeMa0"*i3w'
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanBodyParameters:
-      password: 'vs[wa16*!'
+      password: '.&0{EeMa0"*i3w'
     fileParameters: []
     responses: []
     responseFields: []
@@ -421,7 +421,7 @@ endpoints:
         name: phone
         description: ''
         required: true
-        example: et
+        example: aliquid
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -431,7 +431,7 @@ endpoints:
         name: opens_at
         description: ''
         required: true
-        example: qui
+        example: blanditiis
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -441,7 +441,7 @@ endpoints:
         name: closed_at
         description: ''
         required: true
-        example: ipsa
+        example: hic
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -451,7 +451,7 @@ endpoints:
         name: address
         description: ''
         required: true
-        example: eaque
+        example: qui
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -461,18 +461,18 @@ endpoints:
         name: greeting_msg
         description: ''
         required: true
-        example: consectetur
+        example: alias
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanBodyParameters:
-      phone: et
-      opens_at: qui
-      closed_at: ipsa
-      address: eaque
-      greeting_msg: consectetur
+      phone: aliquid
+      opens_at: blanditiis
+      closed_at: hic
+      address: qui
+      greeting_msg: alias
     fileParameters: []
     responses: []
     responseFields: []
@@ -502,14 +502,14 @@ endpoints:
         name: id
         description: 'The ID of the remove seller social link.'
         required: true
-        example: in
+        example: delectus
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      id: in
+      id: delectus
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []

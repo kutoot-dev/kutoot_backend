@@ -24,14 +24,14 @@ endpoints:
         name: order_id
         description: 'The ID of the order.'
         required: true
-        example: fugiat
+        example: voluptatibus
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      order_id: fugiat
+      order_id: voluptatibus
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -47,8 +47,8 @@ endpoints:
         headers:
           x-ratelimit-limit: '60'
           x-ratelimit-remaining: '0'
-          retry-after: '54'
-          x-ratelimit-reset: '1770131295'
+          retry-after: '53'
+          x-ratelimit-reset: '1770131364'
           cache-control: 'no-cache, private'
           content-type: application/json
           access-control-allow-origin: '*'
@@ -85,14 +85,14 @@ endpoints:
         name: order_id
         description: 'The ID of the order.'
         required: true
-        example: consequuntur
+        example: perspiciatis
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      order_id: consequuntur
+      order_id: perspiciatis
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -108,8 +108,8 @@ endpoints:
         headers:
           x-ratelimit-limit: '60'
           x-ratelimit-remaining: '0'
-          retry-after: '54'
-          x-ratelimit-reset: '1770131295'
+          retry-after: '53'
+          x-ratelimit-reset: '1770131364'
           cache-control: 'no-cache, private'
           content-type: application/json
           access-control-allow-origin: '*'
@@ -150,7 +150,7 @@ endpoints:
         name: order_id
         description: ''
         required: true
-        example: velit
+        example: ullam
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -160,15 +160,15 @@ endpoints:
         name: message
         description: ''
         required: true
-        example: occaecati
+        example: est
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanBodyParameters:
-      order_id: velit
-      message: occaecati
+      order_id: ullam
+      message: est
     fileParameters: []
     responses: []
     responseFields: []

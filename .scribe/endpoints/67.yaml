@@ -22,14 +22,14 @@ endpoints:
         name: id
         description: 'The ID of the product variant.'
         required: true
-        example: 14
+        example: 7
         type: integer
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      id: 14
+      id: 7
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -80,7 +80,7 @@ endpoints:
         name: name
         description: ''
         required: true
-        example: sed
+        example: et
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -90,7 +90,7 @@ endpoints:
         name: product_id
         description: ''
         required: true
-        example: sint
+        example: est
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -100,16 +100,16 @@ endpoints:
         name: status
         description: ''
         required: true
-        example: qui
+        example: est
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanBodyParameters:
-      name: sed
-      product_id: sint
-      status: qui
+      name: et
+      product_id: est
+      status: est
     fileParameters: []
     responses: []
     responseFields: []
@@ -139,14 +139,14 @@ endpoints:
         name: id
         description: 'The ID of the get product variant.'
         required: true
-        example: ut
+        example: dolor
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      id: ut
+      id: dolor
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -193,14 +193,14 @@ endpoints:
         name: id
         description: 'The ID of the update product variant.'
         required: true
-        example: quaerat
+        example: sit
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      id: quaerat
+      id: sit
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
@@ -208,7 +208,7 @@ endpoints:
         name: name
         description: ''
         required: true
-        example: animi
+        example: qui
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -218,7 +218,7 @@ endpoints:
         name: product_id
         description: ''
         required: true
-        example: sed
+        example: quaerat
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -228,16 +228,16 @@ endpoints:
         name: status
         description: ''
         required: true
-        example: dolor
+        example: cupiditate
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanBodyParameters:
-      name: animi
-      product_id: sed
-      status: dolor
+      name: qui
+      product_id: quaerat
+      status: cupiditate
     fileParameters: []
     responses: []
     responseFields: []
@@ -267,14 +267,14 @@ endpoints:
         name: id
         description: 'The ID of the delete product variant.'
         required: true
-        example: nesciunt
+        example: sunt
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      id: nesciunt
+      id: sunt
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -308,14 +308,14 @@ endpoints:
         name: id
         description: 'The ID of the product variant status.'
         required: true
-        example: impedit
+        example: aut
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      id: impedit
+      id: aut
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []

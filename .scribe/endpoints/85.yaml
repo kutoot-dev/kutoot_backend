@@ -69,7 +69,7 @@ endpoints:
         name: name
         description: ''
         required: true
-        example: beatae
+        example: eligendi
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -79,7 +79,7 @@ endpoints:
         name: email
         description: ''
         required: true
-        example: excepturi
+        example: facilis
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -89,7 +89,7 @@ endpoints:
         name: password
         description: 'Must be at least 4 characters.'
         required: true
-        example: F.pm+YcL
+        example: 'y1$ia?-2''*\STjyki'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -99,17 +99,17 @@ endpoints:
         name: status
         description: ''
         required: true
-        example: iure
+        example: quasi
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanBodyParameters:
-      name: beatae
-      email: excepturi
-      password: F.pm+YcL
-      status: iure
+      name: eligendi
+      email: facilis
+      password: 'y1$ia?-2''*\STjyki'
+      status: quasi
     fileParameters: []
     responses: []
     responseFields: []
@@ -139,14 +139,14 @@ endpoints:
         name: id
         description: 'The ID of the admin.'
         required: true
-        example: ex
+        example: minus
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      id: ex
+      id: minus
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -194,14 +194,14 @@ endpoints:
         name: id
         description: 'The ID of the admin.'
         required: true
-        example: ipsam
+        example: dolor
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      id: ipsam
+      id: dolor
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
@@ -209,7 +209,7 @@ endpoints:
         name: name
         description: ''
         required: true
-        example: nobis
+        example: laborum
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -229,7 +229,7 @@ endpoints:
         name: password
         description: 'Must be at least 4 characters.'
         required: true
-        example: '+c-/@~"`DVp{E'
+        example: '|#)1bnlZ|4Zs(K/'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -239,16 +239,16 @@ endpoints:
         name: status
         description: ''
         required: true
-        example: tempore
+        example: consequatur
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanBodyParameters:
-      name: nobis
-      password: '+c-/@~"`DVp{E'
-      status: tempore
+      name: laborum
+      password: '|#)1bnlZ|4Zs(K/'
+      status: consequatur
     fileParameters: []
     responses: []
     responseFields: []
@@ -278,14 +278,14 @@ endpoints:
         name: id
         description: 'The ID of the admin.'
         required: true
-        example: itaque
+        example: rem
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      id: itaque
+      id: rem
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -319,14 +319,14 @@ endpoints:
         name: id
         description: 'The ID of the admin status.'
         required: true
-        example: ut
+        example: adipisci
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      id: ut
+      id: adipisci
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []

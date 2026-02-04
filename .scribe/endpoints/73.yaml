@@ -69,7 +69,7 @@ endpoints:
         name: description
         description: ''
         required: true
-        example: eveniet
+        example: suscipit
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -79,7 +79,7 @@ endpoints:
         name: page_name
         description: ''
         required: true
-        example: nulla
+        example: velit
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -89,7 +89,7 @@ endpoints:
         name: slug
         description: ''
         required: true
-        example: adipisci
+        example: in
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -99,17 +99,17 @@ endpoints:
         name: status
         description: ''
         required: true
-        example: doloribus
+        example: porro
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanBodyParameters:
-      description: eveniet
-      page_name: nulla
-      slug: adipisci
-      status: doloribus
+      description: suscipit
+      page_name: velit
+      slug: in
+      status: porro
     fileParameters: []
     responses: []
     responseFields: []
@@ -139,14 +139,14 @@ endpoints:
         name: id
         description: 'The ID of the custom page.'
         required: true
-        example: 7
+        example: 20
         type: integer
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      id: 7
+      id: 20
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -193,14 +193,14 @@ endpoints:
         name: custom_page
         description: ''
         required: true
-        example: 4
+        example: 2
         type: integer
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      custom_page: 4
+      custom_page: 2
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -248,14 +248,14 @@ endpoints:
         name: id
         description: 'The ID of the custom page.'
         required: true
-        example: 17
+        example: 14
         type: integer
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      id: 17
+      id: 14
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
@@ -263,7 +263,7 @@ endpoints:
         name: description
         description: ''
         required: true
-        example: autem
+        example: dignissimos
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -293,15 +293,15 @@ endpoints:
         name: status
         description: ''
         required: true
-        example: eum
+        example: nihil
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanBodyParameters:
-      description: autem
-      status: eum
+      description: dignissimos
+      status: nihil
     fileParameters: []
     responses: []
     responseFields: []
@@ -331,14 +331,14 @@ endpoints:
         name: id
         description: 'The ID of the custom page.'
         required: true
-        example: 11
+        example: 3
         type: integer
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      id: 11
+      id: 3
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -372,14 +372,14 @@ endpoints:
         name: id
         description: 'The ID of the custom page status.'
         required: true
-        example: ex
+        example: aut
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      id: ex
+      id: aut
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []

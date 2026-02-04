@@ -323,14 +323,14 @@ endpoints:
         name: id
         description: 'The ID of the order show.'
         required: true
-        example: exercitationem
+        example: id
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      id: exercitationem
+      id: id
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []

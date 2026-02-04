@@ -112,7 +112,7 @@ endpoints:
         name: name
         description: ''
         required: true
-        example: est
+        example: at
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -122,7 +122,7 @@ endpoints:
         name: slug
         description: ''
         required: true
-        example: deleniti
+        example: laboriosam
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -139,8 +139,8 @@ endpoints:
         nullable: false
         custom: []
     cleanBodyParameters:
-      name: est
-      slug: deleniti
+      name: at
+      slug: laboriosam
     fileParameters:
       logo: null
     responses: []
@@ -393,14 +393,14 @@ endpoints:
         name: id
         description: 'The ID of the brand status.'
         required: true
-        example: ipsum
+        example: dolore
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      id: ipsum
+      id: dolore
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []

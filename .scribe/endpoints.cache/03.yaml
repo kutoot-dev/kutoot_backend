@@ -84,7 +84,7 @@ endpoints:
           access-control-allow-headers: 'Origin, X-Requested-With, Content-Type, Accept, Authorization, X-CSRF-TOKEN'
           access-control-allow-credentials: 'true'
           access-control-max-age: '86400'
-          set-cookie: 'kutoot_session=eyJpdiI6InJjd3dzMlo2bzBJTDh4RkNyMTFxNlE9PSIsInZhbHVlIjoiblJpM3h3dE5wZGpvUUFKZXM0TEk2eEV4dEhRYi9ybW5WSUZaZFhPcjJsTUVWRmxhcHRXeGZ1eFEvb3NvaENQWXB0eXpPNFZ0R25Sd3VReGNBNDloNFJjbG9MQzd2RHlpM3hNVXplWDZyNStCQlJTbi9lcHllU3Q1bytIdzBpRTIiLCJtYWMiOiJhY2U3MjNhODgxOWZkMzNlNTYwMzgxZmI1ZTJkOWZmY2QwNWI3ZDk3ZmY3NzcwMGE4ZmUxY2ZkMDA4ZTQ4YWIzIiwidGFnIjoiIn0%3D; expires=Tue, 03-Feb-2026 17:07:23 GMT; Max-Age=7200; path=/; httponly; samesite=lax'
+          set-cookie: 'kutoot_session=eyJpdiI6IkJqbkUyNHoxQUh5V1dsTXlUdUJBV2c9PSIsInZhbHVlIjoia2JEd01wbHBieU9iWWcvS2tpTGlHWDQ2YWl5dGtkVGdydmFWSzd5R1M3ZmVQOHkwMCtlYzZneFduYm5VU1JxUXFrMjg1WkZaUXNWNDNtcDExQWNVZjRzbmZBemVheE1JWmFpbStmcTlmdjNVNnowc093SFAwaG1LeHZSNldFbWciLCJtYWMiOiIyYTFjODg1ZTE2ZWM2NjE3ZDUzM2Q0NjMzOGE2ZTUwOTM5NmI0OWZmY2U4MTVhMDdhYjBjN2VmMmZhMzcwNGViIiwidGFnIjoiIn0%3D; expires=Tue, 03-Feb-2026 17:08:33 GMT; Max-Age=7200; path=/; httponly; samesite=lax'
         description: null
         custom: []
     responseFields: []

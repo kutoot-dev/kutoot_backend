@@ -71,7 +71,7 @@ endpoints:
         name: name
         description: ''
         required: true
-        example: veritatis
+        example: qui
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -81,7 +81,7 @@ endpoints:
         name: code
         description: ''
         required: true
-        example: tempore
+        example: iste
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -91,7 +91,7 @@ endpoints:
         name: number_of_time
         description: ''
         required: true
-        example: 27911448.586906
+        example: 56138593.483
         type: number
         enumValues: []
         exampleWasSpecified: false
@@ -101,7 +101,7 @@ endpoints:
         name: offer_type
         description: ''
         required: true
-        example: suscipit
+        example: sapiente
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -111,7 +111,7 @@ endpoints:
         name: discount
         description: ''
         required: true
-        example: 494.7412506
+        example: 1.1382917
         type: number
         enumValues: []
         exampleWasSpecified: false
@@ -121,7 +121,7 @@ endpoints:
         name: status
         description: ''
         required: true
-        example: perferendis
+        example: provident
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -131,20 +131,20 @@ endpoints:
         name: expired_date
         description: ''
         required: true
-        example: rem
+        example: placeat
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanBodyParameters:
-      name: veritatis
-      code: tempore
-      number_of_time: 27911448.586906
-      offer_type: suscipit
-      discount: 494.7412506
-      status: perferendis
-      expired_date: rem
+      name: qui
+      code: iste
+      number_of_time: 56138593.483
+      offer_type: sapiente
+      discount: 1.1382917
+      status: provident
+      expired_date: placeat
     fileParameters: []
     responses: []
     responseFields: []
@@ -174,14 +174,14 @@ endpoints:
         name: id
         description: 'The ID of the coupon.'
         required: true
-        example: repellendus
+        example: porro
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      id: repellendus
+      id: porro
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -229,14 +229,14 @@ endpoints:
         name: id
         description: 'The ID of the coupon.'
         required: true
-        example: magnam
+        example: amet
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      id: magnam
+      id: amet
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
@@ -244,7 +244,7 @@ endpoints:
         name: name
         description: ''
         required: true
-        example: voluptatem
+        example: distinctio
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -264,7 +264,7 @@ endpoints:
         name: number_of_time
         description: ''
         required: true
-        example: 428533.83281571
+        example: 60433500.0
         type: number
         enumValues: []
         exampleWasSpecified: false
@@ -274,7 +274,7 @@ endpoints:
         name: offer_type
         description: ''
         required: true
-        example: aliquid
+        example: perferendis
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -284,7 +284,7 @@ endpoints:
         name: discount
         description: ''
         required: true
-        example: 379.8064
+        example: 486.0
         type: number
         enumValues: []
         exampleWasSpecified: false
@@ -294,7 +294,7 @@ endpoints:
         name: status
         description: ''
         required: true
-        example: doloribus
+        example: possimus
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -304,19 +304,19 @@ endpoints:
         name: expired_date
         description: ''
         required: true
-        example: inventore
+        example: neque
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanBodyParameters:
-      name: voluptatem
-      number_of_time: 428533.83281571
-      offer_type: aliquid
-      discount: 379.8064
-      status: doloribus
-      expired_date: inventore
+      name: distinctio
+      number_of_time: 60433500.0
+      offer_type: perferendis
+      discount: 486.0
+      status: possimus
+      expired_date: neque
     fileParameters: []
     responses: []
     responseFields: []
@@ -346,14 +346,14 @@ endpoints:
         name: id
         description: 'The ID of the coupon.'
         required: true
-        example: optio
+        example: ullam
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      id: optio
+      id: ullam
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -387,14 +387,14 @@ endpoints:
         name: id
         description: 'The ID of the coupon status.'
         required: true
-        example: eos
+        example: nesciunt
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      id: eos
+      id: nesciunt
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []

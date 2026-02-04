@@ -22,14 +22,14 @@ endpoints:
         name: id
         description: 'The ID of the mega menu sub category.'
         required: true
-        example: cupiditate
+        example: numquam
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      id: cupiditate
+      id: numquam
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -76,14 +76,14 @@ endpoints:
         name: id
         description: 'The ID of the create mega menu sub category.'
         required: true
-        example: mollitia
+        example: aspernatur
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      id: mollitia
+      id: aspernatur
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -130,14 +130,14 @@ endpoints:
         name: id
         description: 'The ID of the get mega menu sub category.'
         required: true
-        example: est
+        example: voluptatem
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      id: est
+      id: voluptatem
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -184,14 +184,14 @@ endpoints:
         name: id
         description: 'The ID of the store mega menu sub category.'
         required: true
-        example: dolore
+        example: dolorem
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      id: dolore
+      id: dolorem
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
@@ -209,7 +209,7 @@ endpoints:
         name: status
         description: ''
         required: true
-        example: nesciunt
+        example: aut
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -219,15 +219,15 @@ endpoints:
         name: serial
         description: ''
         required: true
-        example: aut
+        example: nihil
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanBodyParameters:
-      status: nesciunt
-      serial: aut
+      status: aut
+      serial: nihil
     fileParameters: []
     responses: []
     responseFields: []
@@ -257,14 +257,14 @@ endpoints:
         name: id
         description: 'The ID of the edit mega menu sub category.'
         required: true
-        example: nihil
+        example: ex
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      id: nihil
+      id: ex
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -311,14 +311,14 @@ endpoints:
         name: id
         description: 'The ID of the update mega menu sub category.'
         required: true
-        example: inventore
+        example: minus
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      id: inventore
+      id: minus
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
@@ -336,7 +336,7 @@ endpoints:
         name: status
         description: ''
         required: true
-        example: in
+        example: id
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -346,15 +346,15 @@ endpoints:
         name: serial
         description: ''
         required: true
-        example: sapiente
+        example: quidem
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanBodyParameters:
-      status: in
-      serial: sapiente
+      status: id
+      serial: quidem
     fileParameters: []
     responses: []
     responseFields: []
@@ -384,14 +384,14 @@ endpoints:
         name: id
         description: 'The ID of the delete mega menu sub category.'
         required: true
-        example: sapiente
+        example: quia
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      id: sapiente
+      id: quia
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -425,14 +425,14 @@ endpoints:
         name: id
         description: 'The ID of the mega menu sub category status.'
         required: true
-        example: adipisci
+        example: autem
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      id: adipisci
+      id: autem
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []

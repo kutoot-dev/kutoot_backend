@@ -28,14 +28,14 @@ endpoints:
         name: phone
         description: 'Must match the regex /^[0-9]{10}$/.'
         required: true
-        example: '4315899675'
+        example: '4964989985'
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanBodyParameters:
-      phone: '4315899675'
+      phone: '4964989985'
     fileParameters: []
     responses: []
     responseFields: []
@@ -71,7 +71,7 @@ endpoints:
         name: phone
         description: 'Must match the regex /^[0-9]{10}$/.'
         required: true
-        example: '9341715467'
+        example: '0011289763'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -81,15 +81,15 @@ endpoints:
         name: otp
         description: 'Must be 6 characters.'
         required: true
-        example: cazsqr
+        example: tkucvz
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanBodyParameters:
-      phone: '9341715467'
-      otp: cazsqr
+      phone: '0011289763'
+      otp: tkucvz
     fileParameters: []
     responses: []
     responseFields: []
@@ -125,14 +125,14 @@ endpoints:
         name: email
         description: 'Must be a valid email address.'
         required: true
-        example: ngrimes@example.com
+        example: hjacobs@example.org
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanBodyParameters:
-      email: ngrimes@example.com
+      email: hjacobs@example.org
     fileParameters: []
     responses: []
     responseFields: []
@@ -168,7 +168,7 @@ endpoints:
         name: email
         description: 'Must be a valid email address.'
         required: true
-        example: dmorissette@example.org
+        example: alycia48@example.com
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -178,15 +178,15 @@ endpoints:
         name: otp
         description: 'Must be 6 characters.'
         required: true
-        example: lqhtxi
+        example: hhpbpf
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanBodyParameters:
-      email: dmorissette@example.org
-      otp: lqhtxi
+      email: alycia48@example.com
+      otp: hhpbpf
     fileParameters: []
     responses: []
     responseFields: []

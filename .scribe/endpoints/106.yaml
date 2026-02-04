@@ -112,7 +112,7 @@ endpoints:
         name: name
         description: ''
         required: true
-        example: optio
+        example: corrupti
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -122,7 +122,7 @@ endpoints:
         name: minimum_amount
         description: ''
         required: true
-        example: in
+        example: quia
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -132,7 +132,7 @@ endpoints:
         name: maximum_amount
         description: ''
         required: true
-        example: eveniet
+        example: eius
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -142,7 +142,7 @@ endpoints:
         name: withdraw_charge
         description: ''
         required: true
-        example: eum
+        example: nemo
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -152,18 +152,18 @@ endpoints:
         name: description
         description: ''
         required: true
-        example: et
+        example: totam
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanBodyParameters:
-      name: optio
-      minimum_amount: in
-      maximum_amount: eveniet
-      withdraw_charge: eum
-      description: et
+      name: corrupti
+      minimum_amount: quia
+      maximum_amount: eius
+      withdraw_charge: nemo
+      description: totam
     fileParameters: []
     responses: []
     responseFields: []
@@ -193,14 +193,14 @@ endpoints:
         name: id
         description: 'The ID of the withdraw method.'
         required: true
-        example: nobis
+        example: provident
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      id: nobis
+      id: provident
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -247,14 +247,14 @@ endpoints:
         name: withdraw_method
         description: ''
         required: true
-        example: facere
+        example: nemo
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      withdraw_method: facere
+      withdraw_method: nemo
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -302,14 +302,14 @@ endpoints:
         name: id
         description: 'The ID of the withdraw method.'
         required: true
-        example: amet
+        example: laborum
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      id: amet
+      id: laborum
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
@@ -317,7 +317,7 @@ endpoints:
         name: name
         description: ''
         required: true
-        example: delectus
+        example: voluptatum
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -327,7 +327,7 @@ endpoints:
         name: minimum_amount
         description: ''
         required: true
-        example: repellendus
+        example: omnis
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -337,7 +337,7 @@ endpoints:
         name: maximum_amount
         description: ''
         required: true
-        example: unde
+        example: impedit
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -347,7 +347,7 @@ endpoints:
         name: withdraw_charge
         description: ''
         required: true
-        example: vel
+        example: quia
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -357,18 +357,18 @@ endpoints:
         name: description
         description: ''
         required: true
-        example: ipsum
+        example: fugit
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanBodyParameters:
-      name: delectus
-      minimum_amount: repellendus
-      maximum_amount: unde
-      withdraw_charge: vel
-      description: ipsum
+      name: voluptatum
+      minimum_amount: omnis
+      maximum_amount: impedit
+      withdraw_charge: quia
+      description: fugit
     fileParameters: []
     responses: []
     responseFields: []
@@ -398,14 +398,14 @@ endpoints:
         name: id
         description: 'The ID of the withdraw method.'
         required: true
-        example: sit
+        example: unde
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      id: sit
+      id: unde
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -439,14 +439,14 @@ endpoints:
         name: id
         description: 'The ID of the withdraw method status.'
         required: true
-        example: iusto
+        example: enim
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      id: iusto
+      id: enim
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []

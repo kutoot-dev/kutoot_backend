@@ -68,14 +68,14 @@ endpoints:
         name: id
         description: 'The ID of the footer.'
         required: true
-        example: 19
+        example: 2
         type: integer
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      id: 19
+      id: 2
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
@@ -83,7 +83,7 @@ endpoints:
         name: email
         description: ''
         required: true
-        example: et
+        example: nulla
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -93,7 +93,7 @@ endpoints:
         name: phone
         description: ''
         required: true
-        example: eum
+        example: nemo
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -103,7 +103,7 @@ endpoints:
         name: address
         description: ''
         required: true
-        example: autem
+        example: praesentium
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -113,7 +113,7 @@ endpoints:
         name: copyright
         description: ''
         required: true
-        example: repudiandae
+        example: quos
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -123,7 +123,7 @@ endpoints:
         name: first_column
         description: ''
         required: true
-        example: ad
+        example: voluptates
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -133,7 +133,7 @@ endpoints:
         name: second_column
         description: ''
         required: true
-        example: rerum
+        example: dignissimos
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -143,20 +143,20 @@ endpoints:
         name: third_column
         description: ''
         required: true
-        example: dolorem
+        example: quis
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanBodyParameters:
-      email: et
-      phone: eum
-      address: autem
-      copyright: repudiandae
-      first_column: ad
-      second_column: rerum
-      third_column: dolorem
+      email: nulla
+      phone: nemo
+      address: praesentium
+      copyright: quos
+      first_column: voluptates
+      second_column: dignissimos
+      third_column: quis
     fileParameters: []
     responses: []
     responseFields: []

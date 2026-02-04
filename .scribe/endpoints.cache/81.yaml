@@ -67,14 +67,14 @@ endpoints:
         name: id
         description: 'The ID of the delete subscriber.'
         required: true
-        example: assumenda
+        example: aut
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      id: assumenda
+      id: aut
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -108,14 +108,14 @@ endpoints:
         name: id
         description: 'The ID of the specification subscriber email.'
         required: true
-        example: nostrum
+        example: rerum
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      id: nostrum
+      id: rerum
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
@@ -123,7 +123,7 @@ endpoints:
         name: subject
         description: ''
         required: true
-        example: minima
+        example: asperiores
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -133,15 +133,15 @@ endpoints:
         name: message
         description: ''
         required: true
-        example: sed
+        example: rerum
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanBodyParameters:
-      subject: minima
-      message: sed
+      subject: asperiores
+      message: rerum
     fileParameters: []
     responses: []
     responseFields: []
@@ -175,7 +175,7 @@ endpoints:
         name: subject
         description: ''
         required: true
-        example: aliquam
+        example: a
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -185,15 +185,15 @@ endpoints:
         name: message
         description: ''
         required: true
-        example: ipsam
+        example: reiciendis
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanBodyParameters:
-      subject: aliquam
-      message: ipsam
+      subject: a
+      message: reiciendis
     fileParameters: []
     responses: []
     responseFields: []

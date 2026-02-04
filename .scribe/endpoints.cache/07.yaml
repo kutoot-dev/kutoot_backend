@@ -69,14 +69,14 @@ endpoints:
         name: categoryId
         description: ''
         required: true
-        example: illum
+        example: quis
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      categoryId: illum
+      categoryId: quis
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -87,7 +87,7 @@ endpoints:
         status: 404
         content: |-
           {
-              "message": "No query results for model [App\\Models\\Store\\StoreCategory] illum"
+              "message": "No query results for model [App\\Models\\Store\\StoreCategory] quis"
           }
         headers:
           cache-control: 'no-cache, private'

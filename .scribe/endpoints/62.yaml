@@ -112,7 +112,7 @@ endpoints:
         name: name
         description: ''
         required: true
-        example: amet
+        example: in
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -122,7 +122,7 @@ endpoints:
         name: category
         description: ''
         required: true
-        example: nemo
+        example: nam
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -132,7 +132,7 @@ endpoints:
         name: sub_category
         description: ''
         required: true
-        example: et
+        example: voluptas
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -142,7 +142,7 @@ endpoints:
         name: slug
         description: ''
         required: true
-        example: dolor
+        example: et
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -152,18 +152,18 @@ endpoints:
         name: status
         description: ''
         required: true
-        example: autem
+        example: atque
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanBodyParameters:
-      name: amet
-      category: nemo
-      sub_category: et
-      slug: dolor
-      status: autem
+      name: in
+      category: nam
+      sub_category: voluptas
+      slug: et
+      status: atque
     fileParameters: []
     responses: []
     responseFields: []
@@ -193,14 +193,14 @@ endpoints:
         name: id
         description: 'The ID of the product child category.'
         required: true
-        example: aut
+        example: numquam
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      id: aut
+      id: numquam
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -247,14 +247,14 @@ endpoints:
         name: product_child_category
         description: ''
         required: true
-        example: veritatis
+        example: totam
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      product_child_category: veritatis
+      product_child_category: totam
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -302,14 +302,14 @@ endpoints:
         name: id
         description: 'The ID of the product child category.'
         required: true
-        example: sapiente
+        example: ea
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      id: sapiente
+      id: ea
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
@@ -317,7 +317,7 @@ endpoints:
         name: name
         description: ''
         required: true
-        example: omnis
+        example: debitis
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -327,7 +327,7 @@ endpoints:
         name: category
         description: ''
         required: true
-        example: possimus
+        example: aperiam
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -337,7 +337,7 @@ endpoints:
         name: sub_category
         description: ''
         required: true
-        example: vitae
+        example: voluptatem
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -357,17 +357,17 @@ endpoints:
         name: status
         description: ''
         required: true
-        example: officiis
+        example: cupiditate
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanBodyParameters:
-      name: omnis
-      category: possimus
-      sub_category: vitae
-      status: officiis
+      name: debitis
+      category: aperiam
+      sub_category: voluptatem
+      status: cupiditate
     fileParameters: []
     responses: []
     responseFields: []
@@ -397,14 +397,14 @@ endpoints:
         name: id
         description: 'The ID of the product child category.'
         required: true
-        example: culpa
+        example: ea
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      id: culpa
+      id: ea
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -438,14 +438,14 @@ endpoints:
         name: id
         description: 'The ID of the product child category status.'
         required: true
-        example: possimus
+        example: sint
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      id: possimus
+      id: sint
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -479,14 +479,14 @@ endpoints:
         name: id
         description: 'The ID of the subcategory by category.'
         required: true
-        example: in
+        example: facilis
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      id: in
+      id: facilis
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -533,14 +533,14 @@ endpoints:
         name: id
         description: 'The ID of the childcategory by subcategory.'
         required: true
-        example: est
+        example: quam
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      id: est
+      id: quam
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []

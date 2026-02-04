@@ -114,7 +114,7 @@ endpoints:
         name: name
         description: ''
         required: true
-        example: ut
+        example: dolorem
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -134,7 +134,7 @@ endpoints:
         name: status
         description: ''
         required: true
-        example: nobis
+        example: placeat
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -144,17 +144,17 @@ endpoints:
         name: logo
         description: ''
         required: true
-        example: reprehenderit
+        example: expedita
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanBodyParameters:
-      name: ut
+      name: dolorem
       slug: architecto
-      status: nobis
-      logo: reprehenderit
+      status: placeat
+      logo: expedita
     fileParameters: []
     responses: []
     responseFields: []
@@ -184,14 +184,14 @@ endpoints:
         name: id
         description: 'The ID of the product brand.'
         required: true
-        example: accusamus
+        example: facilis
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      id: accusamus
+      id: facilis
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -238,14 +238,14 @@ endpoints:
         name: product_brand
         description: ''
         required: true
-        example: optio
+        example: ducimus
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      product_brand: optio
+      product_brand: ducimus
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -328,7 +328,7 @@ endpoints:
         name: rating
         description: ''
         required: true
-        example: odio
+        example: fugiat
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -338,15 +338,15 @@ endpoints:
         name: status
         description: ''
         required: true
-        example: sit
+        example: iste
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanBodyParameters:
-      rating: odio
-      status: sit
+      rating: fugiat
+      status: iste
     fileParameters: []
     responses: []
     responseFields: []
@@ -376,14 +376,14 @@ endpoints:
         name: id
         description: 'The ID of the product brand.'
         required: true
-        example: magni
+        example: molestiae
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      id: magni
+      id: molestiae
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -417,14 +417,14 @@ endpoints:
         name: id
         description: 'The ID of the product brand status.'
         required: true
-        example: enim
+        example: nam
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      id: enim
+      id: nam
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -458,14 +458,14 @@ endpoints:
         name: id
         description: 'The ID of the product brand approval status.'
         required: true
-        example: et
+        example: molestiae
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      id: et
+      id: molestiae
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
@@ -473,7 +473,7 @@ endpoints:
         name: approval_status
         description: ''
         required: true
-        example: '2'
+        example: '1'
         type: string
         enumValues:
           - '0'
@@ -483,7 +483,7 @@ endpoints:
         nullable: false
         custom: []
     cleanBodyParameters:
-      approval_status: '2'
+      approval_status: '1'
     fileParameters: []
     responses: []
     responseFields: []

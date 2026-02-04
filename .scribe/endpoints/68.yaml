@@ -69,7 +69,7 @@ endpoints:
         name: name
         description: ''
         required: true
-        example: tempora
+        example: vel
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -79,7 +79,7 @@ endpoints:
         name: product_id
         description: ''
         required: true
-        example: ea
+        example: quos
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -89,7 +89,7 @@ endpoints:
         name: variant_id
         description: ''
         required: true
-        example: provident
+        example: magnam
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -99,7 +99,7 @@ endpoints:
         name: price
         description: ''
         required: true
-        example: 32642610.00213
+        example: 144017.93773
         type: number
         enumValues: []
         exampleWasSpecified: false
@@ -109,18 +109,18 @@ endpoints:
         name: status
         description: ''
         required: true
-        example: natus
+        example: pariatur
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanBodyParameters:
-      name: tempora
-      product_id: ea
-      variant_id: provident
-      price: 32642610.00213
-      status: natus
+      name: vel
+      product_id: quos
+      variant_id: magnam
+      price: 144017.93773
+      status: pariatur
     fileParameters: []
     responses: []
     responseFields: []
@@ -150,14 +150,14 @@ endpoints:
         name: id
         description: 'The ID of the get product variant item.'
         required: true
-        example: rem
+        example: vitae
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      id: rem
+      id: vitae
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -204,14 +204,14 @@ endpoints:
         name: id
         description: 'The ID of the update product variant item.'
         required: true
-        example: dignissimos
+        example: odio
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      id: dignissimos
+      id: odio
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
@@ -219,7 +219,7 @@ endpoints:
         name: name
         description: ''
         required: true
-        example: aut
+        example: laudantium
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -229,7 +229,7 @@ endpoints:
         name: product_id
         description: ''
         required: true
-        example: dolore
+        example: praesentium
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -239,7 +239,7 @@ endpoints:
         name: variant_id
         description: ''
         required: true
-        example: labore
+        example: voluptas
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -249,7 +249,7 @@ endpoints:
         name: price
         description: ''
         required: true
-        example: 718.5362084
+        example: 317581934.0
         type: number
         enumValues: []
         exampleWasSpecified: false
@@ -259,18 +259,18 @@ endpoints:
         name: status
         description: ''
         required: true
-        example: magni
+        example: autem
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanBodyParameters:
-      name: aut
-      product_id: dolore
-      variant_id: labore
-      price: 718.5362084
-      status: magni
+      name: laudantium
+      product_id: praesentium
+      variant_id: voluptas
+      price: 317581934.0
+      status: autem
     fileParameters: []
     responses: []
     responseFields: []
@@ -300,14 +300,14 @@ endpoints:
         name: id
         description: 'The ID of the delete product variant item.'
         required: true
-        example: dolores
+        example: reprehenderit
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      id: dolores
+      id: reprehenderit
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -341,14 +341,14 @@ endpoints:
         name: id
         description: 'The ID of the product variant item status.'
         required: true
-        example: et
+        example: velit
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      id: et
+      id: velit
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []

@@ -114,14 +114,14 @@ endpoints:
         name: id
         description: 'The ID of the order request status.'
         required: true
-        example: reiciendis
+        example: eos
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      id: reiciendis
+      id: eos
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
@@ -129,14 +129,14 @@ endpoints:
         name: order_request_status
         description: ''
         required: true
-        example: reprehenderit
+        example: tempora
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanBodyParameters:
-      order_request_status: reprehenderit
+      order_request_status: tempora
     fileParameters: []
     responses: []
     responseFields: []
@@ -212,14 +212,14 @@ endpoints:
         name: id
         description: 'The ID of the order show.'
         required: true
-        example: debitis
+        example: officiis
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      id: debitis
+      id: officiis
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -269,14 +269,14 @@ endpoints:
         name: id
         description: 'The ID of the update order status.'
         required: true
-        example: cum
+        example: corporis
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      id: cum
+      id: corporis
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
@@ -284,7 +284,7 @@ endpoints:
         name: order_status
         description: ''
         required: true
-        example: deleniti
+        example: quo
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -294,15 +294,15 @@ endpoints:
         name: payment_status
         description: ''
         required: true
-        example: fuga
+        example: est
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanBodyParameters:
-      order_status: deleniti
-      payment_status: fuga
+      order_status: quo
+      payment_status: est
     fileParameters: []
     responses: []
     responseFields: []

@@ -67,14 +67,14 @@ endpoints:
         name: id
         description: 'The ID of the edit email template.'
         required: true
-        example: nesciunt
+        example: incidunt
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      id: nesciunt
+      id: incidunt
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -121,14 +121,14 @@ endpoints:
         name: id
         description: 'The ID of the update email template.'
         required: true
-        example: porro
+        example: fugit
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      id: porro
+      id: fugit
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
@@ -136,7 +136,7 @@ endpoints:
         name: subject
         description: ''
         required: true
-        example: quia
+        example: aut
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -146,15 +146,15 @@ endpoints:
         name: description
         description: ''
         required: true
-        example: qui
+        example: aperiam
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanBodyParameters:
-      subject: quia
-      description: qui
+      subject: aut
+      description: aperiam
     fileParameters: []
     responses: []
     responseFields: []

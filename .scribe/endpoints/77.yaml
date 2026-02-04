@@ -112,7 +112,7 @@ endpoints:
         name: title
         description: ''
         required: true
-        example: sunt
+        example: vitae
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -122,7 +122,7 @@ endpoints:
         name: slug
         description: ''
         required: true
-        example: doloribus
+        example: inventore
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -132,7 +132,7 @@ endpoints:
         name: image
         description: ''
         required: true
-        example: suscipit
+        example: ipsam
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -142,7 +142,7 @@ endpoints:
         name: description
         description: ''
         required: true
-        example: delectus
+        example: iste
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -152,7 +152,7 @@ endpoints:
         name: category
         description: ''
         required: true
-        example: quia
+        example: voluptates
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -162,7 +162,7 @@ endpoints:
         name: status
         description: ''
         required: true
-        example: libero
+        example: est
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -172,20 +172,20 @@ endpoints:
         name: show_homepage
         description: ''
         required: true
-        example: eum
+        example: aliquid
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanBodyParameters:
-      title: sunt
-      slug: doloribus
-      image: suscipit
-      description: delectus
-      category: quia
-      status: libero
-      show_homepage: eum
+      title: vitae
+      slug: inventore
+      image: ipsam
+      description: iste
+      category: voluptates
+      status: est
+      show_homepage: aliquid
     fileParameters: []
     responses: []
     responseFields: []
@@ -359,7 +359,7 @@ endpoints:
         name: description
         description: ''
         required: true
-        example: quas
+        example: vero
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -369,7 +369,7 @@ endpoints:
         name: category
         description: ''
         required: true
-        example: adipisci
+        example: quae
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -379,7 +379,7 @@ endpoints:
         name: status
         description: ''
         required: true
-        example: dolores
+        example: aut
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -389,17 +389,17 @@ endpoints:
         name: show_homepage
         description: ''
         required: true
-        example: repellat
+        example: voluptates
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanBodyParameters:
-      description: quas
-      category: adipisci
-      status: dolores
-      show_homepage: repellat
+      description: vero
+      category: quae
+      status: aut
+      show_homepage: voluptates
     fileParameters: []
     responses: []
     responseFields: []

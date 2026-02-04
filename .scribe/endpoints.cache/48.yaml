@@ -28,7 +28,7 @@ endpoints:
         name: email
         description: ''
         required: true
-        example: et
+        example: beatae
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -38,7 +38,7 @@ endpoints:
         name: password
         description: ''
         required: true
-        example: illo
+        example: exercitationem
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -55,8 +55,8 @@ endpoints:
         nullable: false
         custom: []
     cleanBodyParameters:
-      email: et
-      password: illo
+      email: beatae
+      password: exercitationem
     fileParameters: []
     responses: []
     responseFields: []

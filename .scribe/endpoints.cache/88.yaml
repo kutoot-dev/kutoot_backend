@@ -67,14 +67,14 @@ endpoints:
         name: id
         description: 'The ID of the show product report.'
         required: true
-        example: hic
+        example: aut
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      id: hic
+      id: aut
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -121,14 +121,14 @@ endpoints:
         name: id
         description: 'The ID of the delete product report.'
         required: true
-        example: est
+        example: cupiditate
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      id: est
+      id: cupiditate
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -162,14 +162,14 @@ endpoints:
         name: id
         description: 'The ID of the de active product.'
         required: true
-        example: consequatur
+        example: eos
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      id: consequatur
+      id: eos
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []

@@ -69,7 +69,7 @@ endpoints:
         name: description
         description: ''
         required: true
-        example: quia
+        example: velit
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -79,15 +79,15 @@ endpoints:
         name: status
         description: ''
         required: true
-        example: voluptatem
+        example: sequi
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanBodyParameters:
-      description: quia
-      status: voluptatem
+      description: velit
+      status: sequi
     fileParameters: []
     responses: []
     responseFields: []
@@ -164,7 +164,7 @@ endpoints:
         name: description
         description: ''
         required: true
-        example: et
+        example: deleniti
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -174,7 +174,7 @@ endpoints:
         name: title
         description: ''
         required: true
-        example: laborum
+        example: asperiores
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -184,7 +184,7 @@ endpoints:
         name: expired_date
         description: ''
         required: true
-        example: architecto
+        example: dolore
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -194,17 +194,17 @@ endpoints:
         name: status
         description: ''
         required: true
-        example: nulla
+        example: libero
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanBodyParameters:
-      description: et
-      title: laborum
-      expired_date: architecto
-      status: nulla
+      description: deleniti
+      title: asperiores
+      expired_date: dolore
+      status: libero
     fileParameters: []
     responses: []
     responseFields: []
@@ -281,7 +281,7 @@ endpoints:
         name: topbar_phone
         description: ''
         required: true
-        example: sed
+        example: quas
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -291,15 +291,15 @@ endpoints:
         name: topbar_email
         description: ''
         required: true
-        example: voluptatem
+        example: vitae
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanBodyParameters:
-      topbar_phone: sed
-      topbar_email: voluptatem
+      topbar_phone: quas
+      topbar_email: vitae
     fileParameters: []
     responses: []
     responseFields: []
@@ -522,14 +522,14 @@ endpoints:
         name: terms_and_condition
         description: ''
         required: true
-        example: atque
+        example: aspernatur
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanBodyParameters:
-      terms_and_condition: atque
+      terms_and_condition: aspernatur
     fileParameters: []
     responses: []
     responseFields: []
@@ -606,7 +606,7 @@ endpoints:
         name: title
         description: ''
         required: true
-        example: et
+        example: non
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -616,15 +616,15 @@ endpoints:
         name: header
         description: ''
         required: true
-        example: sed
+        example: labore
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanBodyParameters:
-      title: et
-      header: sed
+      title: non
+      header: labore
     fileParameters: []
     responses: []
     responseFields: []
@@ -774,14 +774,14 @@ endpoints:
         name: filter_price_range
         description: ''
         required: true
-        example: 17203.7
+        example: 9.0095841
         type: number
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanBodyParameters:
-      filter_price_range: 17203.7
+      filter_price_range: 9.0095841
     fileParameters: []
     responses: []
     responseFields: []
@@ -854,14 +854,14 @@ endpoints:
         name: id
         description: 'The ID of the update seo setup.'
         required: true
-        example: est
+        example: vel
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      id: est
+      id: vel
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
@@ -869,7 +869,7 @@ endpoints:
         name: seo_title
         description: ''
         required: true
-        example: corporis
+        example: quam
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -886,7 +886,7 @@ endpoints:
         nullable: false
         custom: []
     cleanBodyParameters:
-      seo_title: corporis
+      seo_title: quam
       seo_description: laboriosam
     fileParameters: []
     responses: []
@@ -917,14 +917,14 @@ endpoints:
         name: id
         description: 'The ID of the get seo setup.'
         required: true
-        example: pariatur
+        example: ut
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      id: pariatur
+      id: ut
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []

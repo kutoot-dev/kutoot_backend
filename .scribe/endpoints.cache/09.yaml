@@ -126,7 +126,7 @@ endpoints:
         name: title
         description: 'Must not be greater than 255 characters.'
         required: true
-        example: avrjgcunwznvhpesovw
+        example: ndtpyjearkmjzwxh
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -136,7 +136,7 @@ endpoints:
         name: status
         description: ''
         required: true
-        example: '1'
+        example: '0'
         type: string
         enumValues:
           - '0'
@@ -148,7 +148,7 @@ endpoints:
         name: serial
         description: ''
         required: true
-        example: 14
+        example: 8
         type: integer
         enumValues: []
         exampleWasSpecified: false
@@ -158,7 +158,7 @@ endpoints:
         name: description
         description: ''
         required: false
-        example: 'Maiores ea qui libero autem velit.'
+        example: 'Est autem nam vitae voluptatem qui dolorem labore.'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -168,7 +168,7 @@ endpoints:
         name: link
         description: 'Must be a valid URL.'
         required: false
-        example: 'http://adams.org/sit-sed-ad-ullam-sapiente-vel-facilis-accusamus'
+        example: 'http://www.bogisich.info/commodi-est-molestias-occaecati-voluptatum-sequi-id-veritatis'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -178,7 +178,7 @@ endpoints:
         name: button_text
         description: 'Must not be greater than 100 characters.'
         required: false
-        example: njfzhzcvlfdkwahrzkn
+        example: vqng
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -188,7 +188,7 @@ endpoints:
         name: location
         description: 'Must not be greater than 100 characters.'
         required: false
-        example: yzauxhxvrqfeetmutfuf
+        example: dyntene
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -198,7 +198,7 @@ endpoints:
         name: start_date
         description: 'Must be a valid date.'
         required: false
-        example: '2026-02-03T20:37:22'
+        example: '2026-02-03T20:38:32'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -208,22 +208,22 @@ endpoints:
         name: end_date
         description: 'Must be a valid date. Must be a date after or equal to <code>start_date</code>.'
         required: false
-        example: '2042-01-15'
+        example: '2048-11-26'
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: true
         custom: []
     cleanBodyParameters:
-      title: avrjgcunwznvhpesovw
-      status: '1'
-      serial: 14
-      description: 'Maiores ea qui libero autem velit.'
-      link: 'http://adams.org/sit-sed-ad-ullam-sapiente-vel-facilis-accusamus'
-      button_text: njfzhzcvlfdkwahrzkn
-      location: yzauxhxvrqfeetmutfuf
-      start_date: '2026-02-03T20:37:22'
-      end_date: '2042-01-15'
+      title: ndtpyjearkmjzwxh
+      status: '0'
+      serial: 8
+      description: 'Est autem nam vitae voluptatem qui dolorem labore.'
+      link: 'http://www.bogisich.info/commodi-est-molestias-occaecati-voluptatum-sequi-id-veritatis'
+      button_text: vqng
+      location: dyntene
+      start_date: '2026-02-03T20:38:32'
+      end_date: '2048-11-26'
     fileParameters:
       banner_image: null
     responses: []
@@ -334,7 +334,7 @@ endpoints:
         name: title
         description: 'Must not be greater than 255 characters.'
         required: true
-        example: cgkz
+        example: koymzyujywuzaihsbdsepv
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -344,7 +344,7 @@ endpoints:
         name: status
         description: ''
         required: true
-        example: '0'
+        example: '1'
         type: string
         enumValues:
           - '0'
@@ -366,7 +366,7 @@ endpoints:
         name: description
         description: ''
         required: false
-        example: 'Quam tempora voluptate at.'
+        example: 'Consectetur dolorum et voluptas minus est delectus.'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -376,7 +376,7 @@ endpoints:
         name: link
         description: 'Must be a valid URL.'
         required: false
-        example: 'http://oberbrunner.com/saepe-cum-hic-fugit-accusamus'
+        example: 'http://www.weissnat.net/'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -386,7 +386,7 @@ endpoints:
         name: button_text
         description: 'Must not be greater than 100 characters.'
         required: false
-        example: vguybrsqoxdj
+        example: seka
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -396,7 +396,7 @@ endpoints:
         name: location
         description: 'Must not be greater than 100 characters.'
         required: false
-        example: xekbfmsujvunmcaipayd
+        example: uaonfepbswrcngvrrlu
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -406,7 +406,7 @@ endpoints:
         name: start_date
         description: 'Must be a valid date.'
         required: false
-        example: '2026-02-03T20:37:22'
+        example: '2026-02-03T20:38:32'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -416,22 +416,22 @@ endpoints:
         name: end_date
         description: 'Must be a valid date. Must be a date after or equal to <code>start_date</code>.'
         required: false
-        example: '2083-07-15'
+        example: '2042-01-03'
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: true
         custom: []
     cleanBodyParameters:
-      title: cgkz
-      status: '0'
+      title: koymzyujywuzaihsbdsepv
+      status: '1'
       serial: 18
-      description: 'Quam tempora voluptate at.'
-      link: 'http://oberbrunner.com/saepe-cum-hic-fugit-accusamus'
-      button_text: vguybrsqoxdj
-      location: xekbfmsujvunmcaipayd
-      start_date: '2026-02-03T20:37:22'
-      end_date: '2083-07-15'
+      description: 'Consectetur dolorum et voluptas minus est delectus.'
+      link: 'http://www.weissnat.net/'
+      button_text: seka
+      location: uaonfepbswrcngvrrlu
+      start_date: '2026-02-03T20:38:32'
+      end_date: '2042-01-03'
     fileParameters:
       banner_image: null
     responses: []
@@ -503,14 +503,14 @@ endpoints:
         name: id
         description: 'The ID of the store banner status.'
         required: true
-        example: iure
+        example: earum
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      id: iure
+      id: earum
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -559,7 +559,7 @@ endpoints:
         name: 'banners[].id'
         description: 'The <code>id</code> of an existing record in the store_banners table.'
         required: true
-        example: nulla
+        example: quia
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -569,7 +569,7 @@ endpoints:
         name: 'banners[].serial'
         description: ''
         required: true
-        example: 10
+        example: 5
         type: integer
         enumValues: []
         exampleWasSpecified: false
@@ -578,8 +578,8 @@ endpoints:
     cleanBodyParameters:
       banners:
         -
-          id: nulla
-          serial: 10
+          id: quia
+          serial: 5
     fileParameters: []
     responses: []
     responseFields: []
@@ -652,14 +652,14 @@ endpoints:
         name: location
         description: ''
         required: true
-        example: ad
+        example: voluptatem
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      location: ad
+      location: voluptatem
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []

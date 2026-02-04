@@ -69,7 +69,7 @@ endpoints:
         name: title
         description: ''
         required: true
-        example: quae
+        example: dolorem
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -79,7 +79,7 @@ endpoints:
         name: first_category_id
         description: ''
         required: true
-        example: minus
+        example: fuga
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -106,8 +106,8 @@ endpoints:
         nullable: true
         custom: []
     cleanBodyParameters:
-      title: quae
-      first_category_id: minus
+      title: dolorem
+      first_category_id: fuga
     fileParameters: []
     responses: []
     responseFields: []
@@ -137,14 +137,14 @@ endpoints:
         name: id
         description: 'The ID of the destroy popular category.'
         required: true
-        example: corporis
+        example: qui
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      id: corporis
+      id: qui
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -261,14 +261,14 @@ endpoints:
         name: id
         description: 'The ID of the destroy featured category.'
         required: true
-        example: laborum
+        example: explicabo
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      id: laborum
+      id: explicabo
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []

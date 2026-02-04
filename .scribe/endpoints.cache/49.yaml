@@ -28,14 +28,14 @@ endpoints:
         name: email
         description: 'Must be a valid email address.'
         required: true
-        example: tgreen@example.net
+        example: tiara13@example.com
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanBodyParameters:
-      email: tgreen@example.net
+      email: tiara13@example.com
     fileParameters: []
     responses: []
     responseFields: []
@@ -69,7 +69,7 @@ endpoints:
         name: token
         description: ''
         required: true
-        example: ex
+        example: asperiores
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -79,7 +79,7 @@ endpoints:
         name: password
         description: 'Must be at least 4 characters.'
         required: true
-        example: '!fK0P4~<lCnsHa'
+        example: ']Hu*B@Y`Gf[+Pd,8p6%V'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -89,16 +89,16 @@ endpoints:
         name: c_password
         description: 'The value and <code>password</code> must match.'
         required: true
-        example: corporis
+        example: quisquam
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanBodyParameters:
-      token: ex
-      password: '!fK0P4~<lCnsHa'
-      c_password: corporis
+      token: asperiores
+      password: ']Hu*B@Y`Gf[+Pd,8p6%V'
+      c_password: quisquam
     fileParameters: []
     responses: []
     responseFields: []

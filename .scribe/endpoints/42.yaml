@@ -69,7 +69,7 @@ endpoints:
         name: shopName
         description: 'Must not be greater than 255 characters.'
         required: false
-        example: sfondcd
+        example: ui
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -89,7 +89,7 @@ endpoints:
         name: ownerName
         description: 'Must not be greater than 255 characters.'
         required: false
-        example: tzbf
+        example: hylwbimy
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -99,7 +99,7 @@ endpoints:
         name: phone
         description: 'Must not be greater than 50 characters.'
         required: false
-        example: lvjmgpdjeew
+        example: qqjxcnbopnik
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -109,7 +109,7 @@ endpoints:
         name: email
         description: 'Must be a valid email address. Must not be greater than 255 characters.'
         required: false
-        example: mmoore@example.net
+        example: bernhard.fern@example.org
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -119,7 +119,7 @@ endpoints:
         name: gstNumber
         description: 'Must not be greater than 50 characters.'
         required: false
-        example: lccmzasijfxd
+        example: zbeixydgyyiwpyeqdezixihrg
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -129,7 +129,7 @@ endpoints:
         name: address
         description: 'Must not be greater than 500 characters.'
         required: false
-        example: spklsylukgck
+        example: lrplo
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -139,7 +139,7 @@ endpoints:
         name: googleMapUrl
         description: 'Must not be greater than 2048 characters.'
         required: false
-        example: 'https://www.waters.info/sunt-incidunt-sint-aut-est'
+        example: 'https://www.lind.biz/et-exercitationem-iure-sed-quo-ad-dolorem'
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -159,7 +159,7 @@ endpoints:
         name: location.lat
         description: ''
         required: false
-        example: 25723.6
+        example: 34.591
         type: number
         enumValues: []
         exampleWasSpecified: false
@@ -169,23 +169,23 @@ endpoints:
         name: location.lng
         description: ''
         required: false
-        example: 72.8
+        example: 1983478.641
         type: number
         enumValues: []
         exampleWasSpecified: false
         nullable: true
         custom: []
     cleanBodyParameters:
-      shopName: sfondcd
-      ownerName: tzbf
-      phone: lvjmgpdjeew
-      email: mmoore@example.net
-      gstNumber: lccmzasijfxd
-      address: spklsylukgck
-      googleMapUrl: 'https://www.waters.info/sunt-incidunt-sint-aut-est'
+      shopName: ui
+      ownerName: hylwbimy
+      phone: qqjxcnbopnik
+      email: bernhard.fern@example.org
+      gstNumber: zbeixydgyyiwpyeqdezixihrg
+      address: lrplo
+      googleMapUrl: 'https://www.lind.biz/et-exercitationem-iure-sed-quo-ad-dolorem'
       location:
-        lat: 25723.6
-        lng: 72.8
+        lat: 34.591
+        lng: 1983478.641
     fileParameters: []
     responses: []
     responseFields: []
@@ -249,14 +249,14 @@ endpoints:
         name: imageUrl
         description: ''
         required: true
-        example: 'http://www.haley.org/itaque-provident-temporibus-facilis-consequatur-quia-laudantium'
+        example: 'http://www.adams.net/recusandae-fuga-quia-ea-error'
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanBodyParameters:
-      imageUrl: 'http://www.haley.org/itaque-provident-temporibus-facilis-consequatur-quia-laudantium'
+      imageUrl: 'http://www.adams.net/recusandae-fuga-quia-ea-error'
     fileParameters: []
     responses: []
     responseFields: []

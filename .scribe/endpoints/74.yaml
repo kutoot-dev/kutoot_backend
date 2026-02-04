@@ -69,14 +69,14 @@ endpoints:
         name: terms_and_condition
         description: ''
         required: true
-        example: consequatur
+        example: non
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanBodyParameters:
-      terms_and_condition: consequatur
+      terms_and_condition: non
     fileParameters: []
     responses: []
     responseFields: []
@@ -107,14 +107,14 @@ endpoints:
         name: id
         description: 'The ID of the terms and condition.'
         required: true
-        example: 7
+        example: 15
         type: integer
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      id: 7
+      id: 15
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
@@ -122,14 +122,14 @@ endpoints:
         name: terms_and_condition
         description: ''
         required: true
-        example: quia
+        example: earum
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanBodyParameters:
-      terms_and_condition: quia
+      terms_and_condition: earum
     fileParameters: []
     responses: []
     responseFields: []

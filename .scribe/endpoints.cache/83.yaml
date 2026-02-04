@@ -71,7 +71,7 @@ endpoints:
         name: mail_host
         description: ''
         required: true
-        example: nihil
+        example: debitis
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -81,7 +81,7 @@ endpoints:
         name: email
         description: ''
         required: true
-        example: enim
+        example: architecto
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -91,7 +91,7 @@ endpoints:
         name: smtp_username
         description: ''
         required: true
-        example: odio
+        example: necessitatibus
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -101,7 +101,7 @@ endpoints:
         name: smtp_password
         description: ''
         required: true
-        example: unde
+        example: soluta
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -111,7 +111,7 @@ endpoints:
         name: mail_port
         description: ''
         required: true
-        example: quo
+        example: aperiam
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -121,19 +121,19 @@ endpoints:
         name: mail_encryption
         description: ''
         required: true
-        example: dignissimos
+        example: odit
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanBodyParameters:
-      mail_host: nihil
-      email: enim
-      smtp_username: odio
-      smtp_password: unde
-      mail_port: quo
-      mail_encryption: dignissimos
+      mail_host: debitis
+      email: architecto
+      smtp_username: necessitatibus
+      smtp_password: soluta
+      mail_port: aperiam
+      mail_encryption: odit
     fileParameters: []
     responses: []
     responseFields: []

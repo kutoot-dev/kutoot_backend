@@ -36,8 +36,8 @@ endpoints:
         headers:
           x-ratelimit-limit: '60'
           x-ratelimit-remaining: '0'
-          retry-after: '52'
-          x-ratelimit-reset: '1770131295'
+          retry-after: '51'
+          x-ratelimit-reset: '1770131364'
           cache-control: 'no-cache, private'
           content-type: application/json
           access-control-allow-origin: '*'
@@ -116,8 +116,8 @@ endpoints:
         headers:
           x-ratelimit-limit: '60'
           x-ratelimit-remaining: '0'
-          retry-after: '52'
-          x-ratelimit-reset: '1770131295'
+          retry-after: '51'
+          x-ratelimit-reset: '1770131364'
           cache-control: 'no-cache, private'
           content-type: application/json
           access-control-allow-origin: '*'
@@ -196,8 +196,8 @@ endpoints:
         headers:
           x-ratelimit-limit: '60'
           x-ratelimit-remaining: '0'
-          retry-after: '52'
-          x-ratelimit-reset: '1770131295'
+          retry-after: '51'
+          x-ratelimit-reset: '1770131364'
           cache-control: 'no-cache, private'
           content-type: application/json
           access-control-allow-origin: '*'
@@ -276,8 +276,8 @@ endpoints:
         headers:
           x-ratelimit-limit: '60'
           x-ratelimit-remaining: '0'
-          retry-after: '52'
-          x-ratelimit-reset: '1770131295'
+          retry-after: '51'
+          x-ratelimit-reset: '1770131364'
           cache-control: 'no-cache, private'
           content-type: application/json
           access-control-allow-origin: '*'

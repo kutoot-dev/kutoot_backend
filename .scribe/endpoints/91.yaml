@@ -65,14 +65,14 @@ endpoints:
         name: id
         description: 'The ID of the error page.'
         required: true
-        example: iure
+        example: officiis
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      id: iure
+      id: officiis
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -120,14 +120,14 @@ endpoints:
         name: id
         description: 'The ID of the error page.'
         required: true
-        example: qui
+        example: molestiae
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      id: qui
+      id: molestiae
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
@@ -135,7 +135,7 @@ endpoints:
         name: page_name
         description: ''
         required: true
-        example: non
+        example: est
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -145,7 +145,7 @@ endpoints:
         name: header
         description: ''
         required: true
-        example: deserunt
+        example: dignissimos
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -155,16 +155,16 @@ endpoints:
         name: button_text
         description: ''
         required: true
-        example: a
+        example: et
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanBodyParameters:
-      page_name: non
-      header: deserunt
-      button_text: a
+      page_name: est
+      header: dignissimos
+      button_text: et
     fileParameters: []
     responses: []
     responseFields: []

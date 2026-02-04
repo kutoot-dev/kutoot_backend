@@ -34,8 +34,8 @@ endpoints:
         headers:
           x-ratelimit-limit: '60'
           x-ratelimit-remaining: '0'
-          retry-after: '54'
-          x-ratelimit-reset: '1770131295'
+          retry-after: '53'
+          x-ratelimit-reset: '1770131364'
           cache-control: 'no-cache, private'
           content-type: application/json
           access-control-allow-origin: '*'
@@ -76,7 +76,7 @@ endpoints:
         name: email
         description: 'Must be a valid email address.'
         required: true
-        example: tristian59@example.com
+        example: apfeffer@example.com
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -86,15 +86,15 @@ endpoints:
         name: password
         description: ''
         required: true
-        example: alias
+        example: odio
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanBodyParameters:
-      email: tristian59@example.com
-      password: alias
+      email: apfeffer@example.com
+      password: odio
     fileParameters: []
     responses: []
     responseFields: []

@@ -114,7 +114,7 @@ endpoints:
         name: method_id
         description: ''
         required: true
-        example: ipsum
+        example: quisquam
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -124,7 +124,7 @@ endpoints:
         name: withdraw_amount
         description: ''
         required: true
-        example: 3345723.007287
+        example: 173660971.0
         type: number
         enumValues: []
         exampleWasSpecified: false
@@ -134,16 +134,16 @@ endpoints:
         name: account_info
         description: ''
         required: true
-        example: sed
+        example: omnis
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanBodyParameters:
-      method_id: ipsum
-      withdraw_amount: 3345723.007287
-      account_info: sed
+      method_id: quisquam
+      withdraw_amount: 173660971.0
+      account_info: omnis
     fileParameters: []
     responses: []
     responseFields: []
@@ -173,14 +173,14 @@ endpoints:
         name: id
         description: 'The ID of the my withdraw.'
         required: true
-        example: enim
+        example: quisquam
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      id: enim
+      id: quisquam
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -227,14 +227,14 @@ endpoints:
         name: id
         description: 'The ID of the get withdraw account info.'
         required: true
-        example: deleniti
+        example: maxime
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      id: deleniti
+      id: maxime
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []

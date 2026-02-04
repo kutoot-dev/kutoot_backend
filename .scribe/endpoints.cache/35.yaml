@@ -67,14 +67,14 @@ endpoints:
         name: id
         description: 'The ID of the load chat box.'
         required: true
-        example: et
+        example: hic
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      id: et
+      id: hic
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -121,14 +121,14 @@ endpoints:
         name: id
         description: 'The ID of the load new message.'
         required: true
-        example: sed
+        example: qui
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      id: sed
+      id: qui
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []

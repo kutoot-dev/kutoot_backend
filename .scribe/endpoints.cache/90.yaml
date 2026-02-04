@@ -67,14 +67,14 @@ endpoints:
         name: id
         description: 'The ID of the seller show.'
         required: true
-        example: alias
+        example: nemo
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      id: alias
+      id: nemo
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -121,14 +121,14 @@ endpoints:
         name: id
         description: 'The ID of the seller status.'
         required: true
-        example: animi
+        example: itaque
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      id: animi
+      id: itaque
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -162,14 +162,14 @@ endpoints:
         name: id
         description: 'The ID of the seller delete.'
         required: true
-        example: distinctio
+        example: velit
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      id: distinctio
+      id: velit
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -246,14 +246,14 @@ endpoints:
         name: id
         description: 'The ID of the seller update.'
         required: true
-        example: voluptatum
+        example: eos
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      id: voluptatum
+      id: eos
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
@@ -261,7 +261,7 @@ endpoints:
         name: name
         description: ''
         required: true
-        example: dolores
+        example: exercitationem
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -281,7 +281,7 @@ endpoints:
         name: phone
         description: ''
         required: true
-        example: earum
+        example: dolorem
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -291,7 +291,7 @@ endpoints:
         name: country
         description: ''
         required: true
-        example: dolor
+        example: modi
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -301,7 +301,7 @@ endpoints:
         name: zip_code
         description: ''
         required: true
-        example: culpa
+        example: numquam
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -311,18 +311,18 @@ endpoints:
         name: address
         description: ''
         required: true
-        example: nobis
+        example: aut
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanBodyParameters:
-      name: dolores
-      phone: earum
-      country: dolor
-      zip_code: culpa
-      address: nobis
+      name: exercitationem
+      phone: dolorem
+      country: modi
+      zip_code: numquam
+      address: aut
     fileParameters: []
     responses: []
     responseFields: []
@@ -352,14 +352,14 @@ endpoints:
         name: id
         description: 'The ID of the seller shop detail.'
         required: true
-        example: facere
+        example: ea
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      id: facere
+      id: ea
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -406,14 +406,14 @@ endpoints:
         name: id
         description: 'The ID of the remove seller social link.'
         required: true
-        example: omnis
+        example: maiores
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      id: omnis
+      id: maiores
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -447,14 +447,14 @@ endpoints:
         name: id
         description: 'The ID of the update seller shop.'
         required: true
-        example: dolores
+        example: eveniet
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      id: dolores
+      id: eveniet
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
@@ -482,7 +482,7 @@ endpoints:
         name: phone
         description: ''
         required: true
-        example: voluptas
+        example: consequatur
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -492,7 +492,7 @@ endpoints:
         name: description
         description: ''
         required: true
-        example: nisi
+        example: sunt
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -502,7 +502,7 @@ endpoints:
         name: greeting_msg
         description: ''
         required: true
-        example: consectetur
+        example: id
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -512,7 +512,7 @@ endpoints:
         name: opens_at
         description: ''
         required: true
-        example: ratione
+        example: quae
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -522,7 +522,7 @@ endpoints:
         name: closed_at
         description: ''
         required: true
-        example: in
+        example: et
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -532,19 +532,19 @@ endpoints:
         name: address
         description: ''
         required: true
-        example: vel
+        example: vitae
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanBodyParameters:
-      phone: voluptas
-      description: nisi
-      greeting_msg: consectetur
-      opens_at: ratione
-      closed_at: in
-      address: vel
+      phone: consequatur
+      description: sunt
+      greeting_msg: id
+      opens_at: quae
+      closed_at: et
+      address: vitae
     fileParameters: []
     responses: []
     responseFields: []
@@ -574,14 +574,14 @@ endpoints:
         name: id
         description: 'The ID of the seller review.'
         required: true
-        example: dolores
+        example: culpa
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      id: dolores
+      id: culpa
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -628,14 +628,14 @@ endpoints:
         name: id
         description: 'The ID of the show seller review detail.'
         required: true
-        example: enim
+        example: quae
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      id: enim
+      id: quae
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -682,14 +682,14 @@ endpoints:
         name: id
         description: 'The ID of the send mail to single seller.'
         required: true
-        example: omnis
+        example: voluptas
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      id: omnis
+      id: voluptas
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
@@ -697,7 +697,7 @@ endpoints:
         name: subject
         description: ''
         required: true
-        example: officiis
+        example: tempore
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -707,15 +707,15 @@ endpoints:
         name: message
         description: ''
         required: true
-        example: quidem
+        example: sit
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanBodyParameters:
-      subject: officiis
-      message: quidem
+      subject: tempore
+      message: sit
     fileParameters: []
     responses: []
     responseFields: []
@@ -745,14 +745,14 @@ endpoints:
         name: id
         description: 'The ID of the email history.'
         required: true
-        example: commodi
+        example: eum
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      id: commodi
+      id: eum
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -799,14 +799,14 @@ endpoints:
         name: id
         description: 'The ID of the product by seller.'
         required: true
-        example: deleniti
+        example: perferendis
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      id: deleniti
+      id: perferendis
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -857,7 +857,7 @@ endpoints:
         name: subject
         description: ''
         required: true
-        example: natus
+        example: eum
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -867,15 +867,15 @@ endpoints:
         name: message
         description: ''
         required: true
-        example: voluptatum
+        example: esse
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanBodyParameters:
-      subject: natus
-      message: voluptatum
+      subject: eum
+      message: esse
     fileParameters: []
     responses: []
     responseFields: []
@@ -905,14 +905,14 @@ endpoints:
         name: id
         description: 'The ID of the withdraw list.'
         required: true
-        example: ipsa
+        example: totam
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      id: ipsa
+      id: totam
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -959,14 +959,14 @@ endpoints:
         name: id
         description: 'The ID of the state by country.'
         required: true
-        example: iure
+        example: corporis
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      id: iure
+      id: corporis
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -1013,14 +1013,14 @@ endpoints:
         name: id
         description: 'The ID of the city by state.'
         required: true
-        example: et
+        example: quibusdam
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      id: et
+      id: quibusdam
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []

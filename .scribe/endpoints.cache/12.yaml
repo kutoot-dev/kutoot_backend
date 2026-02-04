@@ -72,14 +72,14 @@ endpoints:
         name: id
         description: 'The ID of the subcategory by category.'
         required: true
-        example: et
+        example: dolorum
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      id: et
+      id: dolorum
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -128,14 +128,14 @@ endpoints:
         name: id
         description: 'The ID of the childcategory by subcategory.'
         required: true
-        example: quidem
+        example: magnam
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      id: quidem
+      id: magnam
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -397,14 +397,14 @@ endpoints:
         name: id
         description: 'The ID of the product by category.'
         required: true
-        example: ex
+        example: beatae
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      id: ex
+      id: beatae
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -592,7 +592,7 @@ endpoints:
         name: name
         description: ''
         required: true
-        example: cum
+        example: harum
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -602,7 +602,7 @@ endpoints:
         name: email
         description: ''
         required: true
-        example: vero
+        example: rerum
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -612,7 +612,7 @@ endpoints:
         name: subject
         description: ''
         required: true
-        example: suscipit
+        example: rem
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -622,7 +622,7 @@ endpoints:
         name: message
         description: ''
         required: true
-        example: aut
+        example: non
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -639,10 +639,10 @@ endpoints:
         nullable: false
         custom: []
     cleanBodyParameters:
-      name: cum
-      email: vero
-      subject: suscipit
-      message: aut
+      name: harum
+      email: rerum
+      subject: rem
+      message: non
     fileParameters: []
     responses: []
     responseFields: []
@@ -783,7 +783,7 @@ endpoints:
         name: name
         description: ''
         required: true
-        example: non
+        example: voluptatem
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -793,7 +793,7 @@ endpoints:
         name: email
         description: ''
         required: true
-        example: porro
+        example: sit
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -803,7 +803,7 @@ endpoints:
         name: comment
         description: ''
         required: true
-        example: et
+        example: consequatur
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -813,7 +813,7 @@ endpoints:
         name: blog_id
         description: ''
         required: true
-        example: minus
+        example: sint
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -830,10 +830,10 @@ endpoints:
         nullable: false
         custom: []
     cleanBodyParameters:
-      name: non
-      email: porro
-      comment: et
-      blog_id: minus
+      name: voluptatem
+      email: sit
+      comment: consequatur
+      blog_id: sint
     fileParameters: []
     responses: []
     responseFields: []
@@ -863,14 +863,14 @@ endpoints:
         name: id
         description: 'The ID of the track order response.'
         required: true
-        example: autem
+        example: doloremque
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      id: autem
+      id: doloremque
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -1009,14 +1009,14 @@ endpoints:
         name: slug
         description: 'The slug of the page.'
         required: true
-        example: et
+        example: provident
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      slug: et
+      slug: provident
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -1248,14 +1248,14 @@ endpoints:
         name: shop_name
         description: ''
         required: true
-        example: natus
+        example: sed
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      shop_name: natus
+      shop_name: sed
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -1349,14 +1349,14 @@ endpoints:
         name: variant_name
         description: ''
         required: true
-        example: occaecati
+        example: cumque
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      variant_name: occaecati
+      variant_name: cumque
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -1509,14 +1509,14 @@ endpoints:
         name: id
         description: 'The ID of the product review list.'
         required: true
-        example: libero
+        example: quasi
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      id: libero
+      id: quasi
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -1525,7 +1525,7 @@ endpoints:
     responses:
       -
         status: 200
-        content: '{"reviews":{"current_page":1,"data":[],"first_page_url":"http:\/\/test.test\/api\/product-review-list\/libero?page=1","from":null,"last_page":1,"last_page_url":"http:\/\/test.test\/api\/product-review-list\/libero?page=1","links":[{"url":null,"label":"&laquo; Previous","active":false},{"url":"http:\/\/test.test\/api\/product-review-list\/libero?page=1","label":"1","active":true},{"url":null,"label":"Next &raquo;","active":false}],"next_page_url":null,"path":"http:\/\/test.test\/api\/product-review-list\/libero","per_page":10,"prev_page_url":null,"to":null,"total":0}}'
+        content: '{"reviews":{"current_page":1,"data":[],"first_page_url":"http:\/\/test.test\/api\/product-review-list\/quasi?page=1","from":null,"last_page":1,"last_page_url":"http:\/\/test.test\/api\/product-review-list\/quasi?page=1","links":[{"url":null,"label":"&laquo; Previous","active":false},{"url":"http:\/\/test.test\/api\/product-review-list\/quasi?page=1","label":"1","active":true},{"url":null,"label":"Next &raquo;","active":false}],"next_page_url":null,"path":"http:\/\/test.test\/api\/product-review-list\/quasi","per_page":10,"prev_page_url":null,"to":null,"total":0}}'
         headers:
           cache-control: 'no-cache, private'
           content-type: application/json
@@ -1613,14 +1613,14 @@ endpoints:
         name: id
         description: 'The ID of the add to compare.'
         required: true
-        example: aliquam
+        example: nemo
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      id: aliquam
+      id: nemo
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -1669,14 +1669,14 @@ endpoints:
         name: id
         description: 'The ID of the remove compare.'
         required: true
-        example: fugiat
+        example: ratione
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      id: fugiat
+      id: ratione
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -1803,14 +1803,14 @@ endpoints:
         name: token
         description: ''
         required: true
-        example: reiciendis
+        example: aut
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      token: reiciendis
+      token: aut
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []

@@ -112,7 +112,7 @@ endpoints:
         name: name
         description: ''
         required: true
-        example: sapiente
+        example: optio
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -122,7 +122,7 @@ endpoints:
         name: slug
         description: ''
         required: true
-        example: voluptate
+        example: non
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -132,7 +132,7 @@ endpoints:
         name: status
         description: ''
         required: true
-        example: commodi
+        example: et
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -142,17 +142,17 @@ endpoints:
         name: icon
         description: ''
         required: true
-        example: veritatis
+        example: voluptate
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanBodyParameters:
-      name: sapiente
-      slug: voluptate
-      status: commodi
-      icon: veritatis
+      name: optio
+      slug: non
+      status: et
+      icon: voluptate
     fileParameters: []
     responses: []
     responseFields: []
@@ -182,14 +182,14 @@ endpoints:
         name: id
         description: 'The ID of the product category.'
         required: true
-        example: dignissimos
+        example: voluptas
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      id: dignissimos
+      id: voluptas
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -236,14 +236,14 @@ endpoints:
         name: product_category
         description: ''
         required: true
-        example: iusto
+        example: ducimus
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      product_category: iusto
+      product_category: ducimus
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -291,14 +291,14 @@ endpoints:
         name: id
         description: 'The ID of the product category.'
         required: true
-        example: a
+        example: nemo
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      id: a
+      id: nemo
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
@@ -326,7 +326,7 @@ endpoints:
         name: status
         description: ''
         required: true
-        example: vitae
+        example: esse
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -336,15 +336,15 @@ endpoints:
         name: icon
         description: ''
         required: true
-        example: est
+        example: ut
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanBodyParameters:
-      status: vitae
-      icon: est
+      status: esse
+      icon: ut
     fileParameters: []
     responses: []
     responseFields: []
@@ -374,14 +374,14 @@ endpoints:
         name: id
         description: 'The ID of the product category.'
         required: true
-        example: culpa
+        example: enim
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      id: culpa
+      id: enim
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -415,14 +415,14 @@ endpoints:
         name: id
         description: 'The ID of the product category status.'
         required: true
-        example: quis
+        example: eligendi
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      id: quis
+      id: eligendi
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []

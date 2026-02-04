@@ -69,7 +69,7 @@ endpoints:
         name: link
         description: ''
         required: true
-        example: aliquam
+        example: laboriosam
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -79,7 +79,7 @@ endpoints:
         name: name
         description: ''
         required: true
-        example: id
+        example: dolorem
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -89,16 +89,16 @@ endpoints:
         name: column
         description: ''
         required: true
-        example: culpa
+        example: id
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanBodyParameters:
-      link: aliquam
-      name: id
-      column: culpa
+      link: laboriosam
+      name: dolorem
+      column: id
     fileParameters: []
     responses: []
     responseFields: []
@@ -128,14 +128,14 @@ endpoints:
         name: id
         description: 'The ID of the footer link.'
         required: true
-        example: 18
+        example: 20
         type: integer
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      id: 18
+      id: 20
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -183,14 +183,14 @@ endpoints:
         name: id
         description: 'The ID of the footer link.'
         required: true
-        example: 5
+        example: 1
         type: integer
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      id: 5
+      id: 1
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
@@ -198,7 +198,7 @@ endpoints:
         name: name
         description: ''
         required: true
-        example: praesentium
+        example: aut
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -208,15 +208,15 @@ endpoints:
         name: link
         description: ''
         required: true
-        example: eaque
+        example: ut
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanBodyParameters:
-      name: praesentium
-      link: eaque
+      name: aut
+      link: ut
     fileParameters: []
     responses: []
     responseFields: []
@@ -373,14 +373,14 @@ endpoints:
         name: id
         description: 'The ID of the update col title.'
         required: true
-        example: aut
+        example: est
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      id: aut
+      id: est
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
@@ -388,14 +388,14 @@ endpoints:
         name: title
         description: ''
         required: true
-        example: inventore
+        example: nemo
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanBodyParameters:
-      title: inventore
+      title: nemo
     fileParameters: []
     responses: []
     responseFields: []

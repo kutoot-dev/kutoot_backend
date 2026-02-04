@@ -114,7 +114,7 @@ endpoints:
         name: short_name
         description: ''
         required: true
-        example: quasi
+        example: sit
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -124,7 +124,7 @@ endpoints:
         name: name
         description: ''
         required: true
-        example: quia
+        example: deserunt
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -134,7 +134,7 @@ endpoints:
         name: slug
         description: ''
         required: true
-        example: excepturi
+        example: consequuntur
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -144,7 +144,7 @@ endpoints:
         name: thumb_image
         description: ''
         required: true
-        example: voluptas
+        example: est
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -154,7 +154,7 @@ endpoints:
         name: category
         description: ''
         required: true
-        example: necessitatibus
+        example: et
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -164,7 +164,7 @@ endpoints:
         name: short_description
         description: ''
         required: true
-        example: incidunt
+        example: rem
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -174,7 +174,7 @@ endpoints:
         name: long_description
         description: ''
         required: true
-        example: voluptas
+        example: ex
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -184,7 +184,7 @@ endpoints:
         name: price
         description: ''
         required: true
-        example: 19155860.0
+        example: 65.21
         type: number
         enumValues: []
         exampleWasSpecified: false
@@ -194,7 +194,7 @@ endpoints:
         name: status
         description: ''
         required: true
-        example: dolorem
+        example: aut
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -204,7 +204,7 @@ endpoints:
         name: weight
         description: ''
         required: true
-        example: atque
+        example: excepturi
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -214,24 +214,24 @@ endpoints:
         name: quantity
         description: ''
         required: true
-        example: 105407.61892125
+        example: 52812.5
         type: number
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanBodyParameters:
-      short_name: quasi
-      name: quia
-      slug: excepturi
-      thumb_image: voluptas
-      category: necessitatibus
-      short_description: incidunt
-      long_description: voluptas
-      price: 19155860.0
-      status: dolorem
-      weight: atque
-      quantity: 105407.61892125
+      short_name: sit
+      name: deserunt
+      slug: consequuntur
+      thumb_image: est
+      category: et
+      short_description: rem
+      long_description: ex
+      price: 65.21
+      status: aut
+      weight: excepturi
+      quantity: 52812.5
     fileParameters: []
     responses: []
     responseFields: []
@@ -385,7 +385,7 @@ endpoints:
         name: short_name
         description: ''
         required: true
-        example: sed
+        example: necessitatibus
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -395,7 +395,7 @@ endpoints:
         name: name
         description: ''
         required: true
-        example: quasi
+        example: porro
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -415,7 +415,7 @@ endpoints:
         name: category
         description: ''
         required: true
-        example: architecto
+        example: blanditiis
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -425,7 +425,7 @@ endpoints:
         name: short_description
         description: ''
         required: true
-        example: sint
+        example: est
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -435,7 +435,7 @@ endpoints:
         name: long_description
         description: ''
         required: true
-        example: saepe
+        example: tempora
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -445,7 +445,7 @@ endpoints:
         name: price
         description: ''
         required: true
-        example: 7.275074965
+        example: 223.28277
         type: number
         enumValues: []
         exampleWasSpecified: false
@@ -455,7 +455,7 @@ endpoints:
         name: status
         description: ''
         required: true
-        example: et
+        example: explicabo
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -465,7 +465,7 @@ endpoints:
         name: weight
         description: ''
         required: true
-        example: ullam
+        example: consequatur
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -475,22 +475,22 @@ endpoints:
         name: quantity
         description: ''
         required: true
-        example: 151940468.27425
+        example: 310756.00243
         type: number
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanBodyParameters:
-      short_name: sed
-      name: quasi
-      category: architecto
-      short_description: sint
-      long_description: saepe
-      price: 7.275074965
-      status: et
-      weight: ullam
-      quantity: 151940468.27425
+      short_name: necessitatibus
+      name: porro
+      category: blanditiis
+      short_description: est
+      long_description: tempora
+      price: 223.28277
+      status: explicabo
+      weight: consequatur
+      quantity: 310756.00243
     fileParameters: []
     responses: []
     responseFields: []
@@ -561,14 +561,14 @@ endpoints:
         name: id
         description: 'The ID of the update product.'
         required: true
-        example: atque
+        example: minima
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      id: atque
+      id: minima
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
@@ -576,7 +576,7 @@ endpoints:
         name: short_name
         description: ''
         required: true
-        example: nostrum
+        example: officia
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -586,7 +586,7 @@ endpoints:
         name: name
         description: ''
         required: true
-        example: eos
+        example: quis
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -606,7 +606,7 @@ endpoints:
         name: category
         description: ''
         required: true
-        example: ullam
+        example: iusto
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -616,7 +616,7 @@ endpoints:
         name: short_description
         description: ''
         required: true
-        example: est
+        example: ducimus
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -626,7 +626,7 @@ endpoints:
         name: long_description
         description: ''
         required: true
-        example: voluptas
+        example: rerum
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -636,7 +636,7 @@ endpoints:
         name: price
         description: ''
         required: true
-        example: 3896637.9
+        example: 0.4
         type: number
         enumValues: []
         exampleWasSpecified: false
@@ -646,7 +646,7 @@ endpoints:
         name: status
         description: ''
         required: true
-        example: quia
+        example: sed
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -656,7 +656,7 @@ endpoints:
         name: weight
         description: ''
         required: true
-        example: molestias
+        example: non
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -666,22 +666,22 @@ endpoints:
         name: quantity
         description: ''
         required: true
-        example: 114.5
+        example: 0.452356
         type: number
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanBodyParameters:
-      short_name: nostrum
-      name: eos
-      category: ullam
-      short_description: est
-      long_description: voluptas
-      price: 3896637.9
-      status: quia
-      weight: molestias
-      quantity: 114.5
+      short_name: officia
+      name: quis
+      category: iusto
+      short_description: ducimus
+      long_description: rerum
+      price: 0.4
+      status: sed
+      weight: non
+      quantity: 0.452356
     fileParameters: []
     responses: []
     responseFields: []
@@ -711,14 +711,14 @@ endpoints:
         name: id
         description: 'The ID of the product status.'
         required: true
-        example: beatae
+        example: ut
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      id: beatae
+      id: ut
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -752,14 +752,14 @@ endpoints:
         name: id
         description: 'The ID of the removed product exist specification.'
         required: true
-        example: aperiam
+        example: magni
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      id: aperiam
+      id: magni
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -836,14 +836,14 @@ endpoints:
         name: id
         description: 'The ID of the subcategory by category.'
         required: true
-        example: quo
+        example: dolore
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      id: quo
+      id: dolore
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -890,14 +890,14 @@ endpoints:
         name: id
         description: 'The ID of the childcategory by subcategory.'
         required: true
-        example: et
+        example: omnis
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      id: et
+      id: omnis
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []

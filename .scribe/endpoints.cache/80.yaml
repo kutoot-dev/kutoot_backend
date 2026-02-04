@@ -144,7 +144,7 @@ endpoints:
         name: user_register
         description: ''
         required: true
-        example: et
+        example: voluptas
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -154,7 +154,7 @@ endpoints:
         name: multivendor
         description: ''
         required: true
-        example: deserunt
+        example: nulla
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -164,7 +164,7 @@ endpoints:
         name: layout
         description: ''
         required: true
-        example: ut
+        example: sint
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -174,7 +174,7 @@ endpoints:
         name: lg_header
         description: ''
         required: true
-        example: distinctio
+        example: illum
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -184,7 +184,7 @@ endpoints:
         name: sm_header
         description: ''
         required: true
-        example: ea
+        example: placeat
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -194,7 +194,7 @@ endpoints:
         name: contact_email
         description: ''
         required: true
-        example: distinctio
+        example: adipisci
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -204,7 +204,7 @@ endpoints:
         name: currency_name
         description: ''
         required: true
-        example: eaque
+        example: est
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -214,7 +214,7 @@ endpoints:
         name: currency_icon
         description: ''
         required: true
-        example: iusto
+        example: voluptas
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -224,22 +224,22 @@ endpoints:
         name: timezone
         description: ''
         required: true
-        example: eum
+        example: cupiditate
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanBodyParameters:
-      user_register: et
-      multivendor: deserunt
-      layout: ut
-      lg_header: distinctio
-      sm_header: ea
-      contact_email: distinctio
-      currency_name: eaque
-      currency_icon: iusto
-      timezone: eum
+      user_register: voluptas
+      multivendor: nulla
+      layout: sint
+      lg_header: illum
+      sm_header: placeat
+      contact_email: adipisci
+      currency_name: est
+      currency_icon: voluptas
+      timezone: cupiditate
     fileParameters: []
     responses: []
     responseFields: []
@@ -333,7 +333,7 @@ endpoints:
         name: allow
         description: ''
         required: true
-        example: quasi
+        example: sit
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -343,7 +343,7 @@ endpoints:
         name: border
         description: ''
         required: true
-        example: eaque
+        example: est
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -353,7 +353,7 @@ endpoints:
         name: corners
         description: ''
         required: true
-        example: quam
+        example: voluptate
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -363,7 +363,7 @@ endpoints:
         name: background_color
         description: ''
         required: true
-        example: omnis
+        example: totam
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -373,7 +373,7 @@ endpoints:
         name: text_color
         description: ''
         required: true
-        example: fugit
+        example: amet
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -383,7 +383,7 @@ endpoints:
         name: border_color
         description: ''
         required: true
-        example: et
+        example: blanditiis
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -393,7 +393,7 @@ endpoints:
         name: button_color
         description: ''
         required: true
-        example: praesentium
+        example: eos
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -403,7 +403,7 @@ endpoints:
         name: btn_text_color
         description: ''
         required: true
-        example: qui
+        example: debitis
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -413,7 +413,7 @@ endpoints:
         name: link_text
         description: ''
         required: true
-        example: eveniet
+        example: eaque
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -423,7 +423,7 @@ endpoints:
         name: btn_text
         description: ''
         required: true
-        example: sint
+        example: cum
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -433,24 +433,24 @@ endpoints:
         name: message
         description: ''
         required: true
-        example: nam
+        example: odit
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanBodyParameters:
-      allow: quasi
-      border: eaque
-      corners: quam
-      background_color: omnis
-      text_color: fugit
-      border_color: et
-      button_color: praesentium
-      btn_text_color: qui
-      link_text: eveniet
-      btn_text: sint
-      message: nam
+      allow: sit
+      border: est
+      corners: voluptate
+      background_color: totam
+      text_color: amet
+      border_color: blanditiis
+      button_color: eos
+      btn_text_color: debitis
+      link_text: eaque
+      btn_text: cum
+      message: odit
     fileParameters: []
     responses: []
     responseFields: []
@@ -504,14 +504,14 @@ endpoints:
         name: allow
         description: ''
         required: true
-        example: sequi
+        example: ut
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanBodyParameters:
-      allow: sequi
+      allow: ut
     fileParameters: []
     responses: []
     responseFields: []
@@ -545,7 +545,7 @@ endpoints:
         name: comment_type
         description: ''
         required: true
-        example: commodi
+        example: dicta
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -562,7 +562,7 @@ endpoints:
         nullable: false
         custom: []
     cleanBodyParameters:
-      comment_type: commodi
+      comment_type: dicta
     fileParameters: []
     responses: []
     responseFields: []
@@ -596,7 +596,7 @@ endpoints:
         name: allow
         description: ''
         required: true
-        example: vitae
+        example: sunt
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -613,7 +613,7 @@ endpoints:
         nullable: false
         custom: []
     cleanBodyParameters:
-      allow: vitae
+      allow: sunt
     fileParameters: []
     responses: []
     responseFields: []
@@ -647,7 +647,7 @@ endpoints:
         name: allow
         description: ''
         required: true
-        example: iste
+        example: repellendus
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -664,7 +664,7 @@ endpoints:
         nullable: false
         custom: []
     cleanBodyParameters:
-      allow: iste
+      allow: repellendus
     fileParameters: []
     responses: []
     responseFields: []
@@ -818,7 +818,7 @@ endpoints:
         name: allow_facebook_pixel
         description: ''
         required: true
-        example: aspernatur
+        example: quaerat
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -835,7 +835,7 @@ endpoints:
         nullable: false
         custom: []
     cleanBodyParameters:
-      allow_facebook_pixel: aspernatur
+      allow_facebook_pixel: quaerat
     fileParameters: []
     responses: []
     responseFields: []
@@ -869,7 +869,7 @@ endpoints:
         name: app_id
         description: ''
         required: true
-        example: asperiores
+        example: nostrum
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -879,7 +879,7 @@ endpoints:
         name: app_key
         description: ''
         required: true
-        example: quo
+        example: qui
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -889,7 +889,7 @@ endpoints:
         name: app_secret
         description: ''
         required: true
-        example: natus
+        example: nobis
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -899,17 +899,17 @@ endpoints:
         name: app_cluster
         description: ''
         required: true
-        example: dolorum
+        example: officia
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanBodyParameters:
-      app_id: asperiores
-      app_key: quo
-      app_secret: natus
-      app_cluster: dolorum
+      app_id: nostrum
+      app_key: qui
+      app_secret: nobis
+      app_cluster: officia
     fileParameters: []
     responses: []
     responseFields: []

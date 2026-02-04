@@ -71,7 +71,7 @@ endpoints:
         name: slider_image
         description: ''
         required: true
-        example: alias
+        example: error
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -81,7 +81,7 @@ endpoints:
         name: title
         description: ''
         required: true
-        example: minus
+        example: amet
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -91,7 +91,7 @@ endpoints:
         name: description
         description: ''
         required: true
-        example: minus
+        example: aut
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -101,7 +101,7 @@ endpoints:
         name: button_link
         description: ''
         required: true
-        example: quis
+        example: quam
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -111,7 +111,7 @@ endpoints:
         name: status
         description: ''
         required: true
-        example: tenetur
+        example: sed
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -121,7 +121,7 @@ endpoints:
         name: serial
         description: ''
         required: true
-        example: ab
+        example: voluptas
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -131,20 +131,20 @@ endpoints:
         name: label
         description: ''
         required: true
-        example: dolores
+        example: provident
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanBodyParameters:
-      slider_image: alias
-      title: minus
-      description: minus
-      button_link: quis
-      status: tenetur
-      serial: ab
-      label: dolores
+      slider_image: error
+      title: amet
+      description: aut
+      button_link: quam
+      status: sed
+      serial: voluptas
+      label: provident
     fileParameters: []
     responses: []
     responseFields: []
@@ -244,7 +244,7 @@ endpoints:
         name: title
         description: ''
         required: true
-        example: vel
+        example: ea
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -254,7 +254,7 @@ endpoints:
         name: description
         description: ''
         required: true
-        example: error
+        example: ab
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -264,7 +264,7 @@ endpoints:
         name: button_link
         description: ''
         required: true
-        example: voluptates
+        example: cum
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -274,7 +274,7 @@ endpoints:
         name: status
         description: ''
         required: true
-        example: nihil
+        example: omnis
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -284,7 +284,7 @@ endpoints:
         name: serial
         description: ''
         required: true
-        example: optio
+        example: et
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -294,19 +294,19 @@ endpoints:
         name: label
         description: ''
         required: true
-        example: rerum
+        example: quod
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanBodyParameters:
-      title: vel
-      description: error
-      button_link: voluptates
-      status: nihil
-      serial: optio
-      label: rerum
+      title: ea
+      description: ab
+      button_link: cum
+      status: omnis
+      serial: et
+      label: quod
     fileParameters: []
     responses: []
     responseFields: []
@@ -377,14 +377,14 @@ endpoints:
         name: id
         description: 'The ID of the slider status.'
         required: true
-        example: dolores
+        example: aut
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      id: dolores
+      id: aut
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []

@@ -112,7 +112,7 @@ endpoints:
         name: name
         description: 'Must not be greater than 255 characters.'
         required: true
-        example: rcbzzeuubxiawpqvmmwvseml
+        example: zpfctoknae
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -122,15 +122,15 @@ endpoints:
         name: country_id
         description: 'The <code>id</code> of an existing record in the countries table.'
         required: true
-        example: accusantium
+        example: molestiae
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanBodyParameters:
-      name: rcbzzeuubxiawpqvmmwvseml
-      country_id: accusantium
+      name: zpfctoknae
+      country_id: molestiae
     fileParameters: []
     responses: []
     responseFields: []
@@ -160,14 +160,14 @@ endpoints:
         name: id
         description: 'The ID of the state.'
         required: true
-        example: esse
+        example: velit
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      id: esse
+      id: velit
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -215,14 +215,14 @@ endpoints:
         name: id
         description: 'The ID of the state.'
         required: true
-        example: est
+        example: harum
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      id: est
+      id: harum
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
@@ -230,7 +230,7 @@ endpoints:
         name: name
         description: 'Must not be greater than 255 characters.'
         required: true
-        example: wqvuiobfgevztugs
+        example: ikeslxhwipvrxtt
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -240,15 +240,15 @@ endpoints:
         name: country_id
         description: 'The <code>id</code> of an existing record in the countries table.'
         required: true
-        example: voluptatem
+        example: nam
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanBodyParameters:
-      name: wqvuiobfgevztugs
-      country_id: voluptatem
+      name: ikeslxhwipvrxtt
+      country_id: nam
     fileParameters: []
     responses: []
     responseFields: []
@@ -278,14 +278,14 @@ endpoints:
         name: id
         description: 'The ID of the state.'
         required: true
-        example: repellendus
+        example: explicabo
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      id: repellendus
+      id: explicabo
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []

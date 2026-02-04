@@ -26,7 +26,7 @@ endpoints:
         name: camp_id
         description: ''
         required: true
-        example: esse
+        example: quidem
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -36,7 +36,7 @@ endpoints:
         name: base_plan_id
         description: ''
         required: true
-        example: nam
+        example: voluptatem
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -46,7 +46,7 @@ endpoints:
         name: amount
         description: ''
         required: true
-        example: 3.340262
+        example: 1.546
         type: number
         enumValues: []
         exampleWasSpecified: false
@@ -56,17 +56,17 @@ endpoints:
         name: quantity
         description: ''
         required: true
-        example: 392.044248875
+        example: 2132.0
         type: number
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanBodyParameters:
-      camp_id: esse
-      base_plan_id: nam
-      amount: 3.340262
-      quantity: 392.044248875
+      camp_id: quidem
+      base_plan_id: voluptatem
+      amount: 1.546
+      quantity: 2132.0
     fileParameters: []
     responses: []
     responseFields: []
@@ -100,7 +100,7 @@ endpoints:
         name: camp_id
         description: ''
         required: true
-        example: aut
+        example: dolorem
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -110,7 +110,7 @@ endpoints:
         name: base_plan_id
         description: ''
         required: true
-        example: quasi
+        example: ratione
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -120,16 +120,16 @@ endpoints:
         name: quantity
         description: ''
         required: true
-        example: 221.1
+        example: 95839.85457
         type: number
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanBodyParameters:
-      camp_id: aut
-      base_plan_id: quasi
-      quantity: 221.1
+      camp_id: dolorem
+      base_plan_id: ratione
+      quantity: 95839.85457
     fileParameters: []
     responses:
       -
@@ -176,7 +176,7 @@ endpoints:
         name: order_id
         description: ''
         required: true
-        example: quia
+        example: inventore
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -186,7 +186,7 @@ endpoints:
         name: coupon_id
         description: ''
         required: true
-        example: iusto
+        example: quam
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -196,16 +196,16 @@ endpoints:
         name: coupon_code
         description: ''
         required: true
-        example: saepe
+        example: voluptatem
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanBodyParameters:
-      order_id: quia
-      coupon_id: iusto
-      coupon_code: saepe
+      order_id: inventore
+      coupon_id: quam
+      coupon_code: voluptatem
     fileParameters: []
     responses: []
     responseFields: []
@@ -282,7 +282,7 @@ endpoints:
         name: razorpay_order_id
         description: ''
         required: true
-        example: consequatur
+        example: expedita
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -292,7 +292,7 @@ endpoints:
         name: payment_id
         description: ''
         required: true
-        example: dolorem
+        example: sapiente
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -302,7 +302,7 @@ endpoints:
         name: payment_status
         description: ''
         required: true
-        example: est
+        example: tempore
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -312,17 +312,17 @@ endpoints:
         name: razorpay_signature
         description: ''
         required: true
-        example: nobis
+        example: illum
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanBodyParameters:
-      razorpay_order_id: consequatur
-      payment_id: dolorem
-      payment_status: est
-      razorpay_signature: nobis
+      razorpay_order_id: expedita
+      payment_id: sapiente
+      payment_status: tempore
+      razorpay_signature: illum
     fileParameters: []
     responses: []
     responseFields: []
@@ -468,14 +468,14 @@ endpoints:
         name: id
         description: 'The ID of the purchasedetail.'
         required: true
-        example: animi
+        example: repellendus
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      id: animi
+      id: repellendus
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []

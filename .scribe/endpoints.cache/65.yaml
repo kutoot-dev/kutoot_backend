@@ -114,7 +114,7 @@ endpoints:
         name: name
         description: ''
         required: true
-        example: delectus
+        example: excepturi
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -124,7 +124,7 @@ endpoints:
         name: designation
         description: ''
         required: true
-        example: ullam
+        example: quisquam
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -134,7 +134,7 @@ endpoints:
         name: image
         description: ''
         required: true
-        example: quidem
+        example: magnam
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -144,7 +144,7 @@ endpoints:
         name: status
         description: ''
         required: true
-        example: et
+        example: quisquam
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -154,7 +154,7 @@ endpoints:
         name: rating
         description: ''
         required: true
-        example: et
+        example: dolorem
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -164,19 +164,19 @@ endpoints:
         name: comment
         description: ''
         required: true
-        example: doloribus
+        example: suscipit
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanBodyParameters:
-      name: delectus
-      designation: ullam
-      image: quidem
-      status: et
-      rating: et
-      comment: doloribus
+      name: excepturi
+      designation: quisquam
+      image: magnam
+      status: quisquam
+      rating: dolorem
+      comment: suscipit
     fileParameters: []
     responses: []
     responseFields: []
@@ -330,7 +330,7 @@ endpoints:
         name: name
         description: ''
         required: true
-        example: officiis
+        example: molestiae
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -340,7 +340,7 @@ endpoints:
         name: designation
         description: ''
         required: true
-        example: nulla
+        example: nihil
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -350,7 +350,7 @@ endpoints:
         name: status
         description: ''
         required: true
-        example: accusamus
+        example: error
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -360,7 +360,7 @@ endpoints:
         name: rating
         description: ''
         required: true
-        example: consectetur
+        example: animi
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -370,18 +370,18 @@ endpoints:
         name: comment
         description: ''
         required: true
-        example: aut
+        example: reprehenderit
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanBodyParameters:
-      name: officiis
-      designation: nulla
-      status: accusamus
-      rating: consectetur
-      comment: aut
+      name: molestiae
+      designation: nihil
+      status: error
+      rating: animi
+      comment: reprehenderit
     fileParameters: []
     responses: []
     responseFields: []
@@ -452,14 +452,14 @@ endpoints:
         name: id
         description: 'The ID of the testimonial status.'
         required: true
-        example: officia
+        example: hic
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      id: officia
+      id: hic
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []

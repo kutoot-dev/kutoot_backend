@@ -28,7 +28,7 @@ endpoints:
         name: man_image
         description: ''
         required: true
-        example: quas
+        example: velit
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -38,7 +38,7 @@ endpoints:
         name: fname
         description: ''
         required: true
-        example: nihil
+        example: voluptatibus
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -48,7 +48,7 @@ endpoints:
         name: lname
         description: ''
         required: true
-        example: ut
+        example: magni
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -58,7 +58,7 @@ endpoints:
         name: email
         description: 'Must be a valid email address.'
         required: true
-        example: xkilback@example.net
+        example: dicki.warren@example.net
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -68,7 +68,7 @@ endpoints:
         name: man_type
         description: ''
         required: true
-        example: saepe
+        example: nulla
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -78,7 +78,7 @@ endpoints:
         name: idn_type
         description: ''
         required: true
-        example: voluptas
+        example: mollitia
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -88,7 +88,7 @@ endpoints:
         name: idn_num
         description: ''
         required: true
-        example: id
+        example: sequi
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -98,7 +98,7 @@ endpoints:
         name: idn_image
         description: ''
         required: true
-        example: consequatur
+        example: eum
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -108,7 +108,7 @@ endpoints:
         name: phone
         description: ''
         required: true
-        example: nesciunt
+        example: a
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -118,7 +118,7 @@ endpoints:
         name: password
         description: 'Must be at least 4 characters.'
         required: true
-        example: 'm$jt0&5=Wuc|~'
+        example: 'c9Ji7;4+sDpj['
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -128,24 +128,24 @@ endpoints:
         name: c_password
         description: 'The value and <code>password</code> must match.'
         required: true
-        example: vel
+        example: debitis
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanBodyParameters:
-      man_image: quas
-      fname: nihil
-      lname: ut
-      email: xkilback@example.net
-      man_type: saepe
-      idn_type: voluptas
-      idn_num: id
-      idn_image: consequatur
-      phone: nesciunt
-      password: 'm$jt0&5=Wuc|~'
-      c_password: vel
+      man_image: velit
+      fname: voluptatibus
+      lname: magni
+      email: dicki.warren@example.net
+      man_type: nulla
+      idn_type: mollitia
+      idn_num: sequi
+      idn_image: eum
+      phone: a
+      password: 'c9Ji7;4+sDpj['
+      c_password: debitis
     fileParameters: []
     responses: []
     responseFields: []

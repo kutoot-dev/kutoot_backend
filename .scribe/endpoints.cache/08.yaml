@@ -116,7 +116,7 @@ endpoints:
         name: name
         description: 'Must not be greater than 255 characters.'
         required: true
-        example: a
+        example: cgt
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -126,7 +126,7 @@ endpoints:
         name: type
         description: ''
         required: true
-        example: 'Special Sponsor'
+        example: Partner
         type: string
         enumValues:
           - Sponsor
@@ -160,7 +160,7 @@ endpoints:
         name: link
         description: 'Must be a valid URL. Must not be greater than 500 characters.'
         required: false
-        example: shabaohhcfmbw
+        example: mimzzkazyeir
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -170,17 +170,17 @@ endpoints:
         name: serial
         description: 'Must be at least 0.'
         required: false
-        example: 76
+        example: 63
         type: integer
         enumValues: []
         exampleWasSpecified: false
         nullable: true
         custom: []
     cleanBodyParameters:
-      name: a
-      type: 'Special Sponsor'
-      link: shabaohhcfmbw
-      serial: 76
+      name: cgt
+      type: Partner
+      link: mimzzkazyeir
+      serial: 63
     fileParameters:
       logo: null
       banner: null
@@ -282,7 +282,7 @@ endpoints:
         name: name
         description: 'Must not be greater than 255 characters.'
         required: true
-        example: cblzgrum
+        example: syweomxdiic
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -292,7 +292,7 @@ endpoints:
         name: type
         description: ''
         required: true
-        example: Sponsor
+        example: Partner
         type: string
         enumValues:
           - Sponsor
@@ -326,7 +326,7 @@ endpoints:
         name: link
         description: 'Must be a valid URL. Must not be greater than 500 characters.'
         required: false
-        example: ydqw
+        example: lbbvjjxrfbwujjamy
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -336,17 +336,17 @@ endpoints:
         name: serial
         description: 'Must be at least 0.'
         required: false
-        example: 54
+        example: 62
         type: integer
         enumValues: []
         exampleWasSpecified: false
         nullable: true
         custom: []
     cleanBodyParameters:
-      name: cblzgrum
-      type: Sponsor
-      link: ydqw
-      serial: 54
+      name: syweomxdiic
+      type: Partner
+      link: lbbvjjxrfbwujjamy
+      serial: 62
     fileParameters:
       logo: null
       banner: null
@@ -419,14 +419,14 @@ endpoints:
         name: id
         description: 'The ID of the sponsor status.'
         required: true
-        example: at
+        example: quia
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      id: at
+      id: quia
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []

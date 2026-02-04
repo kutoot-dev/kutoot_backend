@@ -69,7 +69,7 @@ endpoints:
         name: name
         description: 'Must not be greater than 255 characters.'
         required: true
-        example: oslifjrypakeopfauf
+        example: jh
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -79,7 +79,7 @@ endpoints:
         name: iso2
         description: 'Must not be greater than 2 characters.'
         required: true
-        example: x
+        example: yv
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -89,7 +89,7 @@ endpoints:
         name: iso3
         description: 'Must not be greater than 3 characters.'
         required: false
-        example: r
+        example: u
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -99,7 +99,7 @@ endpoints:
         name: phone_code
         description: 'Must not be greater than 10 characters.'
         required: false
-        example: vqfpdmr
+        example: lnxec
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -109,7 +109,7 @@ endpoints:
         name: status
         description: ''
         required: true
-        example: '1'
+        example: '0'
         type: string
         enumValues:
           - '0'
@@ -118,11 +118,11 @@ endpoints:
         nullable: false
         custom: []
     cleanBodyParameters:
-      name: oslifjrypakeopfauf
-      iso2: x
-      iso3: r
-      phone_code: vqfpdmr
-      status: '1'
+      name: jh
+      iso2: yv
+      iso3: u
+      phone_code: lnxec
+      status: '0'
     fileParameters: []
     responses: []
     responseFields: []
@@ -152,14 +152,14 @@ endpoints:
         name: id
         description: 'The ID of the country.'
         required: true
-        example: provident
+        example: qui
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      id: provident
+      id: qui
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -207,14 +207,14 @@ endpoints:
         name: id
         description: 'The ID of the country.'
         required: true
-        example: pariatur
+        example: voluptates
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      id: pariatur
+      id: voluptates
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
@@ -222,7 +222,7 @@ endpoints:
         name: name
         description: 'Must not be greater than 255 characters.'
         required: true
-        example: msamzgjwzy
+        example: qpyznjhrziz
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -242,7 +242,7 @@ endpoints:
         name: iso3
         description: 'Must not be greater than 3 characters.'
         required: false
-        example: mdi
+        example: st
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -252,7 +252,7 @@ endpoints:
         name: phone_code
         description: 'Must not be greater than 10 characters.'
         required: false
-        example: naptdg
+        example: czp
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -262,7 +262,7 @@ endpoints:
         name: status
         description: ''
         required: true
-        example: '0'
+        example: '1'
         type: string
         enumValues:
           - '0'
@@ -271,10 +271,10 @@ endpoints:
         nullable: false
         custom: []
     cleanBodyParameters:
-      name: msamzgjwzy
-      iso3: mdi
-      phone_code: naptdg
-      status: '0'
+      name: qpyznjhrziz
+      iso3: st
+      phone_code: czp
+      status: '1'
     fileParameters: []
     responses: []
     responseFields: []
@@ -304,14 +304,14 @@ endpoints:
         name: id
         description: 'The ID of the country.'
         required: true
-        example: maiores
+        example: aliquid
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      id: maiores
+      id: aliquid
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -345,14 +345,14 @@ endpoints:
         name: id
         description: 'The ID of the country status.'
         required: true
-        example: ut
+        example: facilis
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      id: ut
+      id: facilis
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []

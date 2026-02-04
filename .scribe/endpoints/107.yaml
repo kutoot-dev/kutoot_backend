@@ -108,14 +108,14 @@ endpoints:
         name: id
         description: 'The ID of the show seller withdraw.'
         required: true
-        example: nihil
+        example: minus
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      id: nihil
+      id: minus
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -162,14 +162,14 @@ endpoints:
         name: id
         description: 'The ID of the delete seller withdraw.'
         required: true
-        example: adipisci
+        example: consequatur
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      id: adipisci
+      id: consequatur
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -203,14 +203,14 @@ endpoints:
         name: id
         description: 'The ID of the approved seller withdraw.'
         required: true
-        example: qui
+        example: sunt
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      id: qui
+      id: sunt
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []

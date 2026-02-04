@@ -116,14 +116,14 @@ endpoints:
         name: shopId
         description: ''
         required: true
-        example: alias
+        example: sapiente
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      shopId: alias
+      shopId: sapiente
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -172,14 +172,14 @@ endpoints:
         name: shopId
         description: ''
         required: true
-        example: eum
+        example: iusto
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      shopId: eum
+      shopId: iusto
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
@@ -187,7 +187,7 @@ endpoints:
         name: commissionPercent
         description: 'Must be at least 0. Must not be greater than 100.'
         required: false
-        example: 2
+        example: 8
         type: number
         enumValues: []
         exampleWasSpecified: false
@@ -197,7 +197,7 @@ endpoints:
         name: discountPercent
         description: 'Must be at least 0. Must not be greater than 100.'
         required: false
-        example: 19
+        example: 6
         type: number
         enumValues: []
         exampleWasSpecified: false
@@ -207,7 +207,7 @@ endpoints:
         name: rating
         description: 'Must be at least 0. Must not be greater than 5.'
         required: false
-        example: 1
+        example: 4
         type: number
         enumValues: []
         exampleWasSpecified: false
@@ -217,7 +217,7 @@ endpoints:
         name: isActive
         description: ''
         required: false
-        example: true
+        example: false
         type: boolean
         enumValues: []
         exampleWasSpecified: false
@@ -227,7 +227,7 @@ endpoints:
         name: isFeatured
         description: ''
         required: false
-        example: true
+        example: false
         type: boolean
         enumValues: []
         exampleWasSpecified: false
@@ -237,7 +237,7 @@ endpoints:
         name: offerTag
         description: 'Must not be greater than 100 characters.'
         required: false
-        example: m
+        example: xpietwlcevdgjssy
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -247,7 +247,7 @@ endpoints:
         name: minimumBillAmount
         description: 'Must be at least 0.'
         required: false
-        example: 14
+        example: 20
         type: number
         enumValues: []
         exampleWasSpecified: false
@@ -257,7 +257,7 @@ endpoints:
         name: shopName
         description: 'Store basic info. Must not be greater than 255 characters.'
         required: false
-        example: vjxgmvtkezmdaghoveumrmfr
+        example: tak
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -267,7 +267,7 @@ endpoints:
         name: address
         description: 'Must not be greater than 500 characters.'
         required: false
-        example: pslulagfs
+        example: hwntavvahzygoes
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -277,7 +277,7 @@ endpoints:
         name: state
         description: 'Must not be greater than 100 characters.'
         required: false
-        example: lxicxframwkiod
+        example: niqkorrvapd
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -287,7 +287,7 @@ endpoints:
         name: city
         description: 'Must not be greater than 100 characters.'
         required: false
-        example: pndrzpzfuhglksiiortovxi
+        example: alkf
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -297,7 +297,7 @@ endpoints:
         name: country
         description: 'Must not be greater than 100 characters.'
         required: false
-        example: cibolvddfaqrica
+        example: kk
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -307,26 +307,26 @@ endpoints:
         name: googleMapUrl
         description: 'Must not be greater than 1000 characters.'
         required: false
-        example: 'http://lakin.com/molestiae-sit-commodi-suscipit-optio-molestiae-aut-ut'
+        example: 'http://berge.com/dolores-hic-ut-minus-qui-eum'
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: true
         custom: []
     cleanBodyParameters:
-      commissionPercent: 2
-      discountPercent: 19
-      rating: 1
-      isActive: true
-      isFeatured: true
-      offerTag: m
-      minimumBillAmount: 14
-      shopName: vjxgmvtkezmdaghoveumrmfr
-      address: pslulagfs
-      state: lxicxframwkiod
-      city: pndrzpzfuhglksiiortovxi
-      country: cibolvddfaqrica
-      googleMapUrl: 'http://lakin.com/molestiae-sit-commodi-suscipit-optio-molestiae-aut-ut'
+      commissionPercent: 8
+      discountPercent: 6
+      rating: 4
+      isActive: false
+      isFeatured: false
+      offerTag: xpietwlcevdgjssy
+      minimumBillAmount: 20
+      shopName: tak
+      address: hwntavvahzygoes
+      state: niqkorrvapd
+      city: alkf
+      country: kk
+      googleMapUrl: 'http://berge.com/dolores-hic-ut-minus-qui-eum'
     fileParameters: []
     responses: []
     responseFields: []
@@ -358,14 +358,14 @@ endpoints:
         name: shopId
         description: ''
         required: true
-        example: omnis
+        example: non
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      shopId: omnis
+      shopId: non
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
@@ -414,7 +414,7 @@ endpoints:
         name: shopId
         description: ''
         required: true
-        example: amet
+        example: dolores
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -424,15 +424,15 @@ endpoints:
         name: imageId
         description: ''
         required: true
-        example: cumque
+        example: vel
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      shopId: amet
-      imageId: cumque
+      shopId: dolores
+      imageId: vel
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []

@@ -118,7 +118,7 @@ endpoints:
         name: method_id
         description: ''
         required: true
-        example: itaque
+        example: eaque
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -128,7 +128,7 @@ endpoints:
         name: withdraw_amount
         description: ''
         required: true
-        example: 246044.25788293
+        example: 128119.90515
         type: number
         enumValues: []
         exampleWasSpecified: false
@@ -138,16 +138,16 @@ endpoints:
         name: account_info
         description: ''
         required: true
-        example: sunt
+        example: vel
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanBodyParameters:
-      method_id: itaque
-      withdraw_amount: 246044.25788293
-      account_info: sunt
+      method_id: eaque
+      withdraw_amount: 128119.90515
+      account_info: vel
     fileParameters: []
     responses: []
     responseFields: []
@@ -177,14 +177,14 @@ endpoints:
         name: id
         description: 'The ID of the withdraw.'
         required: true
-        example: praesentium
+        example: deleniti
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      id: praesentium
+      id: deleniti
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -234,14 +234,14 @@ endpoints:
         name: withdraw
         description: 'The withdraw.'
         required: true
-        example: tenetur
+        example: eligendi
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      withdraw: tenetur
+      withdraw: eligendi
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -292,14 +292,14 @@ endpoints:
         name: id
         description: 'The ID of the withdraw.'
         required: true
-        example: atque
+        example: est
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      id: atque
+      id: est
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -333,14 +333,14 @@ endpoints:
         name: id
         description: 'The ID of the withdraw.'
         required: true
-        example: animi
+        example: ipsa
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      id: animi
+      id: ipsa
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -374,14 +374,14 @@ endpoints:
         name: id
         description: 'The ID of the get withdraw account info.'
         required: true
-        example: voluptatem
+        example: quia
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      id: voluptatem
+      id: quia
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -397,8 +397,8 @@ endpoints:
         headers:
           x-ratelimit-limit: '60'
           x-ratelimit-remaining: '0'
-          retry-after: '54'
-          x-ratelimit-reset: '1770131295'
+          retry-after: '53'
+          x-ratelimit-reset: '1770131364'
           cache-control: 'no-cache, private'
           content-type: application/json
           access-control-allow-origin: '*'

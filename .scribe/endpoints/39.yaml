@@ -73,14 +73,14 @@ endpoints:
         name: name
         description: 'Must not be greater than 100 characters.'
         required: true
-        example: clteqghhybqbmha
+        example: ddlxfckzporsuiarhcq
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanBodyParameters:
-      name: clteqghhybqbmha
+      name: ddlxfckzporsuiarhcq
     fileParameters: []
     responses: []
     responseFields: []
@@ -112,14 +112,14 @@ endpoints:
         name: tagId
         description: ''
         required: true
-        example: dolores
+        example: veniam
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      tagId: dolores
+      tagId: veniam
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []

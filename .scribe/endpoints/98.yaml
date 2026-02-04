@@ -69,7 +69,7 @@ endpoints:
         name: paypal_client_id
         description: ''
         required: true
-        example: temporibus
+        example: doloremque
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -79,7 +79,7 @@ endpoints:
         name: paypal_secret_key
         description: ''
         required: true
-        example: officiis
+        example: sunt
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -89,7 +89,7 @@ endpoints:
         name: account_mode
         description: ''
         required: true
-        example: expedita
+        example: et
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -99,7 +99,7 @@ endpoints:
         name: country_name
         description: ''
         required: true
-        example: dolore
+        example: est
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -109,7 +109,7 @@ endpoints:
         name: currency_name
         description: ''
         required: true
-        example: assumenda
+        example: quod
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -119,19 +119,19 @@ endpoints:
         name: currency_rate
         description: ''
         required: true
-        example: laboriosam
+        example: sint
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanBodyParameters:
-      paypal_client_id: temporibus
-      paypal_secret_key: officiis
-      account_mode: expedita
-      country_name: dolore
-      currency_name: assumenda
-      currency_rate: laboriosam
+      paypal_client_id: doloremque
+      paypal_secret_key: sunt
+      account_mode: et
+      country_name: est
+      currency_name: quod
+      currency_rate: sint
     fileParameters: []
     responses: []
     responseFields: []
@@ -165,7 +165,7 @@ endpoints:
         name: stripe_key
         description: ''
         required: true
-        example: est
+        example: porro
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -175,7 +175,7 @@ endpoints:
         name: stripe_secret
         description: ''
         required: true
-        example: rerum
+        example: nisi
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -185,7 +185,7 @@ endpoints:
         name: country_name
         description: ''
         required: true
-        example: vero
+        example: sequi
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -195,7 +195,7 @@ endpoints:
         name: currency_name
         description: ''
         required: true
-        example: beatae
+        example: vel
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -205,18 +205,18 @@ endpoints:
         name: currency_rate
         description: ''
         required: true
-        example: eaque
+        example: et
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanBodyParameters:
-      stripe_key: est
-      stripe_secret: rerum
-      country_name: vero
-      currency_name: beatae
-      currency_rate: eaque
+      stripe_key: porro
+      stripe_secret: nisi
+      country_name: sequi
+      currency_name: vel
+      currency_rate: et
     fileParameters: []
     responses: []
     responseFields: []
@@ -250,7 +250,7 @@ endpoints:
         name: razorpay_key
         description: ''
         required: true
-        example: id
+        example: est
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -260,7 +260,7 @@ endpoints:
         name: razorpay_secret
         description: ''
         required: true
-        example: eos
+        example: corrupti
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -270,7 +270,7 @@ endpoints:
         name: name
         description: ''
         required: true
-        example: ducimus
+        example: voluptatibus
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -290,7 +290,7 @@ endpoints:
         name: currency_rate
         description: ''
         required: true
-        example: doloremque
+        example: vel
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -300,7 +300,7 @@ endpoints:
         name: theme_color
         description: ''
         required: true
-        example: dolorum
+        example: minima
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -310,7 +310,7 @@ endpoints:
         name: currency_name
         description: ''
         required: true
-        example: molestiae
+        example: qui
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -320,21 +320,21 @@ endpoints:
         name: country_name
         description: ''
         required: true
-        example: error
+        example: est
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanBodyParameters:
-      razorpay_key: id
-      razorpay_secret: eos
-      name: ducimus
+      razorpay_key: est
+      razorpay_secret: corrupti
+      name: voluptatibus
       description: est
-      currency_rate: doloremque
-      theme_color: dolorum
-      currency_name: molestiae
-      country_name: error
+      currency_rate: vel
+      theme_color: minima
+      currency_name: qui
+      country_name: est
     fileParameters: []
     responses: []
     responseFields: []
@@ -368,14 +368,14 @@ endpoints:
         name: account_info
         description: ''
         required: true
-        example: non
+        example: facere
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanBodyParameters:
-      account_info: non
+      account_info: facere
     fileParameters: []
     responses: []
     responseFields: []
@@ -409,7 +409,7 @@ endpoints:
         name: mollie_key
         description: ''
         required: true
-        example: aut
+        example: enim
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -419,7 +419,7 @@ endpoints:
         name: mollie_currency_rate
         description: ''
         required: true
-        example: veritatis
+        example: amet
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -429,7 +429,7 @@ endpoints:
         name: mollie_country_name
         description: ''
         required: true
-        example: labore
+        example: tenetur
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -439,17 +439,17 @@ endpoints:
         name: mollie_currency_name
         description: ''
         required: true
-        example: cumque
+        example: consequatur
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanBodyParameters:
-      mollie_key: aut
-      mollie_currency_rate: veritatis
-      mollie_country_name: labore
-      mollie_currency_name: cumque
+      mollie_key: enim
+      mollie_currency_rate: amet
+      mollie_country_name: tenetur
+      mollie_currency_name: consequatur
     fileParameters: []
     responses: []
     responseFields: []
@@ -483,7 +483,7 @@ endpoints:
         name: paystack_public_key
         description: ''
         required: true
-        example: enim
+        example: amet
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -493,7 +493,7 @@ endpoints:
         name: paystack_secret_key
         description: ''
         required: true
-        example: iste
+        example: quae
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -503,7 +503,7 @@ endpoints:
         name: paystack_currency_rate
         description: ''
         required: true
-        example: in
+        example: facere
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -513,7 +513,7 @@ endpoints:
         name: paystack_currency_name
         description: ''
         required: true
-        example: rerum
+        example: sunt
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -523,18 +523,18 @@ endpoints:
         name: paystack_country_name
         description: ''
         required: true
-        example: labore
+        example: ut
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanBodyParameters:
-      paystack_public_key: enim
-      paystack_secret_key: iste
-      paystack_currency_rate: in
-      paystack_currency_name: rerum
-      paystack_country_name: labore
+      paystack_public_key: amet
+      paystack_secret_key: quae
+      paystack_currency_rate: facere
+      paystack_currency_name: sunt
+      paystack_country_name: ut
     fileParameters: []
     responses: []
     responseFields: []
@@ -568,7 +568,7 @@ endpoints:
         name: public_key
         description: ''
         required: true
-        example: modi
+        example: deserunt
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -578,7 +578,7 @@ endpoints:
         name: secret_key
         description: ''
         required: true
-        example: voluptate
+        example: ut
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -588,7 +588,7 @@ endpoints:
         name: title
         description: ''
         required: true
-        example: molestiae
+        example: quo
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -598,7 +598,7 @@ endpoints:
         name: currency_rate
         description: ''
         required: true
-        example: assumenda
+        example: quo
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -608,7 +608,7 @@ endpoints:
         name: currency_name
         description: ''
         required: true
-        example: numquam
+        example: sed
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -618,19 +618,19 @@ endpoints:
         name: country_name
         description: ''
         required: true
-        example: asperiores
+        example: quo
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanBodyParameters:
-      public_key: modi
-      secret_key: voluptate
-      title: molestiae
-      currency_rate: assumenda
-      currency_name: numquam
-      country_name: asperiores
+      public_key: deserunt
+      secret_key: ut
+      title: quo
+      currency_rate: quo
+      currency_name: sed
+      country_name: quo
     fileParameters: []
     responses: []
     responseFields: []
@@ -664,7 +664,7 @@ endpoints:
         name: account_mode
         description: ''
         required: true
-        example: qui
+        example: facere
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -674,7 +674,7 @@ endpoints:
         name: api_key
         description: ''
         required: true
-        example: et
+        example: magni
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -684,7 +684,7 @@ endpoints:
         name: auth_token
         description: ''
         required: true
-        example: et
+        example: est
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -694,17 +694,17 @@ endpoints:
         name: currency_rate
         description: ''
         required: true
-        example: porro
+        example: numquam
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanBodyParameters:
-      account_mode: qui
-      api_key: et
-      auth_token: et
-      currency_rate: porro
+      account_mode: facere
+      api_key: magni
+      auth_token: est
+      currency_rate: numquam
     fileParameters: []
     responses: []
     responseFields: []

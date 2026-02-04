@@ -120,7 +120,7 @@ endpoints:
         name: fname
         description: ''
         required: true
-        example: et
+        example: dolorem
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -130,7 +130,7 @@ endpoints:
         name: lname
         description: ''
         required: true
-        example: earum
+        example: id
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -150,7 +150,7 @@ endpoints:
         name: man_type
         description: ''
         required: true
-        example: corrupti
+        example: culpa
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -160,7 +160,7 @@ endpoints:
         name: idn_type
         description: ''
         required: true
-        example: officiis
+        example: voluptatem
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -170,7 +170,7 @@ endpoints:
         name: idn_num
         description: ''
         required: true
-        example: earum
+        example: reprehenderit
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -180,19 +180,19 @@ endpoints:
         name: phone
         description: ''
         required: true
-        example: iste
+        example: et
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanBodyParameters:
-      fname: et
-      lname: earum
-      man_type: corrupti
-      idn_type: officiis
-      idn_num: earum
-      phone: iste
+      fname: dolorem
+      lname: id
+      man_type: culpa
+      idn_type: voluptatem
+      idn_num: reprehenderit
+      phone: et
     fileParameters: []
     responses: []
     responseFields: []
@@ -226,7 +226,7 @@ endpoints:
         name: password
         description: 'Must be at least 4 characters.'
         required: true
-        example: '+FWOw0Du3!64`:'
+        example: "U;bAlY(aO?Zjdl'L}"
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -236,15 +236,15 @@ endpoints:
         name: c_password
         description: 'The value and <code>password</code> must match.'
         required: true
-        example: libero
+        example: id
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanBodyParameters:
-      password: '+FWOw0Du3!64`:'
-      c_password: libero
+      password: "U;bAlY(aO?Zjdl'L}"
+      c_password: id
     fileParameters: []
     responses: []
     responseFields: []

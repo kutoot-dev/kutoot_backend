@@ -112,7 +112,7 @@ endpoints:
         name: name
         description: ''
         required: true
-        example: voluptatem
+        example: vel
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -122,7 +122,7 @@ endpoints:
         name: slug
         description: ''
         required: true
-        example: voluptatem
+        example: atque
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -132,16 +132,16 @@ endpoints:
         name: status
         description: ''
         required: true
-        example: praesentium
+        example: libero
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanBodyParameters:
-      name: voluptatem
-      slug: voluptatem
-      status: praesentium
+      name: vel
+      slug: atque
+      status: libero
     fileParameters: []
     responses: []
     responseFields: []
@@ -171,14 +171,14 @@ endpoints:
         name: id
         description: 'The ID of the blog category.'
         required: true
-        example: odio
+        example: assumenda
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      id: odio
+      id: assumenda
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -225,14 +225,14 @@ endpoints:
         name: blog_category
         description: ''
         required: true
-        example: sed
+        example: explicabo
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      blog_category: sed
+      blog_category: explicabo
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -280,14 +280,14 @@ endpoints:
         name: id
         description: 'The ID of the blog category.'
         required: true
-        example: asperiores
+        example: inventore
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      id: asperiores
+      id: inventore
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
@@ -315,14 +315,14 @@ endpoints:
         name: status
         description: ''
         required: true
-        example: sunt
+        example: sint
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanBodyParameters:
-      status: sunt
+      status: sint
     fileParameters: []
     responses: []
     responseFields: []
@@ -352,14 +352,14 @@ endpoints:
         name: id
         description: 'The ID of the blog category.'
         required: true
-        example: sint
+        example: eligendi
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      id: sint
+      id: eligendi
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -393,14 +393,14 @@ endpoints:
         name: id
         description: 'The ID of the blog category status.'
         required: true
-        example: voluptatem
+        example: odit
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      id: voluptatem
+      id: odit
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []

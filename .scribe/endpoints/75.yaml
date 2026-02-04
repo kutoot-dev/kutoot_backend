@@ -69,14 +69,14 @@ endpoints:
         name: privacy_policy
         description: ''
         required: true
-        example: ut
+        example: exercitationem
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanBodyParameters:
-      privacy_policy: ut
+      privacy_policy: exercitationem
     fileParameters: []
     responses: []
     responseFields: []
@@ -107,14 +107,14 @@ endpoints:
         name: id
         description: 'The ID of the privacy policy.'
         required: true
-        example: est
+        example: eius
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      id: est
+      id: eius
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
@@ -122,14 +122,14 @@ endpoints:
         name: privacy_policy
         description: ''
         required: true
-        example: dolor
+        example: repudiandae
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanBodyParameters:
-      privacy_policy: dolor
+      privacy_policy: repudiandae
     fileParameters: []
     responses: []
     responseFields: []

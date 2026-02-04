@@ -69,7 +69,7 @@ endpoints:
         name: question
         description: ''
         required: true
-        example: quia
+        example: labore
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -79,7 +79,7 @@ endpoints:
         name: answer
         description: ''
         required: true
-        example: nulla
+        example: cumque
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -89,16 +89,16 @@ endpoints:
         name: status
         description: ''
         required: true
-        example: est
+        example: eum
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanBodyParameters:
-      question: quia
-      answer: nulla
-      status: est
+      question: labore
+      answer: cumque
+      status: eum
     fileParameters: []
     responses: []
     responseFields: []
@@ -208,7 +208,7 @@ endpoints:
         name: answer
         description: ''
         required: true
-        example: consequatur
+        example: pariatur
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -218,15 +218,15 @@ endpoints:
         name: status
         description: ''
         required: true
-        example: soluta
+        example: possimus
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanBodyParameters:
-      answer: consequatur
-      status: soluta
+      answer: pariatur
+      status: possimus
     fileParameters: []
     responses: []
     responseFields: []
@@ -297,14 +297,14 @@ endpoints:
         name: id
         description: 'The ID of the faq status.'
         required: true
-        example: porro
+        example: nihil
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      id: porro
+      id: nihil
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []

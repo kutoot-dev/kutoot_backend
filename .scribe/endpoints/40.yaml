@@ -26,7 +26,7 @@ endpoints:
         name: username
         description: ''
         required: true
-        example: doloremque
+        example: et
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -36,15 +36,15 @@ endpoints:
         name: password
         description: ''
         required: true
-        example: '@O=mXI%AarQun)K~@-Qn'
+        example: 'Q|PrxcV[)p\q'
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanBodyParameters:
-      username: doloremque
-      password: '@O=mXI%AarQun)K~@-Qn'
+      username: et
+      password: 'Q|PrxcV[)p\q'
     fileParameters: []
     responses: []
     responseFields: []

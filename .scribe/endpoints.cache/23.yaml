@@ -214,14 +214,14 @@ endpoints:
         name: id
         description: 'The ID of the store.'
         required: true
-        example: quia
+        example: possimus
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      id: quia
+      id: possimus
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -276,7 +276,7 @@ endpoints:
         name: store_id
         description: 'The <code>id</code> of an existing record in the seller_applications table.'
         required: true
-        example: rerum
+        example: quas
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -286,15 +286,15 @@ endpoints:
         name: bill_amount
         description: 'Must be at least 1.'
         required: true
-        example: 5
+        example: 3
         type: number
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanBodyParameters:
-      store_id: rerum
-      bill_amount: 5
+      store_id: quas
+      bill_amount: 3
     fileParameters: []
     responses: []
     responseFields: []
@@ -330,7 +330,7 @@ endpoints:
         name: store_id
         description: 'The <code>id</code> of an existing record in the seller_applications table.'
         required: true
-        example: omnis
+        example: cumque
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -340,7 +340,7 @@ endpoints:
         name: bill_amount
         description: 'Must be at least 1.'
         required: true
-        example: 26
+        example: 72
         type: number
         enumValues: []
         exampleWasSpecified: false
@@ -350,7 +350,7 @@ endpoints:
         name: payment_method
         description: ''
         required: false
-        example: sed
+        example: nihil
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -360,7 +360,7 @@ endpoints:
         name: razorpay_payment_id
         description: ''
         required: false
-        example: qui
+        example: possimus
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -370,7 +370,7 @@ endpoints:
         name: razorpay_order_id
         description: ''
         required: false
-        example: vel
+        example: iure
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -380,19 +380,19 @@ endpoints:
         name: razorpay_signature
         description: ''
         required: false
-        example: possimus
+        example: explicabo
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: true
         custom: []
     cleanBodyParameters:
-      store_id: omnis
-      bill_amount: 26
-      payment_method: sed
-      razorpay_payment_id: qui
-      razorpay_order_id: vel
-      razorpay_signature: possimus
+      store_id: cumque
+      bill_amount: 72
+      payment_method: nihil
+      razorpay_payment_id: possimus
+      razorpay_order_id: iure
+      razorpay_signature: explicabo
     fileParameters: []
     responses: []
     responseFields: []
@@ -518,14 +518,14 @@ endpoints:
         name: storeId
         description: ''
         required: true
-        example: sit
+        example: quod
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      storeId: sit
+      storeId: quod
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -580,7 +580,7 @@ endpoints:
         name: store_id
         description: 'The <code>id</code> of an existing record in the seller_applications table.'
         required: true
-        example: fugiat
+        example: vero
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -590,15 +590,15 @@ endpoints:
         name: bill_amount
         description: 'Must be at least 1.'
         required: true
-        example: 52
+        example: 74
         type: number
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanBodyParameters:
-      store_id: fugiat
-      bill_amount: 52
+      store_id: vero
+      bill_amount: 74
     fileParameters: []
     responses: []
     responseFields: []
@@ -634,7 +634,7 @@ endpoints:
         name: store_id
         description: 'The <code>id</code> of an existing record in the seller_applications table.'
         required: true
-        example: qui
+        example: quam
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -644,15 +644,15 @@ endpoints:
         name: bill_amount
         description: 'Must be at least 1.'
         required: true
-        example: 86
+        example: 8
         type: number
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanBodyParameters:
-      store_id: qui
-      bill_amount: 86
+      store_id: quam
+      bill_amount: 8
     fileParameters: []
     responses: []
     responseFields: []
@@ -688,7 +688,7 @@ endpoints:
         name: store_id
         description: 'The <code>id</code> of an existing record in the seller_applications table.'
         required: true
-        example: sint
+        example: quia
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -698,7 +698,7 @@ endpoints:
         name: bill_amount
         description: 'Must be at least 1.'
         required: true
-        example: 76
+        example: 26
         type: number
         enumValues: []
         exampleWasSpecified: false
@@ -708,7 +708,7 @@ endpoints:
         name: payment_method
         description: ''
         required: false
-        example: aut
+        example: atque
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -718,7 +718,7 @@ endpoints:
         name: razorpay_payment_id
         description: ''
         required: false
-        example: nulla
+        example: delectus
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -728,7 +728,7 @@ endpoints:
         name: razorpay_order_id
         description: ''
         required: false
-        example: repellendus
+        example: et
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -738,19 +738,19 @@ endpoints:
         name: razorpay_signature
         description: ''
         required: false
-        example: aut
+        example: repudiandae
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: true
         custom: []
     cleanBodyParameters:
-      store_id: sint
-      bill_amount: 76
-      payment_method: aut
-      razorpay_payment_id: nulla
-      razorpay_order_id: repellendus
-      razorpay_signature: aut
+      store_id: quia
+      bill_amount: 26
+      payment_method: atque
+      razorpay_payment_id: delectus
+      razorpay_order_id: et
+      razorpay_signature: repudiandae
     fileParameters: []
     responses: []
     responseFields: []

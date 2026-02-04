@@ -69,7 +69,7 @@ endpoints:
         name: link
         description: ''
         required: true
-        example: et
+        example: eius
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -79,15 +79,15 @@ endpoints:
         name: status
         description: ''
         required: true
-        example: et
+        example: odit
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanBodyParameters:
-      link: et
-      status: et
+      link: eius
+      status: odit
     fileParameters: []
     responses: []
     responseFields: []
@@ -121,7 +121,7 @@ endpoints:
         name: link
         description: ''
         required: true
-        example: aut
+        example: ea
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -131,15 +131,15 @@ endpoints:
         name: status
         description: ''
         required: true
-        example: dignissimos
+        example: occaecati
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanBodyParameters:
-      link: aut
-      status: dignissimos
+      link: ea
+      status: occaecati
     fileParameters: []
     responses: []
     responseFields: []
@@ -173,7 +173,7 @@ endpoints:
         name: link
         description: ''
         required: true
-        example: alias
+        example: non
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -183,15 +183,15 @@ endpoints:
         name: status
         description: ''
         required: true
-        example: aliquid
+        example: rerum
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanBodyParameters:
-      link: alias
-      status: aliquid
+      link: non
+      status: rerum
     fileParameters: []
     responses: []
     responseFields: []
@@ -225,7 +225,7 @@ endpoints:
         name: link
         description: ''
         required: true
-        example: quo
+        example: molestiae
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -235,15 +235,15 @@ endpoints:
         name: status
         description: ''
         required: true
-        example: dolorem
+        example: beatae
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanBodyParameters:
-      link: quo
-      status: dolorem
+      link: molestiae
+      status: beatae
     fileParameters: []
     responses: []
     responseFields: []
@@ -277,7 +277,7 @@ endpoints:
         name: link
         description: ''
         required: true
-        example: deserunt
+        example: sed
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -287,15 +287,15 @@ endpoints:
         name: status
         description: ''
         required: true
-        example: aliquid
+        example: necessitatibus
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanBodyParameters:
-      link: deserunt
-      status: aliquid
+      link: sed
+      status: necessitatibus
     fileParameters: []
     responses: []
     responseFields: []
@@ -329,7 +329,7 @@ endpoints:
         name: link
         description: ''
         required: true
-        example: adipisci
+        example: laborum
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -339,15 +339,15 @@ endpoints:
         name: status
         description: ''
         required: true
-        example: voluptatem
+        example: natus
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanBodyParameters:
-      link: adipisci
-      status: voluptatem
+      link: laborum
+      status: natus
     fileParameters: []
     responses: []
     responseFields: []
@@ -381,7 +381,7 @@ endpoints:
         name: link
         description: ''
         required: true
-        example: vel
+        example: nihil
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -391,15 +391,15 @@ endpoints:
         name: status
         description: ''
         required: true
-        example: vitae
+        example: quibusdam
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanBodyParameters:
-      link: vel
-      status: vitae
+      link: nihil
+      status: quibusdam
     fileParameters: []
     responses: []
     responseFields: []
@@ -433,7 +433,7 @@ endpoints:
         name: link
         description: ''
         required: true
-        example: fuga
+        example: voluptas
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -443,15 +443,15 @@ endpoints:
         name: status
         description: ''
         required: true
-        example: at
+        example: hic
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanBodyParameters:
-      link: fuga
-      status: at
+      link: voluptas
+      status: hic
     fileParameters: []
     responses: []
     responseFields: []
@@ -485,7 +485,7 @@ endpoints:
         name: link
         description: ''
         required: true
-        example: ab
+        example: sint
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -495,15 +495,15 @@ endpoints:
         name: status
         description: ''
         required: true
-        example: sed
+        example: asperiores
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanBodyParameters:
-      link: ab
-      status: sed
+      link: sint
+      status: asperiores
     fileParameters: []
     responses: []
     responseFields: []
@@ -537,7 +537,7 @@ endpoints:
         name: link
         description: ''
         required: true
-        example: architecto
+        example: repudiandae
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -547,7 +547,7 @@ endpoints:
         name: status
         description: ''
         required: true
-        example: consequatur
+        example: non
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -557,7 +557,7 @@ endpoints:
         name: title_one
         description: ''
         required: true
-        example: tempora
+        example: totam
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -567,7 +567,7 @@ endpoints:
         name: title_two
         description: ''
         required: true
-        example: quis
+        example: sint
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -577,18 +577,18 @@ endpoints:
         name: badge
         description: ''
         required: true
-        example: quia
+        example: odit
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanBodyParameters:
-      link: architecto
-      status: consequatur
-      title_one: tempora
-      title_two: quis
-      badge: quia
+      link: repudiandae
+      status: non
+      title_one: totam
+      title_two: sint
+      badge: odit
     fileParameters: []
     responses: []
     responseFields: []
@@ -622,7 +622,7 @@ endpoints:
         name: link
         description: ''
         required: true
-        example: quia
+        example: veniam
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -632,15 +632,15 @@ endpoints:
         name: status
         description: ''
         required: true
-        example: iste
+        example: autem
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanBodyParameters:
-      link: quia
-      status: iste
+      link: veniam
+      status: autem
     fileParameters: []
     responses: []
     responseFields: []

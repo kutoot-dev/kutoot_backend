@@ -22,14 +22,14 @@ endpoints:
         name: orderId
         description: ''
         required: true
-        example: voluptates
+        example: nesciunt
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      orderId: voluptates
+      orderId: nesciunt
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -67,14 +67,14 @@ endpoints:
         name: pincode
         description: 'Must be 6 digits.'
         required: true
-        example: '528176'
+        example: '475327'
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanBodyParameters:
-      pincode: '528176'
+      pincode: '475327'
     fileParameters: []
     responses: []
     responseFields: []

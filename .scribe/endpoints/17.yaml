@@ -237,14 +237,14 @@ endpoints:
         name: id
         description: 'The ID of the order show.'
         required: true
-        example: quae
+        example: molestiae
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      id: quae
+      id: molestiae
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -334,14 +334,14 @@ endpoints:
         name: id
         description: 'The ID of the get review.'
         required: true
-        example: incidunt
+        example: ea
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      id: incidunt
+      id: ea
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -435,7 +435,7 @@ endpoints:
         name: identifier
         description: ''
         required: true
-        example: et
+        example: asperiores
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -445,15 +445,15 @@ endpoints:
         name: name
         description: 'Must not be greater than 255 characters.'
         required: true
-        example: jfrhpop
+        example: ubcxghmwx
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanBodyParameters:
-      identifier: et
-      name: jfrhpop
+      identifier: asperiores
+      name: ubcxghmwx
     fileParameters: []
     responses: []
     responseFields: []
@@ -487,7 +487,7 @@ endpoints:
         name: identifier
         description: ''
         required: true
-        example: accusantium
+        example: voluptatem
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -497,7 +497,7 @@ endpoints:
         name: name
         description: 'Must not be greater than 255 characters.'
         required: true
-        example: syixyyj
+        example: ocpkmycpovwunvfgxwshpnewo
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -517,7 +517,7 @@ endpoints:
         name: gender
         description: ''
         required: true
-        example: male
+        example: female
         type: string
         enumValues:
           - male
@@ -530,7 +530,7 @@ endpoints:
         name: phone
         description: 'Must not be greater than 20 characters.'
         required: true
-        example: yqejhegrvpbr
+        example: j
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -540,7 +540,7 @@ endpoints:
         name: address
         description: 'Must not be greater than 255 characters.'
         required: true
-        example: gpwlnkdiuxoharaclqenbjm
+        example: cxkuanng
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -550,7 +550,7 @@ endpoints:
         name: house_no
         description: 'Must not be greater than 50 characters.'
         required: true
-        example: neiovgzitwttitfkja
+        example: eihwgxmkdshvmssag
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -560,7 +560,7 @@ endpoints:
         name: street
         description: 'Must not be greater than 255 characters.'
         required: true
-        example: cfykcoci
+        example: hrqjqanzeog
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -570,7 +570,7 @@ endpoints:
         name: city_id
         description: 'The <code>id</code> of an existing record in the cities table.'
         required: true
-        example: 7
+        example: 6
         type: integer
         enumValues: []
         exampleWasSpecified: false
@@ -580,7 +580,7 @@ endpoints:
         name: state_id
         description: 'The <code>id</code> of an existing record in the states table.'
         required: true
-        example: 1
+        example: 9
         type: integer
         enumValues: []
         exampleWasSpecified: false
@@ -600,24 +600,24 @@ endpoints:
         name: zip_code
         description: 'Must not be greater than 20 characters.'
         required: true
-        example: gfhbchvbgqznniawbz
+        example: xqqtqatstep
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanBodyParameters:
-      identifier: accusantium
-      name: syixyyj
-      gender: male
-      phone: yqejhegrvpbr
-      address: gpwlnkdiuxoharaclqenbjm
-      house_no: neiovgzitwttitfkja
-      street: cfykcoci
-      city_id: 7
-      state_id: 1
+      identifier: voluptatem
+      name: ocpkmycpovwunvfgxwshpnewo
+      gender: female
+      phone: j
+      address: cxkuanng
+      house_no: eihwgxmkdshvmssag
+      street: hrqjqanzeog
+      city_id: 6
+      state_id: 9
       country_id: 7
-      zip_code: gfhbchvbgqznniawbz
+      zip_code: xqqtqatstep
     fileParameters:
       image: null
     responses: []
@@ -652,7 +652,7 @@ endpoints:
         name: name
         description: ''
         required: true
-        example: corporis
+        example: quaerat
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -672,7 +672,7 @@ endpoints:
         name: phone
         description: ''
         required: true
-        example: tempore
+        example: ea
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -715,17 +715,17 @@ endpoints:
         name: zip_code
         description: 'Must not be greater than 10 characters.'
         required: false
-        example: rzv
+        example: dyv
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: true
         custom: []
     cleanBodyParameters:
-      name: corporis
-      phone: tempore
+      name: quaerat
+      phone: ea
       gender: other
-      zip_code: rzv
+      zip_code: dyv
     fileParameters: []
     responses: []
     responseFields: []
@@ -759,7 +759,7 @@ endpoints:
         name: current_password
         description: ''
         required: true
-        example: dicta
+        example: vitae
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -769,15 +769,15 @@ endpoints:
         name: password
         description: 'Must be at least 4 characters.'
         required: true
-        example: '?O"^IB24'
+        example: '|#Vd<C*Sh'
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanBodyParameters:
-      current_password: dicta
-      password: '?O"^IB24'
+      current_password: vitae
+      password: '|#Vd<C*Sh'
     fileParameters: []
     responses: []
     responseFields: []
@@ -850,14 +850,14 @@ endpoints:
         name: id
         description: 'The ID of the add compare product.'
         required: true
-        example: natus
+        example: dolorem
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      id: natus
+      id: dolorem
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -904,14 +904,14 @@ endpoints:
         name: id
         description: 'The ID of the delete compare product.'
         required: true
-        example: voluptas
+        example: aut
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      id: voluptas
+      id: aut
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -949,7 +949,7 @@ endpoints:
         name: banner_image
         description: ''
         required: true
-        example: tempora
+        example: illum
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -959,7 +959,7 @@ endpoints:
         name: logo
         description: ''
         required: true
-        example: consequatur
+        example: corrupti
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -969,7 +969,7 @@ endpoints:
         name: shop_name
         description: ''
         required: true
-        example: qui
+        example: laboriosam
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -979,7 +979,7 @@ endpoints:
         name: email
         description: ''
         required: true
-        example: saepe
+        example: nam
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -989,7 +989,7 @@ endpoints:
         name: phone
         description: ''
         required: true
-        example: saepe
+        example: aperiam
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -999,7 +999,7 @@ endpoints:
         name: address
         description: ''
         required: true
-        example: voluptatem
+        example: veniam
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -1009,7 +1009,7 @@ endpoints:
         name: open_at
         description: ''
         required: true
-        example: non
+        example: tempora
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -1019,7 +1019,7 @@ endpoints:
         name: closed_at
         description: ''
         required: true
-        example: aspernatur
+        example: est
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -1029,22 +1029,22 @@ endpoints:
         name: agree_terms_condition
         description: ''
         required: true
-        example: facilis
+        example: repudiandae
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanBodyParameters:
-      banner_image: tempora
-      logo: consequatur
-      shop_name: qui
-      email: saepe
-      phone: saepe
-      address: voluptatem
-      open_at: non
-      closed_at: aspernatur
-      agree_terms_condition: facilis
+      banner_image: illum
+      logo: corrupti
+      shop_name: laboriosam
+      email: nam
+      phone: aperiam
+      address: veniam
+      open_at: tempora
+      closed_at: est
+      agree_terms_condition: repudiandae
     fileParameters: []
     responses: []
     responseFields: []
@@ -1117,14 +1117,14 @@ endpoints:
         name: id
         description: 'The ID of the add to wishlist.'
         required: true
-        example: eius
+        example: quis
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      id: eius
+      id: quis
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -1171,14 +1171,14 @@ endpoints:
         name: id
         description: 'The ID of the remove wishlist.'
         required: true
-        example: dolorum
+        example: est
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      id: dolorum
+      id: est
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -1272,7 +1272,7 @@ endpoints:
         name: subject
         description: ''
         required: true
-        example: expedita
+        example: dolores
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -1282,7 +1282,7 @@ endpoints:
         name: description
         description: ''
         required: true
-        example: cumque
+        example: facere
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -1292,16 +1292,16 @@ endpoints:
         name: product_id
         description: ''
         required: true
-        example: fugiat
+        example: quam
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanBodyParameters:
-      subject: expedita
-      description: cumque
-      product_id: fugiat
+      subject: dolores
+      description: facere
+      product_id: quam
     fileParameters: []
     responses: []
     responseFields: []
@@ -1335,7 +1335,7 @@ endpoints:
         name: rating
         description: ''
         required: true
-        example: fugit
+        example: id
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -1345,7 +1345,7 @@ endpoints:
         name: review
         description: ''
         required: true
-        example: officiis
+        example: rem
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -1355,7 +1355,7 @@ endpoints:
         name: product_id
         description: ''
         required: true
-        example: esse
+        example: omnis
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -1372,9 +1372,9 @@ endpoints:
         nullable: false
         custom: []
     cleanBodyParameters:
-      rating: fugit
-      review: officiis
-      product_id: esse
+      rating: id
+      review: rem
+      product_id: omnis
     fileParameters: []
     responses: []
     responseFields: []
@@ -1434,14 +1434,14 @@ endpoints:
         name: id
         description: 'The ID of the state by country.'
         required: true
-        example: et
+        example: nemo
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      id: et
+      id: nemo
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -1488,14 +1488,14 @@ endpoints:
         name: id
         description: 'The ID of the city by state.'
         required: true
-        example: natus
+        example: cum
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      id: natus
+      id: cum
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []

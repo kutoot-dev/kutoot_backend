@@ -71,7 +71,7 @@ endpoints:
         name: seller_id
         description: ''
         required: true
-        example: voluptatibus
+        example: hic
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -88,7 +88,7 @@ endpoints:
         nullable: false
         custom: []
     cleanBodyParameters:
-      seller_id: voluptatibus
+      seller_id: hic
     fileParameters: []
     responses: []
     responseFields: []
@@ -118,14 +118,14 @@ endpoints:
         name: id
         description: 'The ID of the load active seller message.'
         required: true
-        example: ea
+        example: sunt
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      id: ea
+      id: sunt
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -172,14 +172,14 @@ endpoints:
         name: slug
         description: 'The slug of the chat with seller.'
         required: true
-        example: et
+        example: accusamus
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      slug: et
+      slug: accusamus
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -269,14 +269,14 @@ endpoints:
         name: id
         description: 'The ID of the load chat box.'
         required: true
-        example: sunt
+        example: voluptatem
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      id: sunt
+      id: voluptatem
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -323,14 +323,14 @@ endpoints:
         name: id
         description: 'The ID of the load new message.'
         required: true
-        example: ut
+        example: cumque
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      id: ut
+      id: cumque
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []

@@ -114,7 +114,7 @@ endpoints:
         name: title
         description: ''
         required: true
-        example: sint
+        example: accusantium
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -124,7 +124,7 @@ endpoints:
         name: icon
         description: ''
         required: true
-        example: tenetur
+        example: qui
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -134,7 +134,7 @@ endpoints:
         name: description
         description: ''
         required: true
-        example: nobis
+        example: sit
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -144,17 +144,17 @@ endpoints:
         name: status
         description: ''
         required: true
-        example: vitae
+        example: ea
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanBodyParameters:
-      title: sint
-      icon: tenetur
-      description: nobis
-      status: vitae
+      title: accusantium
+      icon: qui
+      description: sit
+      status: ea
     fileParameters: []
     responses: []
     responseFields: []
@@ -318,7 +318,7 @@ endpoints:
         name: icon
         description: ''
         required: true
-        example: consectetur
+        example: aliquam
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -328,7 +328,7 @@ endpoints:
         name: description
         description: ''
         required: true
-        example: eum
+        example: sequi
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -338,16 +338,16 @@ endpoints:
         name: status
         description: ''
         required: true
-        example: quaerat
+        example: sit
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanBodyParameters:
-      icon: consectetur
-      description: eum
-      status: quaerat
+      icon: aliquam
+      description: sequi
+      status: sit
     fileParameters: []
     responses: []
     responseFields: []
@@ -418,14 +418,14 @@ endpoints:
         name: id
         description: 'The ID of the service status.'
         required: true
-        example: ipsam
+        example: ducimus
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      id: ipsam
+      id: ducimus
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []

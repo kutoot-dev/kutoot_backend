@@ -112,7 +112,7 @@ endpoints:
         name: name
         description: ''
         required: true
-        example: consequuntur
+        example: qui
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -122,7 +122,7 @@ endpoints:
         name: slug
         description: ''
         required: true
-        example: dolores
+        example: autem
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -132,7 +132,7 @@ endpoints:
         name: category
         description: ''
         required: true
-        example: repudiandae
+        example: vel
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -142,17 +142,17 @@ endpoints:
         name: status
         description: ''
         required: true
-        example: blanditiis
+        example: omnis
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanBodyParameters:
-      name: consequuntur
-      slug: dolores
-      category: repudiandae
-      status: blanditiis
+      name: qui
+      slug: autem
+      category: vel
+      status: omnis
     fileParameters: []
     responses: []
     responseFields: []
@@ -182,14 +182,14 @@ endpoints:
         name: id
         description: 'The ID of the product sub category.'
         required: true
-        example: nemo
+        example: eaque
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      id: nemo
+      id: eaque
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -236,14 +236,14 @@ endpoints:
         name: product_sub_category
         description: ''
         required: true
-        example: adipisci
+        example: doloremque
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      product_sub_category: adipisci
+      product_sub_category: doloremque
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -291,14 +291,14 @@ endpoints:
         name: id
         description: 'The ID of the product sub category.'
         required: true
-        example: reiciendis
+        example: accusamus
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      id: reiciendis
+      id: accusamus
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
@@ -306,7 +306,7 @@ endpoints:
         name: name
         description: ''
         required: true
-        example: excepturi
+        example: quas
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -326,7 +326,7 @@ endpoints:
         name: category
         description: ''
         required: true
-        example: sed
+        example: sint
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -336,16 +336,16 @@ endpoints:
         name: status
         description: ''
         required: true
-        example: est
+        example: et
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanBodyParameters:
-      name: excepturi
-      category: sed
-      status: est
+      name: quas
+      category: sint
+      status: et
     fileParameters: []
     responses: []
     responseFields: []
@@ -375,14 +375,14 @@ endpoints:
         name: id
         description: 'The ID of the product sub category.'
         required: true
-        example: et
+        example: molestias
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      id: et
+      id: molestias
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -416,14 +416,14 @@ endpoints:
         name: id
         description: 'The ID of the product sub category status.'
         required: true
-        example: dolores
+        example: laborum
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      id: dolores
+      id: laborum
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []

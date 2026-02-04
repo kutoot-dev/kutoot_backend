@@ -106,14 +106,14 @@ endpoints:
         name: id
         description: 'The ID of the blog comment status.'
         required: true
-        example: reiciendis
+        example: eligendi
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      id: reiciendis
+      id: eligendi
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []

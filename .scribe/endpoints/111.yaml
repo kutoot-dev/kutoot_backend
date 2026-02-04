@@ -69,7 +69,7 @@ endpoints:
         name: link
         description: ''
         required: true
-        example: ab
+        example: architecto
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -79,15 +79,15 @@ endpoints:
         name: icon
         description: ''
         required: true
-        example: perferendis
+        example: enim
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanBodyParameters:
-      link: ab
-      icon: perferendis
+      link: architecto
+      icon: enim
     fileParameters: []
     responses: []
     responseFields: []
@@ -117,14 +117,14 @@ endpoints:
         name: id
         description: 'The ID of the social link.'
         required: true
-        example: voluptate
+        example: quam
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      id: voluptate
+      id: quam
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -172,14 +172,14 @@ endpoints:
         name: id
         description: 'The ID of the social link.'
         required: true
-        example: aspernatur
+        example: dolorem
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      id: aspernatur
+      id: dolorem
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
@@ -187,7 +187,7 @@ endpoints:
         name: link
         description: ''
         required: true
-        example: non
+        example: quidem
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -197,15 +197,15 @@ endpoints:
         name: icon
         description: ''
         required: true
-        example: incidunt
+        example: consequatur
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanBodyParameters:
-      link: non
-      icon: incidunt
+      link: quidem
+      icon: consequatur
     fileParameters: []
     responses: []
     responseFields: []
@@ -235,14 +235,14 @@ endpoints:
         name: id
         description: 'The ID of the social link.'
         required: true
-        example: qui
+        example: rem
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      id: qui
+      id: rem
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []

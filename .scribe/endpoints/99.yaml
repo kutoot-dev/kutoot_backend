@@ -112,7 +112,7 @@ endpoints:
         name: category
         description: ''
         required: true
-        example: at
+        example: quos
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -122,7 +122,7 @@ endpoints:
         name: status
         description: ''
         required: true
-        example: quas
+        example: est
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -132,16 +132,16 @@ endpoints:
         name: serial
         description: ''
         required: true
-        example: non
+        example: aperiam
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanBodyParameters:
-      category: at
-      status: quas
-      serial: non
+      category: quos
+      status: est
+      serial: aperiam
     fileParameters: []
     responses: []
     responseFields: []
@@ -171,14 +171,14 @@ endpoints:
         name: id
         description: 'The ID of the mega menu category.'
         required: true
-        example: 4
+        example: 9
         type: integer
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      id: 4
+      id: 9
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -225,14 +225,14 @@ endpoints:
         name: mega_menu_category
         description: ''
         required: true
-        example: 5
+        example: 16
         type: integer
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      mega_menu_category: 5
+      mega_menu_category: 16
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -280,14 +280,14 @@ endpoints:
         name: id
         description: 'The ID of the mega menu category.'
         required: true
-        example: 8
+        example: 17
         type: integer
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      id: 8
+      id: 17
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
@@ -305,7 +305,7 @@ endpoints:
         name: status
         description: ''
         required: true
-        example: quos
+        example: rem
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -315,15 +315,15 @@ endpoints:
         name: serial
         description: ''
         required: true
-        example: tempore
+        example: deleniti
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanBodyParameters:
-      status: quos
-      serial: tempore
+      status: rem
+      serial: deleniti
     fileParameters: []
     responses: []
     responseFields: []
@@ -353,14 +353,14 @@ endpoints:
         name: id
         description: 'The ID of the mega menu category.'
         required: true
-        example: 10
+        example: 19
         type: integer
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      id: 10
+      id: 19
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -394,14 +394,14 @@ endpoints:
         name: id
         description: 'The ID of the mega menu category status.'
         required: true
-        example: et
+        example: quod
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      id: et
+      id: quod
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []

@@ -135,14 +135,14 @@ endpoints:
         name: image
         description: ''
         required: true
-        example: est
+        example: asperiores
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanBodyParameters:
-      image: est
+      image: asperiores
     fileParameters: []
     responses: []
     responseFields: []

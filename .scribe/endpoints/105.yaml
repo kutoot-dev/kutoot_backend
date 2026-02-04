@@ -112,7 +112,7 @@ endpoints:
         name: city_id
         description: ''
         required: true
-        example: ipsum
+        example: expedita
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -122,7 +122,7 @@ endpoints:
         name: shipping_rule
         description: ''
         required: true
-        example: minima
+        example: magni
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -132,7 +132,7 @@ endpoints:
         name: type
         description: ''
         required: true
-        example: exercitationem
+        example: earum
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -142,7 +142,7 @@ endpoints:
         name: shipping_fee
         description: ''
         required: true
-        example: 68.43099
+        example: 26.47451224
         type: number
         enumValues: []
         exampleWasSpecified: false
@@ -152,7 +152,7 @@ endpoints:
         name: condition_from
         description: ''
         required: true
-        example: 93506.573128176
+        example: 6223.8042
         type: number
         enumValues: []
         exampleWasSpecified: false
@@ -162,19 +162,19 @@ endpoints:
         name: condition_to
         description: ''
         required: true
-        example: 24821455.0
+        example: 1.963
         type: number
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanBodyParameters:
-      city_id: ipsum
-      shipping_rule: minima
-      type: exercitationem
-      shipping_fee: 68.43099
-      condition_from: 93506.573128176
-      condition_to: 24821455.0
+      city_id: expedita
+      shipping_rule: magni
+      type: earum
+      shipping_fee: 26.47451224
+      condition_from: 6223.8042
+      condition_to: 1.963
     fileParameters: []
     responses: []
     responseFields: []
@@ -204,14 +204,14 @@ endpoints:
         name: id
         description: 'The ID of the shipping.'
         required: true
-        example: nesciunt
+        example: explicabo
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      id: nesciunt
+      id: explicabo
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -259,14 +259,14 @@ endpoints:
         name: id
         description: 'The ID of the shipping.'
         required: true
-        example: quis
+        example: quidem
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      id: quis
+      id: quidem
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
@@ -274,7 +274,7 @@ endpoints:
         name: shipping_rule
         description: ''
         required: true
-        example: animi
+        example: libero
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -284,7 +284,7 @@ endpoints:
         name: type
         description: ''
         required: true
-        example: est
+        example: officia
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -294,7 +294,7 @@ endpoints:
         name: shipping_fee
         description: ''
         required: true
-        example: 3028867.9
+        example: 19.0
         type: number
         enumValues: []
         exampleWasSpecified: false
@@ -304,7 +304,7 @@ endpoints:
         name: condition_from
         description: ''
         required: true
-        example: 3.79402002
+        example: 62908.3772662
         type: number
         enumValues: []
         exampleWasSpecified: false
@@ -314,18 +314,18 @@ endpoints:
         name: condition_to
         description: ''
         required: true
-        example: 135632.5
+        example: 5495277.3653
         type: number
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanBodyParameters:
-      shipping_rule: animi
-      type: est
-      shipping_fee: 3028867.9
-      condition_from: 3.79402002
-      condition_to: 135632.5
+      shipping_rule: libero
+      type: officia
+      shipping_fee: 19.0
+      condition_from: 62908.3772662
+      condition_to: 5495277.3653
     fileParameters: []
     responses: []
     responseFields: []
@@ -355,14 +355,14 @@ endpoints:
         name: id
         description: 'The ID of the shipping.'
         required: true
-        example: molestiae
+        example: ut
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      id: molestiae
+      id: ut
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -396,14 +396,14 @@ endpoints:
         name: city_id
         description: 'The ID of the city.'
         required: true
-        example: tempora
+        example: nostrum
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      city_id: tempora
+      city_id: nostrum
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []

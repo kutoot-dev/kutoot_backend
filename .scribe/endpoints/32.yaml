@@ -65,14 +65,14 @@ endpoints:
         name: id
         description: 'The ID of the show product report.'
         required: true
-        example: sit
+        example: officiis
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      id: sit
+      id: officiis
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []

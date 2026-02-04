@@ -112,7 +112,7 @@ endpoints:
         name: key
         description: ''
         required: true
-        example: atque
+        example: deserunt
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -122,15 +122,15 @@ endpoints:
         name: status
         description: ''
         required: true
-        example: laborum
+        example: eum
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanBodyParameters:
-      key: atque
-      status: laborum
+      key: deserunt
+      status: eum
     fileParameters: []
     responses: []
     responseFields: []
@@ -160,14 +160,14 @@ endpoints:
         name: id
         description: 'The ID of the specification key.'
         required: true
-        example: tempora
+        example: ex
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      id: tempora
+      id: ex
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -214,14 +214,14 @@ endpoints:
         name: specification_key
         description: ''
         required: true
-        example: eius
+        example: repellat
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      specification_key: eius
+      specification_key: repellat
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -269,14 +269,14 @@ endpoints:
         name: id
         description: 'The ID of the specification key.'
         required: true
-        example: quisquam
+        example: amet
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      id: quisquam
+      id: amet
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
@@ -294,14 +294,14 @@ endpoints:
         name: status
         description: ''
         required: true
-        example: corporis
+        example: neque
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanBodyParameters:
-      status: corporis
+      status: neque
     fileParameters: []
     responses: []
     responseFields: []
@@ -331,14 +331,14 @@ endpoints:
         name: id
         description: 'The ID of the specification key.'
         required: true
-        example: aspernatur
+        example: beatae
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      id: aspernatur
+      id: beatae
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -372,14 +372,14 @@ endpoints:
         name: id
         description: 'The ID of the specification key status.'
         required: true
-        example: cumque
+        example: sequi
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      id: cumque
+      id: sequi
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []

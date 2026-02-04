@@ -36,8 +36,8 @@ endpoints:
         headers:
           x-ratelimit-limit: '60'
           x-ratelimit-remaining: '0'
-          retry-after: '54'
-          x-ratelimit-reset: '1770131295'
+          retry-after: '53'
+          x-ratelimit-reset: '1770131364'
           cache-control: 'no-cache, private'
           content-type: application/json
           access-control-allow-origin: '*'
@@ -78,14 +78,14 @@ endpoints:
         name: email
         description: ''
         required: true
-        example: tenetur
+        example: omnis
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanBodyParameters:
-      email: tenetur
+      email: omnis
     fileParameters: []
     responses: []
     responseFields: []
@@ -115,14 +115,14 @@ endpoints:
         name: token
         description: ''
         required: true
-        example: ut
+        example: consequatur
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      token: ut
+      token: consequatur
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -138,8 +138,8 @@ endpoints:
         headers:
           x-ratelimit-limit: '60'
           x-ratelimit-remaining: '0'
-          retry-after: '54'
-          x-ratelimit-reset: '1770131295'
+          retry-after: '53'
+          x-ratelimit-reset: '1770131364'
           cache-control: 'no-cache, private'
           content-type: application/json
           access-control-allow-origin: '*'
@@ -176,14 +176,14 @@ endpoints:
         name: token
         description: ''
         required: true
-        example: et
+        example: dolor
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      token: et
+      token: dolor
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
@@ -191,7 +191,7 @@ endpoints:
         name: email
         description: ''
         required: true
-        example: voluptatem
+        example: autem
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -201,15 +201,15 @@ endpoints:
         name: password
         description: 'Must be at least 4 characters.'
         required: true
-        example: Uaewl$H4@;
+        example: _ae-ONfSkn
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanBodyParameters:
-      email: voluptatem
-      password: Uaewl$H4@;
+      email: autem
+      password: _ae-ONfSkn
     fileParameters: []
     responses: []
     responseFields: []

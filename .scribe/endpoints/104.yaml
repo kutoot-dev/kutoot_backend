@@ -65,14 +65,14 @@ endpoints:
         name: id
         description: 'The ID of the update menu visibility.'
         required: true
-        example: eaque
+        example: et
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      id: eaque
+      id: et
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []

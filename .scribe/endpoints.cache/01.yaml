@@ -24,14 +24,14 @@ endpoints:
         name: order
         description: ''
         required: true
-        example: officiis
+        example: architecto
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      order: officiis
+      order: architecto
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
@@ -39,14 +39,14 @@ endpoints:
         name: reason
         description: 'Must not be greater than 255 characters.'
         required: true
-        example: nlvbvlpskzh
+        example: co
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanBodyParameters:
-      reason: nlvbvlpskzh
+      reason: co
     fileParameters: []
     responses: []
     responseFields: []
@@ -377,14 +377,14 @@ endpoints:
         name: id
         description: 'The ID of the order show.'
         required: true
-        example: enim
+        example: quia
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      id: enim
+      id: quia
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -431,14 +431,14 @@ endpoints:
         name: id
         description: 'The ID of the delete order.'
         required: true
-        example: rem
+        example: ut
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      id: rem
+      id: ut
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -472,14 +472,14 @@ endpoints:
         name: id
         description: 'The ID of the update order status.'
         required: true
-        example: et
+        example: consequatur
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanUrlParameters:
-      id: et
+      id: consequatur
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters:
@@ -487,7 +487,7 @@ endpoints:
         name: order_status
         description: ''
         required: true
-        example: ipsum
+        example: cupiditate
         type: string
         enumValues: []
         exampleWasSpecified: false
@@ -497,15 +497,15 @@ endpoints:
         name: payment_status
         description: ''
         required: true
-        example: sit
+        example: nulla
         type: string
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         custom: []
     cleanBodyParameters:
-      order_status: ipsum
-      payment_status: sit
+      order_status: cupiditate
+      payment_status: nulla
     fileParameters: []
     responses: []
     responseFields: []
