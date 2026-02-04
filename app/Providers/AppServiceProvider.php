@@ -7,6 +7,7 @@ use App\Models\Setting;
 use Illuminate\Support\Facades\URL;
 use App\Models\Product;
 use App\Jobs\SyncProductToZohoJob;
+use Opcodes\LogViewer\Facades\LogViewer;
 class AppServiceProvider extends ServiceProvider
 {
     /**
@@ -18,9 +19,9 @@ class AppServiceProvider extends ServiceProvider
     {
         //
 
-          if (env('APP_ENV') === 'production') {
-                    URL::forceScheme('https');
-            }
+        if (env('APP_ENV') === 'production') {
+            URL::forceScheme('https');
+        }
     }
 
     /**
@@ -42,6 +43,10 @@ class AppServiceProvider extends ServiceProvider
             ]);
 
             SyncProductToZohoJob::dispatch($product);
+        });
+
+        LogViewer::auth(function ($request) {
+            // return true to allow viewing the Log Viewer.
         });
     }
 }
