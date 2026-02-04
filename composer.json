@@ -23,6 +23,7 @@
         "mews/purifier": "^3.3",
         "mollie/laravel-mollie": "^2.0",
         "nnjeim/world": "^1.1",
+        "opcodesio/log-viewer": "^3.21",
         "paypal/rest-api-sdk-php": "^1.14",
         "pusher/pusher-php-server": "^7.0",
         "razorpay/razorpay": "^2.8",
