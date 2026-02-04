@@ -57,17 +57,31 @@ class OtpController extends Controller
         // Attempt to send SMS
         $smsSent = false;
         $smsResult = null;
+        $smsError = null;
         try {
             $smsResult = SmsHelper::sendOtp($phone, $otp);
             $smsSent = isset($smsResult['success']) && $smsResult['success'];
+
+            if (!$smsSent && isset($smsResult['message'])) {
+                $smsError = $smsResult['message'];
+            }
         } catch (\Exception $e) {
             Log::error('SMS sending failed: ' . $e->getMessage());
-            // Return success even if SMS fails, but log the error
-            // The OTP is still valid for 10 minutes
+            $smsError = $e->getMessage();
         }
 
         // Log for debugging (remove in production)
-        Log::info('OTP for ' . $phone . ': ' . $otp);
+        Log::info('OTP for ' . $phone . ': ' . $otp . ' | SMS sent: ' . ($smsSent ? 'yes' : 'no'));
+
+        // In debug mode, allow OTP without SMS (for testing)
+        // In production, require SMS to be sent successfully
+        if (!$smsSent && !config('app.debug')) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to send OTP. Please try again.',
+                'error' => $smsError
+            ], 500);
+        }
 
         $response = [
             'success' => true,
@@ -78,6 +92,10 @@ class OtpController extends Controller
         if (config('app.debug')) {
             $response['debug_otp'] = $otp;
             $response['sms_sent'] = $smsSent;
+            if (!$smsSent) {
+                $response['sms_error'] = $smsError;
+                $response['note'] = 'OTP generated but SMS not sent (debug mode allows this)';
+            }
         }
 
         return response()->json($response);
