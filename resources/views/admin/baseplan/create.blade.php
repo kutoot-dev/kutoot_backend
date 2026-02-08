@@ -30,7 +30,7 @@
                                     </div>
                                 </div>
 
-                        
+
 
 
                                 <div class="form-group col-12">
@@ -51,7 +51,7 @@
 
                                     </select>
                                 </div>
-              
+
                                 <div class="form-group col-12">
                                     <label>{{__('admin.Title')}} <span class="text-danger">*</span></label>
                                     <input type="text" id="title" class="form-control"  name="title" value="{{ old('title') }}">
@@ -77,7 +77,7 @@
                                     <input type="number" step="1" id="coupons_per_campaign" class="form-control"  name="coupons_per_campaign" value="{{ old('coupons_per_campaign') }}" required>
                                 </div>
 
-                               
+
 
                                 <div class="form-group col-sm-6 col-md-4">
                                     <label>{{__('admin.Status')}}</label>
@@ -87,7 +87,7 @@
                                     </select>
                                 </div>
 
-                                
+
 
                                 {{-- <div class="form-group col-6">
                                     <label>{{__('Coin Expire Duration(From Date of Purchase)')}} <span class="text-danger">*</span></label>
@@ -97,7 +97,7 @@
                                         <option value="9">9 Month</option>
                                         <option value="12">12 Month</option>
                                         <option value="0">Unlimited</option>
-                                       
+
                                     </select>
                                 </div> --}}
 
@@ -133,6 +133,16 @@
                                     <input type="text"  class="form-control"  name="point5" value="{{ old('title') }}">
                                 </div>
 
+                                <div class="form-group col-12" id="referral_form_url_field" style="display:none;">
+                                    <label>{{__('Referral Form URL')}} <small class="text-muted">(For free plans only)</small></label>
+                                    <input type="url" class="form-control" name="referral_form_url" value="{{ old('referral_form_url') }}" placeholder="https://forms.google.com/...">
+                                </div>
+
+                                <div class="form-group col-12" id="task_form_url_field" style="display:none;">
+                                    <label>{{__('Task Form URL')}} <small class="text-muted">(For free plans only)</small></label>
+                                    <input type="url" class="form-control" name="task_form_url" value="{{ old('task_form_url') }}" placeholder="https://forms.google.com/...">
+                                </div>
+
                                 <div class="form-group col-12">
                                     <label>{{__('admin.Description')}}</label>
                                     <textarea name="description" id="" cols="30" rows="10" class="summernote">{{ old('description') }}</textarea>
@@ -161,5 +171,22 @@
 
             reader.readAsDataURL(event.target.files[0]);
         };
+
+        // Show/hide form URL fields based on ticket price
+        $(document).ready(function() {
+            function toggleFormUrlFields() {
+                var price = parseFloat($('#ticket_price').val()) || 0;
+                if (price === 0) {
+                    $('#referral_form_url_field').slideDown();
+                    $('#task_form_url_field').slideDown();
+                } else {
+                    $('#referral_form_url_field').slideUp();
+                    $('#task_form_url_field').slideUp();
+                }
+            }
+
+            $('#ticket_price').on('input change', toggleFormUrlFields);
+            toggleFormUrlFields(); // Initial check
+        });
       </script>
 @endsection

@@ -119,6 +119,7 @@ use App\Http\Controllers\WEB\Deliveryman\Auth\DeliveryManResetPasswordController
 use App\Http\Controllers\WEB\Seller\InventoryController as SellerInventoryController;
 use App\Http\Controllers\WEB\Admin\CoinCampaignController;
 use App\Http\Controllers\WEB\Admin\BasePlanController;
+use App\Http\Controllers\WEB\Admin\RewardGiveawayController;
 use App\Http\Controllers\WEB\Admin\WinnerController;
 use App\Http\Controllers\WEB\Admin\CoinLedgerAdminController;
 use App\Http\Controllers\CouponCampaignController;
@@ -491,6 +492,12 @@ Route::group(['middleware' => ['demo', 'XSS']], function () {
 
         Route::get('coin-campaign-orders', [CoinCampaignController::class, 'purchasedindex'])->name('coin-campaign-orders');
         Route::get('/admin/purchase/{id}', [CoinCampaignController::class, 'showPurchaseDetails'])->name('purchasedetails');
+
+
+        // Reward Giveaway Routes
+        Route::get('rewards/giveaway', [RewardGiveawayController::class, 'index'])->name('rewards.giveaway');
+        Route::post('rewards/preview', [RewardGiveawayController::class, 'preview'])->name('rewards.preview');
+        Route::post('rewards/distribute', [RewardGiveawayController::class, 'distribute'])->name('rewards.distribute');
 
 
         // start auth route

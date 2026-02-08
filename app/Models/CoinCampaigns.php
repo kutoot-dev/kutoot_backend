@@ -14,6 +14,8 @@ class CoinCampaigns extends Model
     protected $casts = [
         // 'tags' => 'json',
         'highlights' => 'array',
+        'marketing_goal_status' => 'decimal:2',
+        'actual_status' => 'decimal:2',
     ];
 
     protected $fillable = [
@@ -27,7 +29,9 @@ class CoinCampaigns extends Model
         'total_tickets',
         'sold_tickets',
         'coins_per_campaign',
+        'max_coins',
         'coupons_per_campaign',
+        'max_coupons',
         'max_coins_per_transaction',
         'tags',
         'start_date',
@@ -39,6 +43,8 @@ class CoinCampaigns extends Model
         'created_at',
         'updated_at',
         'marketing_start_percent',
+        'marketing_goal_status',
+        'actual_status',
         'series_prefix',
         'number_min',
         'number_max',
@@ -85,7 +91,7 @@ class CoinCampaigns extends Model
         }
 
         $progress = ($currentBuys / $totalGoal) * 100;
-        
+
 
         if($progress < 11){
             $display_percentage=$this->marketing_start_percent;
@@ -218,5 +224,5 @@ public function baseplans()
 
 
 
-    
+
 }

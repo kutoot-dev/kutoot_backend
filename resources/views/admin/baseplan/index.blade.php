@@ -20,46 +20,54 @@
                 <div class="col">
                   <div class="card">
                     <div class="card-body">
-                    
+
                       <div class="table-responsive table-invoice">
                         <table class="table table-striped" id="dataTable">
                             <thead>
                                 <tr>
                                   <th>ID</th>
                                     <th>{{__('coin_campaign.title')}}</th>
-                                    
+                                    <th>{{__('Campaign Name')}}</th>
                                     <th>{{__('Price')}}</th>
                                     <th>{{__('coin_campaign.img')}}</th>
-                                   
+
                                     <th>{{__('Total Earning Coins')}}</th>
                                     <th>{{__('Total Coupons')}}</th>
-                                   
-                              
+
+
                                     <th>{{__('coin_campaign.status')}}</th>
                                     <th width="14%">{{__('admin.Action')}}</th>
                                   </tr>
                             </thead>
                             <tbody>
-                              
-                               
+
+
                                   @foreach ($data as $key => $campaign)
                                       <tr>
                                         <td>{{ $campaign->id }}</td>
                                           <td>{{ $campaign->title }}</td>
-                                          
-                                        
+                                          <td>
+                                              @if($campaign->campaigns && $campaign->campaigns->count() > 0)
+                                                  @foreach($campaign->campaigns as $campaignItem)
+                                                      <span class="badge badge-primary mb-2">{{ $campaignItem->title }}</span>
+                                                  @endforeach
+                                              @else
+                                                  <span class="text-muted">-</span>
+                                              @endif
+                                          </td>
+
                                           <td>{{ $campaign->ticket_price }}</td>
                                           <td>
                                               @if ($campaign->img)
                                                   <img src="{{ $campaign->img }}" alt="{{ $campaign->title }}" class="admin-img">
                                               @endif
                                           </td>
-                                        
+
                                           <td>{{ $campaign->coins_per_campaign }}</td>
                                           <td>{{ $campaign->coupons_per_campaign }}</td>
-                                         
+
                                           <td>
-                                           
+
                                               @if($campaign->status == 1)
                                                 <a href="javascript:;" onclick="changeCoinCampaignStatus({{ $campaign->id }})">
                                                     <input id="status_toggle" type="checkbox" checked data-toggle="toggle" data-on="{{__('admin.Active')}}" data-off="{{__('admin.Inactive')}}" data-onstyle="success" data-offstyle="danger">
@@ -69,26 +77,26 @@
                                                     <input id="status_toggle" type="checkbox" data-toggle="toggle" data-on="{{__('admin.Active')}}" data-off="{{__('admin.Inactive')}}" data-onstyle="success" data-offstyle="danger">
                                                 </a>
                                               @endif
-                                        
+
                                           </td>
 
-                                          
+
                                           <td>
                                               <a href="{{ route('admin.view-baseplans', $campaign->id) }}" class="btn btn-primary btn-sm"><i class="fas fa-eye"></i></a>
-                                              
+
                                                 <a href="{{ route('admin.edit-baseplans', $campaign->id) }}" class="btn btn-primary btn-sm"><i class="fas fa-edit"></i></a>
                                                <!--  <form action="{{ route('admin.delete-coin-campaign', $campaign->id) }}" method="POST" style="display:inline-block;">
                                                     @csrf
                                                     @method('DELETE')
                                                     <button type="submit" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></button>
                                                 </form> -->
-                                             
 
-                                              
+
+
                                           </td>
                                       </tr>
                                   @endforeach
-                               
+
                             </tbody>
                         </table>
                       </div>

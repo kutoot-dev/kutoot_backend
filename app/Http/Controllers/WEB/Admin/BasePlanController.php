@@ -28,18 +28,18 @@ class BasePlanController extends Controller
             3 => 'Completed'
         ];
     }
-   
+
     public function index(Request $request)
     {
-        $data = Baseplans::all();
+        $data = Baseplans::with('campaigns')->get();
         return view('admin.baseplan.index', compact('data'));
     }
-    
+
 
     public function indexAPI(Request $request)
     {
-        
-        $data = Baseplans::all();
+
+        $data = Baseplans::with('campaigns')->get();
         return response()->json(['data' => $data]);
     }
 
@@ -60,7 +60,7 @@ class BasePlanController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\View\View
      */
     public function create()
     {
@@ -72,7 +72,7 @@ class BasePlanController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function store(Request $request)
     {
@@ -85,12 +85,22 @@ class BasePlanController extends Controller
             'description' => 'nullable|string',
             'ticket_price' => 'required|numeric|min:0',
             'img' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:10240',
-            'coins_per_campaign' => 'required|integer|min:1',
+            'coins_per_campaign' => 'required|integer|min:0',
             'coupons_per_campaign' => 'required|integer|min:0',
             'duration' => 'required|string',
+            'referral_form_url' => 'nullable|url|max:500',
+            'task_form_url' => 'nullable|url|max:500',
         ];
 
         $validator = Validator::make($data, $validation);
+
+        // Ensure at least one of coins or coupons is greater than 0
+        $validator->after(function ($validator) use ($request) {
+            if ($request->coins_per_campaign == 0 && $request->coupons_per_campaign == 0) {
+                $validator->errors()->add('coins_per_campaign', 'Either coins or coupons must be greater than 0.');
+                $validator->errors()->add('coupons_per_campaign', 'Either coins or coupons must be greater than 0.');
+            }
+        });
 
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput();
@@ -131,7 +141,7 @@ class BasePlanController extends Controller
      * Display the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
 
     public function details($id)
@@ -140,7 +150,7 @@ class BasePlanController extends Controller
         return response()->json(['data' => $data]);
     }
 
-    
+
     public function show($id)
     {
         $data = Baseplans::find($id);
@@ -151,7 +161,7 @@ class BasePlanController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\View\View
      */
     public function edit($id)
     {
@@ -166,7 +176,7 @@ class BasePlanController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function update(Request $request, $id)
     {
@@ -178,14 +188,25 @@ class BasePlanController extends Controller
             'ticket_price' => 'required|numeric|min:0',
             'img' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:10240',
             // 'total_tickets' => 'required|integer|min:1',
-            'coins_per_campaign' => 'required|integer|min:1',
+            'coins_per_campaign' => 'required|integer|min:0',
             'coupons_per_campaign' => 'required|integer|min:0',
             'duration' => 'required|string',
+            'referral_form_url' => 'nullable|url|max:500',
+            'task_form_url' => 'nullable|url|max:500',
             // 'max_coins_per_transaction' => 'required|integer|min:1|max:100',
             // 'start_date' => 'required|date',
             // 'end_date' => 'nullable|date|after_or_equal:start_date',
         ];
         $validator = Validator::make($data, $validation);
+
+        // Ensure at least one of coins or coupons is greater than 0
+        $validator->after(function ($validator) use ($request) {
+            if ($request->coins_per_campaign == 0 && $request->coupons_per_campaign == 0) {
+                $validator->errors()->add('coins_per_campaign', 'Either coins or coupons must be greater than 0.');
+                $validator->errors()->add('coupons_per_campaign', 'Either coins or coupons must be greater than 0.');
+            }
+        });
+
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput();
         }
@@ -195,7 +216,7 @@ class BasePlanController extends Controller
             $imageName = 'baseplan-'.time() . '.' . $image->getClientOriginalExtension();
             $image->move(public_path('uploads/website-images/coin_campaigns'), $imageName);
             $data['img'] = 'uploads/website-images/coin_campaigns/' . $imageName;
-        } 
+        }
       $record = Baseplans::findOrFail($id);
 
         if ($record) {
@@ -236,7 +257,7 @@ class BasePlanController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy($id)
     {
@@ -258,6 +279,189 @@ class BasePlanController extends Controller
         return redirect()->route('admin.all-baseplans')->with($notification);
     }
 
-   
+    /**
+     * API: Store a newly created baseplan via API
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function apiStore(Request $request)
+    {
+        $data = $request->all();
 
+        $validation = [
+            'title' => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'ticket_price' => 'required|numeric|min:0',
+            'img' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:10240',
+            'coins_per_campaign' => 'required|integer|min:0',
+            'coupons_per_campaign' => 'required|integer|min:0',
+            'duration' => 'required|string',
+            'referral_form_url' => 'nullable|url|max:500',
+            'task_form_url' => 'nullable|url|max:500',
+        ];
+
+        $validator = Validator::make($data, $validation);
+
+        // Ensure at least one of coins or coupons is greater than 0
+        $validator->after(function ($validator) use ($request) {
+            if ($request->coins_per_campaign == 0 && $request->coupons_per_campaign == 0) {
+                $validator->errors()->add('coins_per_campaign', 'Either coins or coupons must be greater than 0.');
+                $validator->errors()->add('coupons_per_campaign', 'Either coins or coupons must be greater than 0.');
+            }
+        });
+
+        if ($validator->fails()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Validation failed',
+                'errors' => $validator->errors()
+            ], 422);
+        }
+
+        if ($request->hasFile('img')) {
+            $image = $request->file('img');
+            $imageName = 'baseplan-'.time() . '.' . $image->getClientOriginalExtension();
+            $image->move(public_path('uploads/website-images/coin_campaigns'), $imageName);
+            $data['img'] = 'uploads/website-images/coin_campaigns/' . $imageName;
+        } else {
+            $data['img'] = null;
+        }
+
+        $create = Baseplans::create($data);
+
+        if (!empty($data['camp_id_list']) && is_array($data['camp_id_list'])) {
+            foreach ($data['camp_id_list'] as $campaignId) {
+                BaseplanCampaignLinked::create([
+                    'baseplan_id' => $create->id,
+                    'campaign_id' => $campaignId,
+                ]);
+            }
+        }
+
+        if ($create) {
+            return response()->json([
+                'success' => true,
+                'message' => 'Baseplan created successfully',
+                'data' => $create->load('campaigns')
+            ], 201);
+        } else {
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to create baseplan'
+            ], 500);
+        }
+    }
+
+    /**
+     * API: Update baseplan via API
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function apiUpdate(Request $request, $id)
+    {
+        $data = $request->all();
+
+        $validation = [
+            'title' => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'ticket_price' => 'required|numeric|min:0',
+            'img' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:10240',
+            'coins_per_campaign' => 'required|integer|min:0',
+            'coupons_per_campaign' => 'required|integer|min:0',
+            'duration' => 'required|string',
+            'referral_form_url' => 'nullable|url|max:500',
+            'task_form_url' => 'nullable|url|max:500',
+        ];
+
+        $validator = Validator::make($data, $validation);
+
+        // Ensure at least one of coins or coupons is greater than 0
+        $validator->after(function ($validator) use ($request) {
+            if ($request->coins_per_campaign == 0 && $request->coupons_per_campaign == 0) {
+                $validator->errors()->add('coins_per_campaign', 'Either coins or coupons must be greater than 0.');
+                $validator->errors()->add('coupons_per_campaign', 'Either coins or coupons must be greater than 0.');
+            }
+        });
+
+        if ($validator->fails()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Validation failed',
+                'errors' => $validator->errors()
+            ], 422);
+        }
+
+        $record = Baseplans::findOrFail($id);
+
+        $hasImage = $request->hasFile('img');
+        if ($hasImage) {
+            $image = $request->file('img');
+            $imageName = 'baseplan-'.time() . '.' . $image->getClientOriginalExtension();
+            $image->move(public_path('uploads/website-images/coin_campaigns'), $imageName);
+            $data['img'] = 'uploads/website-images/coin_campaigns/' . $imageName;
+
+            // Delete old image
+            if ($record->img && file_exists(public_path($record->img))) {
+                unlink(public_path($record->img));
+            }
+        } else {
+            // Keep the old image
+            $data['img'] = $record->img;
+        }
+
+        $record->update($data);
+
+        BaseplanCampaignLinked::where('baseplan_id', $record->id)->delete();
+
+        if (!empty($data['camp_id_list']) && is_array($data['camp_id_list'])) {
+            foreach ($data['camp_id_list'] as $campaignId) {
+                BaseplanCampaignLinked::create([
+                    'baseplan_id' => $record->id,
+                    'campaign_id' => $campaignId,
+                ]);
+            }
+        }
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Baseplan updated successfully',
+            'data' => $record->load('campaigns')
+        ], 200);
+    }
+
+    /**
+     * API: Delete baseplan via API
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function apiDestroy($id)
+    {
+        $data = Baseplans::find($id);
+
+        if (!$data) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Baseplan not found'
+            ], 404);
+        }
+
+        try {
+            if ($data->img && file_exists(public_path($data->img))) {
+                unlink(public_path($data->img));
+            }
+        } catch (\Exception $e) {
+            Log::error('Error deleting baseplan image at path '. $data->img .': ' . $e->getMessage());
+        }
+
+        $data->delete();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Baseplan deleted successfully'
+        ], 200);
+    }
 }

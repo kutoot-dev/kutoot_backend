@@ -26,9 +26,9 @@
                                 <div class="form-group col-3">
                                     <label>{{__('Thumbnail Preview')}}</label>
                                     <div>
-                                        
+
                                           <img id="preview-img" class="admin-preview-img" src={{ $data->img ? asset($data->img) : asset('uploads/website-images/preview.png') }} alt="">
-                                        
+
                                     </div>
                                 </div>
 
@@ -47,16 +47,16 @@
 </div>
 
 
-                            
+
 <div class="form-group col-sm-6 col-md-4 col-lg-3">
     <label>{{__('Thumbnail Video Preview')}}</label>
     <div>
-        
+
             <video id="preview-video" style="max-width:100%" controls>
                 <source src="{{ $data->video ? asset($data->video) : asset('uploads/website-images/preview.mp4') }}" type="video/mp4">
                 Your browser does not support the video tag.
             </video>
-       
+
     </div>
 </div>
 
@@ -106,7 +106,7 @@
                                     <input type="number" id="ticket_price" class="form-control"  name="ticket_price" value="{{ $data->ticket_price ?? '' }}" required>
                                 </div>
 
-                              
+
 
  <div class="form-group col">
     <label>Series Prefix <span class="text-danger">*</span></label>
@@ -130,7 +130,7 @@
         <label>{{__('Numbers Per Ticket')}} <span class="text-danger">*</span></label>
        <select name="numbers_per_ticket" class="form-control">
     @foreach([2,3,4,5,6] as $n)
-        <option value="{{ $n }}" 
+        <option value="{{ $n }}"
             {{ old('numbers_per_ticket', $data->numbers_per_ticket ?? 6) == $n ? 'selected' : '' }}>
             {{ $n }}
         </option>
@@ -142,13 +142,29 @@
                         <div class="form-group col-sm-6 col-md-4 col-lg-3">
                                     <label>{{__('coin_campaign.total_tickets')}} <span class="text-danger">*</span></label>
                                     <input type="number" step="1" id="total_tickets" class="form-control"  name="total_tickets" value="{{ $data->total_tickets }}" required readonly>
-                                </div>             
+                                </div>
+
+                                <div class="form-group col-sm-6 col-md-4">
+                                    <label>{{__('Max Coins Limit')}} <small class="text-muted">(Total distributable)</small></label>
+                                    <input type="number" step="1" min="0" id="max_coins" class="form-control"  name="max_coins" value="{{ $data->max_coins }}" placeholder="Leave empty for unlimited">
+                                </div>
+
+                                <div class="form-group col-sm-6 col-md-4">
+                                    <label>{{__('Max Coupons Limit')}} <small class="text-muted">(Total distributable)</small></label>
+                                    <input type="number" step="1" min="0" id="max_coupons" class="form-control"  name="max_coupons" value="{{ $data->max_coupons }}" placeholder="Leave empty for unlimited">
+                                </div>
 
                                 <div class="form-group col-sm-6 col-md-4">
                                     <label>{{__('Marketing Start Percent')}} (%) <span class="text-danger">*</span></label>
                                     <input type="number" step="1" min="0" max="100" id="marketing_start_percent" class="form-control"  name="marketing_start_percent" value="{{ $data->marketing_start_percent }}" required>
                                 </div>
-
+                                <div class="form-group col-sm-6 col-md-4">
+                                    <label>{{__('Marketing Goal Status')}} (%) <span class="text-danger">*</span></label>
+                                    <input type="number" step="0.01" min="0" max="100" id="marketing_goal_status" class="form-control"  name="marketing_goal_status" value="{{ old('marketing_goal_status', $data->marketing_goal_status ?? 0) }}" required>
+                                    <small class="form-text text-muted">
+                                        <i class="fas fa-info-circle"></i> Current percentage of tickets sold relative to total tickets.
+                                    </small>
+                                </div>
                                 <div class="form-group col-sm-6 col-md-4">
                                     <label>{{__('admin.Status')}}</label>
                                  <select name="status" class="form-control">
@@ -161,15 +177,21 @@
 </select>
 
                                 </div>
-
+                                <div class="form-group col-sm-6 col-md-4">
+                                    <label>{{__('Actual Status')}} (%) <span class="text-danger">*</span></label>
+                                    <input type="number" step="0.01" min="0" max="100" id="actual_status" class="form-control"  name="actual_status" value="{{ old('actual_status', $data->actual_status ?? 0) }}" required>
+                                    <small class="form-text text-muted">
+                                        <i class="fas fa-info-circle"></i> Overall campaign completion percentage based on time and ticket sales.
+                                    </small>
+                                </div>
                                  <div class="form-group col-sm-6 col-md-4">
                                     <label>{{__('Promotion Type')}}</label>
                                    <select name="promotion" class="form-control">
-    <option value="Featured" 
+    <option value="Featured"
         {{ old('promotion', $data->promotion ?? '') == 'Featured' ? 'selected' : '' }}>
         {{ __('Featured') }}
     </option>
-    <option value="Top-Banner" 
+    <option value="Top-Banner"
         {{ old('promotion', $data->promotion ?? '') == 'Top-Banner' ? 'selected' : '' }}>
         {{ __('Top-Banner') }}
     </option>
@@ -223,11 +245,11 @@
                 <div class="kv-pairs">
                     @foreach($object as $k => $v)
                         <div class="kv-pair mb-2 d-flex">
-                            <input type="text" name="highlights[{{ $objIndex }}][key][]" 
-                                   value="{{ $k }}" placeholder="Key" 
+                            <input type="text" name="highlights[{{ $objIndex }}][key][]"
+                                   value="{{ $k }}" placeholder="Key"
                                    class="form-control me-2" />
-                            <input type="text" name="highlights[{{ $objIndex }}][value][]" 
-                                   value="{{ $v }}" placeholder="Value" 
+                            <input type="text" name="highlights[{{ $objIndex }}][value][]"
+                                   value="{{ $v }}" placeholder="Value"
                                    class="form-control me-2" />
                             <button type="button" class="btn btn-danger remove-pair">X</button>
                         </div>

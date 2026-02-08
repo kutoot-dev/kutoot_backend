@@ -272,20 +272,20 @@ class CheckoutController extends Controller
                     }
                     // ✅ SORT the two-digit values (important)
                     sort($numbers, SORT_STRING);
-                    // Join the numbers to form the code
-                    $code = implode('', $numbers);
+                    // Format: Series-NN-NN-NN-NN-NN
+                    $code = $currentSeriesLabel . '-' . implode('-', $numbers);
                     // Check both database and current session for same campaign and series
                     $existsInDb = UserCoupons::where('coupon_code', $code)
                         ->where('main_campaign_id', $campaign->id)
                         ->where('series_label', $currentSeriesLabel)
                         ->exists();
-                    $existsInSession = in_array($code . '_' . $currentSeriesLabel, $generatedCodes);
+                    $existsInSession = in_array($code, $generatedCodes);
 
                     $retryCount++;
                 } while ($existsInDb || $existsInSession);
 
-                // Add to session tracker with series label
-                $generatedCodes[] = $code . '_' . $currentSeriesLabel;
+                // Add to session tracker
+                $generatedCodes[] = $code;
 
                 $newone = UserCoupons::create([
                     'purchased_camp_id' => $purchase->id,
@@ -300,15 +300,53 @@ class CheckoutController extends Controller
                 array_push($couponslist, $newone);
             }
 
+            $total_price = $baseplan->ticket_price;
+            $payable_amount = $total_price * 1;
+            $payable_amount = round($payable_amount, 2);
+
+            // ✅ Handle FREE plans (price = 0)
+            if ($payable_amount == 0) {
+                // Mark payment as successful immediately
+                $purchase->payment_status = 'success';
+                $purchase->payment_id = 'FREE_PLAN_' . time();
+                $purchase->razor_order_id = 'FREE_' . $purchase->id;
+                $purchase->camp_ticket_price = 0;
+                $purchase->save();
+
+                // Activate all coupons
+                UserCoupons::where('purchased_camp_id', $purchase->id)
+                    ->update(['status' => 1]);
+
+                // Credit coins immediately
+                $coinService = app(\App\Services\CoinLedgerService::class);
+                $coinsdata = $coinService->creditPaid(
+                    $user->id,
+                    $baseplan->coins_per_campaign * $purchase->quantity,
+                    "OID" . $purchase->id
+                );
+
+                DB::commit();
+
+                $purchase = PurchasedCoins::with('coupons')->where('id', $purchase->id)->where('user_id', $user->id)->first();
+                $purchase['series-prefix'] = $campaign->series_prefix;
+                $purchase['number_min'] = $campaign->number_min;
+                $purchase['number_max'] = $campaign->number_max;
+                $purchase['numbers_per_ticket'] = $campaign->numbers_per_ticket;
+                $purchase['basedetails'] = $purchase->basedetails;
+                $purchase['coinsdata'] = $coinsdata;
+
+                return response()->json([
+                    'message' => 'Free plan activated successfully! Coins and coupons have been credited.',
+                    'data' => $purchase
+                ]);
+            }
+
+            // ✅ Handle PAID plans (price > 0) - Original Razorpay flow
             $razorpay = RazorpayPayment::first();
             if (!$razorpay) {
                 DB::rollBack();
                 return response()->json(['message' => 'Razorpay configuration not found!'], 500);
             }
-
-            $total_price = $baseplan->ticket_price;
-            $payable_amount = $total_price * 1;
-            $payable_amount = round($payable_amount, 2);
 
             $api = new Api($razorpay->key, $razorpay->secret_key);
             $order = $api->order->create(

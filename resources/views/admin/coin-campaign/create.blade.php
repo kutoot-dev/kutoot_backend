@@ -48,10 +48,10 @@
 
                                         <video  id="preview-video"   controls style="max-width:100%">
                                           <source src="movie.mp4" type="video/mp4">
-                                        
+
                                         </video>
 
-                                       
+
                                     </div>
                                 </div>
 
@@ -87,7 +87,7 @@
                                     <label>{{__('Title1')}} </label>
                                     <input type="text" id="title1" class="form-control"  name="title1" value="{{ old('title1') }}">
                                 </div>
-                                
+
                                 <div class="form-group col-6">
                                     <label>{{__('Campaign Slug')}} <span class="text-danger">*</span></label>
                                     <input type="text" id="campaign_id" class="form-control"  name="campaign_id" value="{{ old('campaign_id') }}" placeholder="Give campaign id like CP001" required>
@@ -111,7 +111,7 @@
 
 <div class="form-group col">
     <label>Series Prefix <span class="text-danger">*</span></label>
-    <input type="text" name="series_prefix" class="form-control" maxlength="1" value="{{ old('series_prefix', $campaign->series_prefix ?? '') }}" 
+    <input type="text" name="series_prefix" class="form-control" maxlength="1" value="{{ old('series_prefix', $campaign->series_prefix ?? '') }}"
     placeholder="1 character like A" required>
 </div>
 
@@ -141,7 +141,7 @@
         </select>
 </div>
 
-  
+
 
   <div class="form-group col-sm-6 col-md-4 col-lg-3">
                                     <label>{{__('coin_campaign.total_tickets')}} </label>
@@ -149,8 +149,26 @@
                                 </div>
 
                                 <div class="form-group col-sm-6 col-md-4">
+                                    <label>{{__('Max Coins Limit')}} <small class="text-muted">(Total distributable)</small></label>
+                                    <input type="number" step="1" min="0" id="max_coins" class="form-control"  name="max_coins" value="{{ old('max_coins') }}" placeholder="Leave empty for unlimited">
+                                </div>
+
+                                <div class="form-group col-sm-6 col-md-4">
+                                    <label>{{__('Max Coupons Limit')}} <small class="text-muted">(Total distributable)</small></label>
+                                    <input type="number" step="1" min="0" id="max_coupons" class="form-control"  name="max_coupons" value="{{ old('max_coupons') }}" placeholder="Leave empty for unlimited">
+                                </div>
+
+                                <div class="form-group col-sm-6 col-md-4">
                                     <label>{{__('Marketing Start Percent')}} (%) <span class="text-danger">*</span></label>
                                     <input type="number" step="1" min="0" max="100" id="marketing_start_percent" class="form-control"  name="marketing_start_percent" value="10" required>
+                                </div>
+
+                                <div class="form-group col-sm-6 col-md-4">
+                                    <label>{{__('Marketing Goal Status')}} (%) <span class="text-danger">*</span></label>
+                                    <input type="number" step="0.01" min="0" max="100" id="marketing_goal_status" class="form-control"  name="marketing_goal_status" value="{{ old('marketing_goal_status', 0) }}" required>
+                                    <small class="form-text text-muted">
+                                        <i class="fas fa-info-circle"></i> Current percentage of tickets sold relative to total tickets.
+                                    </small>
                                 </div>
 
                                 <div class="form-group col-sm-4 col-md-4">
@@ -164,6 +182,14 @@
     </option>
 </select>
 
+                                </div>
+
+                                <div class="form-group col-sm-6 col-md-4">
+                                    <label>{{__('Actual Status')}} (%) <span class="text-danger">*</span></label>
+                                    <input type="number" step="0.01" min="0" max="100" id="actual_status" class="form-control"  name="actual_status" value="{{ old('actual_status', 0) }}" required>
+                                    <small class="form-text text-muted">
+                                        <i class="fas fa-info-circle"></i> Overall campaign completion percentage based on time and ticket sales.
+                                    </small>
                                 </div>
 
                                  <div class="form-group col-sm-4 col-md-4">
@@ -232,11 +258,11 @@
         </div>
         <button type="button" class="btn btn-secondary btn-sm add-pair">Add Key-Value</button>
     </div>
-   
+
 </div>
 
  <button type="button" id="addObject" class="btn btn-primary mt-3">Add Object</button>
-                                
+
 {{-- end highlight --}}
                             </div>
                             <div class="row">
@@ -252,7 +278,7 @@
         </section>
       </div>
       <script>
- 
+
 function previewImage(event, targetId) {
     console.log("Previewing image for target:", targetId);
     const reader = new FileReader();
@@ -341,7 +367,7 @@ document.getElementById('addObject').addEventListener('click', function () {
         </div>
         <button type="button" class="btn btn-secondary btn-sm add-pair">Add Key-Value</button>
     </div>`;
-    
+
     document.getElementById('highlightsWrapper').insertAdjacentHTML('beforeend', objHtml);
 });
 

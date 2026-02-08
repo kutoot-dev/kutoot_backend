@@ -37,7 +37,7 @@
     <label>{{ __('admin.Thumbnail Image') }} <span class="text-danger">*</span></label>
     <input type="file" class="form-control-file" name="img" onchange="previewThumnailImage(event)">
 </div>
-                                
+
                                 <div class="form-group col-12">
                                     <label>Please select campaign</label>
                                     <select name="camp_id_list[]" multiple class="form-control" style="min-height: 120px;">
@@ -51,7 +51,7 @@
 
                                     </select>
                                 </div>
-                                
+
                                 <div class="form-group col-12">
                                     <label>{{__('admin.Title')}} <span class="text-danger">*</span></label>
                                     <input type="text" id="title" class="form-control"  name="title" value="{{ $data->title }}">
@@ -118,7 +118,17 @@
                                     <input type="text"  class="form-control"  name="point5" value="{{ $data->point5 }}">
                                 </div>
 
-                              
+                                <div class="form-group col-12" id="referral_form_url_field" style="display:none;">
+                                    <label>{{__('Referral Form URL')}} <small class="text-muted">(For free plans only)</small></label>
+                                    <input type="url" class="form-control" name="referral_form_url" value="{{ $data->referral_form_url }}" placeholder="https://forms.google.com/...">
+                                </div>
+
+                                <div class="form-group col-12" id="task_form_url_field" style="display:none;">
+                                    <label>{{__('Task Form URL')}} <small class="text-muted">(For free plans only)</small></label>
+                                    <input type="url" class="form-control" name="task_form_url" value="{{ $data->task_form_url }}" placeholder="https://forms.google.com/...">
+                                </div>
+
+
 
                                  <!-- <div class="form-group col-sm-6 col-md-4">
                                     <label>{{__('Promotion Type')}}</label>
@@ -166,6 +176,23 @@
 
             reader.readAsDataURL(event.target.files[0]);
         };
+
+        // Show/hide form URL fields based on ticket price
+        $(document).ready(function() {
+            function toggleFormUrlFields() {
+                var price = parseFloat($('#ticket_price').val()) || 0;
+                if (price === 0) {
+                    $('#referral_form_url_field').slideDown();
+                    $('#task_form_url_field').slideDown();
+                } else {
+                    $('#referral_form_url_field').slideUp();
+                    $('#task_form_url_field').slideUp();
+                }
+            }
+
+            $('#ticket_price').on('input change', toggleFormUrlFields);
+            toggleFormUrlFields(); // Initial check
+        });
       </script>
 @endsection
 

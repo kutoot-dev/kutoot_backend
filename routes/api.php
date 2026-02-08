@@ -520,6 +520,13 @@ Route::group(['middleware' => ['demo', 'XSS']], function () {
         Route::get('/tags', [\App\Http\Controllers\WEB\Admin\TagController::class, 'index']);
         Route::post('/tags', [\App\Http\Controllers\WEB\Admin\TagController::class, 'store']);
         Route::delete('/tags/{tagId}', [\App\Http\Controllers\WEB\Admin\TagController::class, 'destroy']);
+
+        // Baseplans Management
+        Route::get('/baseplans', [BasePlanController::class, 'indexAPI']);
+        Route::post('/baseplans', [BasePlanController::class, 'apiStore']);
+        Route::get('/baseplans/{id}', [BasePlanController::class, 'details']);
+        Route::post('/baseplans/{id}', [BasePlanController::class, 'apiUpdate']); // Using POST for file uploads
+        Route::delete('/baseplans/{id}', [BasePlanController::class, 'apiDestroy']);
     });
 
     /*

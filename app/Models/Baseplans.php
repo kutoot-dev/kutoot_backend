@@ -10,7 +10,7 @@ class Baseplans extends Model
     use HasFactory;
 
     protected $table = 'coinbase_plans';
-    
+
     protected $fillable = [
             'camp_id',
             'title',
@@ -26,6 +26,8 @@ class Baseplans extends Model
             'point3',
             'point4',
             'point5',
+            'referral_form_url',
+            'task_form_url',
             'status',
     ];
 
@@ -37,7 +39,7 @@ class Baseplans extends Model
     public function planslinked(){
 
         return $this->belongsTo(BaseplanCampaignLinked::class,'baseplan_id','id');
-        
+
     }
 
 public function campaigns()
